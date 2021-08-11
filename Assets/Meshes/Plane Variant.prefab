@@ -38,7 +38,6 @@ MonoBehaviour:
   turnSmoothTime: 0.1
   teleportTime: 0.5
   inTwister: 0
-  PlayerBullet: {fileID: 3469041069849487933, guid: ead9e6a72d8941249860b6107e8d8d10, type: 3}
 --- !u!114 &8743132507772040387
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -51,10 +50,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a949a4def22ed1c40b38b25caf5c3ced, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp: 10
-  FireRate: 0
-  Player_Bullet: {fileID: 3469041069849487933, guid: ead9e6a72d8941249860b6107e8d8d10, type: 3}
+  Curr_hp: 10
+  Max_hp: 10
   PlayerDead: 0
+--- !u!114 &3194908822696522147
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 623804480134904321}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 982b5d54e0820be4bb98269626785bbc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Player_Bullet: {fileID: 3469041069849487933, guid: ead9e6a72d8941249860b6107e8d8d10, type: 3}
+  ShootForce: 0
+  UpwardForce: 0
+  FireRate: 0
+  AllowButtonHold: 1
+  fpscamera: {fileID: 0}
+  AttackPoint: {fileID: 0}
 --- !u!1001 &317885370764216144
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -16,7 +16,7 @@ public class Enemy_Stats : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+       
     }
 
     public void Damage(int damageAmount)

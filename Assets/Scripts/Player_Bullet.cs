@@ -4,13 +4,9 @@ using UnityEngine;
 
 public class Player_Bullet : Bullet
 {
-     
-    
-   public GameObject collisonExplosion;
+     public GameObject collisonExplosion;
         
        
-    
-    
     // Start is called before the first frame update
     void Start()
     {
@@ -23,7 +19,7 @@ public class Player_Bullet : Bullet
 
     }
 
-    void OnTriggerEnter(Collider collision) 
+    private void OnTriggerEnter(Collider collision) 
     { 
         if (collision.CompareTag("Enemy")) 
         {

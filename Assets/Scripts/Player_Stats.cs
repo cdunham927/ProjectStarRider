@@ -4,34 +4,33 @@ using UnityEngine;
 
 public class Player_Stats : MonoBehaviour
 {
-    [Header(" Player Stats : ")]
-    public int hp;
-    public float FireRate;
-    
-    public GameObject Player_Bullet;
- 
+    [Header(" Player Hp : ")]
+    public int Curr_hp;
+    public int Max_hp;
     public bool PlayerDead = false;
+  
     // Start is called before the first frame update
     void Start()
     {
-        hp = 10;
+        Max_hp = 10;
        
     }
 
     // Update is called once per frame
     void Update()
     {
-        //anything that takes place when the hp is zero should go here
-        if (hp <= 0 && PlayerDead == false) 
-        {
-            PlayerDead = true;
-            Destroy(gameObject);
-        }
+       
+        
     }
 
     public void Damage(int damageAmount) 
     {
-        hp -= damageAmount;
-           
+        //anything that takes place when the hp is zero should go here
+        Curr_hp = Max_hp - damageAmount;
+        if (Curr_hp <= 0 && PlayerDead == false) 
+        {
+            PlayerDead = true;
+            Destroy(gameObject);
+        }
     }
 }

@@ -36,10 +36,9 @@ public class Player_controller: MonoBehaviour
     public float teleportTime = .5f;
     public bool inTwister = false;
 
-    [Header(" Projectile Settings : ")]
-    public GameObject PlayerBullet;
-
     
+
+
 
 
 
@@ -114,6 +113,8 @@ public class Player_controller: MonoBehaviour
         }
         takingAway = false;
     }*/
+
+    
 
 
 
