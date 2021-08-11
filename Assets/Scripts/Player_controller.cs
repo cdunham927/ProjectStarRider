@@ -7,16 +7,16 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
-public class Player_Mov : MonoBehaviour
+public class Player_controller: MonoBehaviour
 {
-    [Header("Contorllers")]
+    [Header(" Player Camera Contorllers : ")]
     private CharacterController controller;
     public Transform cam;
     public Transform Target;
     public GameObject player;
     //public GameObject MenuCanvas;
 
-    [Header("Speed Settings")]
+    [Header(" Speed Settings : ")]
     public float speed = 10f;
     public float gravity = 5.0f;
 
@@ -35,6 +35,10 @@ public class Player_Mov : MonoBehaviour
     [Header("Teleport Settings")]
     public float teleportTime = .5f;
     public bool inTwister = false;
+
+    [Header(" Projectile Settings : ")]
+    public GameObject PlayerBullet;
+
     
 
 
@@ -48,7 +52,7 @@ public class Player_Mov : MonoBehaviour
         //textDisplay.GetComponent<Text>().text = "00" + secondsLeft;
     }
     
-     void Movement()
+    void Movement()
     {
            float horizontal = Input.GetAxisRaw("Horizontal");
             //float horizontal = Input.GetKeyDown("w");
