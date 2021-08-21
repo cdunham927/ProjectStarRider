@@ -4,27 +4,16 @@ using UnityEngine;
 
 public class Enemy_Stats : MonoBehaviour
 {
-    public int hp;
-    public float FireRate;
+    public int hp = 3;
+    
    
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-       
-    }
-
     public void Damage(int damageAmount)
     {
         hp -= damageAmount;
+        Debug.Log("Enemy took damage");
         if(hp <= 0) 
         {
-            Destroy(gameObject);
+            gameObject.SetActive(false);
         
         }
     }
