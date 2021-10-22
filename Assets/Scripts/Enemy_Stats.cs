@@ -6,6 +6,7 @@ public class Enemy_Stats : MonoBehaviour
 {
     public int hp = 3;
     public Healthbar healthScript;
+    public Animator anim;
 
     private void Update()
     {
@@ -20,6 +21,7 @@ public class Enemy_Stats : MonoBehaviour
 
     public void Damage(int damageAmount)
     {
+        if (anim != null) anim.SetTrigger("Hit");
         hp -= damageAmount;
         healthScript.SetHealth(hp);
         Debug.Log("Enemy took damage");

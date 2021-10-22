@@ -36,6 +36,8 @@ public class Player_controller: MonoBehaviour
     public float teleportTime = .5f;
     public bool inTwister = false;
 
+
+    public float rotSpd;
     
 
 
@@ -56,7 +58,8 @@ public class Player_controller: MonoBehaviour
            float horizontal = Input.GetAxisRaw("Horizontal");
             //float horizontal = Input.GetKeyDown("w");
             float vertical = Input.GetAxisRaw("Vertical");
-            Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
+            //Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
+            Vector3 direction = new Vector3(0f, 0f, vertical).normalized;
       
             if(direction.magnitude >= 0.1f) 
             {
@@ -66,6 +69,11 @@ public class Player_controller: MonoBehaviour
 
                 Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
                 controller.Move(moveDir.normalized * speed * Time.deltaTime);
+            }
+
+            if (horizontal != 0)
+            {
+                controller.transform.Rotate(horizontal * rotSpd * Time.deltaTime, 0f, 0f);
             }
     }
     

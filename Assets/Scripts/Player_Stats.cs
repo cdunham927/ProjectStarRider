@@ -8,23 +8,16 @@ public class Player_Stats : MonoBehaviour
     public int Curr_hp;
     public int Max_hp;
     public bool PlayerDead = false;
+    public Animator anim;
   
-    // Start is called before the first frame update
     void Start()
     {
-        Max_hp = 10;
-       
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-       
-        
+        Max_hp = 10;       
     }
 
     public void Damage(int damageAmount) 
     {
+        if (anim != null) anim.SetTrigger("Hit");
         //anything that takes place when the hp is zero should go here
         Curr_hp = Max_hp - damageAmount;
         if (Curr_hp <= 0 && PlayerDead == false) 
