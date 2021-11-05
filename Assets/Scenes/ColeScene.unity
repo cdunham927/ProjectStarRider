@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641258, b: 0.5748172, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -128,11 +128,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 623804480134904321, guid: dc0c9aa6c59ca0343b7c6b5f82a933d7, type: 3}
   m_PrefabInstance: {fileID: 1372987450}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &67737689 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 280316581165965499, guid: dc0c9aa6c59ca0343b7c6b5f82a933d7, type: 3}
-  m_PrefabInstance: {fileID: 1372987450}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &100681997
 GameObject:
   m_ObjectHideFlags: 0
@@ -199,7 +194,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 41997b1b797e2914cb7b071b315b01d5, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -644,7 +639,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 1.25, z: 30}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1051148971}
+  - {fileID: 4185940495756139419}
   m_Father: {fileID: 1931379938}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -757,7 +752,7 @@ Transform:
   m_LocalScale: {x: 5.083085, y: 2.170809, z: 5.213202}
   m_Children:
   - {fileID: 1986712505}
-  - {fileID: 67737689}
+  - {fileID: 1372987451}
   m_Father: {fileID: 0}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -827,7 +822,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 41997b1b797e2914cb7b071b315b01d5, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -924,7 +919,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: afd7ee7c95cc9b242a97731bfadc4d04, type: 2}
+  - {fileID: 2100000, guid: 760d5e7652c65774c8ee5799c5daf37c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -992,11 +987,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 48755a058ddd7fe41aa97f5a94600e85, type: 3}
   m_PrefabInstance: {fileID: 650677854603311432}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &681223338 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 48755a058ddd7fe41aa97f5a94600e85, type: 3}
-  m_PrefabInstance: {fileID: 650677854603311432}
-  m_PrefabAsset: {fileID: 0}
 --- !u!54 &681223339
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1041,7 +1031,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 681223338}
+  - {fileID: 650677854603311433}
   m_Father: {fileID: 273401002}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1139,7 +1129,7 @@ MonoBehaviour:
     ModeOverride: 2
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 2.0421686, y: 1}
+    m_SensorSize: {x: 1.70347, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -1162,6 +1152,7 @@ GameObject:
   - component: {fileID: 762070937}
   - component: {fileID: 762070936}
   - component: {fileID: 762070935}
+  - component: {fileID: 762070940}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1252,7 +1243,7 @@ MonoBehaviour:
     m_Bits: 4294967295
   EffectFlags:
     components: []
-  sharedInstanceID: 81f83867-b091-48cb-b0e6-eabab02d23d8
+  sharedInstanceID: 3aef18ef-77fc-4bfb-9662-963e5fe0dfe4
 --- !u!114 &762070937
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1338,6 +1329,38 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
+--- !u!114 &762070940
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 762070933}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_RenderShadows: 1
+  m_RequiresDepthTextureOption: 2
+  m_RequiresOpaqueTextureOption: 2
+  m_CameraType: 0
+  m_Cameras: []
+  m_RendererIndex: -1
+  m_VolumeLayerMask:
+    serializedVersion: 2
+    m_Bits: 1
+  m_VolumeTrigger: {fileID: 0}
+  m_RenderPostProcessing: 0
+  m_Antialiasing: 0
+  m_AntialiasingQuality: 2
+  m_StopNaN: 0
+  m_Dithering: 0
+  m_ClearDepth: 1
+  m_AllowXRRendering: 1
+  m_RequiresDepthTexture: 0
+  m_RequiresColorTexture: 0
+  m_Version: 2
 --- !u!1 &782903677
 GameObject:
   m_ObjectHideFlags: 0
@@ -1494,11 +1517,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac0b09e7857660247b1477e93731de29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!4 &1051148971 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 48755a058ddd7fe41aa97f5a94600e85, type: 3}
-  m_PrefabInstance: {fileID: 4185940495756139418}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1091995409
 GameObject:
   m_ObjectHideFlags: 0
@@ -1594,7 +1612,7 @@ MonoBehaviour:
     ModeOverride: 2
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 2.0421686, y: 1}
+    m_SensorSize: {x: 1.70347, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -1881,6 +1899,11 @@ PrefabInstance:
     - {fileID: 8743132507772040387, guid: dc0c9aa6c59ca0343b7c6b5f82a933d7, type: 3}
     - {fileID: 3194908822696522147, guid: dc0c9aa6c59ca0343b7c6b5f82a933d7, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: dc0c9aa6c59ca0343b7c6b5f82a933d7, type: 3}
+--- !u!4 &1372987451 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 1372987450}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1439465584
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2472,7 +2495,7 @@ MonoBehaviour:
     ModeOverride: 2
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 2.0421686, y: 1}
+    m_SensorSize: {x: 1.70347, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -2652,7 +2675,7 @@ PrefabInstance:
   m_SourcePrefab: {fileID: 100100000, guid: dc0c9aa6c59ca0343b7c6b5f82a933d7, type: 3}
 --- !u!4 &1997058430 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 280316581165965499, guid: dc0c9aa6c59ca0343b7c6b5f82a933d7, type: 3}
+  m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 1997058429}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &2018518884
@@ -2679,7 +2702,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2018518884}
-  m_LocalRotation: {x: -1.5316429e-11, y: 0.99999946, z: -0.0010652707, w: -0.000000014377963}
+  m_LocalRotation: {x: -1.517323e-11, y: 0.99999946, z: -0.0010652707, w: -0.000000014243538}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -2723,7 +2746,7 @@ MonoBehaviour:
     ModeOverride: 2
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 2.0421686, y: 1}
+    m_SensorSize: {x: 1.70347, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -3012,6 +3035,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 48755a058ddd7fe41aa97f5a94600e85, type: 3}
+--- !u!4 &650677854603311433 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 650677854603311432}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4185940495756139418
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3105,6 +3133,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 48755a058ddd7fe41aa97f5a94600e85, type: 3}
+--- !u!4 &4185940495756139419 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 4185940495756139418}
+  m_PrefabAsset: {fileID: 0}
 --- !u!65 &7206147187797679644
 BoxCollider:
   m_ObjectHideFlags: 0
