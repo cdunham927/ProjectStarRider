@@ -8,11 +8,22 @@ public class Bullet : MonoBehaviour
     public int damage;
     public Rigidbody rb;
     
-    void start() 
+    public virtual void OnEnable() 
     { 
         float step =  speed * Time.deltaTime;
+        Invoke("Disable", 4f);
     }
-    
+
+    private void OnDisable()
+    {
+        CancelInvoke();
+    }
+
+    void Disable()
+    {
+        gameObject.SetActive(false);
+    }
+
     public Bullet() 
     {
         speed = 1.0f;

@@ -5,25 +5,21 @@ using UnityEngine;
 public class Player_Bullet : Bullet
 {
      public GameObject collisonExplosion;
+    public int dmg = 1;
         
        
     // Start is called before the first frame update
-    void Start()
+    public override void OnEnable()
     {
-        rb.velocity = transform.right * speed; 
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
+        base.OnEnable();
+        rb.velocity = transform.forward * speed;
     }
 
     private void OnTriggerEnter(Collider collision) 
     { 
         if (collision.CompareTag("Enemy")) 
         {
-            collision.gameObject.GetComponent<Enemy_Stats>().Damage(1);
+            collision.gameObject.GetComponent<Enemy_Stats>().Damage(dmg);
         }
     
     }

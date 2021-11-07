@@ -6,15 +6,10 @@ public class EnemyBullet : Bullet
 {
     public GameObject collisonExplosion;
 
-    void OnEnable()
+    public override void OnEnable()
     {
+        base.OnEnable();
         rb.velocity = transform.forward * speed;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 
     private void OnTriggerEnter(Collider collision)
