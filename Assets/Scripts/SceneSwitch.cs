@@ -10,7 +10,7 @@ public class SceneSwitch : MonoBehaviour
 {
     public void SceneSwitcher() 
     {
-        SceneManager.LoadScene("GameScene");
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
     public void QuitGame() 
