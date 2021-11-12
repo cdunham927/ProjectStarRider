@@ -12,22 +12,11 @@ public class PlayerController : MonoBehaviour
     [Header("Settings")]
     public bool joystick = true;
 
-    [Space]
-
-    [Header("Parameters")]
-    //public float xySpeed = 18;
-    //public float lookSpeed = 340;
-    //public float forwardSpeed = 6;
-
-    [Space]
-
     [Header("Public References")]
     public Transform aimTarget;
-    //public CinemachineDollyCart dolly;
     public Transform cameraParent;
 
     public Transform cam;
-    //public CharacterController controller;
 
     [Header("Rotation Settings")]
     public float turnSmoothTime = 0.1f;
@@ -45,19 +34,23 @@ public class PlayerController : MonoBehaviour
     public float yViewThresU;
     public float yViewThresD;
 
-    //[Space]
+    //For the After-Image mechanic
+    //
+    //
+    //
+    public GameObject[] afterimages;
+    public float maxImagesTime = 40f;
+    float curActiveTime;
+    //int curActive;
+    float oneCharge;
 
-    //[Header("Particles")]
-    //public ParticleSystem trail;
-    //public ParticleSystem circle;
-    //public ParticleSystem barrel;
-    //public ParticleSystem stars;
 
     void Start()
     {
-        //playerModel = transform.GetChild(0);
-        //SetSpeed(forwardSpeed);
+        curActiveTime = maxImagesTime;
         speed = slowSpd;
+        //4 charges max, so 1 charge is 1/4th of the max image time
+        oneCharge = maxImagesTime / 4;
     }
 
     void Update()
@@ -68,21 +61,8 @@ public class PlayerController : MonoBehaviour
 
         float vert = Input.GetAxis("Vertical");
         speed = (vert > 0) ? highSpd : slowSpd;
-        /*
-        Vector3 direction = new Vector3(0f, 0f, v).normalized;
-
-        if (direction.magnitude >= 0.1f)
-        {
-            float targetAngle = Mathf.Atan2(direction.x, direction.y) * Mathf.Rad2Deg + cam.eulerAngles.y;
-            float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
-            transform.rotation = Quaternion.Euler(0f, angle, 0f);
-
-            Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
-            controller.Move(moveDir.normalized * speed * Time.deltaTime);
-        }*/
 
         transform.position -= transform.forward * speed * Time.deltaTime;
-        //transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(transform.rotation.x, transform.rotation.y, 0), realignRot * Time.deltaTime);
 
         /**/
         Vector2 screenMousePos = Camera.main.ScreenToViewportPoint(Input.mousePosition);
@@ -115,12 +95,36 @@ public class PlayerController : MonoBehaviour
 
         float hor = Input.GetAxis("Horizontal");
         if (hor != 0) transform.Rotate(0, hor * sideRotSpd * Time.deltaTime, 0);
+
+        //If we hit fire button and we have one charge(the max clones is 4, so a fourth of the max images time is one charge
+        if (Input.GetButtonDown("Fire2") && (curActiveTime > (oneCharge)))
+        {
+            AfterImage();
+        }
+
+        if (curActiveTime < maxImagesTime) curActiveTime += Time.deltaTime;
     }
 
-    private void LateUpdate()
+    public void AfterImage()
     {
-        //Probably want to lerp this
-        //transform.forward = -cam.forward;
+        if (!afterimages[0].activeInHierarchy)
+        {
+            afterimages[0].SetActive(true);
+        }
+        else if (!afterimages[1].activeInHierarchy)
+        {
+            afterimages[1].SetActive(true);
+        }
+        else if (!afterimages[2].activeInHierarchy)
+        {
+            afterimages[2].SetActive(true);
+        }
+        else
+        {
+            afterimages[3].SetActive(true);
+        }
+
+        curActiveTime -= oneCharge;
     }
 
     private void OnDrawGizmos()
