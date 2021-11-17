@@ -414,7 +414,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3008179053251007223}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -470,7 +470,7 @@ TrailRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 2100000, guid: 09e1bc16eda6b8d44847e20a040b3a1e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -500,7 +500,7 @@ TrailRenderer:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 1
+        value: 0.5172405
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -510,11 +510,11 @@ TrailRenderer:
       - serializedVersion: 3
         time: 1
         value: 0
-        inSlope: -2.169643
-        outSlope: -2.169643
+        inSlope: -0.90473366
+        outSlope: -0.90473366
         tangentMode: 0
         weightedMode: 0
-        inWeight: 0.17777777
+        inWeight: 0.15245485
         outWeight: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
@@ -633,6 +633,7 @@ GameObject:
   - component: {fileID: 3598041049945022640}
   - component: {fileID: 3598041049945022647}
   - component: {fileID: 3598041049945022646}
+  - component: {fileID: 5770712157231980431}
   m_Layer: 0
   m_Name: Ship_Test
   m_TagString: Untagged
@@ -723,6 +724,20 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!64 &5770712157231980431
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3598041049945022644}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 928957019322126092, guid: a4901776fc74e8347a2ed28737af9730, type: 3}
 --- !u!1 &3598041050566017185
 GameObject:
   m_ObjectHideFlags: 0
@@ -752,8 +767,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3598041050566017185}
-  m_LocalRotation: {x: 0.15905312, y: 0.000000029422944, z: -0.0000000047401527, w: 0.98727006}
-  m_LocalPosition: {x: 565.8, y: 77, z: -450.11}
+  m_LocalRotation: {x: -0.0000000012550202, y: 0.99526304, z: -0.09721878, w: -0.000000012848088}
+  m_LocalPosition: {x: 0.0000017519133, y: 5.6778727, z: 19.940516}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3598041051537867734}
@@ -782,9 +797,9 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 2.5
-  far clip plane: 1300
-  field of view: 13.44
+  near clip plane: 0.01
+  far clip plane: 5000
+  field of view: 45
   orthographic: 0
   orthographic size: 10
   m_Depth: -1
@@ -898,7 +913,7 @@ MonoBehaviour:
     m_Bits: 4294967295
   EffectFlags:
     components: []
-  sharedInstanceID: a8ba1912-950e-4986-a8ae-b33b1d0ee130
+  sharedInstanceID: 358df5c3-9f8f-4b21-9af8-547830435b04
 --- !u!114 &3598041050566017187
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1032,7 +1047,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3598041051537867755}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -1572,7 +1587,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8908628655476520439}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -1628,7 +1643,7 @@ TrailRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 2100000, guid: 09e1bc16eda6b8d44847e20a040b3a1e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1657,8 +1672,8 @@ TrailRenderer:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0.094444275
-        value: 1
+        time: 0
+        value: 0.50574684
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -1666,13 +1681,13 @@ TrailRenderer:
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 1
+        time: 0.9948425
         value: 0
-        inSlope: -1.889213
-        outSlope: -1.889213
+        inSlope: -1.2209976
+        outSlope: -1.2209976
         tangentMode: 0
         weightedMode: 0
-        inWeight: 0.30061343
+        inWeight: 0.13247675
         outWeight: 0
       m_PreInfinity: 2
       m_PostInfinity: 2

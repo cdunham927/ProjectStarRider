@@ -10,7 +10,7 @@ public class Healthbar : MonoBehaviour
 
     private void OnEnable()
     {
-        SetMaxHealth(stats.hp);
+        SetMaxHealth(stats.MaxHP);
     }
 
     public void SetMaxHealth(int health)
