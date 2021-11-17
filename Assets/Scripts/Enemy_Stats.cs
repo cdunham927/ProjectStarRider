@@ -25,13 +25,23 @@ public class Enemy_Stats : MonoBehaviour
         CurrHP = MaxHP;
     
     }
+    
     public void Damage(int damageAmount)
     {
         if (anim != null) anim.SetTrigger("Hit");
         CurrHP -= damageAmount;
         healthScript.SetHealth(CurrHP);
         Debug.Log("Enemy took damage");
-        if(CurrHP <= 0) 
+        
+        //DamageBlinking
+        blinkTimer -= Time.deltaTime;
+        float lerp = Mathf.Clamp01(blinkTimer / blinkDuration);
+        float intensity = (lerp * blinkIntesity) + 1.0f;
+        skinnedMeshRenderer.materials[0].color = Color.white * intensity;
+        //skinnedMeshRenderer.materials[1].color = Color.white * intensity;
+        //skinnedMeshRenderer.materials[2].color = Color.white * intensity;
+
+        if (CurrHP <= 0) 
         {
             gameObject.SetActive(false);
         }
@@ -41,16 +51,13 @@ public class Enemy_Stats : MonoBehaviour
 
     private void Update()
     {
-        blinkTimer -= Time.deltaTime;
-        float lerp = Mathf.Clamp01(blinkTimer / blinkDuration);
-        float intensity = (lerp * blinkIntesity) + 1.0f;
-        
-        skinnedMeshRenderer.material.color = Color.white * intensity;
-        
-        
-        
-            if (Input.GetKeyDown(KeyCode.A))
+       
+
+
+
+        if (Input.GetKeyDown(KeyCode.A))
             {
+                
                 Damage(1);
             }
         
