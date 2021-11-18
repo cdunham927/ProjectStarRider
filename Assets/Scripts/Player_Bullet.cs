@@ -5,7 +5,7 @@ using UnityEngine;
 public class Player_Bullet : Bullet
 {
      public GameObject collisonExplosion;
-    public int dmg = 1;
+     public int dmg = 1;
         
        
     // Start is called before the first frame update
