@@ -8,7 +8,7 @@ using UnityEngine.SceneManagement;
 
 public class SceneSwitch : MonoBehaviour
 {
-    public void SceneSwitcher() 
+    public void NextScene() 
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
@@ -29,5 +29,9 @@ public class SceneSwitch : MonoBehaviour
         SceneManager.LoadScene("StartMenu");
     }
 
-   
+   public void Tutorial()
+   {
+        SceneManager.LoadScene("Tutorial");
+    
+   }
 }
