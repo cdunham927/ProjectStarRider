@@ -12,17 +12,27 @@ public class PlayerController : MonoBehaviour
     [Header("Settings")]
     public bool joystick = true;
 
+    [Space]
+    
     [Header("Public References")]
     public Transform aimTarget;
     public Transform cameraParent;
-
     public Transform cam;
+
+    [Space]
 
     [Header("Rotation Settings")]
     public float turnSmoothTime = 0.1f;
     float turnSmoothVelocity;
+    
+    [Space]
 
-    float speed;
+    [Header("Particles")]
+    public ParticleSystem trails;
+
+
+
+    public float speed;
     public float slowSpd;
     public float highSpd;
     public float rotSpd;
@@ -37,18 +47,19 @@ public class PlayerController : MonoBehaviour
     //For the After-Image mechanic
     //
     //
-    //
+    // //int curActive;
     public GameObject[] afterimages;
     public float maxImagesTime = 40f;
     float curActiveTime;
-    //int curActive;
     float oneCharge;
 
 
     void Start()
     {
+        playerModel = transform.GetChild(0);
         curActiveTime = maxImagesTime;
         speed = slowSpd;
+        
         //4 charges max, so 1 charge is 1/4th of the max image time
         oneCharge = maxImagesTime / 4;
     }
@@ -56,17 +67,21 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         
-        float h = joystick ? Input.GetAxis("Horizontal") : Input.GetAxis("Mouse X");
-        float v = joystick ? Input.GetAxis("Vertical") : Input.GetAxis("Mouse Y");
+        //float h = joystick ? Input.GetAxis("Horizontal") : Input.GetAxis("Mouse X");
+        //float v = joystick ? Input.GetAxis("Vertical") : Input.GetAxis("Mouse Y");
 
         float vert = Input.GetAxis("Vertical");
+        float hor = Input.GetAxis("Horizontal");
         speed = (vert > 0) ? highSpd : slowSpd;
 
+        //Move(hor,vert,speed);
         transform.position -= transform.forward * speed * Time.deltaTime;
 
         /**/
         Vector2 screenMousePos = Camera.main.ScreenToViewportPoint(Input.mousePosition);
         //Debug.Log(screenMousePos);
+
+        //Vector3 screenMousePos = Camera.main.ScreenToViewportPoint(Input.mousePosition);
 
         if (screenMousePos.x < xViewThresL)
         {
@@ -93,7 +108,7 @@ public class PlayerController : MonoBehaviour
         }
         /**/
 
-        float hor = Input.GetAxis("Horizontal");
+        //float hor = Input.GetAxis("Horizontal");
         if (hor != 0) transform.Rotate(0, hor * sideRotSpd * Time.deltaTime, 0);
 
         //If we hit fire button and we have one charge(the max clones is 4, so a fourth of the max images time is one charge
@@ -103,6 +118,22 @@ public class PlayerController : MonoBehaviour
         }
 
         if (curActiveTime < maxImagesTime) curActiveTime += Time.deltaTime;
+    }
+
+    void Move(float x, float y, float speed) 
+    {
+        transform.localPosition += new Vector3(x, y, 0) * speed * Time.deltaTime;
+        ClampPosition();
+    }
+     
+    void ClampPosition()
+    {
+        Vector3 screenMousePos = Camera.main.ScreenToViewportPoint(Input.mousePosition);
+        //Vector3 pos = Camera.main.WorldToViewportPoint(transform.position);
+        screenMousePos.x = Mathf.Clamp01(screenMousePos.x);
+        screenMousePos.y = Mathf.Clamp01(screenMousePos.y);
+        transform.position = Camera.main.ViewportToWorldPoint(screenMousePos);
+    
     }
 
     public void AfterImage()
