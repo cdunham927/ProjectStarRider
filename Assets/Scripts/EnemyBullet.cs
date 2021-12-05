@@ -9,7 +9,6 @@ public class EnemyBullet : Bullet
     public override void OnEnable()
     {
         base.OnEnable();
-        rb.velocity = transform.forward * speed;
     }
 
     private void OnTriggerEnter(Collider collision)
@@ -18,5 +17,10 @@ public class EnemyBullet : Bullet
         {
             collision.gameObject.GetComponent<Player_Stats>().Damage(1);
         }
+    }
+
+    public void Push()
+    {
+        rb.velocity = transform.forward * (speed + Random.Range(0, randSpdMod));
     }
 }

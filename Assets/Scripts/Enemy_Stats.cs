@@ -19,6 +19,8 @@ public class Enemy_Stats : MonoBehaviour
     public float blinkDuration;
     private float blinkTimer;
 
+    public AnimationClip deathClip;
+
     void Start() 
     {
         skinnedMeshRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
@@ -43,10 +45,21 @@ public class Enemy_Stats : MonoBehaviour
 
         if (CurrHP <= 0) 
         {
-            gameObject.SetActive(false);
+            anim.SetTrigger("Death");
+            Invoke("Disable", deathClip.length);
         }
 
         blinkTimer = blinkDuration;
+    }
+
+    void Disable()
+    {
+        gameObject.SetActive(false);
+    }
+
+    private void OnDisable()
+    {
+        CancelInvoke();
     }
 
     private void Update()
