@@ -13,14 +13,16 @@ public class Enemy_Stats : MonoBehaviour
     [HideInInspector]
     SkinnedMeshRenderer skinnedMeshRenderer;
     
-    
+    /*
     [Header(" Damage Blink Settings: ")]
     public float blinkIntesity;
     public float blinkDuration;
     private float blinkTimer;
-
+    */
+    
     //public AnimationClip deathClip;
-    public GameObject deathFx;
+    [Header(" Attached Particle Systems: ")]
+    public GameObject deathVFX;
     
     void Start() 
     {
@@ -37,10 +39,10 @@ public class Enemy_Stats : MonoBehaviour
         Debug.Log("Enemy took damage");
         
         //DamageBlinking
-        blinkTimer -= Time.deltaTime;
-        float lerp = Mathf.Clamp01(blinkTimer / blinkDuration);
-        float intensity = (lerp * blinkIntesity) + 1.0f;
-        skinnedMeshRenderer.materials[0].color = Color.white * intensity;
+        //blinkTimer -= Time.deltaTime;
+        //float lerp = Mathf.Clamp01(blinkTimer / blinkDuration);
+        //float intensity = (lerp * blinkIntesity) + 1.0f;
+        //skinnedMeshRenderer.materials[0].color = Color.white * intensity;
         //skinnedMeshRenderer.materials[1].color = Color.white * intensity;
         //skinnedMeshRenderer.materials[2].color = Color.white * intensity;
 
@@ -48,11 +50,11 @@ public class Enemy_Stats : MonoBehaviour
         {
             if(anim != null) anim.SetTrigger("Death");
             //Invoke("Disable", deathClip.length);
-            Instantiate(deathFx, transform.position, transform.rotation);
+            Instantiate(deathVFX, transform.position, transform.rotation);
             Invoke("Disable", 0.01f);
         }
 
-        blinkTimer = blinkDuration;
+        //blinkTimer = blinkDuration;
     }
 
     void Disable()
@@ -65,18 +67,6 @@ public class Enemy_Stats : MonoBehaviour
         CancelInvoke();
     }
 
-    private void Update()
-    {
-       
-
-
-
-        if (Input.GetKeyDown(KeyCode.A))
-            {
-                
-                //Damage(1);
-            }
-        
-    }
+   
 
 }

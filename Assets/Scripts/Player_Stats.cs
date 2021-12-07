@@ -11,13 +11,18 @@ public class Player_Stats : MonoBehaviour
     public bool PlayerDead = false;
     public Animator anim;
 
+    [Header("Visual Effects")]
+    public GameObject deathVFX;
+    
+    [Header("UI Assets")]
     public Image healthImage;
+    
     public float lerpSpd = 7f;
-    PauseMenu pause;
+    //GameManager OverUI;
 
     void Start()
     {
-        pause = FindObjectOfType<PauseMenu>();
+        //OverUI = FindObjectOfType<GameManager>().GameOver();
         healthImage = GameObject.FindGameObjectWithTag("Health").GetComponent<Image>();
 
         Curr_hp = Max_hp;
@@ -37,9 +42,17 @@ public class Player_Stats : MonoBehaviour
         Curr_hp -= damageAmount;
         if (Curr_hp <= 0 && PlayerDead == false) 
         {
-            PlayerDead = true;
-            PauseMenu.pauseMenu = false;
-            Destroy(gameObject);
+            
+            Instantiate(deathVFX, transform.position, Quaternion.identity);
+            Invoke("Death", 1f);
+            
         }
+    }
+
+    void Death() 
+    {
+        PlayerDead = true;
+        FindObjectOfType<GameManager>().GameOver();
+        Destroy(gameObject);
     }
 }

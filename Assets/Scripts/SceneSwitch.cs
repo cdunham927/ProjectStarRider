@@ -8,6 +8,15 @@ using UnityEngine.SceneManagement;
 
 public class SceneSwitch : MonoBehaviour
 {
+   void Start()
+   {
+        FindObjectOfType<GameManager>();
+        
+   }
+
+    
+
+
     public void NextScene() 
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
@@ -34,4 +43,20 @@ public class SceneSwitch : MonoBehaviour
         SceneManager.LoadScene("Tutorial");
     
    }
+
+    public void Restart()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        Time.timeScale = 1f;
+       //pauseMenu = false;
+    }
+
+    public void GoToMainMenu()
+    {
+        
+        Time.timeScale = 1f;
+        SceneManager.LoadScene("Main_Menu");
+    }
+
+    
 }
