@@ -54,9 +54,12 @@ public class PlayerController : MonoBehaviour
     float curActiveTime;
     float oneCharge;
 
+    Rigidbody bod;
+
 
     void Start()
     {
+        bod = GetComponent<Rigidbody>();
         playerModel = transform.GetChild(0);
         curActiveTime = maxImagesTime;
         speed = slowSpd;
@@ -80,6 +83,7 @@ public class PlayerController : MonoBehaviour
 
         //Move(hor,vert,speed);
         transform.position -= transform.forward * speed * Time.deltaTime;
+        //bod.AddForce(-transform.forward * speed * Time.deltaTime);
 
         if (Input.GetKey(KeyCode.Space))
         {

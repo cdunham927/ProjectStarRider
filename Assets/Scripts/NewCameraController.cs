@@ -13,11 +13,11 @@ public class NewCameraController : MonoBehaviour
         player = FindObjectOfType<PlayerController>();
     }
 
-    private void Update()
+    private void LateUpdate()
     {
         if (player != null)
         {
-            transform.position = Vector3.Lerp(transform.position, pos.position, lerpSpd * Time.deltaTime);
+            transform.position = Vector3.Slerp(transform.position, pos.position, lerpSpd * Time.deltaTime);
             //Same y and z rotation as player, same x as pos
             transform.rotation = Quaternion.Lerp(transform.rotation, pos.transform.rotation, lerpSpd * Time.deltaTime);
         }
