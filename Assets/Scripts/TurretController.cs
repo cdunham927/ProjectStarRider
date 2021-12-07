@@ -29,7 +29,7 @@ public class TurretController : MonoBehaviour
     private void Update()
     {
         //If the player is close enough
-        if (playerInRange)
+        if (playerInRange && player != null)
         {
             //If the cooldown is at 0 then we can attack
             if (attackCools <= 0) Attack();

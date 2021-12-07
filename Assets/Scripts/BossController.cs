@@ -37,7 +37,7 @@ public class BossController : MonoBehaviour
     private void Update()
     {
         //If the player is close enough
-        if (playerInRange && stats.CurrHP > 0)
+        if (playerInRange && stats.CurrHP > 0 & player != null)
         {
             //If the cooldown is at 0 then we can attack
             if (attackCools <= 0) Attack();
@@ -77,10 +77,10 @@ public class BossController : MonoBehaviour
 
                 //Aim it at the player
                 //
-                var offset = 0f;
-                Vector2 direction = player.transform.position - t.transform.position;
-                direction.Normalize();
-                float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+                //var offset = 0f;
+                //Vector2 direction = player.transform.position - t.transform.position;
+                //direction.Normalize();
+                //float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
 
                 //Activate it at the enemy position
                 bul.SetActive(true);

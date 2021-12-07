@@ -19,8 +19,9 @@ public class Enemy_Stats : MonoBehaviour
     public float blinkDuration;
     private float blinkTimer;
 
-    public AnimationClip deathClip;
-
+    //public AnimationClip deathClip;
+    public GameObject deathFx;
+    
     void Start() 
     {
         skinnedMeshRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
@@ -45,8 +46,10 @@ public class Enemy_Stats : MonoBehaviour
 
         if (CurrHP <= 0) 
         {
-            anim.SetTrigger("Death");
-            Invoke("Disable", deathClip.length);
+            if(anim != null) anim.SetTrigger("Death");
+            //Invoke("Disable", deathClip.length);
+            Instantiate(deathFx, transform.position, transform.rotation);
+            Invoke("Disable", 0.01f);
         }
 
         blinkTimer = blinkDuration;
@@ -71,7 +74,7 @@ public class Enemy_Stats : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.A))
             {
                 
-                Damage(1);
+                //Damage(1);
             }
         
     }

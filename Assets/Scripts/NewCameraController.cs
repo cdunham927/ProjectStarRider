@@ -15,8 +15,11 @@ public class NewCameraController : MonoBehaviour
 
     private void Update()
     {
-        transform.position = Vector3.Lerp(transform.position, pos.position, lerpSpd * Time.deltaTime);
-        //Same y and z rotation as player, same x as pos
-        transform.rotation = Quaternion.Lerp(transform.rotation, pos.transform.rotation, lerpSpd * Time.deltaTime);
+        if (player != null)
+        {
+            transform.position = Vector3.Lerp(transform.position, pos.position, lerpSpd * Time.deltaTime);
+            //Same y and z rotation as player, same x as pos
+            transform.rotation = Quaternion.Lerp(transform.rotation, pos.transform.rotation, lerpSpd * Time.deltaTime);
+        }
     }
 }

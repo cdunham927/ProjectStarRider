@@ -19,7 +19,9 @@ public class Player_Bullet : Bullet
     { 
         if (collision.CompareTag("Enemy")) 
         {
+            Debug.Log("Hit Enemy");
             collision.gameObject.GetComponent<Enemy_Stats>().Damage(dmg);
+            Invoke("Disable", 0.01f);
         }
     
     }
