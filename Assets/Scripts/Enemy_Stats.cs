@@ -59,6 +59,7 @@ public class Enemy_Stats : MonoBehaviour
 
     void Disable()
     {
+        FindObjectOfType<GameManager>().Victory();
         gameObject.SetActive(false);
     }
 

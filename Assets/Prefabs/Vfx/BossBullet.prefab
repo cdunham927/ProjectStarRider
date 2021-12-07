@@ -285,7 +285,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.5
+      scalar: 1
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -4761,7 +4761,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f42829d729dae694aae0984de2c4c506, type: 2}
+  - {fileID: 2100000, guid: aa1f567ae1ea4d44fb30c3c2e1851209, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4859,7 +4859,7 @@ TrailRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f42829d729dae694aae0984de2c4c506, type: 2}
+  - {fileID: 2100000, guid: aa1f567ae1ea4d44fb30c3c2e1851209, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4880,7 +4880,7 @@ TrailRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Time: 0.25
+  m_Time: 0.1
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 1
@@ -4957,9 +4957,9 @@ GameObject:
   - component: {fileID: 5290036462192655792}
   - component: {fileID: 5290036462192655793}
   - component: {fileID: 5290036462192655798}
-  - component: {fileID: 5290036462192655799}
+  - component: {fileID: 2200912568623390087}
   m_Layer: 0
-  m_Name: Star_Bolt_PlayerBullet
+  m_Name: BossBullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4972,8 +4972,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5290036462192655796}
-  m_LocalRotation: {x: -0, y: 0.15402658, z: -0, w: 0.98806673}
-  m_LocalPosition: {x: 216.53949, y: -276.68777, z: 1106.6316}
+  m_LocalRotation: {x: 0.015982715, y: 0.8830852, z: 0.032168906, w: -0.4678358}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 5290036460291992090}
@@ -4991,11 +4991,11 @@ Rigidbody:
   m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0.05
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 2
+  m_CollisionDetection: 1
 --- !u!135 &5290036462192655798
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -5009,7 +5009,7 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &5290036462192655799
+--- !u!114 &2200912568623390087
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5018,13 +5018,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 5290036462192655796}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c943a2c3efd70c84a87cbe00527142d9, type: 3}
+  m_Script: {fileID: 11500000, guid: 8ee826ecce4635e4d889e54bc7c4f46d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 650
+  speed: 5
   randSpdMod: 0
   damage: 1
   rb: {fileID: 5290036462192655793}
-  disableTime: 4
+  disableTime: 5
   collisonExplosion: {fileID: 0}
-  dmg: 1

@@ -10,8 +10,9 @@ public class GameManager : MonoBehaviour
     
     public GameObject pauseMenuUI;
     public GameObject GameOverUI;
+    public GameObject VictoryUI;
 
-    
+
     // Start is called before the first frame update
     void Start()
     {
@@ -56,6 +57,22 @@ public class GameManager : MonoBehaviour
 
 
     }
+
+    public void Victory()
+    {
+
+        if (gameIsOver == false)
+        {
+
+            VictoryUI.SetActive(true);
+            Time.timeScale = 1f;
+            gameIsOver = true;
+
+        }
+
+    }
+
+
 
     public void Pause() 
     {
