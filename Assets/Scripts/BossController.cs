@@ -84,7 +84,9 @@ public class BossController : MonoBehaviour
 
                 //Activate it at the enemy position
                 bul.SetActive(true);
-                bul.transform.rotation = Quaternion.Euler(Vector3.forward * (angle + offset));
+                //bul.transform.rotation = Quaternion.Euler(Vector3.forward * (angle + offset));
+                //bul.transform.forward = Vector3.forward * (angle + offset);
+                bul.transform.rotation = Quaternion.Euler(Random.Range(0, 360), Random.Range(0, 360), Random.Range(0, 360));
                 bul.GetComponent<EnemyBullet>().Push();
             }
         }

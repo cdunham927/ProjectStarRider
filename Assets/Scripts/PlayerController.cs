@@ -34,6 +34,7 @@ public class PlayerController : MonoBehaviour
 
     public float speed;
     public float slowSpd;
+    public float regSpd;
     public float highSpd;
     public float rotSpd;
     public float sideRotSpd;
@@ -72,10 +73,23 @@ public class PlayerController : MonoBehaviour
 
         float vert = Input.GetAxis("Vertical");
         float hor = Input.GetAxis("Horizontal");
-        speed = (vert > 0) ? highSpd : slowSpd;
+        //speed = (vert > 0) ? highSpd : slowSpd;
+        if (vert > 0) speed = highSpd;
+        else if (vert < 0) speed = slowSpd;
+        else  speed = regSpd;
 
         //Move(hor,vert,speed);
         transform.position -= transform.forward * speed * Time.deltaTime;
+
+        if (Input.GetKey(KeyCode.Space))
+        {
+            transform.position -= Vector3.up * speed * Time.deltaTime;
+        }
+
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            transform.position += Vector3.up * speed * Time.deltaTime;
+        }
 
         /**/
         Vector2 screenMousePos = Camera.main.ScreenToViewportPoint(Input.mousePosition);
@@ -98,13 +112,13 @@ public class PlayerController : MonoBehaviour
         if (screenMousePos.y > yViewThresU)
         {
             //Debug.Log("Move y view");
-            transform.Rotate(rotSpd * Time.deltaTime, 0, 0);
+            //transform.Rotate(rotSpd * Time.deltaTime, 0, 0);
         }
 
         if (screenMousePos.y < yViewThresD)
         {
             //Debug.Log("Move y view");
-            transform.Rotate(-rotSpd * Time.deltaTime, 0, 0);
+            //transform.Rotate(-rotSpd * Time.deltaTime, 0, 0);
         }
         /**/
 
@@ -122,8 +136,8 @@ public class PlayerController : MonoBehaviour
 
     void Move(float x, float y, float speed) 
     {
-        transform.localPosition += new Vector3(x, y, 0) * speed * Time.deltaTime;
-        ClampPosition();
+        //transform.localPosition += new Vector3(x, y, 0) * speed * Time.deltaTime;
+        //ClampPosition();
     }
      
     void ClampPosition()

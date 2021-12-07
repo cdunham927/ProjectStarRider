@@ -17,8 +17,12 @@ public class TurretController : MonoBehaviour
     //Set the radius for the detection collider
     public SphereCollider detectionCollider;
 
+    //Player
+    PlayerController player;
+
     private void OnEnable()
     {
+        player = FindObjectOfType<PlayerController>();
         detectionCollider.radius = attackRange;
     }
 
@@ -43,9 +47,12 @@ public class TurretController : MonoBehaviour
             //Put it where the enemy position is
             bul.transform.position = transform.position;
             //Aim it at the player
-            bul.transform.rotation = transform.rotation;
+            //bul.transform.rotation = transform.rotation;
             //Activate it at the enemy position
             bul.SetActive(true);
+            bul.transform.LookAt(player.transform);
+            bul.transform.Rotate(0, Random.Range(-15f, 15f), 0);
+            bul.GetComponent<EnemyBullet>().Push();
         }
 
         //Reset attack cooldown

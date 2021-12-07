@@ -16,6 +16,7 @@ public class EnemyBullet : Bullet
         if (collision.CompareTag("Player"))
         {
             collision.gameObject.GetComponent<Player_Stats>().Damage(1);
+            Invoke("Disable", 0.001f);
         }
     }
 
