@@ -23,10 +23,19 @@ public class Enemy_Stats : MonoBehaviour
     //public AnimationClip deathClip;
     [Header(" Attached Particle Systems: ")]
     public GameObject deathVFX;
-    
-    void Start() 
+
+    [Range(0, 1)]
+    public float hpSpawnChance = 0.3f;
+
+    //Object pool for hp pickups
+    public ObjectPool hpPool;
+    bool spawned = false;
+
+
+    void OnEnable() 
     {
         skinnedMeshRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
+        spawned = false;
         CurrHP = MaxHP;
     
     }
@@ -46,9 +55,26 @@ public class Enemy_Stats : MonoBehaviour
         //skinnedMeshRenderer.materials[1].color = Color.white * intensity;
         //skinnedMeshRenderer.materials[2].color = Color.white * intensity;
 
-        if (CurrHP <= 0) 
+        if (CurrHP <= 0 && !spawned)
         {
-            if(anim != null) anim.SetTrigger("Death");
+            if (Random.value < hpSpawnChance)
+            {
+                int num = Random.Range(1, 4);
+                for (int i = 0; i < num; i++)
+                {
+                    GameObject pick = hpPool.GetPooledObject();
+                    if (pick != null)
+                    {
+                        //Put it where the enemy position is
+                        pick.transform.position = transform.position + new Vector3(Random.Range(-1.5f, 1.5f), Random.Range(-1.5f, 1.5f), Random.Range(-1.5f, 1.5f));
+                        pick.transform.rotation = Quaternion.Euler(Random.Range(0, 360), Random.Range(0, 360), Random.Range(0, 360));
+                        pick.SetActive(true);
+                    }
+                }
+                spawned = true;
+            }
+
+            if (anim != null) anim.SetTrigger("Death");
             //Invoke("Disable", deathClip.length);
             Instantiate(deathVFX, transform.position, transform.rotation);
             Invoke("Disable", 0.01f);
@@ -59,7 +85,7 @@ public class Enemy_Stats : MonoBehaviour
 
     void Disable()
     {
-        FindObjectOfType<GameManager>().Victory();
+        //FindObjectOfType<GameManager>().Victory();
         gameObject.SetActive(false);
     }
 

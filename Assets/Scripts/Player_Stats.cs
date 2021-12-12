@@ -35,6 +35,16 @@ public class Player_Stats : MonoBehaviour
         healthImage.fillAmount = Mathf.Lerp(healthImage.fillAmount, (float)Curr_hp / (float)Max_hp, lerpSpd * Time.deltaTime);
     }
 
+    public void Heal(int amt)
+    {
+        if (!PlayerDead)
+        {
+            if (Curr_hp + amt <= Max_hp)
+                Curr_hp += amt;
+            else Curr_hp = Max_hp; 
+        }
+    }
+
     public void Damage(int damageAmount) 
     {
         if (anim != null) anim.SetTrigger("Hit");
