@@ -54,7 +54,7 @@ public class PlayerController : MonoBehaviour
     float curActiveTime;
     float oneCharge;
 
-    Rigidbody bod;
+    public Rigidbody bod;
 
 
     void Start()
@@ -82,17 +82,29 @@ public class PlayerController : MonoBehaviour
         else  speed = regSpd;
 
         //Move(hor,vert,speed);
-        transform.position -= transform.forward * speed * Time.deltaTime;
+        //Movement
+        //transform.position -= transform.forward * speed * Time.deltaTime;
         //bod.AddForce(-transform.forward * speed * Time.deltaTime);
+        bod.velocity = -transform.forward * speed;
+
+        if (Input.GetButton("RotateLeft"))
+        {
+            transform.Rotate(0, 0, rotSpd * Time.deltaTime);
+        }
+
+        if (Input.GetButton("RotateRight"))
+        {
+            transform.Rotate(0, 0, -rotSpd * Time.deltaTime);
+        }
 
         if (Input.GetKey(KeyCode.Space))
         {
-            transform.position -= Vector3.up * speed * Time.deltaTime;
+            //transform.position -= Vector3.up * speed * Time.deltaTime;
         }
 
         if (Input.GetKey(KeyCode.LeftShift))
         {
-            transform.position += Vector3.up * speed * Time.deltaTime;
+            //transform.position += Vector3.up * speed * Time.deltaTime;
         }
 
         /**/
@@ -104,25 +116,25 @@ public class PlayerController : MonoBehaviour
         if (screenMousePos.x < xViewThresL)
         {
             //Debug.Log("Move x view");
-            //transform.Rotate(0, rotSpd * Time.deltaTime, 0);
+            transform.Rotate(0, rotSpd * Time.deltaTime, 0);
         }
 
         if (screenMousePos.x > xViewThresR)
         {
             //Debug.Log("Move x view");
-            //transform.Rotate(0, -rotSpd * Time.deltaTime, 0);
+            transform.Rotate(0, -rotSpd * Time.deltaTime, 0);
         }
 
         if (screenMousePos.y > yViewThresU)
         {
             //Debug.Log("Move y view");
-            //transform.Rotate(rotSpd * Time.deltaTime, 0, 0);
+            transform.Rotate(rotSpd * Time.deltaTime, 0, 0);
         }
 
         if (screenMousePos.y < yViewThresD)
         {
             //Debug.Log("Move y view");
-            //transform.Rotate(-rotSpd * Time.deltaTime, 0, 0);
+            transform.Rotate(-rotSpd * Time.deltaTime, 0, 0);
         }
         /**/
 
@@ -143,7 +155,16 @@ public class PlayerController : MonoBehaviour
         //transform.localPosition += new Vector3(x, y, 0) * speed * Time.deltaTime;
         //ClampPosition();
     }
-     
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Wall"))
+        {
+            //Debug.Log("Hit wall");
+            bod.velocity = Vector3.Reflect(bod.velocity, collision.contacts[0].normal);
+        }
+    }
+
     void ClampPosition()
     {
         Vector3 screenMousePos = Camera.main.ScreenToViewportPoint(Input.mousePosition);
