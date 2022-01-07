@@ -68,9 +68,21 @@ public class PlayerController : MonoBehaviour
         oneCharge = maxImagesTime / 4;
     }
 
+    bool usingAxis = false;
+
     void Update()
     {
-        
+        //Update controller or keyboard input
+        if (Input.anyKeyDown) joystick = false;
+        for (int i = 0; i < 20; i++)
+        {
+            if (Input.GetKeyDown("joystick 1 button " + i))
+            {
+                Debug.Log("joystick 1 button " + i);
+                joystick = true;
+            }
+        }
+
         //float h = joystick ? Input.GetAxis("Horizontal") : Input.GetAxis("Mouse X");
         //float v = joystick ? Input.GetAxis("Vertical") : Input.GetAxis("Mouse Y");
 
@@ -80,6 +92,9 @@ public class PlayerController : MonoBehaviour
         if (vert > 0) speed = highSpd;
         else if (vert < 0) speed = slowSpd;
         else  speed = regSpd;
+
+        float vert2 = Input.GetAxis("Vertical2");
+        float hor2 = Input.GetAxis("Horizontal2");
 
         //Move(hor,vert,speed);
         //Movement
@@ -113,28 +128,43 @@ public class PlayerController : MonoBehaviour
 
         //Vector3 screenMousePos = Camera.main.ScreenToViewportPoint(Input.mousePosition);
 
-        if (screenMousePos.x < xViewThresL)
-        {
-            //Debug.Log("Move x view");
-            transform.Rotate(0, rotSpd * Time.deltaTime, 0);
+        if (!joystick) {
+            if (screenMousePos.x < xViewThresL)
+            {
+                //Debug.Log("Move x view");
+                transform.Rotate(0, rotSpd * Time.deltaTime, 0);
+            }
+
+            if (screenMousePos.x > xViewThresR)
+            {
+                //Debug.Log("Move x view");
+                transform.Rotate(0, -rotSpd * Time.deltaTime, 0);
+            }
+
+            if (screenMousePos.y > yViewThresU)
+            {
+                //Debug.Log("Move y view");
+                transform.Rotate(rotSpd * Time.deltaTime, 0, 0);
+            }
+
+            if (screenMousePos.y < yViewThresD)
+            {
+                //Debug.Log("Move y view");
+                transform.Rotate(-rotSpd * Time.deltaTime, 0, 0);
+            }
         }
 
-        if (screenMousePos.x > xViewThresR)
+        if (joystick)
         {
-            //Debug.Log("Move x view");
-            transform.Rotate(0, -rotSpd * Time.deltaTime, 0);
-        }
+            if (hor2 != 0)
+            {
+                transform.Rotate(0, -rotSpd * Time.deltaTime * hor2, 0);
+            }
 
-        if (screenMousePos.y > yViewThresU)
-        {
-            //Debug.Log("Move y view");
-            transform.Rotate(rotSpd * Time.deltaTime, 0, 0);
-        }
-
-        if (screenMousePos.y < yViewThresD)
-        {
-            //Debug.Log("Move y view");
-            transform.Rotate(-rotSpd * Time.deltaTime, 0, 0);
+            if (vert2 != 0)
+            {
+                transform.Rotate(-rotSpd * Time.deltaTime * vert2, 0, 0);
+            }
         }
         /**/
 
@@ -147,7 +177,22 @@ public class PlayerController : MonoBehaviour
             AfterImage();
         }
 
-        if (curActiveTime < maxImagesTime) curActiveTime += Time.deltaTime;
+        //Alt fire with left trigger
+        if (Input.GetAxisRaw("Altfire2") == 1 && curActiveTime > oneCharge)
+        {
+            if (usingAxis == false)
+            {
+                // Call your event function here.
+                AfterImage();
+                usingAxis = true;
+            }
+        }
+        if (Input.GetAxisRaw("Altfire2") == 0)
+        {
+            usingAxis = false;
+        }
+
+if (curActiveTime < maxImagesTime) curActiveTime += Time.deltaTime;
     }
 
     void Move(float x, float y, float speed) 
