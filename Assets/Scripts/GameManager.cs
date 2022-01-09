@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -38,6 +39,23 @@ public class GameManager : MonoBehaviour
             }
             
            
+        }
+
+        if (Application.isEditor)
+        {
+            if (Input.GetKeyDown(KeyCode.O))
+            {
+                Enemy_Stats[] enemies = FindObjectsOfType<Enemy_Stats>();
+                foreach(Enemy_Stats e in enemies)
+                {
+                    e.Damage(1);
+                }
+            }
+
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            }
         }
     }
 

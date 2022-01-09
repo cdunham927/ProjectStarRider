@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 //using DG.Tweening;
-using Cinemachine;
+//using Cinemachine;
 using UnityEngine.Rendering.PostProcessing;
 
 public class PlayerController : MonoBehaviour
@@ -55,6 +55,7 @@ public class PlayerController : MonoBehaviour
     float oneCharge;
 
     public Rigidbody bod;
+    public float pushBack = 10f;
 
 
     void Start()
@@ -192,7 +193,7 @@ public class PlayerController : MonoBehaviour
             usingAxis = false;
         }
 
-if (curActiveTime < maxImagesTime) curActiveTime += Time.deltaTime;
+        if (curActiveTime < maxImagesTime) curActiveTime += Time.deltaTime;
     }
 
     void Move(float x, float y, float speed) 
@@ -206,7 +207,8 @@ if (curActiveTime < maxImagesTime) curActiveTime += Time.deltaTime;
         if (collision.gameObject.CompareTag("Wall"))
         {
             //Debug.Log("Hit wall");
-            bod.velocity = Vector3.Reflect(bod.velocity, collision.contacts[0].normal);
+            //bod.velocity = Vector3.Reflect(bod.velocity, collision.contacts[0].normal);
+            //bod.velocity = transform.forward * pushBack;
         }
     }
 
