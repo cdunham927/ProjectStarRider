@@ -77,7 +77,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1139947883432206532}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 59958b3ba19a52c48ba5689bbc6f7e8e, type: 2}
   m_CullingMode: 0
@@ -103,8 +103,10 @@ MonoBehaviour:
   MaxHP: 10
   CurrHP: 10
   healthScript: {fileID: 573377688435008515}
-  anim: {fileID: 0}
+  anim: {fileID: -1034466729906832040}
   deathVFX: {fileID: 4593951957772366835, guid: 1e092bc34c05e7a4388b0d0c57e84ec9, type: 3}
+  hpSpawnChance: 0.3
+  hpPool: {fileID: 0}
 --- !u!114 &573377688435008515
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -240,6 +242,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parent: {fileID: 7255042562914908036}
+  anim: {fileID: -1034466729906832040}
 --- !u!1 &2131027273301204764
 GameObject:
   m_ObjectHideFlags: 0

@@ -74,7 +74,7 @@ public class Enemy_Stats : MonoBehaviour
                 spawned = true;
             }
 
-            if (anim != null) anim.SetTrigger("Death");
+            //if (anim != null) anim.SetTrigger("Death");
             //Invoke("Disable", deathClip.length);
             Instantiate(deathVFX, transform.position, transform.rotation);
             Invoke("Disable", 0.01f);

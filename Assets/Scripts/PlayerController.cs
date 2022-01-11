@@ -224,24 +224,27 @@ public class PlayerController : MonoBehaviour
 
     public void AfterImage()
     {
-        if (!afterimages[0].activeInHierarchy)
+        if (!GameManager.gameIsPaused)
         {
-            afterimages[0].SetActive(true);
-        }
-        else if (!afterimages[1].activeInHierarchy)
-        {
-            afterimages[1].SetActive(true);
-        }
-        else if (!afterimages[2].activeInHierarchy)
-        {
-            afterimages[2].SetActive(true);
-        }
-        else
-        {
-            afterimages[3].SetActive(true);
-        }
+            if (!afterimages[0].activeInHierarchy)
+            {
+                afterimages[0].SetActive(true);
+            }
+            else if (!afterimages[1].activeInHierarchy)
+            {
+                afterimages[1].SetActive(true);
+            }
+            else if (!afterimages[2].activeInHierarchy)
+            {
+                afterimages[2].SetActive(true);
+            }
+            else
+            {
+                afterimages[3].SetActive(true);
+            }
 
-        curActiveTime -= oneCharge;
+            curActiveTime -= oneCharge;
+        }
     }
 
     private void OnDrawGizmos()
