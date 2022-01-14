@@ -39,6 +39,8 @@ public class PlayerController : MonoBehaviour
     public float rotSpd;
     public float sideRotSpd;
     public float realignRot;
+    float lerpToSpd;
+    public float spdLerpAmt = 5f;
 
     public float xViewThresR;
     public float xViewThresL;
@@ -90,9 +92,11 @@ public class PlayerController : MonoBehaviour
         float vert = Input.GetAxis("Vertical");
         float hor = Input.GetAxis("Horizontal");
         //speed = (vert > 0) ? highSpd : slowSpd;
-        if (vert > 0) speed = highSpd;
-        else if (vert < 0) speed = slowSpd;
-        else  speed = regSpd;
+        if (vert > 0) lerpToSpd = highSpd;
+        else if (vert < 0) lerpToSpd = slowSpd;
+        else lerpToSpd = regSpd;
+
+        speed = Mathf.Lerp(speed, lerpToSpd, Time.deltaTime * spdLerpAmt);
 
         float vert2 = Input.GetAxis("Vertical2");
         float hor2 = Input.GetAxis("Horizontal2");
