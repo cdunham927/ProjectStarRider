@@ -149,13 +149,13 @@ public class PlayerController : MonoBehaviour
             if (screenMousePos.y > yViewThresU)
             {
                 //Debug.Log("Move y view");
-                transform.Rotate(rotSpd * Time.deltaTime, 0, 0);
+                transform.Rotate(-rotSpd * Time.deltaTime, 0, 0);
             }
 
             if (screenMousePos.y < yViewThresD)
             {
                 //Debug.Log("Move y view");
-                transform.Rotate(-rotSpd * Time.deltaTime, 0, 0);
+                transform.Rotate(rotSpd * Time.deltaTime, 0, 0);
             }
         }
 
