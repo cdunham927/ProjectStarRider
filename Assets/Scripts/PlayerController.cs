@@ -59,6 +59,7 @@ public class PlayerController : MonoBehaviour
     public Rigidbody bod;
     public float pushBack = 10f;
 
+    public bool invertControls = false;
 
     void Start()
     {
@@ -134,28 +135,57 @@ public class PlayerController : MonoBehaviour
         //Vector3 screenMousePos = Camera.main.ScreenToViewportPoint(Input.mousePosition);
 
         if (!joystick) {
-            if (screenMousePos.x < xViewThresL)
+            if (invertControls)
             {
-                //Debug.Log("Move x view");
-                transform.Rotate(0, -rotSpd * Time.deltaTime, 0);
-            }
+                if (screenMousePos.x < xViewThresL)
+                {
+                    //Debug.Log("Move x view");
+                    transform.Rotate(0, -rotSpd * Time.deltaTime, 0);
+                }
 
-            if (screenMousePos.x > xViewThresR)
-            {
-                //Debug.Log("Move x view");
-                transform.Rotate(0, rotSpd * Time.deltaTime, 0);
-            }
+                if (screenMousePos.x > xViewThresR)
+                {
+                    //Debug.Log("Move x view");
+                    transform.Rotate(0, rotSpd * Time.deltaTime, 0);
+                }
 
-            if (screenMousePos.y > yViewThresU)
-            {
-                //Debug.Log("Move y view");
-                transform.Rotate(-rotSpd * Time.deltaTime, 0, 0);
-            }
+                if (screenMousePos.y > yViewThresU)
+                {
+                    //Debug.Log("Move y view");
+                    transform.Rotate(-rotSpd * Time.deltaTime, 0, 0);
+                }
 
-            if (screenMousePos.y < yViewThresD)
+                if (screenMousePos.y < yViewThresD)
+                {
+                    //Debug.Log("Move y view");
+                    transform.Rotate(rotSpd * Time.deltaTime, 0, 0);
+                }
+            }
+            else
             {
-                //Debug.Log("Move y view");
-                transform.Rotate(rotSpd * Time.deltaTime, 0, 0);
+                if (screenMousePos.x < xViewThresL)
+                {
+                    //Debug.Log("Move x view");
+                    transform.Rotate(0, rotSpd * Time.deltaTime, 0);
+                }
+
+                if (screenMousePos.x > xViewThresR)
+                {
+                    //Debug.Log("Move x view");
+                    transform.Rotate(0, -rotSpd * Time.deltaTime, 0);
+                }
+
+                if (screenMousePos.y > yViewThresU)
+                {
+                    //Debug.Log("Move y view");
+                    transform.Rotate(rotSpd * Time.deltaTime, 0, 0);
+                }
+
+                if (screenMousePos.y < yViewThresD)
+                {
+                    //Debug.Log("Move y view");
+                    transform.Rotate(-rotSpd * Time.deltaTime, 0, 0);
+                }
             }
         }
 
@@ -163,12 +193,14 @@ public class PlayerController : MonoBehaviour
         {
             if (hor2 != 0)
             {
-                transform.Rotate(0, -rotSpd * Time.deltaTime * hor2, 0);
+                if (invertControls) transform.Rotate(0, rotSpd * Time.deltaTime * hor2, 0);
+                else transform.Rotate(0, -rotSpd * Time.deltaTime * hor2, 0);
             }
 
             if (vert2 != 0)
             {
-                transform.Rotate(-rotSpd * Time.deltaTime * vert2, 0, 0);
+                if (invertControls) transform.Rotate(rotSpd * Time.deltaTime * vert2, 0, 0);
+                else transform.Rotate(-rotSpd * Time.deltaTime * vert2, 0, 0);
             }
         }
         /**/
