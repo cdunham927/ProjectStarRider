@@ -20,10 +20,13 @@ public class TurretController : MonoBehaviour
     //Player
     PlayerController player;
 
+    public Collider col;
+
     private void OnEnable()
     {
         player = FindObjectOfType<PlayerController>();
         detectionCollider.radius = attackRange;
+        SetCollider(false);
     }
 
     private void Update()
@@ -57,5 +60,10 @@ public class TurretController : MonoBehaviour
 
         //Reset attack cooldown
         attackCools = timeBetweenAttacks;
+    }
+
+    public void SetCollider(bool st = true)
+    {
+        col.enabled = st;
     }
 }
