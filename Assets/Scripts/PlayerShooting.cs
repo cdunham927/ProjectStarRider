@@ -24,7 +24,7 @@ public class PlayerShooting : MonoBehaviour
     {
         GameObject bul = bulPool.GetPooledObject();
         bul.transform.position = bulSpawn.transform.position;
-        bul.transform.rotation = transform.rotation;
+        bul.transform.rotation = bulSpawn.transform.rotation;
         bul.SetActive(true);
         curShootCools = shootCooldown;
     }

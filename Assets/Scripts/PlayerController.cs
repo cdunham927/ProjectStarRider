@@ -103,7 +103,6 @@ public class PlayerController : MonoBehaviour
         
         if (vert > 0)
         {
-
             if (speedUpTimer > 0)
                 lerpToSpd = superSpd;
             else lerpToSpd = highSpd;

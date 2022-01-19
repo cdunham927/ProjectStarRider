@@ -16,6 +16,7 @@ public class TurretController : MonoBehaviour
     public bool playerInRange = false;
     //Set the radius for the detection collider
     public SphereCollider detectionCollider;
+    public Collider col;
 
     //Player
     PlayerController player;
@@ -24,6 +25,7 @@ public class TurretController : MonoBehaviour
     {
         player = FindObjectOfType<PlayerController>();
         detectionCollider.radius = attackRange;
+        SetCollider(false);
     }
 
     private void Update()
@@ -57,5 +59,10 @@ public class TurretController : MonoBehaviour
 
         //Reset attack cooldown
         attackCools = timeBetweenAttacks;
+    }
+
+    public void SetCollider(bool cl = true)
+    {
+        col.enabled = cl;
     }
 }
