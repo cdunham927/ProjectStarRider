@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HealthPickup : Pickup
+public class HealthPickup : MonoBehaviour
 {
     public float pickupDistance = 10f;
     float distance;
@@ -13,7 +13,6 @@ public class HealthPickup : Pickup
     bool healed = false;
     public float rotSpd;
     float xRot, yRot, zRot;
-    public bool moves = true;
 
     private void OnEnable()
     {
@@ -31,16 +30,16 @@ public class HealthPickup : Pickup
         //transform.rotation = Random.rotation;
         transform.Rotate(xRot, yRot, zRot);
 
-        if (distance <= pickupDistance && stats.Curr_hp < stats.Max_hp && moves) 
+        if (distance <= pickupDistance && stats.Curr_hp < stats.Max_hp) 
             transform.position = Vector3.MoveTowards(transform.position, stats.transform.position, spd * Time.deltaTime);
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player") && stats.Curr_hp < stats.Max_hp) GetPickup();
+        if (other.CompareTag("Player") && stats.Curr_hp < stats.Max_hp) Pickup();
     }
 
-    public override void GetPickup()
+    void Pickup()
     {
         if (!healed)
         {
@@ -48,5 +47,15 @@ public class HealthPickup : Pickup
             stats.Heal(amountToGive);
             Invoke("Disable", 0.001f);
         }
+    }
+
+    private void OnDisable()
+    {
+        CancelInvoke();
+    }
+
+    void Disable()
+    {
+        gameObject.SetActive(false);
     }
 }
