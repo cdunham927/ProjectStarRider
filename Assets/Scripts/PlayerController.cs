@@ -36,6 +36,7 @@ public class PlayerController : MonoBehaviour
     public float slowSpd;
     public float regSpd;
     public float highSpd;
+    public float superSpd;
     public float rotSpd;
     public float sideRotSpd;
     public float realignRot;
@@ -51,6 +52,7 @@ public class PlayerController : MonoBehaviour
     //
     //
     // //int curActive;
+    
     public GameObject[] afterimages;
     public float maxImagesTime = 40f;
     float curActiveTime;
@@ -61,7 +63,10 @@ public class PlayerController : MonoBehaviour
 
     public bool invertControls = false;
 
-    void Start()
+    public float speedUpTime;
+    float speedUpTimer;
+
+    void Awake()
     {
         bod = GetComponent<Rigidbody>();
         playerModel = transform.GetChild(0);
@@ -73,6 +78,8 @@ public class PlayerController : MonoBehaviour
     }
 
     bool usingAxis = false;
+    float vert, hor, vert2, hor2;
+
 
     void Update()
     {
@@ -90,123 +97,32 @@ public class PlayerController : MonoBehaviour
         //float h = joystick ? Input.GetAxis("Horizontal") : Input.GetAxis("Mouse X");
         //float v = joystick ? Input.GetAxis("Vertical") : Input.GetAxis("Mouse Y");
 
-        float vert = Input.GetAxis("Vertical");
-        float hor = Input.GetAxis("Horizontal");
+         vert = Input.GetAxis("Vertical");
+         hor = Input.GetAxis("Horizontal");
         //speed = (vert > 0) ? highSpd : slowSpd;
-        if (vert > 0) lerpToSpd = highSpd;
+        
+        if (vert > 0)
+        {
+
+            if (speedUpTimer > 0)
+                lerpToSpd = superSpd;
+            else lerpToSpd = highSpd;
+        }
+
+
         else if (vert < 0) lerpToSpd = slowSpd;
         else lerpToSpd = regSpd;
 
         speed = Mathf.Lerp(speed, lerpToSpd, Time.deltaTime * spdLerpAmt);
 
-        float vert2 = Input.GetAxis("Vertical2");
-        float hor2 = Input.GetAxis("Horizontal2");
+        vert2 = Input.GetAxis("Vertical2");
+        hor2 = Input.GetAxis("Horizontal2");
 
         //Move(hor,vert,speed);
         //Movement
         //transform.position -= transform.forward * speed * Time.deltaTime;
         //bod.AddForce(-transform.forward * speed * Time.deltaTime);
-        bod.velocity = -transform.forward * speed;
 
-        if (Input.GetButton("RotateLeft"))
-        {
-            transform.Rotate(0, 0, rotSpd * Time.deltaTime);
-        }
-
-        if (Input.GetButton("RotateRight"))
-        {
-            transform.Rotate(0, 0, -rotSpd * Time.deltaTime);
-        }
-
-        if (Input.GetKey(KeyCode.Space))
-        {
-            //transform.position -= Vector3.up * speed * Time.deltaTime;
-        }
-
-        if (Input.GetKey(KeyCode.LeftShift))
-        {
-            //transform.position += Vector3.up * speed * Time.deltaTime;
-        }
-
-        /**/
-        Vector2 screenMousePos = Camera.main.ScreenToViewportPoint(Input.mousePosition);
-        //Debug.Log(screenMousePos);
-
-        //Vector3 screenMousePos = Camera.main.ScreenToViewportPoint(Input.mousePosition);
-
-        if (!joystick) {
-            if (invertControls)
-            {
-                if (screenMousePos.x < xViewThresL)
-                {
-                    //Debug.Log("Move x view");
-                    transform.Rotate(0, -rotSpd * Time.deltaTime, 0);
-                }
-
-                if (screenMousePos.x > xViewThresR)
-                {
-                    //Debug.Log("Move x view");
-                    transform.Rotate(0, rotSpd * Time.deltaTime, 0);
-                }
-
-                if (screenMousePos.y > yViewThresU)
-                {
-                    //Debug.Log("Move y view");
-                    transform.Rotate(-rotSpd * Time.deltaTime, 0, 0);
-                }
-
-                if (screenMousePos.y < yViewThresD)
-                {
-                    //Debug.Log("Move y view");
-                    transform.Rotate(rotSpd * Time.deltaTime, 0, 0);
-                }
-            }
-            else
-            {
-                if (screenMousePos.x < xViewThresL)
-                {
-                    //Debug.Log("Move x view");
-                    transform.Rotate(0, rotSpd * Time.deltaTime, 0);
-                }
-
-                if (screenMousePos.x > xViewThresR)
-                {
-                    //Debug.Log("Move x view");
-                    transform.Rotate(0, -rotSpd * Time.deltaTime, 0);
-                }
-
-                if (screenMousePos.y > yViewThresU)
-                {
-                    //Debug.Log("Move y view");
-                    transform.Rotate(rotSpd * Time.deltaTime, 0, 0);
-                }
-
-                if (screenMousePos.y < yViewThresD)
-                {
-                    //Debug.Log("Move y view");
-                    transform.Rotate(-rotSpd * Time.deltaTime, 0, 0);
-                }
-            }
-        }
-
-        if (joystick)
-        {
-            if (hor2 != 0)
-            {
-                if (invertControls) transform.Rotate(0, rotSpd * Time.deltaTime * hor2, 0);
-                else transform.Rotate(0, -rotSpd * Time.deltaTime * hor2, 0);
-            }
-
-            if (vert2 != 0)
-            {
-                if (invertControls) transform.Rotate(rotSpd * Time.deltaTime * vert2, 0, 0);
-                else transform.Rotate(-rotSpd * Time.deltaTime * vert2, 0, 0);
-            }
-        }
-        /**/
-
-        //float hor = Input.GetAxis("Horizontal");
-        if (hor != 0) transform.Rotate(0, hor * sideRotSpd * Time.deltaTime, 0);
 
         //If we hit fire button and we have one charge(the max clones is 4, so a fourth of the max images time is one charge
         if (Input.GetButtonDown("Fire2") && (curActiveTime > (oneCharge)))
@@ -229,7 +145,130 @@ public class PlayerController : MonoBehaviour
             usingAxis = false;
         }
 
+        if (speedUpTimer > 0) speedUpTimer -= Time.deltaTime;
+
         if (curActiveTime < maxImagesTime) curActiveTime += Time.deltaTime;
+
+        if (Application.isEditor)
+        {
+            if (Input.GetKeyDown(KeyCode.Alpha8))
+            {
+                SpeedUp();
+            }
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        
+        bod.velocity = -transform.forward * speed;
+        if (Input.GetButton("RotateLeft"))
+        {
+            transform.Rotate(0, 0, rotSpd * Time.fixedDeltaTime);
+        }
+
+        if (Input.GetButton("RotateRight"))
+        {
+            transform.Rotate(0, 0, -rotSpd * Time.fixedDeltaTime);
+        }
+
+        if (Input.GetKey(KeyCode.Space))
+        {
+            //transform.position -= Vector3.up * speed * Time.deltaTime;
+        }
+
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            //transform.position += Vector3.up * speed * Time.deltaTime;
+        }
+
+        /**/
+        Vector2 screenMousePos = Camera.main.ScreenToViewportPoint(Input.mousePosition);
+        //Debug.Log(screenMousePos);
+
+        //Vector3 screenMousePos = Camera.main.ScreenToViewportPoint(Input.mousePosition);
+
+        if (!joystick) 
+        {
+            if (invertControls)
+            {
+                if (screenMousePos.x < xViewThresL)
+                {
+                    //Debug.Log("Move x view");
+                    transform.Rotate(0, -rotSpd * Time.fixedDeltaTime, 0);
+                }
+
+                if (screenMousePos.x > xViewThresR)
+                {
+                    //Debug.Log("Move x view");
+                    transform.Rotate(0, rotSpd * Time.fixedDeltaTime, 0);
+                }
+
+                if (screenMousePos.y > yViewThresU)
+                {
+                    //Debug.Log("Move y view");
+                    transform.Rotate(-rotSpd * Time.fixedDeltaTime, 0, 0);
+                }
+
+                if (screenMousePos.y < yViewThresD)
+                {
+                    //Debug.Log("Move y view");
+                    transform.Rotate(rotSpd * Time.fixedDeltaTime, 0, 0);
+                }
+            }
+            else
+            {
+                if (screenMousePos.x < xViewThresL)
+                {
+                    //Debug.Log("Move x view");
+                    transform.Rotate(0, rotSpd * Time.fixedDeltaTime, 0);
+                }
+
+                if (screenMousePos.x > xViewThresR)
+                {
+                    //Debug.Log("Move x view");
+                    transform.Rotate(0, -rotSpd * Time.fixedDeltaTime, 0);
+                }
+
+                if (screenMousePos.y > yViewThresU)
+                {
+                    //Debug.Log("Move y view");
+                    transform.Rotate(rotSpd * Time.fixedDeltaTime, 0, 0);
+                }
+
+                if (screenMousePos.y < yViewThresD)
+                {
+                    //Debug.Log("Move y view");
+                    transform.Rotate(-rotSpd * Time.fixedDeltaTime, 0, 0);
+                }
+            }
+        }
+
+        if (joystick)
+        {
+            if (hor2 != 0)
+            {
+                if (invertControls) transform.Rotate(0, rotSpd * Time.fixedDeltaTime * hor2, 0);
+                else transform.Rotate(0, -rotSpd * Time.fixedDeltaTime * hor2, 0);
+            }
+
+            if (vert2 != 0)
+            {
+                if (invertControls) transform.Rotate(rotSpd * Time.fixedDeltaTime * vert2, 0, 0);
+                else transform.Rotate(-rotSpd * Time.fixedDeltaTime * vert2, 0, 0);
+            }
+        }
+        /**/
+
+        //float hor = Input.GetAxis("Horizontal");
+
+
+        if (hor != 0) transform.Rotate(0, hor * sideRotSpd * Time.fixedDeltaTime, 0);
+    }
+
+    public void SpeedUp()
+    {
+        speedUpTimer = speedUpTime;
     }
 
     void Move(float x, float y, float speed) 
