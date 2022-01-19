@@ -18,6 +18,7 @@ public class EnemyDetectionController : MonoBehaviour
         {
             anim.SetBool("InRange", true);
             parent.playerInRange = true;
+            parent.SetCollider(true);
         }
     }
 
@@ -27,6 +28,7 @@ public class EnemyDetectionController : MonoBehaviour
         {
             anim.SetBool("InRange", false);
             parent.playerInRange = false;
+            parent.SetCollider(false);
         }
     }
 
@@ -36,6 +38,7 @@ public class EnemyDetectionController : MonoBehaviour
         {
             anim.SetBool("InRange", true);
             parent.playerInRange = true;
+            parent.SetCollider(true);
         }
     }
 }
