@@ -11,17 +11,17 @@ public class HealthPickup : Pickup
     public int amountToGive;
     public float spd;
     bool healed = false;
-    public float rotSpd;
-    float xRot, yRot, zRot;
+    //public float rotSpd;
+    //float xRot, yRot, zRot;
     public bool moves = true;
 
     private void OnEnable()
     {
         stats = FindObjectOfType<Player_Stats>();
         healed = false;
-        xRot = Random.Range(0, rotSpd);
-        yRot = Random.Range(0, rotSpd);
-        zRot = Random.Range(0, rotSpd);
+        //xRot = Random.Range(0, rotSpd);
+        //yRot = Random.Range(0, rotSpd);
+        //zRot = Random.Range(0, rotSpd);
     }
 
     private void Update()
@@ -29,7 +29,7 @@ public class HealthPickup : Pickup
         distance = Vector3.Distance(transform.position, stats.transform.position);
 
         //transform.rotation = Random.rotation;
-        transform.Rotate(xRot, yRot, zRot);
+        //transform.Rotate(xRot, yRot, zRot);
 
         if (distance <= pickupDistance && stats.Curr_hp < stats.Max_hp && moves) 
             transform.position = Vector3.MoveTowards(transform.position, stats.transform.position, spd * Time.deltaTime);
