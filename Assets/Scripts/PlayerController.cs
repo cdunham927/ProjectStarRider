@@ -58,13 +58,18 @@ public class PlayerController : MonoBehaviour
     float curActiveTime;
     float oneCharge;
 
-    public Rigidbody bod;
-    public float pushBack = 10f;
 
     public bool invertControls = false;
 
     public float speedUpTime;
     float speedUpTimer;
+
+    //Knockback when hitting walls/obstacles
+    public Rigidbody bod;
+    public float pushBack = 10f;
+    bool hitWall = false;
+    [Range(0, 0.5f)]
+    public float timeToMove = 0.225f;
 
     void Awake()
     {
@@ -160,7 +165,7 @@ public class PlayerController : MonoBehaviour
     private void FixedUpdate()
     {
         
-        bod.velocity = -transform.forward * speed;
+        if (!hitWall) bod.velocity = -transform.forward * speed;
         if (Input.GetButton("RotateLeft"))
         {
             transform.Rotate(0, 0, rotSpd * Time.fixedDeltaTime);
@@ -282,8 +287,16 @@ public class PlayerController : MonoBehaviour
         {
             //Debug.Log("Hit wall");
             //bod.velocity = Vector3.Reflect(bod.velocity, collision.contacts[0].normal);
+            hitWall = true;
+            Invoke("ResetHitWall", timeToMove);
             //bod.velocity = transform.forward * pushBack;
+            bod.AddForce(transform.forward * pushBack);
         }
+    }
+
+    void ResetHitWall()
+    {
+        hitWall = false;
     }
 
     void ClampPosition()

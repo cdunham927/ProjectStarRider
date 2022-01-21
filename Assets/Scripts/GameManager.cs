@@ -19,6 +19,9 @@ public class GameManager : MonoBehaviour
     public GameObject victoryButton;
     public GameObject gameoverButton;
 
+    public bool tutorialLevel;
+    //public EnemySpawnManager enemyManager;
+
 
     // Start is called before the first frame update
     void Awake()
