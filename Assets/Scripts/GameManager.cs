@@ -20,15 +20,38 @@ public class GameManager : MonoBehaviour
     public GameObject gameoverButton;
 
     public bool tutorialLevel;
-    //public EnemySpawnManager enemyManager;
-
+    public EnemyManager[] enemyManager;
+    public int enemyCount = 0;
 
     // Start is called before the first frame update
     void Awake()
     {
         //GameOverUI.SetActive(false);
         //pauseMenuUI.SetActive(false);
-        eventSystem = EventSystem.current;
+        enemyManager = FindObjectsOfType<EnemyManager>();
+        Invoke("FillEnemyCount", 0.25f);
+        //eventSystem = EventSystem.current;
+    }
+
+    void FillEnemyCount()
+    {
+        if (tutorialLevel)
+        {
+            foreach (EnemyManager eM in enemyManager)
+            {
+                enemyCount += eM.enemies.Length;
+            }
+        }
+    }
+
+    public void EnemyDiedEvent()
+    {
+        if (tutorialLevel)
+        {
+            enemyCount--;
+
+            if (enemyCount <= 0) Victory();
+        }
     }
 
     // Update is called once per frame
@@ -41,8 +64,8 @@ public class GameManager : MonoBehaviour
                 Resume();
             }
             else
-            {        
-                eventSystem.firstSelectedGameObject = mainMenuButton;
+            {
+                EventSystem.current.firstSelectedGameObject = mainMenuButton;
                 Pause();
             }
         }
@@ -79,7 +102,7 @@ public class GameManager : MonoBehaviour
     { 
         if (gameIsOver == false)
         {
-            eventSystem.SetSelectedGameObject(gameoverButton);
+            EventSystem.current.SetSelectedGameObject(gameoverButton);
             GameOverUI.SetActive(true);
             Time.timeScale = 1f; 
             gameIsOver = true;
@@ -91,7 +114,7 @@ public class GameManager : MonoBehaviour
     {
         if (gameIsOver == false)
         {
-            eventSystem.SetSelectedGameObject(victoryButton);
+            EventSystem.current.SetSelectedGameObject(victoryButton);
             VictoryUI.SetActive(true);
             Time.timeScale = 1f;
             gameIsOver = true;
