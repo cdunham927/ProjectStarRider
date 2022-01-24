@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 //using DG.Tweening;
-//using Cinemachine;
+using Cinemachine;
 using UnityEngine.Rendering.PostProcessing;
 
 public class PlayerController : MonoBehaviour
@@ -29,8 +29,6 @@ public class PlayerController : MonoBehaviour
 
     [Header("Particles")]
     public ParticleSystem trails;
-
-
 
     public float speed;
     public float slowSpd;
@@ -64,6 +62,11 @@ public class PlayerController : MonoBehaviour
     public float speedUpTime;
     float speedUpTimer;
 
+    //References for camera
+    public CinemachineVirtualCamera cinCam;
+    public GameObject aimAtTarget;
+    public GameObject followTarget;
+
     //Knockback when hitting walls/obstacles
     public Rigidbody bod;
     public float pushBack = 10f;
@@ -73,6 +76,11 @@ public class PlayerController : MonoBehaviour
 
     void Awake()
     {
+        //Set cinemachine follow and aim targets
+        cinCam = Camera.main.GetComponent<CinemachineVirtualCamera>();
+        cinCam.m_Follow = followTarget.transform;
+        cinCam.m_LookAt = aimTarget.transform;
+
         bod = GetComponent<Rigidbody>();
         playerModel = transform.GetChild(0);
         curActiveTime = maxImagesTime;
@@ -84,7 +92,6 @@ public class PlayerController : MonoBehaviour
 
     bool usingAxis = false;
     float vert, hor, vert2, hor2;
-
 
     void Update()
     {

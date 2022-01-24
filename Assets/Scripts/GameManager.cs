@@ -6,15 +6,29 @@ using UnityEngine.EventSystems;
 
 public class GameManager : MonoBehaviour
 {
-    
+    //Prefab references for making more levels easier
+    public GameObject minimapPrefab;
+    //Enemies need to grab from this pool
+    public GameObject hpPoolPrefab;
+    //Player needs to grab from this pool
+    public GameObject playerBulletPoolPrefab;
+    //Enemies need to grab from this pool
+    public GameObject enemyBulletPoolPrefab;
+    //This object needs these references
+    //Instantiate them, then grab references for the right buttons(probably with tags)
+    public GameObject pauseMenuUIPrefab;
+    public GameObject GameOverUIPrefab;
+    public GameObject VictoryUIPrefab;
+
     public static bool gameIsPaused = false;
     public static bool gameIsOver = false;
     
     public GameObject pauseMenuUI;
     public GameObject GameOverUI;
     public GameObject VictoryUI;
-
+    //Current event system
     public EventSystem eventSystem;
+    //Get buttons via tags probably
     public GameObject mainMenuButton;
     public GameObject victoryButton;
     public GameObject gameoverButton;
