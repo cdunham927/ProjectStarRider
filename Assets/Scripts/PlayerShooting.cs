@@ -9,6 +9,13 @@ public class PlayerShooting : MonoBehaviour
     public float shootCooldown;
     float curShootCools;
     public GameObject bulSpawn;
+    GameManager cont;
+
+    private void Awake()
+    {
+        cont = FindObjectOfType<GameManager>();
+        bulPool = cont.bulPool;
+    }
 
     private void Update()
     {
@@ -22,6 +29,7 @@ public class PlayerShooting : MonoBehaviour
 
     public void Shoot()
     {
+        if (bulPool == null) bulPool = cont.bulPool;
         GameObject bul = bulPool.GetPooledObject();
         bul.transform.position = bulSpawn.transform.position;
         bul.transform.rotation = bulSpawn.transform.rotation;

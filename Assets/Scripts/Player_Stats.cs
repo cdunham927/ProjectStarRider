@@ -30,7 +30,7 @@ public class Player_Stats : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.L)) Damage(1);
+        if (Application.isEditor && Input.GetKeyDown(KeyCode.L)) Damage(1);
 
         healthImage.fillAmount = Mathf.Lerp(healthImage.fillAmount, (float)Curr_hp / (float)Max_hp, lerpSpd * Time.deltaTime);
     }
@@ -52,7 +52,6 @@ public class Player_Stats : MonoBehaviour
         Curr_hp -= damageAmount;
         if (Curr_hp <= 0 && PlayerDead == false) 
         {
-            
             Instantiate(deathVFX, transform.position, Quaternion.identity);
             Invoke("Death", 1f);
             
@@ -63,6 +62,6 @@ public class Player_Stats : MonoBehaviour
     {
         PlayerDead = true;
         FindObjectOfType<GameManager>().GameOver();
-        Destroy(gameObject);
+        gameObject.SetActive(false);
     }
 }

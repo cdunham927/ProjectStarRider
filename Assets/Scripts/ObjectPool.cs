@@ -31,6 +31,7 @@ public class ObjectPool : MonoBehaviour
     bool spawned = false;
     private void Update()
     {
+        /*
         //If we're in the editor
         if (Application.isEditor && test)
         {
@@ -56,7 +57,7 @@ public class ObjectPool : MonoBehaviour
                 float ranZ = Random.Range(-5f, 5f);
                 ActivateAtPosition(new Vector3(ranX, ranY, ranZ), Quaternion.identity);
             }
-        }
+        }*/
     }
 
     //Spawn the object and add it to the pool

@@ -32,6 +32,10 @@ public class GameManager : MonoBehaviour
     public GameObject mainMenuButton;
     public GameObject victoryButton;
     public GameObject gameoverButton;
+    //Instances of pools and minimap
+    public ObjectPool hpPool; 
+    public ObjectPool bulPool; 
+    public ObjectPool enemyBulPool; 
 
     public bool tutorialLevel;
     public EnemyManager[] enemyManager;
@@ -40,10 +44,37 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
+        //Spawn new event system
+        if (FindObjectOfType<EventSystem>() == null)
+        {
+            var eventSystem = new GameObject("EventSystem", typeof(EventSystem), typeof(StandaloneInputModule));
+        }
+        //Spawn prefabs
+        pauseMenuUI = Instantiate(pauseMenuUIPrefab);
+        GameOverUI = Instantiate(GameOverUIPrefab);
+        VictoryUI = Instantiate(VictoryUIPrefab);
+        //Get references for buttons
+        mainMenuButton = GameObject.FindGameObjectWithTag("MainMenu");
+        victoryButton = GameObject.FindGameObjectWithTag("VictoryRetry");
+        gameoverButton = GameObject.FindGameObjectWithTag("GameOverRetry");
+        //Disable the ui, we don't need them on level start
+        pauseMenuUI.SetActive(false);
+        GameOverUI.SetActive(false);
+        VictoryUI.SetActive(false);
+
+        //Now spawn object pool objects
+        hpPool = Instantiate(hpPoolPrefab).GetComponent<ObjectPool>();
+        bulPool = Instantiate(playerBulletPoolPrefab).GetComponent<ObjectPool>(); ;
+        enemyBulPool = Instantiate(enemyBulletPoolPrefab).GetComponent<ObjectPool>();
+
+        //Spawn minimap
+        Instantiate(minimapPrefab);
+
         //GameOverUI.SetActive(false);
         //pauseMenuUI.SetActive(false);
         enemyManager = FindObjectsOfType<EnemyManager>();
         Invoke("FillEnemyCount", 0.25f);
+        gameIsOver = false;
         //eventSystem = EventSystem.current;
     }
 

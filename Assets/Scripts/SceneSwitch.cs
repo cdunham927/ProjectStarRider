@@ -8,14 +8,12 @@ using UnityEngine.SceneManagement;
 
 public class SceneSwitch : MonoBehaviour
 {
-   void Start()
-   {
-        FindObjectOfType<GameManager>();
-        
-   }
+    GameManager cont;
 
-    
-
+    void Awake()
+    {
+         cont = FindObjectOfType<GameManager>();
+    }
 
     public void NextScene() 
     {
@@ -41,19 +39,26 @@ public class SceneSwitch : MonoBehaviour
    public void Tutorial()
    {
         SceneManager.LoadScene("Tutorial");
-    
    }
 
     public void Restart()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        Time.timeScale = 1f;
-       //pauseMenu = false;
+        if (cont == null)
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            Time.timeScale = 1f;
+            //pauseMenu = false;
+        }
+        else
+        {
+            cont.Resume();
+            Time.timeScale = 1f;
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
     }
 
     public void GoToMainMenu()
     {
-        
         Time.timeScale = 1f;
         SceneManager.LoadScene("Main_Menu");
     }

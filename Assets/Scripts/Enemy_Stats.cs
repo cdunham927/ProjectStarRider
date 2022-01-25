@@ -31,6 +31,13 @@ public class Enemy_Stats : MonoBehaviour
     public ObjectPool hpPool;
     bool spawned = false;
 
+    GameManager cont;
+
+    private void Awake()
+    {
+        cont = FindObjectOfType<GameManager>();
+        hpPool = cont.hpPool;
+    }
 
     void OnEnable() 
     {

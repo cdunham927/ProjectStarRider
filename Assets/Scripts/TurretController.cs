@@ -21,6 +21,14 @@ public class TurretController : MonoBehaviour
     //Player
     PlayerController player;
 
+    GameManager cont;
+
+    private void Awake()
+    {
+        cont = FindObjectOfType<GameManager>();
+        bulletPool = cont.enemyBulPool;
+    }
+
     private void OnEnable()
     {
         player = FindObjectOfType<PlayerController>();
@@ -42,6 +50,7 @@ public class TurretController : MonoBehaviour
 
     public void Attack()
     {
+        if (bulletPool == null) bulletPool = cont.enemyBulPool;
         //Get pooled bullet
         GameObject bul = bulletPool.GetPooledObject();
         if (bul != null)
