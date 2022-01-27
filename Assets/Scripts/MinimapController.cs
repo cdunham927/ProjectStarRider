@@ -15,6 +15,6 @@ public class MinimapController : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (targ.gameObject.activeInHierarchy) transform.position = Vector3.Lerp(transform.position, new Vector3(targ.position.x, targ.position.y + yFollow, targ.position.z), lerpSpd * Time.deltaTime);
+        if (targ.gameObject.activeInHierarchy) transform.position = Vector3.Lerp(transform.position, new Vector3(targ.position.x, yFollow, targ.position.z), lerpSpd * Time.deltaTime);
     }
 }
