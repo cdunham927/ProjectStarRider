@@ -10,9 +10,11 @@ public class PlayerShooting : MonoBehaviour
     float curShootCools;
     public GameObject bulSpawn;
     GameManager cont;
+    Rigidbody bod;
 
     private void Awake()
     {
+        bod = GetComponentInParent<Rigidbody>();
         cont = FindObjectOfType<GameManager>();
         bulPool = cont.bulPool;
     }
@@ -33,6 +35,7 @@ public class PlayerShooting : MonoBehaviour
         GameObject bul = bulPool.GetPooledObject();
         bul.transform.position = bulSpawn.transform.position;
         bul.transform.rotation = bulSpawn.transform.rotation;
+        //bul.GetComponent<Rigidbody>().velocity = bod.velocity;
         bul.SetActive(true);
         curShootCools = shootCooldown;
     }

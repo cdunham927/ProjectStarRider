@@ -154,7 +154,7 @@ GameObject:
   - component: {fileID: 5290036462192655793}
   - component: {fileID: 5290036462192655798}
   - component: {fileID: 5290036462192655799}
-  - component: {fileID: 8743211250117129749}
+  - component: {fileID: 8883688754571840923}
   m_Layer: 0
   m_Name: Star_Bolt_PlayerBullet
   m_TagString: Bullet
@@ -251,10 +251,10 @@ SphereCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5290036462192655796}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 2
+  m_Radius: 1.75
   m_Center: {x: 0, y: 0, z: -0.89}
 --- !u!114 &5290036462192655799
 MonoBehaviour:
@@ -268,16 +268,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c943a2c3efd70c84a87cbe00527142d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 650
+  speed: 350
   randSpdMod: 0
   damage: 1
   rb: {fileID: 5290036462192655793}
   disableTime: 4
-  hitPrefab: {fileID: 6108864283411289591, guid: 4afc82f7a672d41419a92fdee1880cf6, type: 3}
+  hitPrefab: {fileID: 6108864283411289591, guid: a4df29038acd7794aa0f2012912af043, type: 3}
   muzzlePrefab: {fileID: 0}
   dmg: 1
-  hitPrefabLifetime: 5
---- !u!114 &8743211250117129749
+--- !u!114 &8883688754571840923
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -286,7 +285,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5290036462192655796}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dafd55e02fb2e0b4b8a2582043dfa6ba, type: 3}
+  m_Script: {fileID: 11500000, guid: 74ab1be95f4f4cc42957110590fd24cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitVfx: {fileID: 6108864283411289591, guid: 4afc82f7a672d41419a92fdee1880cf6, type: 3}
+  hitVfx: {fileID: 6108864283411289591, guid: a4df29038acd7794aa0f2012912af043, type: 3}

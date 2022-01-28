@@ -12,7 +12,7 @@ public class Bullet : MonoBehaviour
     
     public virtual void OnEnable() 
     { 
-        float step =  (speed  + Random.Range(0, randSpdMod)) * Time.deltaTime;
+        //float step =  (speed  + Random.Range(0, randSpdMod)) * Time.deltaTime;
         Invoke("Disable", disableTime);
     }
 
@@ -23,6 +23,7 @@ public class Bullet : MonoBehaviour
 
     void Disable()
     {
+        rb.velocity = Vector2.zero;
         gameObject.SetActive(false);
     }
 
@@ -30,9 +31,5 @@ public class Bullet : MonoBehaviour
     {
         speed = 1.0f;
         damage = 1;
-        
-   
     }
-   
-   
 }
