@@ -52,7 +52,7 @@ public class Enemy_Stats : MonoBehaviour
         if (anim != null) anim.SetTrigger("Hit");
         CurrHP -= damageAmount;
         healthScript.SetHealth(CurrHP);
-        Debug.Log("Enemy took damage");
+        //Debug.Log("Enemy took damage");
         
         //DamageBlinking
         //blinkTimer -= Time.deltaTime;

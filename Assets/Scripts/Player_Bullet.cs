@@ -24,7 +24,7 @@ public class Player_Bullet : Bullet
     {
         if (col.CompareTag("Enemy")) 
         {
-            Debug.Log("Hit Enemy");
+            //Debug.Log("Hit Enemy");
             col.gameObject.GetComponent<Enemy_Stats>().Damage(dmg);
             Invoke("Disable", 0.01f);
             GameObject hitVfxInstance = Instantiate(hitPrefab, transform.position, Quaternion.identity);
