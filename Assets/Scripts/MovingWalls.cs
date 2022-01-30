@@ -5,7 +5,7 @@ using UnityEngine;
 public class MovingWalls : MonoBehaviour
 {
     public int currentMarker = 0;
-    
+    public bool looping;
     public Transform[] Markers;
     // Movement speed in units per second.
     public float speed = 1.0F;
@@ -15,7 +15,7 @@ public class MovingWalls : MonoBehaviour
     {
         // Set our position as a fraction of the distance between the markers.
         transform.position = Vector3.MoveTowards(transform.position, Markers[currentMarker].position, Time.deltaTime * speed);
-        if (Vector3.Distance(transform.position, Markers[currentMarker].position) <= 0.2f)
+        if (looping && Vector3.Distance(transform.position, Markers[currentMarker].position) <= 0.2f)
         {
             if (currentMarker == 0)
             {
