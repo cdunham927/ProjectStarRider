@@ -11,12 +11,21 @@ public class PlayerShooting : MonoBehaviour
     public GameObject bulSpawn;
     GameManager cont;
     Rigidbody bod;
+    public PlayerShooting parentShoot;
 
     private void Awake()
     {
         bod = GetComponentInParent<Rigidbody>();
         cont = FindObjectOfType<GameManager>();
         bulPool = cont.bulPool;
+    }
+
+    private void OnEnable()
+    {
+        if (parentShoot != null)
+        {
+            shootCooldown = parentShoot.shootCooldown;
+        }
     }
 
     private void Update()

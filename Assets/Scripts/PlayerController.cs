@@ -4,6 +4,7 @@ using UnityEngine;
 //using DG.Tweening;
 using Cinemachine;
 using UnityEngine.Rendering.PostProcessing;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -36,6 +37,7 @@ public class PlayerController : MonoBehaviour
     public float highSpd;
     public float superSpd;
     public float rotSpd;
+    public float turnSpd;
     public float sideRotSpd;
     public float realignRot;
     float lerpToSpd;
@@ -55,7 +57,11 @@ public class PlayerController : MonoBehaviour
     public float maxImagesTime = 40f;
     float curActiveTime;
     float oneCharge;
-
+    public Image[] afterimageUI;
+    public Sprite emptyImage;
+    public Sprite filledImage;
+    public float uiLerp = 10f;
+    public float rechargeSpd = 2.5f;
 
     public bool invertControls = false;
 
@@ -81,6 +87,7 @@ public class PlayerController : MonoBehaviour
         cinCam.m_Follow = followTarget.transform;
         cinCam.m_LookAt = aimTarget.transform;
 
+        afterimageUI = FindObjectOfType<GameManager>().afterimages;
         bod = GetComponent<Rigidbody>();
         playerModel = transform.GetChild(0);
         curActiveTime = maxImagesTime;
@@ -158,7 +165,58 @@ public class PlayerController : MonoBehaviour
 
         if (speedUpTimer > 0) speedUpTimer -= Time.deltaTime;
 
-        if (curActiveTime < maxImagesTime) curActiveTime += Time.deltaTime;
+        if (curActiveTime < maxImagesTime) curActiveTime += Time.deltaTime * rechargeSpd;
+
+        //afterimageUI[0].color - Color.Lerp(afterimagesUI[].color, ())
+
+        //0-8
+        if (afterimageUI[0] != null) afterimageUI[0].fillAmount = Mathf.Lerp(afterimageUI[0].fillAmount, (curActiveTime) / (oneCharge * 1f), uiLerp * Time.deltaTime);
+        if (afterimageUI[0] != null) afterimageUI[0].sprite = (curActiveTime < oneCharge * 1f) ? emptyImage : filledImage;
+        //8-16
+        if (afterimageUI[1] != null)
+        {
+            if (curActiveTime > oneCharge)
+            {
+                afterimageUI[1].fillAmount = Mathf.Lerp(afterimageUI[1].fillAmount, (curActiveTime) / (oneCharge * 2f), uiLerp * Time.deltaTime);
+                afterimageUI[1].sprite = (curActiveTime < oneCharge * 2f) ? emptyImage : filledImage;
+            }
+
+            else
+            {
+                afterimageUI[1].fillAmount = Mathf.Lerp(afterimageUI[1].fillAmount, 0, uiLerp * Time.deltaTime);
+                afterimageUI[1].sprite = emptyImage;
+            }
+        }
+        //16-24
+        if (afterimageUI[2] != null)
+        {
+            if (curActiveTime > (oneCharge * 2f))
+            {
+                afterimageUI[2].fillAmount = Mathf.Lerp(afterimageUI[2].fillAmount, (curActiveTime) / (oneCharge * 3f), uiLerp * Time.deltaTime);
+                afterimageUI[2].sprite = (curActiveTime < oneCharge * 3f) ? emptyImage : filledImage;
+            }
+
+            else
+            {
+                afterimageUI[2].fillAmount = Mathf.Lerp(afterimageUI[2].fillAmount, 0, uiLerp * Time.deltaTime);
+                afterimageUI[2].sprite = emptyImage;
+            }
+        }
+        //24-32
+        if (afterimageUI[3] != null)
+        {
+            if (curActiveTime > (oneCharge * 3f))
+            {
+                afterimageUI[3].fillAmount = Mathf.Lerp(afterimageUI[3].fillAmount, curActiveTime / maxImagesTime, uiLerp * Time.deltaTime);
+                afterimageUI[3].sprite = (curActiveTime < maxImagesTime) ? emptyImage : filledImage;
+            }
+
+            else
+            {
+                afterimageUI[3].fillAmount = Mathf.Lerp(afterimageUI[3].fillAmount, 0, uiLerp * Time.deltaTime);
+                afterimageUI[3].sprite = emptyImage;
+            }
+        }
 
         if (Application.isEditor)
         {
@@ -175,12 +233,12 @@ public class PlayerController : MonoBehaviour
         if (!hitWall) bod.velocity = -transform.forward * speed;
         if (Input.GetButton("RotateLeft"))
         {
-            transform.Rotate(0, 0, rotSpd * Time.fixedDeltaTime);
+            transform.Rotate(0, 0, turnSpd * Time.fixedDeltaTime);
         }
 
         if (Input.GetButton("RotateRight"))
         {
-            transform.Rotate(0, 0, -rotSpd * Time.fixedDeltaTime);
+            transform.Rotate(0, 0, -turnSpd * Time.fixedDeltaTime);
         }
 
         if (Input.GetKey(KeyCode.Space))

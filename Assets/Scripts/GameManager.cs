@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -23,19 +24,30 @@ public class GameManager : MonoBehaviour
     public static bool gameIsPaused = false;
     public static bool gameIsOver = false;
     
+    [HideInInspector]
     public GameObject pauseMenuUI;
+    [HideInInspector]
     public GameObject GameOverUI;
+    [HideInInspector]
     public GameObject VictoryUI;
     //Current event system
+    [HideInInspector]
     public EventSystem eventSystem;
     //Get buttons via tags probably
+    [HideInInspector]
     public GameObject mainMenuButton;
+    [HideInInspector]
     public GameObject victoryButton;
+    [HideInInspector]
     public GameObject gameoverButton;
     //Instances of pools and minimap
-    public ObjectPool hpPool; 
-    public ObjectPool bulPool; 
-    public ObjectPool enemyBulPool; 
+    [HideInInspector]
+    public ObjectPool hpPool;
+    [HideInInspector]
+    public ObjectPool bulPool;
+    [HideInInspector]
+    public ObjectPool enemyBulPool;
+    public Image[] afterimages;
 
     public bool tutorialLevel;
     public EnemyManager[] enemyManager;

@@ -16,12 +16,12 @@ public class Bullet : MonoBehaviour
         Invoke("Disable", disableTime);
     }
 
-    private void OnDisable()
+    void OnDisable()
     {
         CancelInvoke();
     }
 
-    void Disable()
+    public virtual void Disable()
     {
         rb.velocity = Vector2.zero;
         gameObject.SetActive(false);

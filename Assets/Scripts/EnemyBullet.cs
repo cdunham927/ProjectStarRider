@@ -20,6 +20,11 @@ public class EnemyBullet : Bullet
         }
     }
 
+    public override void Disable()
+    {
+        base.Disable();
+    }
+
     public void Push()
     {
         rb.velocity = transform.forward * (speed + Random.Range(0, randSpdMod));

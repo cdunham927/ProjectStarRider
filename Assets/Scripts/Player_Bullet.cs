@@ -8,6 +8,8 @@ public class Player_Bullet : Bullet
     public GameObject muzzlePrefab; 
     
     public int dmg = 1;
+
+    public TrailRenderer trail;
     
     public void FixedUpdate()
     {
@@ -18,6 +20,12 @@ public class Player_Bullet : Bullet
     {
         base.OnEnable();
         rb.velocity = transform.forward * speed;
+    }
+
+    public override void Disable()
+    {
+        trail.Clear();
+        base.Disable();
     }
 
     private void OnTriggerEnter(Collider col) 
