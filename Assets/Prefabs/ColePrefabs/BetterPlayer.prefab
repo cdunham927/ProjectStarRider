@@ -14601,8 +14601,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulPool: {fileID: 0}
-  shootCooldown: 0.125
   bulSpawn: {fileID: 6448657219224798944}
+  muzzle: {fileID: 0}
+  shootCooldown: 0.125
+  AS: {fileID: 0}
   parentShoot: {fileID: 5272638553245071613}
 --- !u!1 &1955345188098046849
 GameObject:
@@ -34287,8 +34289,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulPool: {fileID: 0}
-  shootCooldown: 0.125
   bulSpawn: {fileID: 8312821632896828730}
+  muzzle: {fileID: 0}
+  shootCooldown: 0.125
+  AS: {fileID: 0}
   parentShoot: {fileID: 5272638553245071613}
 --- !u!1 &5412505993545802444
 GameObject:
@@ -54092,8 +54096,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulPool: {fileID: 0}
-  shootCooldown: 0.125
   bulSpawn: {fileID: 6196601145558399737}
+  muzzle: {fileID: 0}
+  shootCooldown: 0.125
+  AS: {fileID: 0}
   parentShoot: {fileID: 5272638553245071613}
 --- !u!1 &7299137356408208994
 GameObject:
@@ -59074,12 +59080,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8701767644159492043}
+  - component: {fileID: 1236896654648400342}
   - component: {fileID: 8701767644159492045}
   - component: {fileID: 5272638553245071613}
   - component: {fileID: 6380044461598761777}
   - component: {fileID: 2009239985978953898}
   - component: {fileID: 4336756984537600398}
-  - component: {fileID: 1236896654648400342}
+  - component: {fileID: 701194358528213671}
   m_Layer: 0
   m_Name: BetterPlayer
   m_TagString: Player
@@ -59110,6 +59117,25 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1236896654648400342
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8701767644159492086}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a949a4def22ed1c40b38b25caf5c3ced, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Curr_hp: 10
+  Max_hp: 10
+  PlayerDead: 0
+  anim: {fileID: 6380044461598761777}
+  deathVFX: {fileID: 4593951957772366835, guid: 1ea62ba607eceb94da4a428626a98023, type: 3}
+  healthImage: {fileID: 0}
+  lerpSpd: 50
 --- !u!114 &8701767644159492045
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -59174,8 +59200,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulPool: {fileID: 0}
-  shootCooldown: 0.4
   bulSpawn: {fileID: 7299137356408208994}
+  muzzle: {fileID: 0}
+  shootCooldown: 0.4
+  AS: {fileID: 701194358528213671}
   parentShoot: {fileID: 0}
 --- !u!95 &6380044461598761777
 Animator:
@@ -59225,25 +59253,102 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.35, y: 1.15, z: 2.51}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1236896654648400342
-MonoBehaviour:
+--- !u!82 &701194358528213671
+AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8701767644159492086}
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a949a4def22ed1c40b38b25caf5c3ced, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Curr_hp: 10
-  Max_hp: 10
-  PlayerDead: 0
-  anim: {fileID: 6380044461598761777}
-  deathVFX: {fileID: 4593951957772366835, guid: 1ea62ba607eceb94da4a428626a98023, type: 3}
-  healthImage: {fileID: 0}
-  lerpSpd: 50
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 5d3f46b86d9c6934288ada3a050f0cf4, type: 3}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &8701767644839538911
 GameObject:
   m_ObjectHideFlags: 0
@@ -59481,6 +59586,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulPool: {fileID: 0}
-  shootCooldown: 0.125
   bulSpawn: {fileID: 6593996469369643299}
+  muzzle: {fileID: 0}
+  shootCooldown: 0.125
+  AS: {fileID: 0}
   parentShoot: {fileID: 5272638553245071613}

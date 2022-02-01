@@ -4,20 +4,32 @@ using UnityEngine;
 
 public class PlayerShooting : MonoBehaviour
 {
-    public ObjectPool bulPool;
+    [Header("Shooting References: ")]
+    public ObjectPool bulPool; 
+    public GameObject bulSpawn;
+    public GameObject muzzle;
+
+    [Header("shooting settings: ")]
     //public float bulletSpd;
     public float shootCooldown;
     float curShootCools;
-    public GameObject bulSpawn;
+   
+    [Header("Audio Clips: ")]
+    public AudioClip ShotSounds; 
+    private AudioSource AS;
+    
     GameManager cont;
     Rigidbody bod;
     public PlayerShooting parentShoot;
+
+    
 
     private void Awake()
     {
         bod = GetComponentInParent<Rigidbody>();
         cont = FindObjectOfType<GameManager>();
         bulPool = cont.bulPool;
+        AS = GetComponent<AudioSource>();
     }
 
     private void OnEnable()
@@ -33,6 +45,7 @@ public class PlayerShooting : MonoBehaviour
         if ((Input.GetButton("Fire1") || Input.GetAxis("Altfire1") > 0) && curShootCools <= 0)
         {
             Shoot();
+            PlaySound();
         }
 
         if (curShootCools > 0) curShootCools -= Time.deltaTime;
@@ -47,5 +60,18 @@ public class PlayerShooting : MonoBehaviour
         //bul.GetComponent<Rigidbody>().velocity = bod.velocity;
         bul.SetActive(true);
         curShootCools = shootCooldown;
+    }
+
+    public void PlaySound()
+    {
+        AS.PlayOneShot(ShotSounds);
+    
+    }
+
+    
+    public void PlayMuzzle() 
+    { 
+    
+    
     }
 }
