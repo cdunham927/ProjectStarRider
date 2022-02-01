@@ -5,6 +5,7 @@ using UnityEngine;
 public class EnemyBullet : Bullet
 {
     public GameObject collisonExplosion;
+    public TrailRenderer trail;
 
     public override void OnEnable()
     {
@@ -22,6 +23,7 @@ public class EnemyBullet : Bullet
 
     public override void Disable()
     {
+        if (trail != null)trail.Clear();
         base.Disable();
     }
 
