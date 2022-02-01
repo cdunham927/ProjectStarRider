@@ -5,7 +5,7 @@ using UnityEngine;
 public class Player_Bullet : Bullet
 {
     public GameObject hitPrefab;
-    public GameObject muzzlePrefab; 
+    //public GameObject muzzlePrefab; 
     
     public int dmg = 1;
 
@@ -30,12 +30,35 @@ public class Player_Bullet : Bullet
 
     private void OnTriggerEnter(Collider col) 
     {
-        if (col.CompareTag("Enemy")) 
+        if (col.CompareTag("Enemy") || col.CompareTag("Wall")) 
         {
             //Debug.Log("Hit Enemy");
             col.gameObject.GetComponent<Enemy_Stats>().Damage(dmg);
             Invoke("Disable", 0.01f);
+            //ContactPoint cp = col.GetContact(0);
             GameObject hitVfxInstance = Instantiate(hitPrefab, transform.position, Quaternion.identity);
+            
         }
+    }
+
+    /*
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "Enemy") 
+        {
+            collision.gameObject.GetComponent<Enemy_Stats>().Damage(dmg);
+            Invoke("Disable", 0.01f);
+            ContactPoint cp = collision.GetContact(0);
+            creatVxf(cp);
+        
+        }
+    }
+    */
+
+    void creatVxf(ContactPoint contact) 
+    {
+        Quaternion rot = Quaternion.FromToRotation(Vector3.up, contact.normal);
+        GameObject hitVfxInstance = Instantiate(hitPrefab, transform.position, rot);
+    
     }
 }
