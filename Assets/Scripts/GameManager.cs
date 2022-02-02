@@ -52,6 +52,7 @@ public class GameManager : MonoBehaviour
     public bool tutorialLevel;
     public EnemyManager[] enemyManager;
     public int enemyCount = 0;
+    public GameObject controlsText;
 
     // Start is called before the first frame update
     void Awake()
@@ -125,6 +126,11 @@ public class GameManager : MonoBehaviour
                 EventSystem.current.firstSelectedGameObject = mainMenuButton;
                 Pause();
             }
+        }
+
+        if (Input.GetKeyDown(KeyCode.H))
+        {
+            if (controlsText != null) controlsText.SetActive(!controlsText.activeInHierarchy);
         }
 
         if (Application.isEditor)
