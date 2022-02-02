@@ -5,9 +5,11 @@ using UnityEngine.UI;
 
 public class Healthbar : MonoBehaviour
 {
-    public Slider slider;
+    public GameObject canv;
+    public Image slider;
     public Enemy_Stats stats;
     PlayerController player;
+    public Vector3 dir;
 
     private void Awake()
     {
@@ -18,7 +20,8 @@ public class Healthbar : MonoBehaviour
     {
         if (player != null && player.gameObject.activeInHierarchy)
         {
-            transform.LookAt(transform.position + Camera.main.transform.rotation * Vector3.forward, Camera.main.transform.rotation * Vector3.up);
+            //slider.transform.LookAt(transform.position + Camera.main.transform.rotation * Vector3.forward, Camera.main.transform.rotation * Vector3.up);
+            canv.transform.LookAt(transform.position + Camera.main.transform.rotation * Vector3.forward, dir);
         }
     }
 
@@ -29,12 +32,12 @@ public class Healthbar : MonoBehaviour
 
     public void SetMaxHealth(int health)
     {
-        slider.maxValue = health;
-        slider.value = health;
+        //slider.fillAmount = Mathf.Lerp(slider.fillAmount, health / stats.MaxHP, 10f * Time.deltaTime);
+        //slider.fillAmount = stats.MaxHP;
     }
 
     public void SetHealth(int health)
     {
-        slider.value = health;
+        slider.fillAmount = (float)health / (float)stats.MaxHP;
     }
 }
