@@ -10,6 +10,7 @@ public class Player_Bullet : Bullet
     public int dmg = 1;
 
     public TrailRenderer trail;
+    public GameObject spawnPos;
     
     public void FixedUpdate()
     {
@@ -27,21 +28,24 @@ public class Player_Bullet : Bullet
         trail.Clear();
         base.Disable();
     }
-
     
     
-    private void OnTriggerEnter(Collider col) 
+    private void OnTriggerEnter(Collider col)
     {
-        if (col.CompareTag("Enemy") || col.CompareTag("Wall")) 
+        if (col.CompareTag("Enemy"))
         {
-            
             //Debug.Log("Hit Enemy");
             col.gameObject.GetComponent<Enemy_Stats>().Damage(dmg);
             Invoke("Disable", 0.01f);
             //ContactPoint cp = col.GetContact(0);
-            GameObject hitVfxInstance = Instantiate(hitPrefab, transform.position, Quaternion.identity);
-
-            
+            GameObject hitVfxInstance = Instantiate(hitPrefab, spawnPos.transform.position, Quaternion.identity);
+        }
+        if (col.CompareTag("Wall"))
+        {
+            //Debug.Log("Hit Enemy");
+            Invoke("Disable", 0.01f);
+            //ContactPoint cp = col.GetContact(0);
+            GameObject hitVfxInstance = Instantiate(hitPrefab, spawnPos.transform.position, Quaternion.identity);
         }
     }
 
@@ -66,6 +70,5 @@ public class Player_Bullet : Bullet
     {
         Quaternion rot = Quaternion.FromToRotation(Vector3.up, contact.normal);
         GameObject hitVfxInstance = Instantiate(hitPrefab, transform.position, rot);
-    
     }
 }
