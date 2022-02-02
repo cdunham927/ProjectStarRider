@@ -8,7 +8,7 @@ public class Bullet : MonoBehaviour
     public float randSpdMod = 0f;
     public int damage;
     public Rigidbody rb;
-    public float disableTime = 4f;
+    public float disableTime = 3f;
     
     public virtual void OnEnable() 
     { 
@@ -32,4 +32,6 @@ public class Bullet : MonoBehaviour
         speed = 1.0f;
         damage = 1;
     }
+
+
 }
