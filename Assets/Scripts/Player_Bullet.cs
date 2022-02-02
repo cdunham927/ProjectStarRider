@@ -28,22 +28,29 @@ public class Player_Bullet : Bullet
         base.Disable();
     }
 
+    
+    
     private void OnTriggerEnter(Collider col) 
     {
         if (col.CompareTag("Enemy") || col.CompareTag("Wall")) 
         {
+            
             //Debug.Log("Hit Enemy");
             col.gameObject.GetComponent<Enemy_Stats>().Damage(dmg);
             Invoke("Disable", 0.01f);
             //ContactPoint cp = col.GetContact(0);
             GameObject hitVfxInstance = Instantiate(hitPrefab, transform.position, Quaternion.identity);
+
             
         }
     }
 
     /*
-    private void OnCollisionEnter(Collision collision)
+    void OnCollisionEnter(Collision collision)
     {
+       
+        Invoke("Disable", 0.1f);
+
         if (collision.gameObject.tag == "Enemy") 
         {
             collision.gameObject.GetComponent<Enemy_Stats>().Damage(dmg);
@@ -52,8 +59,8 @@ public class Player_Bullet : Bullet
             creatVxf(cp);
         
         }
-    }
-    */
+    }*/
+   
 
     void creatVxf(ContactPoint contact) 
     {
