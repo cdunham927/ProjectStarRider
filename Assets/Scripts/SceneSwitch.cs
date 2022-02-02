@@ -5,19 +5,45 @@ using System.Diagnostics;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-
 public class SceneSwitch : MonoBehaviour
 {
     GameManager cont;
+    public AudioClip tutorialSong;
+    public AudioClip menuSong;
+    public string tutorialName;
+    public string menuName;
+    MusicController music;
+    Animator musicAnim;
+    public float waitTime;
 
     void Awake()
     {
-         cont = FindObjectOfType<GameManager>();
+        cont = FindObjectOfType<GameManager>();
     }
 
     public void NextScene() 
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+    }
+
+    IEnumerator ToTutorialScene()
+    {
+        music = FindObjectOfType<MusicController>();
+        musicAnim = music.GetComponent<Animator>();
+        musicAnim.SetTrigger("fadeOut");
+        yield return new WaitForSeconds(waitTime);
+        music.ChangeSong(tutorialSong);
+        SceneManager.LoadScene(tutorialName);
+    }
+
+    IEnumerator ToMenuScene()
+    {
+        music = FindObjectOfType<MusicController>();
+        musicAnim = music.GetComponent<Animator>();
+        musicAnim.SetTrigger("fadeOut");
+        yield return new WaitForSeconds(waitTime);
+        music.ChangeSong(menuSong);
+        SceneManager.LoadScene(menuName);
     }
 
     public void QuitGame() 
@@ -35,11 +61,6 @@ public class SceneSwitch : MonoBehaviour
     {
         SceneManager.LoadScene("StartMenu");
     }
-
-   public void Tutorial()
-   {
-        SceneManager.LoadScene("Tutorial");
-   }
 
     public void Restart()
     {
@@ -60,9 +81,12 @@ public class SceneSwitch : MonoBehaviour
     public void GoToMainMenu()
     {
         Time.timeScale = 1f;
-        SceneManager.LoadScene("Main_Menu");
+        StartCoroutine(ToMenuScene());
     }
 
-    
-    
+    public void GoToTutorial()
+    {
+        Time.timeScale = 1f;
+        StartCoroutine(ToTutorialScene());
+    }
 }

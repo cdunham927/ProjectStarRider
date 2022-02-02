@@ -57,11 +57,6 @@ public class MenuFunctions : MonoBehaviour
         scene.Back();
     }
 
-    public void Tutorial()
-    {
-        scene.Tutorial();
-    }
-
     public void Restart()
     {
         scene.Restart();
