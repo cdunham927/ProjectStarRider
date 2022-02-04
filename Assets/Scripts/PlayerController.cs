@@ -36,6 +36,7 @@ public class PlayerController : MonoBehaviour
     public float regSpd;
     public float highSpd;
     public float superSpd;
+    public float sideSpeed;
     public float rotSpd;
     public float turnSpd;
     public float sideRotSpd;
@@ -227,10 +228,11 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    Vector3 newVelZ;
+    Vector3 newVelX;
+
     private void FixedUpdate()
     {
-        
-        if (!hitWall) bod.velocity = -transform.forward * speed;
         if (Input.GetButton("RotateLeft"))
         {
             transform.Rotate(0, 0, turnSpd * Time.fixedDeltaTime);
@@ -332,7 +334,11 @@ public class PlayerController : MonoBehaviour
         //float hor = Input.GetAxis("Horizontal");
 
 
-        if (hor != 0) transform.Rotate(0, hor * sideRotSpd * Time.fixedDeltaTime, 0);
+        if (hor != 0) newVelX = -transform.right * sideSpeed * hor;
+        else newVelX = Vector3.zero;
+        if (!hitWall) newVelZ = -transform.forward * speed;
+        if (!hitWall) bod.velocity = newVelX + newVelZ;
+        //if (hor != 0) transform.Rotate(0, hor * sideRotSpd * Time.fixedDeltaTime, 0);
     }
 
     public void SpeedUp()

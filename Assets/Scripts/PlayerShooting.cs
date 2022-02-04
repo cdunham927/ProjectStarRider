@@ -65,7 +65,6 @@ public class PlayerShooting : MonoBehaviour
     public void PlaySound()
     {
         AS.PlayOneShot(ShotSounds);
-    
     }
 
     

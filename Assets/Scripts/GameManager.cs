@@ -53,6 +53,7 @@ public class GameManager : MonoBehaviour
     public EnemyManager[] enemyManager;
     public int enemyCount = 0;
     public GameObject controlsText;
+    public Text enemyCountText;
 
     // Start is called before the first frame update
     void Awake()
@@ -99,6 +100,10 @@ public class GameManager : MonoBehaviour
             {
                 enemyCount += eM.enemies.Length;
             }
+            if (enemyCountText != null && enemyCountText.gameObject.activeInHierarchy)
+            {
+                enemyCountText.text = "Enemies: " + enemyCount.ToString();
+            }
         }
     }
 
@@ -107,6 +112,10 @@ public class GameManager : MonoBehaviour
         if (tutorialLevel)
         {
             enemyCount--;
+            if (enemyCountText != null && enemyCountText.gameObject.activeInHierarchy)
+            {
+                enemyCountText.text = "Enemies: " + enemyCount.ToString();
+            }
 
             if (enemyCount <= 0) Victory();
         }
