@@ -29,20 +29,26 @@ public class SceneSwitch : MonoBehaviour
     IEnumerator ToTutorialScene()
     {
         music = FindObjectOfType<MusicController>();
-        musicAnim = music.GetComponent<Animator>();
-        musicAnim.SetTrigger("fadeOut");
+        if (music != null)
+        {
+            musicAnim = music.GetComponent<Animator>();
+            musicAnim.SetTrigger("fadeOut");
+        }
         yield return new WaitForSeconds(waitTime);
-        music.ChangeSong(tutorialSong);
+        if (music != null) music.ChangeSong(tutorialSong);
         SceneManager.LoadScene(tutorialName);
     }
 
     IEnumerator ToMenuScene()
     {
         music = FindObjectOfType<MusicController>();
-        musicAnim = music.GetComponent<Animator>();
-        musicAnim.SetTrigger("fadeOut");
+        if (music != null)
+        {
+            musicAnim = music.GetComponent<Animator>();
+            musicAnim.SetTrigger("fadeOut");
+        }
         yield return new WaitForSeconds(waitTime);
-        music.ChangeSong(menuSong);
+        if (music != null)  music.ChangeSong(menuSong);
         SceneManager.LoadScene(menuName);
     }
 

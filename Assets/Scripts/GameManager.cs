@@ -55,9 +55,12 @@ public class GameManager : MonoBehaviour
     public GameObject controlsText;
     public Text enemyCountText;
 
+    public PlayerController player;
+
     // Start is called before the first frame update
     void Awake()
     {
+        player = FindObjectOfType<PlayerController>();
         //Spawn new event system
         if (FindObjectOfType<EventSystem>() == null)
         {
@@ -174,6 +177,17 @@ public class GameManager : MonoBehaviour
     { 
         if (gameIsOver == false)
         {
+            //Deactivate enemycounttext
+            if (enemyCountText != null && enemyCountText.gameObject.activeInHierarchy)
+            {
+                enemyCountText.gameObject.SetActive(false);
+            }
+            //If player is using keyboard, show the mouse
+            if (!player.joystick)
+            {
+                //Show cursor
+                Cursor.visible = true;
+            }
             if (controlsText != null) controlsText.SetActive(false);
             //EventSystem.current.SetSelectedGameObject(gameoverButton);
             EventSystem.current.SetSelectedGameObject(null);
@@ -189,6 +203,17 @@ public class GameManager : MonoBehaviour
     {
         if (gameIsOver == false)
         {
+            //Deactivate enemycounttext
+            if (enemyCountText != null && enemyCountText.gameObject.activeInHierarchy)
+            {
+                enemyCountText.gameObject.SetActive(false);
+            }
+            //If player is using keyboard, show the mouse
+            if (!player.joystick)
+            {
+                //Show cursor
+                Cursor.visible = true;
+            }
             if (controlsText != null) controlsText.SetActive(false);
             //EventSystem.current.SetSelectedGameObject(victoryButton);
             EventSystem.current.SetSelectedGameObject(null);
@@ -202,6 +227,17 @@ public class GameManager : MonoBehaviour
 
     public void Pause()
     {
+        //Deactivate enemycounttext
+        if (enemyCountText != null && enemyCountText.gameObject.activeInHierarchy)
+        {
+            enemyCountText.gameObject.SetActive(false);
+        }
+        //If player is using keyboard, show the mouse
+        if (!player.joystick)
+        {
+            //Show cursor
+            Cursor.visible = true;
+        }
         if (controlsText != null) controlsText.SetActive(false);
         pauseMenuUI.SetActive(true);
         EventSystem.current.SetSelectedGameObject(null);
@@ -212,6 +248,17 @@ public class GameManager : MonoBehaviour
 
     public void Resume()
     {
+        //Activate enemycounttext
+        if (enemyCountText != null)
+        {
+            enemyCountText.gameObject.SetActive(true);
+        }
+        //If player is using keyboard, show the mouse
+        if (!player.joystick)
+        {
+            //Show cursor
+            Cursor.visible = false;
+        }
         EventSystem.current.SetSelectedGameObject(null);
         pauseMenuUI.SetActive(false);
         Time.timeScale = 1f;

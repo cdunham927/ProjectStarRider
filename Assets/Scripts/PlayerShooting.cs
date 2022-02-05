@@ -42,7 +42,7 @@ public class PlayerShooting : MonoBehaviour
 
     private void Update()
     {
-        if ((Input.GetButton("Fire1") || Input.GetAxis("Altfire1") > 0) && curShootCools <= 0)
+        if ((Input.GetButton("Fire1") || Input.GetAxis("Altfire1") > 0) && curShootCools <= 0 && !GameManager.gameIsPaused)
         {
             Shoot();
             PlaySound();

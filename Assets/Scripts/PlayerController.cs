@@ -38,6 +38,7 @@ public class PlayerController : MonoBehaviour
     public float superSpd;
     public float sideSpeed;
     public float rotSpd;
+    public float lookSpd;
     public float turnSpd;
     public float sideRotSpd;
     public float realignRot;
@@ -81,8 +82,16 @@ public class PlayerController : MonoBehaviour
     [Range(0, 0.5f)]
     public float timeToMove = 0.225f;
 
+    GameManager cont;
+
     void Awake()
     {
+        cont = FindObjectOfType<GameManager>();
+        //Lock cursor in screen;
+        Cursor.lockState = CursorLockMode.Confined;
+        //Hide cursor
+        Cursor.visible = false;
+
         //Set cinemachine follow and aim targets
         cinCam = Camera.main.GetComponent<CinemachineVirtualCamera>();
         cinCam.m_Follow = followTarget.transform;
@@ -103,6 +112,14 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        if (Input.GetMouseButtonDown(0) && !GameManager.gameIsPaused && !GameManager.gameIsOver)
+        {
+            //Lock cursor in screen;
+            Cursor.lockState = CursorLockMode.Confined;
+            //Hide cursor
+            Cursor.visible = false;
+        }
+
         //Update controller or keyboard input
         if (Input.anyKeyDown) joystick = false;
         for (int i = 0; i < 20; i++)
@@ -231,6 +248,8 @@ public class PlayerController : MonoBehaviour
     Vector3 newVelZ;
     Vector3 newVelX;
 
+    Vector3 rotation = Vector3.zero;
+
     private void FixedUpdate()
     {
         if (Input.GetButton("RotateLeft"))
@@ -261,8 +280,20 @@ public class PlayerController : MonoBehaviour
 
         if (!joystick) 
         {
+            rotation.y += Input.GetAxis("Mouse X");
+            rotation.x += -Input.GetAxis("Mouse Y");
+            //rotation.x = Mathf.Clamp(rotation.x, -15f, 15f);
+            transform.eulerAngles = new Vector3(rotation.x, rotation.y, 0) * lookSpd;
+            Camera.main.transform.localRotation = Quaternion.Euler(rotation.x * lookSpd, 0, 0);
+
             if (invertControls)
             {
+                rotation.y += Input.GetAxis("Mouse X");
+                rotation.x += -Input.GetAxis("Mouse Y");
+                //rotation.x = Mathf.Clamp(rotation.x, -15f, 15f);
+                transform.eulerAngles = new Vector3(rotation.x, rotation.y, 0) * lookSpd;
+                Camera.main.transform.localRotation = Quaternion.Euler(rotation.x * lookSpd, 0, 0);
+                /*
                 if (screenMousePos.x < xViewThresL)
                 {
                     //Debug.Log("Move x view");
@@ -286,9 +317,16 @@ public class PlayerController : MonoBehaviour
                     //Debug.Log("Move y view");
                     transform.Rotate(rotSpd * Time.fixedDeltaTime, 0, 0);
                 }
+                */
             }
             else
             {
+                rotation.y += -Input.GetAxis("Mouse X");
+                rotation.x += Input.GetAxis("Mouse Y");
+                //rotation.x = Mathf.Clamp(rotation.x, -15f, 15f);
+                transform.eulerAngles = Vector3.Lerp(transform.eulerAngles, new Vector3(rotation.x, rotation.y, 0), lookSpd * Time.fixedDeltaTime);
+                Camera.main.transform.localRotation = Quaternion.Euler(rotation.x * lookSpd, 0, 0);
+                /*
                 if (screenMousePos.x < xViewThresL)
                 {
                     //Debug.Log("Move x view");
@@ -312,6 +350,7 @@ public class PlayerController : MonoBehaviour
                     //Debug.Log("Move y view");
                     transform.Rotate(-rotSpd * Time.fixedDeltaTime, 0, 0);
                 }
+                */
             }
         }
 
