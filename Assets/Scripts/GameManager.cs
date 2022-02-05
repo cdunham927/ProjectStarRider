@@ -126,18 +126,18 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetButtonDown("Pause"))
         {
-            if (gameIsPaused) 
+            if (gameIsPaused)
             {
                 Resume();
             }
             else
             {
-                EventSystem.current.firstSelectedGameObject = mainMenuButton;
+                //EventSystem.current.firstSelectedGameObject = mainMenuButton;
                 Pause();
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.H))
+        if (Input.GetButtonDown("Select"))
         {
             if (controlsText != null) controlsText.SetActive(!controlsText.activeInHierarchy);
         }
@@ -174,6 +174,9 @@ public class GameManager : MonoBehaviour
     { 
         if (gameIsOver == false)
         {
+            if (controlsText != null) controlsText.SetActive(false);
+            //EventSystem.current.SetSelectedGameObject(gameoverButton);
+            EventSystem.current.SetSelectedGameObject(null);
             EventSystem.current.SetSelectedGameObject(gameoverButton);
             GameOverUI.SetActive(true);
             Time.timeScale = 1f; 
@@ -186,6 +189,9 @@ public class GameManager : MonoBehaviour
     {
         if (gameIsOver == false)
         {
+            if (controlsText != null) controlsText.SetActive(false);
+            //EventSystem.current.SetSelectedGameObject(victoryButton);
+            EventSystem.current.SetSelectedGameObject(null);
             EventSystem.current.SetSelectedGameObject(victoryButton);
             VictoryUI.SetActive(true);
             Time.timeScale = 1f;
@@ -194,15 +200,19 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void Pause() 
+    public void Pause()
     {
+        if (controlsText != null) controlsText.SetActive(false);
         pauseMenuUI.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(mainMenuButton);
         Time.timeScale = 0f;
         gameIsPaused = true;
     }
 
-    public void Resume() 
+    public void Resume()
     {
+        EventSystem.current.SetSelectedGameObject(null);
         pauseMenuUI.SetActive(false);
         Time.timeScale = 1f;
         gameIsPaused = false;

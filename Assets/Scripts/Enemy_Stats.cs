@@ -32,6 +32,7 @@ public class Enemy_Stats : MonoBehaviour
     bool spawned = false;
 
     GameManager cont;
+    public GameObject minimapObj;
 
     private void Awake()
     {
@@ -43,6 +44,7 @@ public class Enemy_Stats : MonoBehaviour
     {
         skinnedMeshRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
         spawned = false;
+        if (minimapObj != null) minimapObj.SetActive(true);
         CurrHP = MaxHP;
     
     }
@@ -81,6 +83,7 @@ public class Enemy_Stats : MonoBehaviour
                 spawned = true;
                 //FindObjectOfType<GameManager>().EnemyDiedEvent();
             }
+            if (minimapObj != null) minimapObj.SetActive(false);
             FindObjectOfType<GameManager>().EnemyDiedEvent();
             //if (anim != null) anim.SetTrigger("Death");
             //Invoke("Disable", deathClip.length);
