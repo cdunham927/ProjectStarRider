@@ -54,12 +54,17 @@ public class GameManager : MonoBehaviour
     public int enemyCount = 0;
     public GameObject controlsText;
     public Text enemyCountText;
+    public GameObject uiParent;
 
     public PlayerController player;
 
     // Start is called before the first frame update
     void Awake()
     {
+        if (tutorialLevel)
+        {
+            controlsText.gameObject.SetActive(true);
+        }
         player = FindObjectOfType<PlayerController>();
         //Spawn new event system
         if (FindObjectOfType<EventSystem>() == null)
@@ -182,6 +187,7 @@ public class GameManager : MonoBehaviour
             {
                 enemyCountText.gameObject.SetActive(false);
             }
+            uiParent.SetActive(false);
             //If player is using keyboard, show the mouse
             if (!player.joystick)
             {
@@ -208,6 +214,7 @@ public class GameManager : MonoBehaviour
             {
                 enemyCountText.gameObject.SetActive(false);
             }
+            uiParent.SetActive(false);
             //If player is using keyboard, show the mouse
             if (!player.joystick)
             {
@@ -232,6 +239,7 @@ public class GameManager : MonoBehaviour
         {
             enemyCountText.gameObject.SetActive(false);
         }
+        uiParent.SetActive(false);
         //If player is using keyboard, show the mouse
         if (!player.joystick)
         {
@@ -253,6 +261,7 @@ public class GameManager : MonoBehaviour
         {
             enemyCountText.gameObject.SetActive(true);
         }
+        uiParent.SetActive(true);
         //If player is using keyboard, show the mouse
         if (!player.joystick)
         {

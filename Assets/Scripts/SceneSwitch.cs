@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class SceneSwitch : MonoBehaviour
 {
@@ -15,6 +17,12 @@ public class SceneSwitch : MonoBehaviour
     MusicController music;
     Animator musicAnim;
     public float waitTime;
+
+    public GameObject optionsPrefab;
+    public GameObject optionsMenu;
+    public Button optionsButton;
+    public GameObject musicVolume;
+    public GameObject resumeButton;
 
     void Awake()
     {
@@ -60,12 +68,16 @@ public class SceneSwitch : MonoBehaviour
 
     public void Options() 
     {
-        SceneManager.LoadScene("OptionsScene");
+        optionsMenu.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(musicVolume);
     }
 
     public void Back()
     {
-        SceneManager.LoadScene("StartMenu");
+        optionsMenu.SetActive(false);
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(resumeButton);
     }
 
     public void Restart()
