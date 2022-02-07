@@ -14,14 +14,33 @@ public class OptionsController : MonoBehaviour
     public Slider musicSlider;
     public Slider soundSlider;
 
+    //Set starting values for sliders;
+    public Slider controllerSensitivitySlider;
+    public Slider mouseSensitivitySlider;
+    public Toggle invertToggle;
+
+    PlayerController player;
+
     private void Awake()
     {
         cont = FindObjectOfType<GameManager>();
         scene = FindObjectOfType<SceneSwitch>();
+        player = FindObjectOfType<PlayerController>();
 
+        //Set initial slider values from loads
         masterSlider.value = GetMasterVolume();
         musicSlider.value = GetMusicVolume();
         soundSlider.value = GetSoundVolume();
+        if (PlayerPrefs.HasKey("ControllerSensitivity")) controllerSensitivitySlider.value = PlayerPrefs.GetFloat("ControllerSensitivity");
+        if (PlayerPrefs.HasKey("MouseSensitivity")) mouseSensitivitySlider.value = PlayerPrefs.GetFloat("MouseSensitivity");
+        if (PlayerPrefs.HasKey("Invert")) invertToggle.isOn = (PlayerPrefs.GetInt("Invert") == 1) ? true : false;
+
+        if (player != null)
+        {
+            player.GetControllerSensitivity();
+            player.GetMouseSensitivity();
+            player.GetInvert();
+        }
     }
 
     float GetMasterVolume()
@@ -37,6 +56,11 @@ public class OptionsController : MonoBehaviour
         {
             return -15f;
         }
+    }
+
+    public void Back()
+    {
+        scene.Back();
     }
 
     float GetMusicVolume()
@@ -82,5 +106,35 @@ public class OptionsController : MonoBehaviour
     public void ChangeSoundVolume(float vol)
     {
         masterMixer.SetFloat("soundVolume", vol);
+    }
+
+    public void SetMouseSensitivity(float val)
+    {
+        if (player == null) player = FindObjectOfType<PlayerController>();
+
+        PlayerPrefs.SetFloat("MouseSensitivity", val);
+        PlayerPrefs.Save();
+
+        if (player != null) player.GetMouseSensitivity();
+    }
+
+    public void SetControllerSensitivity(float val)
+    {
+        if (player == null) player = FindObjectOfType<PlayerController>();
+
+        PlayerPrefs.SetFloat("ControllerSensitivity", val);
+        PlayerPrefs.Save();
+
+        if (player != null) player.GetControllerSensitivity();
+    }
+
+    public void SetInvert(bool val)
+    {
+        if (player == null) player = FindObjectOfType<PlayerController>();
+
+        PlayerPrefs.SetInt("Invert", (val == true) ? 1 : 0);
+        PlayerPrefs.Save();
+
+        if (player != null) player.GetInvert();
     }
 }

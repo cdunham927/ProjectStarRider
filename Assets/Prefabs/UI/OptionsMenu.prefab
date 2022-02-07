@@ -552,17 +552,17 @@ MonoBehaviour:
   m_FillRect: {fileID: 3228907334002779959}
   m_HandleRect: {fileID: 3228907332556620886}
   m_Direction: 0
-  m_MinValue: 0
-  m_MaxValue: 1
+  m_MinValue: 30
+  m_MaxValue: 140
   m_WholeNumbers: 0
-  m_Value: 0.8000001
+  m_Value: 55
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
-        m_MethodName: UpdateSound
-        m_Mode: 1
+      - m_Target: {fileID: 2032527561579835242}
+        m_TargetAssemblyTypeName: OptionsController, Assembly-CSharp
+        m_MethodName: SetControllerSensitivity
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -1563,7 +1563,19 @@ MonoBehaviour:
   m_Group: {fileID: 0}
   onValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2032527561579835242}
+        m_TargetAssemblyTypeName: OptionsController, Assembly-CSharp
+        m_MethodName: SetInvert
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_IsOn: 1
 --- !u!114 &3228907333140720140
 MonoBehaviour:
@@ -2283,17 +2295,17 @@ MonoBehaviour:
   m_FillRect: {fileID: 3228907334412265929}
   m_HandleRect: {fileID: 3228907332700665538}
   m_Direction: 0
-  m_MinValue: 0
-  m_MaxValue: 1
+  m_MinValue: 0.125
+  m_MaxValue: 2
   m_WholeNumbers: 0
-  m_Value: 0.70000005
+  m_Value: 1.125
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
-        m_MethodName: UpdateSound
-        m_Mode: 1
+      - m_Target: {fileID: 2032527561579835242}
+        m_TargetAssemblyTypeName: OptionsController, Assembly-CSharp
+        m_MethodName: SetMouseSensitivity
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -3647,6 +3659,9 @@ MonoBehaviour:
   masterSlider: {fileID: 1306530480352264803}
   musicSlider: {fileID: 5486015543143836753}
   soundSlider: {fileID: 3228907333048035206}
+  controllerSensitivitySlider: {fileID: 3228907332558879408}
+  mouseSensitivitySlider: {fileID: 3228907333484970760}
+  invertToggle: {fileID: 3228907333140720179}
 --- !u!1 &5486015543295188284
 GameObject:
   m_ObjectHideFlags: 0
@@ -3991,8 +4006,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: SceneSwitch, Assembly-CSharp
+      - m_Target: {fileID: 2032527561579835242}
+        m_TargetAssemblyTypeName: OptionsController, Assembly-CSharp
         m_MethodName: Back
         m_Mode: 1
         m_Arguments:

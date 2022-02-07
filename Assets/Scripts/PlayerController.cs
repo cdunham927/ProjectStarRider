@@ -280,12 +280,6 @@ public class PlayerController : MonoBehaviour
 
         if (!joystick) 
         {
-            rotation.y += Input.GetAxis("Mouse X");
-            rotation.x += -Input.GetAxis("Mouse Y");
-            //rotation.x = Mathf.Clamp(rotation.x, -15f, 15f);
-            transform.eulerAngles = new Vector3(rotation.x, rotation.y, 0) * lookSpd;
-            Camera.main.transform.localRotation = Quaternion.Euler(rotation.x * lookSpd, 0, 0);
-
             if (invertControls)
             {
                 rotation.y += Input.GetAxis("Mouse X");
@@ -324,7 +318,7 @@ public class PlayerController : MonoBehaviour
                 rotation.y += -Input.GetAxis("Mouse X");
                 rotation.x += Input.GetAxis("Mouse Y");
                 //rotation.x = Mathf.Clamp(rotation.x, -15f, 15f);
-                transform.eulerAngles = Vector3.Lerp(transform.eulerAngles, new Vector3(rotation.x, rotation.y, 0), lookSpd * Time.fixedDeltaTime);
+                transform.eulerAngles = new Vector3(rotation.x, rotation.y, 0) * lookSpd;
                 Camera.main.transform.localRotation = Quaternion.Euler(rotation.x * lookSpd, 0, 0);
                 /*
                 if (screenMousePos.x < xViewThresL)
@@ -378,6 +372,21 @@ public class PlayerController : MonoBehaviour
         if (!hitWall) newVelZ = -transform.forward * speed;
         if (!hitWall) bod.velocity = newVelX + newVelZ;
         //if (hor != 0) transform.Rotate(0, hor * sideRotSpd * Time.fixedDeltaTime, 0);
+    }
+
+    public void GetMouseSensitivity()
+    {
+        lookSpd = PlayerPrefs.GetFloat("MouseSensitivity", lookSpd);
+    }
+
+    public void GetControllerSensitivity()
+    {
+        rotSpd = PlayerPrefs.GetFloat("ControllerSensitivity", rotSpd);
+    }
+
+    public void GetInvert()
+    {
+        invertControls = (PlayerPrefs.GetInt("Invert") == 1)? true : false;
     }
 
     public void SpeedUp()

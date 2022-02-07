@@ -58,9 +58,13 @@ public class GameManager : MonoBehaviour
     [HideInInspector]
     public PlayerController player;
 
+    GameObject optionsMenu;
+    SceneSwitch scene;
+
     // Start is called before the first frame update
     void Awake()
     {
+        scene = FindObjectOfType<SceneSwitch>();
         if (tutorialLevel)
         {
             controlsText.gameObject.SetActive(true);
@@ -261,13 +265,15 @@ public class GameManager : MonoBehaviour
         {
             enemyCountText.gameObject.SetActive(true);
         }
+        if (optionsMenu == null)
+        {
+            optionsMenu = scene.optionsMenu;
+        }
+        optionsMenu.SetActive(false);
         uiParent.SetActive(true);
         //If player is using keyboard, show the mouse
-        if (!player.joystick)
-        {
-            //Show cursor
-            Cursor.visible = false;
-        }
+        //Show cursor
+        Cursor.visible = false;
         EventSystem.current.SetSelectedGameObject(null);
         pauseMenuUI.SetActive(false);
         Time.timeScale = 1f;

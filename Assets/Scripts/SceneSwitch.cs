@@ -29,6 +29,7 @@ public class SceneSwitch : MonoBehaviour
     public GameObject mainMenuButton;
     [HideInInspector]
     public GameObject pauseMenu;
+    public GameObject startGameButton;
 
     void Awake()
     {
@@ -43,7 +44,7 @@ public class SceneSwitch : MonoBehaviour
         //resumeButton = GameObject.FindGameObjectWithTag("ResumeButton");
         optionsMenu.SetActive(false);
 
-        pauseMenu = cont.pauseMenuUI;
+        if (cont != null) pauseMenu = cont.pauseMenuUI;
     }
 
     public void NextScene() 
@@ -85,11 +86,15 @@ public class SceneSwitch : MonoBehaviour
 
     public void Options() 
     {
-        if (pauseMenu == null)
+        if (pauseMenu == null && cont != null)
         {
             pauseMenu = cont.pauseMenuUI;
         }
-        pauseMenu.SetActive(false);
+        if (pauseMenu != null) pauseMenu.SetActive(false);
+        else
+        {
+            startGameButton.SetActive(true);
+        }
         optionsMenu.SetActive(true);
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(musicVolume);
@@ -98,7 +103,14 @@ public class SceneSwitch : MonoBehaviour
     public void Back()
     {
         optionsMenu.SetActive(false);
-        pauseMenu.SetActive(true);
+        if (pauseMenu != null)
+        {
+            pauseMenu.SetActive(true);
+        }
+        else
+        {
+            startGameButton.SetActive(true);
+        }
         EventSystem.current.SetSelectedGameObject(null);
         //if (mainMenuButton == null)
         //{

@@ -9,6 +9,8 @@ public class MusicController : MonoBehaviour
     public static MusicController instance;
     public AudioSource src;
 
+    //Gotta save audio settings to playerprefs, then load those prefs on awake
+
     private void Awake()
     {
         if (instance == null)
