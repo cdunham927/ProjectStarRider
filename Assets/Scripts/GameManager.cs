@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
 {
     //Prefab references for making more levels easier
     public GameObject minimapPrefab;
+    public GameObject minimap;
     //Enemies need to grab from this pool
     public GameObject hpPoolPrefab;
     //Player needs to grab from this pool
@@ -94,7 +95,7 @@ public class GameManager : MonoBehaviour
         enemyBulPool = Instantiate(enemyBulletPoolPrefab).GetComponent<ObjectPool>();
 
         //Spawn minimap
-        Instantiate(minimapPrefab);
+        minimap = Instantiate(minimapPrefab);
 
         //GameOverUI.SetActive(false);
         //pauseMenuUI.SetActive(false);
@@ -136,7 +137,7 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetButtonDown("Pause"))
+        if (Input.GetButtonDown("Pause") && !gameIsOver)
         {
             if (gameIsPaused)
             {
@@ -179,6 +180,8 @@ public class GameManager : MonoBehaviour
             {
                 GameOver();
             }
+
+            if (Input.GetKeyDown(KeyCode.V)) Victory();
         }
     }
 
@@ -191,6 +194,7 @@ public class GameManager : MonoBehaviour
             {
                 enemyCountText.gameObject.SetActive(false);
             }
+            minimap.SetActive(false);
             uiParent.SetActive(false);
             //If player is using keyboard, show the mouse
             if (!player.joystick)
@@ -200,9 +204,9 @@ public class GameManager : MonoBehaviour
             }
             if (controlsText != null) controlsText.SetActive(false);
             //EventSystem.current.SetSelectedGameObject(gameoverButton);
+            GameOverUI.SetActive(true);
             EventSystem.current.SetSelectedGameObject(null);
             EventSystem.current.SetSelectedGameObject(gameoverButton);
-            GameOverUI.SetActive(true);
             Time.timeScale = 1f; 
             gameIsOver = true;
 
@@ -218,6 +222,7 @@ public class GameManager : MonoBehaviour
             {
                 enemyCountText.gameObject.SetActive(false);
             }
+            minimap.SetActive(false);
             uiParent.SetActive(false);
             //If player is using keyboard, show the mouse
             if (!player.joystick)
@@ -227,9 +232,9 @@ public class GameManager : MonoBehaviour
             }
             if (controlsText != null) controlsText.SetActive(false);
             //EventSystem.current.SetSelectedGameObject(victoryButton);
+            VictoryUI.SetActive(true);
             EventSystem.current.SetSelectedGameObject(null);
             EventSystem.current.SetSelectedGameObject(victoryButton);
-            VictoryUI.SetActive(true);
             Time.timeScale = 1f;
             gameIsOver = true;
 
@@ -243,6 +248,7 @@ public class GameManager : MonoBehaviour
         {
             enemyCountText.gameObject.SetActive(false);
         }
+        minimap.SetActive(false);
         uiParent.SetActive(false);
         //If player is using keyboard, show the mouse
         if (!player.joystick)
@@ -269,6 +275,7 @@ public class GameManager : MonoBehaviour
         {
             optionsMenu = scene.optionsMenu;
         }
+        minimap.SetActive(true);
         optionsMenu.SetActive(false);
         uiParent.SetActive(true);
         //If player is using keyboard, show the mouse

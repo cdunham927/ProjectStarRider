@@ -119,6 +119,11 @@ public class PlayerController : MonoBehaviour
             //Hide cursor
             Cursor.visible = false;
         }
+        if (Input.GetMouseButtonDown(0) && (GameManager.gameIsPaused || GameManager.gameIsOver))
+        {
+            //Hide cursor
+            Cursor.visible = true;
+        }
 
         //Update controller or keyboard input
         if (Input.anyKeyDown) joystick = false;

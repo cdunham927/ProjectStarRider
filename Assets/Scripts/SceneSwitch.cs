@@ -84,13 +84,18 @@ public class SceneSwitch : MonoBehaviour
         Application.Quit();
     }
 
+    GameObject lastSelected;
+
     public void Options() 
     {
+        lastSelected = EventSystem.current.currentSelectedGameObject;
         if (pauseMenu == null && cont != null)
         {
             pauseMenu = cont.pauseMenuUI;
         }
+        //If we're in the main game, deactivate pause menu
         if (pauseMenu != null) pauseMenu.SetActive(false);
+        //Else we're in the main menu so we activate the main menu stuff again
         else
         {
             startGameButton.SetActive(true);
@@ -103,6 +108,10 @@ public class SceneSwitch : MonoBehaviour
     public void Back()
     {
         optionsMenu.SetActive(false);
+        if (pauseMenu == null && cont != null)
+        {
+            pauseMenu = cont.pauseMenuUI;
+        }
         if (pauseMenu != null)
         {
             pauseMenu.SetActive(true);
@@ -116,7 +125,7 @@ public class SceneSwitch : MonoBehaviour
         //{
         //    mainMenuButton = cont.mainMenuButton;
         //}
-        EventSystem.current.SetSelectedGameObject(optionsButton);
+        EventSystem.current.SetSelectedGameObject(lastSelected);
     }
 
     public void Restart()
