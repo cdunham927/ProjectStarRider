@@ -55,7 +55,7 @@ public class GameManager : MonoBehaviour
     public GameObject controlsText;
     public Text enemyCountText;
     public GameObject uiParent;
-
+    [HideInInspector]
     public PlayerController player;
 
     // Start is called before the first frame update

@@ -19,14 +19,31 @@ public class SceneSwitch : MonoBehaviour
     public float waitTime;
 
     public GameObject optionsPrefab;
+    [HideInInspector]
     public GameObject optionsMenu;
-    public Button optionsButton;
+    [HideInInspector]
+    public GameObject optionsButton;
+    [HideInInspector]
     public GameObject musicVolume;
-    public GameObject resumeButton;
+    [HideInInspector]
+    public GameObject mainMenuButton;
+    [HideInInspector]
+    public GameObject pauseMenu;
 
     void Awake()
     {
         cont = FindObjectOfType<GameManager>();
+
+        //Spawn options menu
+        //Get references, then deactivate menu
+        optionsMenu = Instantiate(optionsPrefab);
+        optionsButton = GameObject.FindGameObjectWithTag("OptionsButton");
+        musicVolume = GameObject.FindGameObjectWithTag("MusicVolume");
+        mainMenuButton = GameObject.FindGameObjectWithTag("MainMenu");
+        //resumeButton = GameObject.FindGameObjectWithTag("ResumeButton");
+        optionsMenu.SetActive(false);
+
+        pauseMenu = cont.pauseMenuUI;
     }
 
     public void NextScene() 
@@ -68,6 +85,11 @@ public class SceneSwitch : MonoBehaviour
 
     public void Options() 
     {
+        if (pauseMenu == null)
+        {
+            pauseMenu = cont.pauseMenuUI;
+        }
+        pauseMenu.SetActive(false);
         optionsMenu.SetActive(true);
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(musicVolume);
@@ -76,8 +98,13 @@ public class SceneSwitch : MonoBehaviour
     public void Back()
     {
         optionsMenu.SetActive(false);
+        pauseMenu.SetActive(true);
         EventSystem.current.SetSelectedGameObject(null);
-        EventSystem.current.SetSelectedGameObject(resumeButton);
+        //if (mainMenuButton == null)
+        //{
+        //    mainMenuButton = cont.mainMenuButton;
+        //}
+        EventSystem.current.SetSelectedGameObject(optionsButton);
     }
 
     public void Restart()
