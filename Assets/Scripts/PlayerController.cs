@@ -127,7 +127,7 @@ public class PlayerController : MonoBehaviour
                 rotation.y += Input.GetAxis("Mouse X");
                 rotation.x += -Input.GetAxis("Mouse Y");
                 //rotation.x = Mathf.Clamp(rotation.x, -15f, 15f);
-                transform.eulerAngles = new Vector3(rotation.x, rotation.y, 0) * lookSpd;
+                transform.eulerAngles = new Vector3(rotation.x, rotation.y, rotation.z) * lookSpd;
                 //Camera.main.transform.localRotation = Quaternion.Euler(rotation.x * lookSpd * Time.deltaTime, 0, 0);
                 /*
                 if (screenMousePos.x < xViewThresL)
@@ -160,7 +160,7 @@ public class PlayerController : MonoBehaviour
                 rotation.y += -Input.GetAxis("Mouse X");
                 rotation.x += Input.GetAxis("Mouse Y");
                 //rotation.x = Mathf.Clamp(rotation.x, -15f, 15f);
-                transform.eulerAngles = new Vector3(rotation.x, rotation.y, 0) * lookSpd;
+                transform.eulerAngles = new Vector3(rotation.x, rotation.y, rotation.z) * lookSpd;
                 //Camera.main.transform.localRotation = Quaternion.Euler(rotation.x * lookSpd * Time.deltaTime, 0, 0);
                 /*
                 if (screenMousePos.x < xViewThresL)
@@ -206,12 +206,15 @@ public class PlayerController : MonoBehaviour
         }
         if (Input.GetButton("RotateLeft"))
         {
-            transform.Rotate(0, 0, turnSpd * Time.deltaTime);
+            Debug.Log("rotateleft");
+            //transform.Rotate(0, 0, turnSpd * Time.deltaTime);
+            rotation.z += turnSpd * Time.deltaTime;
         }
 
         if (Input.GetButton("RotateRight"))
         {
             transform.Rotate(0, 0, -turnSpd * Time.deltaTime);
+            rotation.z -= turnSpd * Time.deltaTime;
         }
 
         if (Input.GetKey(KeyCode.Space))
