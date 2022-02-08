@@ -17,7 +17,7 @@ public class TurretController : MonoBehaviour
     //Set the radius for the detection collider
     public SphereCollider detectionCollider;
     public Collider col;
-
+    public bool isRandom;
     //Player
     PlayerController player;
 
@@ -50,9 +50,11 @@ public class TurretController : MonoBehaviour
 
     public void Attack()
     {
-        if (bulletPool == null) bulletPool = cont.enemyBulPool;
-        //Get pooled bullet
-        GameObject bul = bulletPool.GetPooledObject();
+        
+        
+            if (bulletPool == null) bulletPool = cont.enemyBulPool;
+            //Get pooled bullet
+            GameObject bul = bulletPool.GetPooledObject();
         if (bul != null)
         {
             //Put it where the enemy position is
@@ -63,13 +65,20 @@ public class TurretController : MonoBehaviour
             bul.SetActive(true);
             bul.transform.LookAt(player.transform);
             bul.transform.Rotate(0, Random.Range(-15f, 15f), 0);
+
+            if (isRandom == true)
+            {
+                bul.transform.rotation = Quaternion.Euler(Random.Range(0, 360), Random.Range(0, 360), Random.Range(0, 360));
+            }
+
             bul.GetComponent<EnemyBullet>().Push();
+
         }
 
         //Reset attack cooldown
         attackCools = timeBetweenAttacks;
     }
-
+    
     public void SetCollider(bool cl = true)
     {
         col.enabled = cl;
