@@ -16,6 +16,8 @@ public class GameManager : MonoBehaviour
     public GameObject playerBulletPoolPrefab;
     //Enemies need to grab from this pool
     public GameObject enemyBulletPoolPrefab;
+    //Bullets need to grab from this pool
+    public GameObject hitVFXPoolPrefab;
     //This object needs these references
     //Instantiate them, then grab references for the right buttons(probably with tags)
     public GameObject pauseMenuUIPrefab;
@@ -46,6 +48,8 @@ public class GameManager : MonoBehaviour
     public ObjectPool hpPool;
     [HideInInspector]
     public ObjectPool bulPool;
+    [HideInInspector]
+    public ObjectPool hitVFXPool;
     [HideInInspector]
     public ObjectPool enemyBulPool;
     public Image[] afterimages;
@@ -93,6 +97,7 @@ public class GameManager : MonoBehaviour
         hpPool = Instantiate(hpPoolPrefab).GetComponent<ObjectPool>();
         bulPool = Instantiate(playerBulletPoolPrefab).GetComponent<ObjectPool>(); ;
         enemyBulPool = Instantiate(enemyBulletPoolPrefab).GetComponent<ObjectPool>();
+        hitVFXPool = Instantiate(hitVFXPoolPrefab).GetComponent<ObjectPool>();
 
         //Spawn minimap
         minimap = Instantiate(minimapPrefab);

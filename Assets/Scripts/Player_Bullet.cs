@@ -11,10 +11,18 @@ public class Player_Bullet : Bullet
 
     public TrailRenderer trail;
     public GameObject spawnPos;
-    
-    public void FixedUpdate()
+    Rigidbody bod;
+    GameManager cont;
+
+    public ObjectPool hitVFXPool;
+    ParticleSystem[] curEmit;
+    //public int amtToEmit = 5;
+
+    private void Awake()
     {
-        //rb.AddForce(transform.forward * speed * Time.fixedDeltaTime);
+        bod = GetComponentInParent<Rigidbody>();
+        cont = FindObjectOfType<GameManager>();
+        hitVFXPool = cont.bulPool;
     }
 
     public override void OnEnable()
@@ -28,8 +36,8 @@ public class Player_Bullet : Bullet
         trail.Clear();
         base.Disable();
     }
-    
-    
+
+    /*
     private void OnTriggerEnter(Collider col)
     {
         if (col.CompareTag("Enemy"))
@@ -38,37 +46,66 @@ public class Player_Bullet : Bullet
             col.gameObject.GetComponent<Enemy_Stats>().Damage(dmg);
             Invoke("Disable", 0.01f);
             //ContactPoint cp = col.GetContact(0);
-            GameObject hitVfxInstance = Instantiate(hitPrefab, spawnPos.transform.position, Quaternion.identity);
+            if (hitVFXPool == null) hitVFXPool = cont.hitVFXPool;
+            GameObject hit = hitVFXPool.GetPooledObject();
+            //Get particle systems and emit 1 particle
+            curEmit = hit.GetComponentsInChildren<ParticleSystem>();
+            foreach (ParticleSystem e in curEmit) e.Emit(1);
+            hit.transform.position = transform.position;
+            hit.transform.rotation = transform.rotation;
+            //bul.GetComponent<Rigidbody>().velocity = bod.velocity;
+            hit.SetActive(true);
         }
         if (col.CompareTag("Wall"))
         {
-            //Debug.Log("Hit Enemy");
-            Invoke("Disable", 0.01f);
-            //ContactPoint cp = col.GetContact(0);
-            GameObject hitVfxInstance = Instantiate(hitPrefab, spawnPos.transform.position, Quaternion.identity);
-        }
-    }
-
-    /*
-    void OnCollisionEnter(Collision collision)
-    {
-       
-        Invoke("Disable", 0.1f);
-
-        if (collision.gameObject.tag == "Enemy") 
-        {
-            collision.gameObject.GetComponent<Enemy_Stats>().Damage(dmg);
-            Invoke("Disable", 0.01f);
-            ContactPoint cp = collision.GetContact(0);
-            creatVxf(cp);
-        
+            //Invoke("Disable", 0.01f);
+            if (hitVFXPool == null) hitVFXPool = cont.hitVFXPool;
+            GameObject hit = hitVFXPool.GetPooledObject();
+            //Get particle systems and emit 1 particle
+            curEmit = hit.GetComponentsInChildren<ParticleSystem>();
+            foreach (ParticleSystem e in curEmit) e.Emit(1);
+            hit.transform.position = transform.position;
+            hit.transform.rotation = transform.rotation;
+            //bul.GetComponent<Rigidbody>().velocity = bod.velocity;
+            hit.SetActive(true);
         }
     }*/
-   
 
-    void creatVxf(ContactPoint contact) 
+    private void Update()
     {
-        Quaternion rot = Quaternion.FromToRotation(Vector3.up, contact.normal);
-        GameObject hitVfxInstance = Instantiate(hitPrefab, transform.position, rot);
+        transform.forward = bod.velocity.normalized;
+    }
+
+    private void OnCollisionEnter(Collision col)
+    {
+        if (col.gameObject.CompareTag("Enemy"))
+        {
+            //Debug.Log("Hit Enemy");
+            col.gameObject.GetComponent<Enemy_Stats>().Damage(dmg);
+            Invoke("Disable", 0.01f);
+            //ContactPoint cp = col.GetContact(0);
+            if (hitVFXPool == null) hitVFXPool = cont.hitVFXPool;
+            GameObject hit = hitVFXPool.GetPooledObject();
+            //Get particle systems and emit 1 particle
+            //curEmit = hit.GetComponentsInChildren<ParticleSystem>();
+            //foreach (ParticleSystem e in curEmit) e.Emit(amtToEmit);
+            hit.transform.position = spawnPos.transform.position;
+            hit.transform.rotation = spawnPos.transform.rotation;
+            //bul.GetComponent<Rigidbody>().velocity = bod.velocity;
+            hit.SetActive(true);
+        }
+        if (col.gameObject.CompareTag("Wall"))
+        {
+            //bod.velocity = Vector3.Reflect(bod.velocity, col.contacts[0].normal);
+            if (hitVFXPool == null) hitVFXPool = cont.hitVFXPool;
+            GameObject hit = hitVFXPool.GetPooledObject();
+            //Get particle systems and emit 1 particle
+            //curEmit = hit.GetComponentsInChildren<ParticleSystem>();
+            //foreach (ParticleSystem e in curEmit) e.Emit(amtToEmit);
+            hit.transform.position = spawnPos.transform.position;
+            hit.transform.rotation = spawnPos.transform.rotation;
+            //bul.GetComponent<Rigidbody>().velocity = bod.velocity;
+            hit.SetActive(true);
+        }
     }
 }

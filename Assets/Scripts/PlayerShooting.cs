@@ -22,8 +22,6 @@ public class PlayerShooting : MonoBehaviour
     Rigidbody bod;
     public PlayerShooting parentShoot;
 
-    
-
     private void Awake()
     {
         bod = GetComponentInParent<Rigidbody>();

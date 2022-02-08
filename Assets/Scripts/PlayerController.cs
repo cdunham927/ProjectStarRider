@@ -82,10 +82,21 @@ public class PlayerController : MonoBehaviour
     [Range(0, 0.5f)]
     public float timeToMove = 0.225f;
 
+    Player_Stats stats;
+    public int collisionDamage = 0;
     GameManager cont;
+
+    //For aiming with the mouse
+    Vector3 newVelZ;
+    Vector3 newVelX;
+    Vector3 rotation = Vector3.zero;
+
+    bool usingAxis = false;
+    float vert, hor, vert2, hor2;
 
     void Awake()
     {
+        stats = FindObjectOfType<Player_Stats>();
         cont = FindObjectOfType<GameManager>();
         //Lock cursor in screen;
         Cursor.lockState = CursorLockMode.Confined;
@@ -107,11 +118,132 @@ public class PlayerController : MonoBehaviour
         oneCharge = maxImagesTime / 4;
     }
 
-    bool usingAxis = false;
-    float vert, hor, vert2, hor2;
-
     void Update()
     {
+        if (!joystick && !GameManager.gameIsPaused && !GameManager.gameIsOver)
+        {
+            if (invertControls)
+            {
+                rotation.y += Input.GetAxis("Mouse X");
+                rotation.x += -Input.GetAxis("Mouse Y");
+                //rotation.x = Mathf.Clamp(rotation.x, -15f, 15f);
+                transform.eulerAngles = new Vector3(rotation.x, rotation.y, 0) * lookSpd;
+                //Camera.main.transform.localRotation = Quaternion.Euler(rotation.x * lookSpd * Time.deltaTime, 0, 0);
+                /*
+                if (screenMousePos.x < xViewThresL)
+                {
+                    //Debug.Log("Move x view");
+                    transform.Rotate(0, -rotSpd * Time.fixedDeltaTime, 0);
+                }
+
+                if (screenMousePos.x > xViewThresR)
+                {
+                    //Debug.Log("Move x view");
+                    transform.Rotate(0, rotSpd * Time.fixedDeltaTime, 0);
+                }
+
+                if (screenMousePos.y > yViewThresU)
+                {
+                    //Debug.Log("Move y view");
+                    transform.Rotate(-rotSpd * Time.fixedDeltaTime, 0, 0);
+                }
+
+                if (screenMousePos.y < yViewThresD)
+                {
+                    //Debug.Log("Move y view");
+                    transform.Rotate(rotSpd * Time.fixedDeltaTime, 0, 0);
+                }
+                */
+            }
+            else
+            {
+                rotation.y += -Input.GetAxis("Mouse X");
+                rotation.x += Input.GetAxis("Mouse Y");
+                //rotation.x = Mathf.Clamp(rotation.x, -15f, 15f);
+                transform.eulerAngles = new Vector3(rotation.x, rotation.y, 0) * lookSpd;
+                //Camera.main.transform.localRotation = Quaternion.Euler(rotation.x * lookSpd * Time.deltaTime, 0, 0);
+                /*
+                if (screenMousePos.x < xViewThresL)
+                {
+                    //Debug.Log("Move x view");
+                    transform.Rotate(0, rotSpd * Time.fixedDeltaTime, 0);
+                }
+
+                if (screenMousePos.x > xViewThresR)
+                {
+                    //Debug.Log("Move x view");
+                    transform.Rotate(0, -rotSpd * Time.fixedDeltaTime, 0);
+                }
+
+                if (screenMousePos.y > yViewThresU)
+                {
+                    //Debug.Log("Move y view");
+                    transform.Rotate(rotSpd * Time.fixedDeltaTime, 0, 0);
+                }
+
+                if (screenMousePos.y < yViewThresD)
+                {
+                    //Debug.Log("Move y view");
+                    transform.Rotate(-rotSpd * Time.fixedDeltaTime, 0, 0);
+                }
+                */
+            }
+        }
+
+        if (joystick && !GameManager.gameIsPaused && !GameManager.gameIsOver)
+        {
+            if (hor2 != 0)
+            {
+                if (invertControls) transform.Rotate(0, rotSpd * Time.deltaTime * hor2, 0);
+                else transform.Rotate(0, -rotSpd * Time.deltaTime * hor2, 0);
+            }
+
+            if (vert2 != 0)
+            {
+                if (invertControls) transform.Rotate(rotSpd * Time.deltaTime * vert2, 0, 0);
+                else transform.Rotate(-rotSpd * Time.deltaTime * vert2, 0, 0);
+            }
+        }
+        if (Input.GetButton("RotateLeft"))
+        {
+            transform.Rotate(0, 0, turnSpd * Time.deltaTime);
+        }
+
+        if (Input.GetButton("RotateRight"))
+        {
+            transform.Rotate(0, 0, -turnSpd * Time.deltaTime);
+        }
+
+        if (Input.GetKey(KeyCode.Space))
+        {
+            //transform.position -= Vector3.up * speed * Time.deltaTime;
+        }
+
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            //transform.position += Vector3.up * speed * Time.deltaTime;
+        }
+
+        /**/
+        //Vector2 screenMousePos = Camera.main.ScreenToViewportPoint(Input.mousePosition);
+        //Debug.Log(screenMousePos);
+
+        //Vector3 screenMousePos = Camera.main.ScreenToViewportPoint(Input.mousePosition);
+
+
+        /**/
+
+        //float hor = Input.GetAxis("Horizontal");
+
+
+        if (hor != 0) newVelX = -transform.right * sideSpeed * hor;
+        else newVelX = Vector3.zero;
+        if (!hitWall) newVelZ = -transform.forward * speed;
+        if (!hitWall) bod.velocity = newVelX + newVelZ;
+        //if (hor != 0) transform.Rotate(0, hor * sideRotSpd * Time.fixedDeltaTime, 0);
+
+
+        //Hide cursor if we click into the game
         if (Input.GetMouseButtonDown(0) && !GameManager.gameIsPaused && !GameManager.gameIsOver)
         {
             //Lock cursor in screen;
@@ -119,6 +251,7 @@ public class PlayerController : MonoBehaviour
             //Hide cursor
             Cursor.visible = false;
         }
+        //Show the cursor if we click into the game and its paused
         if (Input.GetMouseButtonDown(0) && (GameManager.gameIsPaused || GameManager.gameIsOver))
         {
             //Hide cursor
@@ -250,135 +383,6 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    Vector3 newVelZ;
-    Vector3 newVelX;
-
-    Vector3 rotation = Vector3.zero;
-
-    private void FixedUpdate()
-    {
-        if (Input.GetButton("RotateLeft"))
-        {
-            transform.Rotate(0, 0, turnSpd * Time.fixedDeltaTime);
-        }
-
-        if (Input.GetButton("RotateRight"))
-        {
-            transform.Rotate(0, 0, -turnSpd * Time.fixedDeltaTime);
-        }
-
-        if (Input.GetKey(KeyCode.Space))
-        {
-            //transform.position -= Vector3.up * speed * Time.deltaTime;
-        }
-
-        if (Input.GetKey(KeyCode.LeftShift))
-        {
-            //transform.position += Vector3.up * speed * Time.deltaTime;
-        }
-
-        /**/
-        Vector2 screenMousePos = Camera.main.ScreenToViewportPoint(Input.mousePosition);
-        //Debug.Log(screenMousePos);
-
-        //Vector3 screenMousePos = Camera.main.ScreenToViewportPoint(Input.mousePosition);
-
-        if (!joystick) 
-        {
-            if (invertControls)
-            {
-                rotation.y += Input.GetAxis("Mouse X");
-                rotation.x += -Input.GetAxis("Mouse Y");
-                //rotation.x = Mathf.Clamp(rotation.x, -15f, 15f);
-                transform.eulerAngles = new Vector3(rotation.x, rotation.y, 0) * lookSpd;
-                Camera.main.transform.localRotation = Quaternion.Euler(rotation.x * lookSpd, 0, 0);
-                /*
-                if (screenMousePos.x < xViewThresL)
-                {
-                    //Debug.Log("Move x view");
-                    transform.Rotate(0, -rotSpd * Time.fixedDeltaTime, 0);
-                }
-
-                if (screenMousePos.x > xViewThresR)
-                {
-                    //Debug.Log("Move x view");
-                    transform.Rotate(0, rotSpd * Time.fixedDeltaTime, 0);
-                }
-
-                if (screenMousePos.y > yViewThresU)
-                {
-                    //Debug.Log("Move y view");
-                    transform.Rotate(-rotSpd * Time.fixedDeltaTime, 0, 0);
-                }
-
-                if (screenMousePos.y < yViewThresD)
-                {
-                    //Debug.Log("Move y view");
-                    transform.Rotate(rotSpd * Time.fixedDeltaTime, 0, 0);
-                }
-                */
-            }
-            else
-            {
-                rotation.y += -Input.GetAxis("Mouse X");
-                rotation.x += Input.GetAxis("Mouse Y");
-                //rotation.x = Mathf.Clamp(rotation.x, -15f, 15f);
-                transform.eulerAngles = new Vector3(rotation.x, rotation.y, 0) * lookSpd;
-                Camera.main.transform.localRotation = Quaternion.Euler(rotation.x * lookSpd, 0, 0);
-                /*
-                if (screenMousePos.x < xViewThresL)
-                {
-                    //Debug.Log("Move x view");
-                    transform.Rotate(0, rotSpd * Time.fixedDeltaTime, 0);
-                }
-
-                if (screenMousePos.x > xViewThresR)
-                {
-                    //Debug.Log("Move x view");
-                    transform.Rotate(0, -rotSpd * Time.fixedDeltaTime, 0);
-                }
-
-                if (screenMousePos.y > yViewThresU)
-                {
-                    //Debug.Log("Move y view");
-                    transform.Rotate(rotSpd * Time.fixedDeltaTime, 0, 0);
-                }
-
-                if (screenMousePos.y < yViewThresD)
-                {
-                    //Debug.Log("Move y view");
-                    transform.Rotate(-rotSpd * Time.fixedDeltaTime, 0, 0);
-                }
-                */
-            }
-        }
-
-        if (joystick)
-        {
-            if (hor2 != 0)
-            {
-                if (invertControls) transform.Rotate(0, rotSpd * Time.fixedDeltaTime * hor2, 0);
-                else transform.Rotate(0, -rotSpd * Time.fixedDeltaTime * hor2, 0);
-            }
-
-            if (vert2 != 0)
-            {
-                if (invertControls) transform.Rotate(rotSpd * Time.fixedDeltaTime * vert2, 0, 0);
-                else transform.Rotate(-rotSpd * Time.fixedDeltaTime * vert2, 0, 0);
-            }
-        }
-        /**/
-
-        //float hor = Input.GetAxis("Horizontal");
-
-
-        if (hor != 0) newVelX = -transform.right * sideSpeed * hor;
-        else newVelX = Vector3.zero;
-        if (!hitWall) newVelZ = -transform.forward * speed;
-        if (!hitWall) bod.velocity = newVelX + newVelZ;
-        //if (hor != 0) transform.Rotate(0, hor * sideRotSpd * Time.fixedDeltaTime, 0);
-    }
-
     public void GetMouseSensitivity()
     {
         lookSpd = PlayerPrefs.GetFloat("MouseSensitivity", lookSpd);
@@ -415,6 +419,8 @@ public class PlayerController : MonoBehaviour
             Invoke("ResetHitWall", timeToMove);
             //bod.velocity = transform.forward * pushBack;
             bod.AddForce(transform.forward * pushBack);
+            //Take damage?
+            stats.Damage(collisionDamage);
         }
     }
 
@@ -430,7 +436,6 @@ public class PlayerController : MonoBehaviour
         screenMousePos.x = Mathf.Clamp01(screenMousePos.x);
         screenMousePos.y = Mathf.Clamp01(screenMousePos.y);
         transform.position = Camera.main.ViewportToWorldPoint(screenMousePos);
-    
     }
 
     public void AfterImage()
