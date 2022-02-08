@@ -20,7 +20,7 @@ public class TurretController : MonoBehaviour
 
     //Player
     PlayerController player;
-
+    public bool isRandom;
     GameManager cont;
 
     private void Awake()
@@ -63,6 +63,10 @@ public class TurretController : MonoBehaviour
             bul.SetActive(true);
             bul.transform.LookAt(player.transform);
             bul.transform.Rotate(0, Random.Range(-15f, 15f), 0);
+            if (isRandom)
+            {
+                bul.transform.rotation = Quaternion.Euler(Random.Range(0, 360), Random.Range(0, 360), Random.Range(0, 360));
+            }
             bul.GetComponent<EnemyBullet>().Push();
         }
 

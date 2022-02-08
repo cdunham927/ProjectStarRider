@@ -37,7 +37,6 @@ public class Player_Bullet : Bullet
         base.Disable();
     }
 
-    /*
     private void OnTriggerEnter(Collider col)
     {
         if (col.CompareTag("Enemy"))
@@ -48,11 +47,8 @@ public class Player_Bullet : Bullet
             //ContactPoint cp = col.GetContact(0);
             if (hitVFXPool == null) hitVFXPool = cont.hitVFXPool;
             GameObject hit = hitVFXPool.GetPooledObject();
-            //Get particle systems and emit 1 particle
-            curEmit = hit.GetComponentsInChildren<ParticleSystem>();
-            foreach (ParticleSystem e in curEmit) e.Emit(1);
-            hit.transform.position = transform.position;
-            hit.transform.rotation = transform.rotation;
+            hit.transform.position = spawnPos.transform.position;
+            hit.transform.rotation = spawnPos.transform.rotation;
             //bul.GetComponent<Rigidbody>().velocity = bod.velocity;
             hit.SetActive(true);
         }
@@ -61,19 +57,16 @@ public class Player_Bullet : Bullet
             //Invoke("Disable", 0.01f);
             if (hitVFXPool == null) hitVFXPool = cont.hitVFXPool;
             GameObject hit = hitVFXPool.GetPooledObject();
-            //Get particle systems and emit 1 particle
-            curEmit = hit.GetComponentsInChildren<ParticleSystem>();
-            foreach (ParticleSystem e in curEmit) e.Emit(1);
-            hit.transform.position = transform.position;
-            hit.transform.rotation = transform.rotation;
+            hit.transform.position = spawnPos.transform.position;
+            hit.transform.rotation = spawnPos.transform.rotation;
             //bul.GetComponent<Rigidbody>().velocity = bod.velocity;
             hit.SetActive(true);
         }
-    }*/
+    }
 
     private void Update()
     {
-        transform.forward = bod.velocity.normalized;
+        //transform.forward = bod.velocity.normalized;
     }
 
     private void OnCollisionEnter(Collision col)

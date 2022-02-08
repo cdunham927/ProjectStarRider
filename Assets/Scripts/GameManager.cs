@@ -144,14 +144,19 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetButtonDown("Pause") && !gameIsOver)
         {
-            if (gameIsPaused)
+            if (optionsMenu == null) optionsMenu = scene.optionsMenu;
+
+            if (gameIsPaused && optionsMenu != null && !optionsMenu.activeInHierarchy)
             {
                 Resume();
             }
-            else
-            {
+            else if (!gameIsPaused) {
                 //EventSystem.current.firstSelectedGameObject = mainMenuButton;
                 Pause();
+            }
+            else
+            {
+                scene.Back();
             }
         }
 
