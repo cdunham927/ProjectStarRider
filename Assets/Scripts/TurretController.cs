@@ -17,7 +17,7 @@ public class TurretController : MonoBehaviour
     //Set the radius for the detection collider
     public SphereCollider detectionCollider;
     public Collider col;
-    public bool isRandom;
+    
 
     //Player
     PlayerController player;
@@ -64,13 +64,9 @@ public class TurretController : MonoBehaviour
             bul.SetActive(true);
             bul.transform.LookAt(player.transform);
             bul.transform.Rotate(0, Random.Range(-15f, 15f), 0);
-<<<<<<< HEAD
-            if (isRandom)
-=======
             
 
             if (isRandom == true)
->>>>>>> 2815b09b94a884ae1c7e1ae5fffebfb502fd0374
             {
                 bul.transform.rotation = Quaternion.Euler(Random.Range(0, 360), Random.Range(0, 360), Random.Range(0, 360));
             }
