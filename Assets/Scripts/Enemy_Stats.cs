@@ -5,6 +5,7 @@ using UnityEngine;
 public class Enemy_Stats : MonoBehaviour
 {
     public int MaxHP;
+    [HideInInspector]
     public int CurrHP;
     
     public Healthbar healthScript;
@@ -38,6 +39,11 @@ public class Enemy_Stats : MonoBehaviour
     {
         cont = FindObjectOfType<GameManager>();
         hpPool = cont.hpPool;
+    }
+
+    public int GetHealth()
+    {
+        return CurrHP;
     }
 
     void OnEnable() 

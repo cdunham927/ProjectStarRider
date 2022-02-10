@@ -43,7 +43,7 @@ public class Player_Bullet : Bullet
         {
             //Debug.Log("Hit Enemy");
             col.gameObject.GetComponent<Enemy_Stats>().Damage(dmg);
-            Invoke("Disable", 0.01f);
+            Invoke("Disable", 0.001f);
             //ContactPoint cp = col.GetContact(0);
             if (hitVFXPool == null) hitVFXPool = cont.hitVFXPool;
             GameObject hit = hitVFXPool.GetPooledObject();
@@ -54,7 +54,7 @@ public class Player_Bullet : Bullet
         }
         if (col.CompareTag("Wall"))
         {
-            //Invoke("Disable", 0.01f);
+            Invoke("Disable", 0.001f);
             if (hitVFXPool == null) hitVFXPool = cont.hitVFXPool;
             GameObject hit = hitVFXPool.GetPooledObject();
             hit.transform.position = spawnPos.transform.position;
