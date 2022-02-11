@@ -6,6 +6,12 @@ public class EnemyDetectionController : MonoBehaviour
 {
     public TurretController parent;
     public Animator anim;
+    public Healthbar hpBar;
+
+    private void Awake()
+    {
+        //hpBar = GetComponent<Healthbar>();
+    }
 
     private void OnEnable()
     {
@@ -16,6 +22,7 @@ public class EnemyDetectionController : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            //hpBar.SwitchUIActive(true);
             anim.SetBool("InRange", true);
             parent.playerInRange = true;
             parent.SetCollider(true);
@@ -26,6 +33,7 @@ public class EnemyDetectionController : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            hpBar.SwitchUIActive(false);
             anim.SetBool("InRange", false);
             parent.playerInRange = false;
             parent.SetCollider(false);

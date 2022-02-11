@@ -34,8 +34,11 @@ public class Enemy_Stats : MonoBehaviour
     GameManager cont;
     public GameObject minimapObj;
 
+    public Healthbar hpBar;
+
     private void Awake()
     {
+        //hpBar = GetComponent<Healthbar>();
         cont = FindObjectOfType<GameManager>();
         hpPool = cont.hpPool;
     }
@@ -57,6 +60,7 @@ public class Enemy_Stats : MonoBehaviour
     public void Damage(int damageAmount)
     {
         if (anim != null) anim.SetTrigger("Hit");
+        hpBar.SwitchUIActive(true);
         CurrHP -= damageAmount;
         healthScript.SetHealth(CurrHP);
         //Debug.Log("Enemy took damage");
