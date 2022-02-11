@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Shapes;
+using UnityEngine.Rendering;
 
 public class Player_Stats : MonoBehaviour
 {
@@ -16,23 +18,37 @@ public class Player_Stats : MonoBehaviour
     
     [Header("UI Assets")]
     public Image healthImage;
-    
+
+    //Shapes things
+    public float size;
+    public Shapes.Rectangle innerRect;
+
     public float lerpSpd = 7f;
+
     //GameManager OverUI;
+
 
     void Start()
     {
         //OverUI = FindObjectOfType<GameManager>().GameOver();
-        healthImage = GameObject.FindGameObjectWithTag("Health").GetComponent<Image>();
+        //healthImage = GameObject.FindGameObjectWithTag("Health").GetComponent<Image>();
+        innerRect = GameObject.FindGameObjectWithTag("Health").GetComponent<Shapes.Rectangle>();
 
         Curr_hp = Max_hp;
     }
 
     private void Update()
     {
-        if (Application.isEditor && Input.GetKeyDown(KeyCode.L)) Damage(1);
+        if (Application.isEditor)
+        {
+            if (Input.GetKeyDown(KeyCode.Alpha1))
+            {
+                Damage(1);
+            }
+        }
 
-        healthImage.fillAmount = Mathf.Lerp(healthImage.fillAmount, (float)Curr_hp / (float)Max_hp, lerpSpd * Time.deltaTime);
+        //healthImage.fillAmount = Mathf.Lerp(healthImage.fillAmount, (float)Curr_hp / (float)Max_hp, lerpSpd * Time.deltaTime);
+        innerRect.Width = ((float)Curr_hp / (float)Max_hp) * size;
     }
 
     public void Heal(int amt)

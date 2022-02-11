@@ -2,11 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-//using Shapes;
-//using UnityEngine.Rendering;
+using Shapes;
+using UnityEngine.Rendering;
 
-public class Healthbar : MonoBehaviour
-//public class Healthbar : ImmediateModeMonitor
+public class Healthbar : ImmediateModeShapeDrawer
 {
     public GameObject canv;
     public Image slider;
@@ -14,37 +13,38 @@ public class Healthbar : MonoBehaviour
     PlayerController player;
     public Vector3 dir;
 
-    //Shapes things
-    public float lineThickness;
-    public bool use3D;
-    public Color fillColorStart;
-    public Color fillColorEnd;
-    public Color borderColor;
-    public float healthBarWidth;
-    public float healthBarHeight;
+     //Shapes things
+     public float lineThickness;
+     public bool use3D;
+     public Color fillColorStart;
+     public Color fillColorEnd;
+     public Color borderColor;
+     public float healthBarWidth;
+     public float healthBarHeight;
 
-    /*public override void DrawShapes(Camera cam)
-    {
-        using (Draw.Command(cam))
-        {
-            Draw.ZTest = CompareFunction.Always;
-            Draw.Thickness = lineThickness;
-            Draw.LineGeometry = use3D ? LineGeometry.Volumetric3D : LineGeometry.Flat2D;
-            Draw.ThicknessSpace = ThicknessSpace.Pixels;
-            Draw.Color = fillColorStart;
-            Draw.Matrix = transform.localToWorldMatrix;
+     public override void DrawShapes(Camera cam)
+     {
+         using (Draw.Command(cam))
+         {
+             Draw.ZTest = CompareFunction.Always;
+             Draw.Thickness = lineThickness;
+             Draw.LineGeometry = use3D ? LineGeometry.Volumetric3D : LineGeometry.Flat2D;
+             Draw.ThicknessSpace = ThicknessSpace.Pixels;
+             Draw.Color = fillColorStart;
+             Draw.Matrix = transform.localToWorldMatrix;
 
-            float healthWidthPercentage = (float)stats.GetHealth() / (float)stats.MaxHP;
+             float healthWidthPercentage = (float)stats.GetHealth() / (float)stats.MaxHP;
 
-            Rect outerRect = new Rect(0, 0, healthBarWidth, healthBarHeight);
-            Rect innerRect = new Rect(0, 0, healthWidthPercentage, healthBarHeight);
+             Rect outerRect = new Rect(0, 0, healthBarWidth, healthBarHeight);
+             Rect innerRect = new Rect(0, 0, healthWidthPercentage, healthBarHeight);
 
-            Vector4 cornerRadii = new Vector4(0.5f, 1f, 1.5f, 2f);
+             Vector4 cornerRadii = new Vector4(0.5f, 1f, 1.5f, 2f);
 
-            Draw.Rectangle(innerRect, fillColorEnd);
-            Draw.RectangleBorder(outerRect, lineThickness, cornerRadii, borderColor);
-        }
-    }*/
+             Draw.Rectangle(innerRect, fillColorEnd);
+             Draw.RectangleBorder(outerRect, lineThickness, cornerRadii, borderColor);
+         }
+     }
+
 
     private void Awake()
     {
@@ -73,6 +73,6 @@ public class Healthbar : MonoBehaviour
 
     public void SetHealth(int health)
     {
-        slider.fillAmount = (float)health / (float)stats.MaxHP;
+        //slider.fillAmount = (float)health / (float)stats.MaxHP;
     }
 }

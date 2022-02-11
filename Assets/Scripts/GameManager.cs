@@ -62,13 +62,19 @@ public class GameManager : MonoBehaviour
     public GameObject uiParent;
     [HideInInspector]
     public PlayerController player;
+    public GameObject uiCamera;
+    Camera uiCam;
 
     GameObject optionsMenu;
     SceneSwitch scene;
 
+    Canvas can;
+
     // Start is called before the first frame update
     void Awake()
     {
+        can = GetComponent<Canvas>();
+        can.worldCamera = Instantiate(uiCamera).GetComponent<Camera>();
         scene = FindObjectOfType<SceneSwitch>();
         if (tutorialLevel)
         {

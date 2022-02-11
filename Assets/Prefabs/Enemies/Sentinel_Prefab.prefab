@@ -50,7 +50,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &331639249648433790
 Transform:
   m_ObjectHideFlags: 0
@@ -60,7 +60,7 @@ Transform:
   m_GameObject: {fileID: 1139947883432206532}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -25.5, y: 79.1, z: 585}
-  m_LocalScale: {x: 30, y: 30, z: 30}
+  m_LocalScale: {x: 6, y: 6, z: 6}
   m_Children:
   - {fileID: 4283628149098481256}
   - {fileID: 8518689779421600657}
@@ -121,10 +121,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65259cc6f8b30344aa1ac8eba18cca73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  useCullingMasks: 0
   canv: {fileID: 5735672329957655316}
   slider: {fileID: 2998539813025873492}
   stats: {fileID: 7676454518761160614}
   dir: {x: 0, y: 1, z: 0}
+  lineThickness: 5
+  use3D: 0
+  fillColorStart: {r: 1, g: 1, b: 1, a: 1}
+  fillColorEnd: {r: 1, g: 0, b: 0, a: 1}
+  borderColor: {r: 0.6132076, g: 0, b: 0, a: 1}
+  healthBarWidth: 100
+  healthBarHeight: 15
 --- !u!114 &7255042562914908036
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -143,6 +151,7 @@ MonoBehaviour:
   playerInRange: 0
   detectionCollider: {fileID: 6229183058674865352}
   col: {fileID: 2550159598481487559}
+  isRandom: 0
 --- !u!135 &2550159598481487559
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -154,7 +163,7 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.73
+  m_Radius: 1.03
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1481282251394324850
 GameObject:
@@ -232,7 +241,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 25
+  m_Radius: 8.38
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &170566211678139085
 MonoBehaviour:
@@ -310,8 +319,8 @@ RectTransform:
   m_Father: {fileID: 3612458193574352749}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMin: {x: 0.2, y: 0}
+  m_AnchorMax: {x: 0.2, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -638,7 +647,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0.2, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
