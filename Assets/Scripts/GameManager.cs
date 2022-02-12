@@ -206,6 +206,7 @@ public class GameManager : MonoBehaviour
     { 
         if (gameIsOver == false)
         {
+            MusicController.instance.ChangeSong(MusicController.instance.deathClip);
             //Deactivate enemycounttext
             if (enemyCountText != null && enemyCountText.gameObject.activeInHierarchy)
             {
@@ -235,6 +236,7 @@ public class GameManager : MonoBehaviour
     {
         if (gameIsOver == false)
         {
+            MusicController.instance.ChangeSong(MusicController.instance.winClip);
             //Deactivate enemycounttext
             if (enemyCountText != null && enemyCountText.gameObject.activeInHierarchy)
             {

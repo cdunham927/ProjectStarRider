@@ -26,8 +26,6 @@ public class Player_Stats : MonoBehaviour
     public float lerpSpd = 7f;
 
     //GameManager OverUI;
-
-
     void Start()
     {
         //OverUI = FindObjectOfType<GameManager>().GameOver();
@@ -43,7 +41,7 @@ public class Player_Stats : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Alpha1))
             {
-                Damage(1);
+                Damage(2);
             }
         }
 
@@ -70,13 +68,12 @@ public class Player_Stats : MonoBehaviour
         {
             Instantiate(deathVFX, transform.position, Quaternion.identity);
             Invoke("Death", 1f);
-            
+            PlayerDead = true;
         }
     }
 
     void Death() 
     {
-        PlayerDead = true;
         FindObjectOfType<GameManager>().GameOver();
         gameObject.SetActive(false);
     }

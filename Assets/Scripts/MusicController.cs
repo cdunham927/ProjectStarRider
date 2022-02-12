@@ -8,6 +8,9 @@ public class MusicController : MonoBehaviour
 
     public static MusicController instance;
     public AudioSource src;
+    public AudioClip deathClip;
+    public AudioClip winClip;
+    public AudioClip tutorialSong;
 
     //Gotta save audio settings to playerprefs, then load those prefs on awake
 

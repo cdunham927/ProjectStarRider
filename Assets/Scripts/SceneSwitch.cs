@@ -130,6 +130,10 @@ public class SceneSwitch : MonoBehaviour
 
     public void Restart()
     {
+        if (cont.tutorialLevel)
+        {
+            MusicController.instance.ChangeSong(MusicController.instance.tutorialSong);
+        }
         if (cont == null)
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
