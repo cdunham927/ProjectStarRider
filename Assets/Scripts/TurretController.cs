@@ -18,6 +18,8 @@ public class TurretController : MonoBehaviour
     public SphereCollider detectionCollider;
     public Collider col;
 	public bool isRandom;
+    public float accx;
+    public float accy;
     
 
     //Player
@@ -63,7 +65,7 @@ public class TurretController : MonoBehaviour
             //Activate it at the enemy position
             bul.SetActive(true);
             bul.transform.LookAt(player.transform);
-            bul.transform.Rotate(0, Random.Range(-15f, 15f), 0);
+            bul.transform.Rotate(Random.Range(-accx,accx), Random.Range(-accy, accy), 0);
             if (isRandom == true)
             {
                 bul.transform.rotation = Quaternion.Euler(Random.Range(0, 360), Random.Range(0, 360), Random.Range(0, 360));
