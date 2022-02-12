@@ -60,6 +60,7 @@ public class GameManager : MonoBehaviour
     public GameObject controlsText;
     public Text enemyCountText;
     public GameObject uiParent;
+    public GameObject healthbar;
     [HideInInspector]
     public PlayerController player;
     public GameObject uiCamera;
@@ -212,6 +213,7 @@ public class GameManager : MonoBehaviour
             }
             minimap.SetActive(false);
             uiParent.SetActive(false);
+            healthbar.SetActive(false);
             //If player is using keyboard, show the mouse
             if (!player.joystick)
             {
@@ -240,6 +242,7 @@ public class GameManager : MonoBehaviour
             }
             minimap.SetActive(false);
             uiParent.SetActive(false);
+            healthbar.SetActive(false);
             //If player is using keyboard, show the mouse
             if (!player.joystick)
             {
@@ -266,6 +269,7 @@ public class GameManager : MonoBehaviour
         }
         minimap.SetActive(false);
         uiParent.SetActive(false);
+        healthbar.SetActive(false);
         //If player is using keyboard, show the mouse
         if (!player.joystick)
         {
@@ -293,6 +297,7 @@ public class GameManager : MonoBehaviour
         }
         minimap.SetActive(true);
         optionsMenu.SetActive(false);
+        healthbar.SetActive(true);
         uiParent.SetActive(true);
         //If player is using keyboard, show the mouse
         //Show cursor
