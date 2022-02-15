@@ -120,260 +120,263 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        if (!joystick && !GameManager.gameIsPaused && !GameManager.gameIsOver)
+        if (!stats.PlayerDead)
         {
-            if (invertControls)
+            if (!joystick && !GameManager.gameIsPaused && !GameManager.gameIsOver)
             {
-                rotation.y += Input.GetAxis("Mouse X");
-                rotation.x += -Input.GetAxis("Mouse Y");
-                //rotation.x = Mathf.Clamp(rotation.x, -15f, 15f);
-                transform.eulerAngles = new Vector3(rotation.x, rotation.y, rotation.z) * lookSpd;
-                //Camera.main.transform.localRotation = Quaternion.Euler(rotation.x * lookSpd * Time.deltaTime, 0, 0);
-                /*
-                if (screenMousePos.x < xViewThresL)
+                if (invertControls)
                 {
-                    //Debug.Log("Move x view");
-                    transform.Rotate(0, -rotSpd * Time.fixedDeltaTime, 0);
-                }
+                    rotation.y += Input.GetAxis("Mouse X");
+                    rotation.x += -Input.GetAxis("Mouse Y");
+                    //rotation.x = Mathf.Clamp(rotation.x, -15f, 15f);
+                    transform.eulerAngles = new Vector3(rotation.x, rotation.y, rotation.z) * lookSpd;
+                    //Camera.main.transform.localRotation = Quaternion.Euler(rotation.x * lookSpd * Time.deltaTime, 0, 0);
+                    /*
+                    if (screenMousePos.x < xViewThresL)
+                    {
+                        //Debug.Log("Move x view");
+                        transform.Rotate(0, -rotSpd * Time.fixedDeltaTime, 0);
+                    }
 
-                if (screenMousePos.x > xViewThresR)
-                {
-                    //Debug.Log("Move x view");
-                    transform.Rotate(0, rotSpd * Time.fixedDeltaTime, 0);
-                }
+                    if (screenMousePos.x > xViewThresR)
+                    {
+                        //Debug.Log("Move x view");
+                        transform.Rotate(0, rotSpd * Time.fixedDeltaTime, 0);
+                    }
 
-                if (screenMousePos.y > yViewThresU)
-                {
-                    //Debug.Log("Move y view");
-                    transform.Rotate(-rotSpd * Time.fixedDeltaTime, 0, 0);
-                }
+                    if (screenMousePos.y > yViewThresU)
+                    {
+                        //Debug.Log("Move y view");
+                        transform.Rotate(-rotSpd * Time.fixedDeltaTime, 0, 0);
+                    }
 
-                if (screenMousePos.y < yViewThresD)
-                {
-                    //Debug.Log("Move y view");
-                    transform.Rotate(rotSpd * Time.fixedDeltaTime, 0, 0);
+                    if (screenMousePos.y < yViewThresD)
+                    {
+                        //Debug.Log("Move y view");
+                        transform.Rotate(rotSpd * Time.fixedDeltaTime, 0, 0);
+                    }
+                    */
                 }
-                */
-            }
-            else
-            {
-                rotation.y += -Input.GetAxis("Mouse X");
-                rotation.x += Input.GetAxis("Mouse Y");
-                //rotation.x = Mathf.Clamp(rotation.x, -15f, 15f);
-                transform.eulerAngles = new Vector3(rotation.x, rotation.y, rotation.z) * lookSpd;
-                //Camera.main.transform.localRotation = Quaternion.Euler(rotation.x * lookSpd * Time.deltaTime, 0, 0);
-                /*
-                if (screenMousePos.x < xViewThresL)
+                else
                 {
-                    //Debug.Log("Move x view");
-                    transform.Rotate(0, rotSpd * Time.fixedDeltaTime, 0);
-                }
+                    rotation.y += -Input.GetAxis("Mouse X");
+                    rotation.x += Input.GetAxis("Mouse Y");
+                    //rotation.x = Mathf.Clamp(rotation.x, -15f, 15f);
+                    transform.eulerAngles = new Vector3(rotation.x, rotation.y, rotation.z) * lookSpd;
+                    //Camera.main.transform.localRotation = Quaternion.Euler(rotation.x * lookSpd * Time.deltaTime, 0, 0);
+                    /*
+                    if (screenMousePos.x < xViewThresL)
+                    {
+                        //Debug.Log("Move x view");
+                        transform.Rotate(0, rotSpd * Time.fixedDeltaTime, 0);
+                    }
 
-                if (screenMousePos.x > xViewThresR)
-                {
-                    //Debug.Log("Move x view");
-                    transform.Rotate(0, -rotSpd * Time.fixedDeltaTime, 0);
-                }
+                    if (screenMousePos.x > xViewThresR)
+                    {
+                        //Debug.Log("Move x view");
+                        transform.Rotate(0, -rotSpd * Time.fixedDeltaTime, 0);
+                    }
 
-                if (screenMousePos.y > yViewThresU)
-                {
-                    //Debug.Log("Move y view");
-                    transform.Rotate(rotSpd * Time.fixedDeltaTime, 0, 0);
-                }
+                    if (screenMousePos.y > yViewThresU)
+                    {
+                        //Debug.Log("Move y view");
+                        transform.Rotate(rotSpd * Time.fixedDeltaTime, 0, 0);
+                    }
 
-                if (screenMousePos.y < yViewThresD)
-                {
-                    //Debug.Log("Move y view");
-                    transform.Rotate(-rotSpd * Time.fixedDeltaTime, 0, 0);
+                    if (screenMousePos.y < yViewThresD)
+                    {
+                        //Debug.Log("Move y view");
+                        transform.Rotate(-rotSpd * Time.fixedDeltaTime, 0, 0);
+                    }
+                    */
                 }
-                */
-            }
-        }
-
-        if (joystick && !GameManager.gameIsPaused && !GameManager.gameIsOver)
-        {
-            if (hor2 != 0)
-            {
-                if (invertControls) transform.Rotate(0, rotSpd * Time.deltaTime * hor2, 0);
-                else transform.Rotate(0, -rotSpd * Time.deltaTime * hor2, 0);
             }
 
-            if (vert2 != 0)
+            if (joystick && !GameManager.gameIsPaused && !GameManager.gameIsOver)
             {
-                if (invertControls) transform.Rotate(rotSpd * Time.deltaTime * vert2, 0, 0);
-                else transform.Rotate(-rotSpd * Time.deltaTime * vert2, 0, 0);
+                if (hor2 != 0)
+                {
+                    if (invertControls) transform.Rotate(0, rotSpd * Time.deltaTime * hor2, 0);
+                    else transform.Rotate(0, -rotSpd * Time.deltaTime * hor2, 0);
+                }
+
+                if (vert2 != 0)
+                {
+                    if (invertControls) transform.Rotate(rotSpd * Time.deltaTime * vert2, 0, 0);
+                    else transform.Rotate(-rotSpd * Time.deltaTime * vert2, 0, 0);
+                }
             }
-        }
-        if (Input.GetButton("RotateLeft"))
-        {
-            Debug.Log("rotateleft");
-            //transform.Rotate(0, 0, turnSpd * Time.deltaTime);
-            rotation.z += turnSpd * Time.deltaTime;
-        }
-
-        if (Input.GetButton("RotateRight"))
-        {
-            transform.Rotate(0, 0, -turnSpd * Time.deltaTime);
-            rotation.z -= turnSpd * Time.deltaTime;
-        }
-
-        if (Input.GetKey(KeyCode.Space))
-        {
-            //transform.position -= Vector3.up * speed * Time.deltaTime;
-        }
-
-        if (Input.GetKey(KeyCode.LeftShift))
-        {
-            //transform.position += Vector3.up * speed * Time.deltaTime;
-        }
-
-        /**/
-        //Vector2 screenMousePos = Camera.main.ScreenToViewportPoint(Input.mousePosition);
-        //Debug.Log(screenMousePos);
-
-        //Vector3 screenMousePos = Camera.main.ScreenToViewportPoint(Input.mousePosition);
-
-
-        /**/
-
-        //float hor = Input.GetAxis("Horizontal");
-
-
-        if (hor != 0) newVelX = -transform.right * sideSpeed * hor;
-        else newVelX = Vector3.zero;
-        if (!hitWall) newVelZ = -transform.forward * speed;
-        if (!hitWall) bod.velocity = newVelX + newVelZ;
-        //if (hor != 0) transform.Rotate(0, hor * sideRotSpd * Time.fixedDeltaTime, 0);
-
-
-        //Hide cursor if we click into the game
-        if (Input.GetMouseButtonDown(0) && !GameManager.gameIsPaused && !GameManager.gameIsOver)
-        {
-            //Lock cursor in screen;
-            Cursor.lockState = CursorLockMode.Confined;
-            //Hide cursor
-            Cursor.visible = false;
-        }
-        //Show the cursor if we click into the game and its paused
-        if (Input.GetMouseButtonDown(0) && (GameManager.gameIsPaused || GameManager.gameIsOver))
-        {
-            //Hide cursor
-            Cursor.visible = true;
-        }
-
-        //Update controller or keyboard input
-        if (Input.anyKeyDown) joystick = false;
-        for (int i = 0; i < 20; i++)
-        {
-            if (Input.GetKeyDown("joystick 1 button " + i))
+            if (Input.GetButton("RotateLeft"))
             {
-                Debug.Log("joystick 1 button " + i);
-                joystick = true;
+                Debug.Log("rotateleft");
+                //transform.Rotate(0, 0, turnSpd * Time.deltaTime);
+                rotation.z += turnSpd * Time.deltaTime;
             }
-        }
 
-        //float h = joystick ? Input.GetAxis("Horizontal") : Input.GetAxis("Mouse X");
-        //float v = joystick ? Input.GetAxis("Vertical") : Input.GetAxis("Mouse Y");
-
-         vert = Input.GetAxis("Vertical");
-         hor = Input.GetAxis("Horizontal");
-        //speed = (vert > 0) ? highSpd : slowSpd;
-        
-        if (vert > 0)
-        {
-            if (speedUpTimer > 0)
-                lerpToSpd = superSpd;
-            else lerpToSpd = highSpd;
-        }
-
-
-        else if (vert < 0) lerpToSpd = slowSpd;
-        else lerpToSpd = regSpd;
-
-        speed = Mathf.Lerp(speed, lerpToSpd, Time.deltaTime * spdLerpAmt);
-
-        vert2 = Input.GetAxis("Vertical2");
-        hor2 = Input.GetAxis("Horizontal2");
-
-        //Move(hor,vert,speed);
-        //Movement
-        //transform.position -= transform.forward * speed * Time.deltaTime;
-        //bod.AddForce(-transform.forward * speed * Time.deltaTime);
-
-
-        //If we hit fire button and we have one charge(the max clones is 4, so a fourth of the max images time is one charge
-        if (Input.GetButtonDown("Fire2") && (curActiveTime > (oneCharge)))
-        {
-            AfterImage();
-        }
-
-        //Alt fire with left trigger
-        if (Input.GetAxisRaw("Altfire2") == 1 && curActiveTime > oneCharge)
-        {
-            if (usingAxis == false)
+            if (Input.GetButton("RotateRight"))
             {
-                // Call your event function here.
+                transform.Rotate(0, 0, -turnSpd * Time.deltaTime);
+                rotation.z -= turnSpd * Time.deltaTime;
+            }
+
+            if (Input.GetKey(KeyCode.Space))
+            {
+                //transform.position -= Vector3.up * speed * Time.deltaTime;
+            }
+
+            if (Input.GetKey(KeyCode.LeftShift))
+            {
+                //transform.position += Vector3.up * speed * Time.deltaTime;
+            }
+
+            /**/
+            //Vector2 screenMousePos = Camera.main.ScreenToViewportPoint(Input.mousePosition);
+            //Debug.Log(screenMousePos);
+
+            //Vector3 screenMousePos = Camera.main.ScreenToViewportPoint(Input.mousePosition);
+
+
+            /**/
+
+            //float hor = Input.GetAxis("Horizontal");
+
+
+            if (hor != 0) newVelX = -transform.right * sideSpeed * hor;
+            else newVelX = Vector3.zero;
+            if (!hitWall) newVelZ = -transform.forward * speed;
+            if (!hitWall) bod.velocity = newVelX + newVelZ;
+            //if (hor != 0) transform.Rotate(0, hor * sideRotSpd * Time.fixedDeltaTime, 0);
+
+
+            //Hide cursor if we click into the game
+            if (Input.GetMouseButtonDown(0) && !GameManager.gameIsPaused && !GameManager.gameIsOver)
+            {
+                //Lock cursor in screen;
+                Cursor.lockState = CursorLockMode.Confined;
+                //Hide cursor
+                Cursor.visible = false;
+            }
+            //Show the cursor if we click into the game and its paused
+            if (Input.GetMouseButtonDown(0) && (GameManager.gameIsPaused || GameManager.gameIsOver))
+            {
+                //Hide cursor
+                Cursor.visible = true;
+            }
+
+            //Update controller or keyboard input
+            if (Input.anyKeyDown) joystick = false;
+            for (int i = 0; i < 20; i++)
+            {
+                if (Input.GetKeyDown("joystick 1 button " + i))
+                {
+                    Debug.Log("joystick 1 button " + i);
+                    joystick = true;
+                }
+            }
+
+            //float h = joystick ? Input.GetAxis("Horizontal") : Input.GetAxis("Mouse X");
+            //float v = joystick ? Input.GetAxis("Vertical") : Input.GetAxis("Mouse Y");
+
+            vert = Input.GetAxis("Vertical");
+            hor = Input.GetAxis("Horizontal");
+            //speed = (vert > 0) ? highSpd : slowSpd;
+
+            if (vert > 0)
+            {
+                if (speedUpTimer > 0)
+                    lerpToSpd = superSpd;
+                else lerpToSpd = highSpd;
+            }
+
+
+            else if (vert < 0) lerpToSpd = slowSpd;
+            else lerpToSpd = regSpd;
+
+            speed = Mathf.Lerp(speed, lerpToSpd, Time.deltaTime * spdLerpAmt);
+
+            vert2 = Input.GetAxis("Vertical2");
+            hor2 = Input.GetAxis("Horizontal2");
+
+            //Move(hor,vert,speed);
+            //Movement
+            //transform.position -= transform.forward * speed * Time.deltaTime;
+            //bod.AddForce(-transform.forward * speed * Time.deltaTime);
+
+
+            //If we hit fire button and we have one charge(the max clones is 4, so a fourth of the max images time is one charge
+            if (Input.GetButtonDown("Fire2") && (curActiveTime > (oneCharge)))
+            {
                 AfterImage();
-                usingAxis = true;
-            }
-        }
-        if (Input.GetAxisRaw("Altfire2") == 0)
-        {
-            usingAxis = false;
-        }
-
-        if (speedUpTimer > 0) speedUpTimer -= Time.deltaTime;
-
-        if (curActiveTime < maxImagesTime) curActiveTime += Time.deltaTime * rechargeSpd;
-
-        //afterimageUI[0].color - Color.Lerp(afterimagesUI[].color, ())
-
-        //0-8
-        if (afterimageUI[0] != null) afterimageUI[0].fillAmount = Mathf.Lerp(afterimageUI[0].fillAmount, (curActiveTime) / (oneCharge * 1f), uiLerp * Time.deltaTime);
-        if (afterimageUI[0] != null) afterimageUI[0].sprite = (curActiveTime < oneCharge * 1f) ? emptyImage : filledImage;
-        //8-16
-        if (afterimageUI[1] != null)
-        {
-            if (curActiveTime > oneCharge)
-            {
-                afterimageUI[1].fillAmount = Mathf.Lerp(afterimageUI[1].fillAmount, (curActiveTime) / (oneCharge * 2f), uiLerp * Time.deltaTime);
-                afterimageUI[1].sprite = (curActiveTime < oneCharge * 2f) ? emptyImage : filledImage;
             }
 
-            else
+            //Alt fire with left trigger
+            if (Input.GetAxisRaw("Altfire2") == 1 && curActiveTime > oneCharge)
             {
-                afterimageUI[1].fillAmount = Mathf.Lerp(afterimageUI[1].fillAmount, 0, uiLerp * Time.deltaTime);
-                afterimageUI[1].sprite = emptyImage;
+                if (usingAxis == false)
+                {
+                    // Call your event function here.
+                    AfterImage();
+                    usingAxis = true;
+                }
             }
-        }
-        //16-24
-        if (afterimageUI[2] != null)
-        {
-            if (curActiveTime > (oneCharge * 2f))
+            if (Input.GetAxisRaw("Altfire2") == 0)
             {
-                afterimageUI[2].fillAmount = Mathf.Lerp(afterimageUI[2].fillAmount, (curActiveTime) / (oneCharge * 3f), uiLerp * Time.deltaTime);
-                afterimageUI[2].sprite = (curActiveTime < oneCharge * 3f) ? emptyImage : filledImage;
-            }
-
-            else
-            {
-                afterimageUI[2].fillAmount = Mathf.Lerp(afterimageUI[2].fillAmount, 0, uiLerp * Time.deltaTime);
-                afterimageUI[2].sprite = emptyImage;
-            }
-        }
-        //24-32
-        if (afterimageUI[3] != null)
-        {
-            if (curActiveTime > (oneCharge * 3f))
-            {
-                afterimageUI[3].fillAmount = Mathf.Lerp(afterimageUI[3].fillAmount, curActiveTime / maxImagesTime, uiLerp * Time.deltaTime);
-                afterimageUI[3].sprite = (curActiveTime < maxImagesTime) ? emptyImage : filledImage;
+                usingAxis = false;
             }
 
-            else
+            if (speedUpTimer > 0) speedUpTimer -= Time.deltaTime;
+
+            if (curActiveTime < maxImagesTime) curActiveTime += Time.deltaTime * rechargeSpd;
+
+            //afterimageUI[0].color - Color.Lerp(afterimagesUI[].color, ())
+
+            //0-8
+            if (afterimageUI[0] != null) afterimageUI[0].fillAmount = Mathf.Lerp(afterimageUI[0].fillAmount, (curActiveTime) / (oneCharge * 1f), uiLerp * Time.deltaTime);
+            if (afterimageUI[0] != null) afterimageUI[0].sprite = (curActiveTime < oneCharge * 1f) ? emptyImage : filledImage;
+            //8-16
+            if (afterimageUI[1] != null)
             {
-                afterimageUI[3].fillAmount = Mathf.Lerp(afterimageUI[3].fillAmount, 0, uiLerp * Time.deltaTime);
-                afterimageUI[3].sprite = emptyImage;
+                if (curActiveTime > oneCharge)
+                {
+                    afterimageUI[1].fillAmount = Mathf.Lerp(afterimageUI[1].fillAmount, (curActiveTime) / (oneCharge * 2f), uiLerp * Time.deltaTime);
+                    afterimageUI[1].sprite = (curActiveTime < oneCharge * 2f) ? emptyImage : filledImage;
+                }
+
+                else
+                {
+                    afterimageUI[1].fillAmount = Mathf.Lerp(afterimageUI[1].fillAmount, 0, uiLerp * Time.deltaTime);
+                    afterimageUI[1].sprite = emptyImage;
+                }
+            }
+            //16-24
+            if (afterimageUI[2] != null)
+            {
+                if (curActiveTime > (oneCharge * 2f))
+                {
+                    afterimageUI[2].fillAmount = Mathf.Lerp(afterimageUI[2].fillAmount, (curActiveTime) / (oneCharge * 3f), uiLerp * Time.deltaTime);
+                    afterimageUI[2].sprite = (curActiveTime < oneCharge * 3f) ? emptyImage : filledImage;
+                }
+
+                else
+                {
+                    afterimageUI[2].fillAmount = Mathf.Lerp(afterimageUI[2].fillAmount, 0, uiLerp * Time.deltaTime);
+                    afterimageUI[2].sprite = emptyImage;
+                }
+            }
+            //24-32
+            if (afterimageUI[3] != null)
+            {
+                if (curActiveTime > (oneCharge * 3f))
+                {
+                    afterimageUI[3].fillAmount = Mathf.Lerp(afterimageUI[3].fillAmount, curActiveTime / maxImagesTime, uiLerp * Time.deltaTime);
+                    afterimageUI[3].sprite = (curActiveTime < maxImagesTime) ? emptyImage : filledImage;
+                }
+
+                else
+                {
+                    afterimageUI[3].fillAmount = Mathf.Lerp(afterimageUI[3].fillAmount, 0, uiLerp * Time.deltaTime);
+                    afterimageUI[3].sprite = emptyImage;
+                }
             }
         }
 

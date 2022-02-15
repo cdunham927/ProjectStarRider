@@ -25,9 +25,13 @@ public class Player_Stats : MonoBehaviour
 
     public float lerpSpd = 7f;
 
+    GameObject dVfx;
+
     //GameManager OverUI;
-    void Start()
+    void Awake()
     {
+        dVfx = Instantiate(deathVFX);
+        dVfx.SetActive(false);
         //OverUI = FindObjectOfType<GameManager>().GameOver();
         //healthImage = GameObject.FindGameObjectWithTag("Health").GetComponent<Image>();
         innerRect = GameObject.FindGameObjectWithTag("Health").GetComponent<Shapes.Rectangle>();
@@ -64,11 +68,22 @@ public class Player_Stats : MonoBehaviour
         if (anim != null) anim.SetTrigger("Hit");
         //anything that takes place when the hp is zero should go here
         Curr_hp -= damageAmount;
-        if (Curr_hp <= 0 && PlayerDead == false) 
+        if (Curr_hp <= 0)
         {
-            Instantiate(deathVFX, transform.position, Quaternion.identity);
-            Invoke("Death", 1f);
-            PlayerDead = true;
+            //Stop player movement
+            GetComponent<Rigidbody>().velocity = Vector3.zero;
+            //Spawn death vfx
+            dVfx.transform.position = transform.position;
+            foreach (Transform t in dVfx.GetComponentsInChildren<Transform>())
+                dVfx.transform.rotation = transform.rotation;
+            dVfx.SetActive(true);
+            //o.transform.SetParent(this.transform);
+            //Debug.Log("Player dying");
+            if (!PlayerDead)
+            {
+                Invoke("Death", 1f);
+                PlayerDead = true;
+            }
         }
     }
 
