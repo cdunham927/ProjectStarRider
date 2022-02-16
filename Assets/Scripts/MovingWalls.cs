@@ -23,6 +23,14 @@ public class MovingWalls : MonoBehaviour
             }
             else currentMarker = 0;
         }
-        
+    }
+
+    public void SwitchDoor()
+    {
+        if (currentMarker == 0)
+        {
+            currentMarker = 1;
+        }
+        else currentMarker = 0;
     }
 }

@@ -36,6 +36,10 @@ public class Enemy_Stats : MonoBehaviour
 
     public Healthbar hpBar;
 
+    //Enemy Manager for trap rooms
+    [HideInInspector]
+    public EnemyManager manager;
+
     private void Awake()
     {
         //hpBar = GetComponent<Healthbar>();
@@ -54,7 +58,6 @@ public class Enemy_Stats : MonoBehaviour
         spawned = false;
         if (minimapObj != null) minimapObj.SetActive(true);
         CurrHP = MaxHP;
-    
     }
     
     public void Damage(int damageAmount)
@@ -93,7 +96,8 @@ public class Enemy_Stats : MonoBehaviour
                 //FindObjectOfType<GameManager>().EnemyDiedEvent();
             }
             if (minimapObj != null) minimapObj.SetActive(false);
-            FindObjectOfType<GameManager>().EnemyDiedEvent();
+            manager.EnemyDied();
+            //FindObjectOfType<GameManager>().EnemyDiedEvent();
             //if (anim != null) anim.SetTrigger("Death");
             //Invoke("Disable", deathClip.length);
             Instantiate(deathVFX, transform.position, transform.rotation);
