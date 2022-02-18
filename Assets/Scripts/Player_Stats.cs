@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Shapes;
 using UnityEngine.Rendering;
+using Cinemachine;
 
 public class Player_Stats : MonoBehaviour
 {
@@ -28,8 +29,30 @@ public class Player_Stats : MonoBehaviour
     GameObject dVfx;
 
     //GameManager OverUI;
-    void Awake()
+
+    //Audio stuff
+    AudioSource src;
+    public AudioClip takeDamageClip;
+    public AudioClip explodeClip;
+    public float hitVolume;
+    public float explodeVolume;
+
+    //Camera shake on take damage
+    CinemachineVirtualCamera cine;
+    CinemachineBasicMultiChannelPerlin perlin;
+    public float shakeTimer;
+    float curTime;
+    public float shakeAmt;
+
+    private void Awake()
     {
+        //src = FindObjectOfType<GameManager>().GetComponent<AudioSource>();
+
+        //Camera shake things
+        if (cine == null) cine = Camera.main.GetComponent<CinemachineVirtualCamera>();
+        if (perlin == null) perlin = cine.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
+
+        src = GetComponent<AudioSource>();
         dVfx = Instantiate(deathVFX);
         dVfx.SetActive(false);
         //OverUI = FindObjectOfType<GameManager>().GameOver();
@@ -39,8 +62,24 @@ public class Player_Stats : MonoBehaviour
         Curr_hp = Max_hp;
     }
 
+    public void ShakeCamera()
+    {
+        perlin.m_AmplitudeGain = shakeAmt;
+        curTime = shakeTimer;
+    }
+
     private void Update()
     {
+        if (curTime > 0)
+        {
+            curTime -= Time.deltaTime;
+        }
+
+        if (curTime <= 0 && perlin != null)
+        {
+            perlin.m_AmplitudeGain = 0f;
+        }
+
         if (Application.isEditor)
         {
             if (Input.GetKeyDown(KeyCode.Alpha1))
@@ -68,8 +107,18 @@ public class Player_Stats : MonoBehaviour
         if (anim != null) anim.SetTrigger("Hit");
         //anything that takes place when the hp is zero should go here
         Curr_hp -= damageAmount;
+        ShakeCamera();
+        //Play damage sound
+        if (Curr_hp > 0)
+        {
+            src.volume = hitVolume;
+            src.PlayOneShot(takeDamageClip);
+        }
         if (Curr_hp <= 0)
         {
+            //Play explosion sound
+            src.volume = explodeVolume;
+            src.PlayOneShot(explodeClip);
             //Stop player movement
             GetComponent<Rigidbody>().velocity = Vector3.zero;
             //Spawn death vfx

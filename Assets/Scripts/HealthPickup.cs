@@ -15,6 +15,9 @@ public class HealthPickup : Pickup
     //float xRot, yRot, zRot;
     public bool moves = true;
 
+    public AudioClip clip;
+
+
     private void OnEnable()
     {
         stats = FindObjectOfType<Player_Stats>();
@@ -44,6 +47,7 @@ public class HealthPickup : Pickup
     {
         if (!healed)
         {
+            MusicController.instance.src.PlayOneShot(clip);
             healed = true;
             stats.Heal(amountToGive);
             Invoke("Disable", 0.001f);

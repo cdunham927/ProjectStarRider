@@ -70,6 +70,7 @@ public class GameManager : MonoBehaviour
     SceneSwitch scene;
 
     Canvas can;
+    public float waitTime = 1f;
 
     // Start is called before the first frame update
     void Awake()
@@ -153,11 +154,11 @@ public class GameManager : MonoBehaviour
         {
             if (optionsMenu == null) optionsMenu = scene.optionsMenu;
 
-            if (gameIsPaused && optionsMenu != null && !optionsMenu.activeInHierarchy)
+            if (gameIsPaused && !optionsMenu.activeInHierarchy)
             {
                 Resume();
             }
-            else if (!gameIsPaused) {
+            else if (!gameIsPaused && !optionsMenu.activeInHierarchy) {
                 //EventSystem.current.firstSelectedGameObject = mainMenuButton;
                 Pause();
             }
@@ -203,7 +204,13 @@ public class GameManager : MonoBehaviour
     }
 
     public void GameOver() 
-    { 
+    {
+        StartCoroutine(ShowGameOver());
+    }
+
+    IEnumerator ShowGameOver()
+    {
+        yield return new WaitForSeconds(waitTime);
         if (gameIsOver == false)
         {
             MusicController.instance.ChangeSong(MusicController.instance.deathClip);
@@ -226,9 +233,8 @@ public class GameManager : MonoBehaviour
             GameOverUI.SetActive(true);
             EventSystem.current.SetSelectedGameObject(null);
             EventSystem.current.SetSelectedGameObject(gameoverButton);
-            Time.timeScale = 1f; 
+            Time.timeScale = 1f;
             gameIsOver = true;
-
         }
     }
 
@@ -272,6 +278,7 @@ public class GameManager : MonoBehaviour
         minimap.SetActive(false);
         uiParent.SetActive(false);
         healthbar.SetActive(false);
+        optionsMenu.SetActive(false);
         //If player is using keyboard, show the mouse
         if (!player.joystick)
         {

@@ -45,7 +45,7 @@ public class EnemyManager : MonoBehaviour
     public void EnemyDied()
     {
         enemyCount--;
-        if (enemyCount <= 0)
+        if (enemyCount <= 0 && door != null)
         {
             door.SwitchDoor();
         }

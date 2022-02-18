@@ -93,8 +93,14 @@ public class PlayerController : MonoBehaviour
 
     bool usingAxis = false;
     float vert, hor, vert2, hor2;
+    float rotAxis;
 
-    void Awake()
+    //Dashing ability
+    public float dashSpd;
+    public float dashCooldown;
+    float curDashCools;
+
+    private void Awake()
     {
         stats = FindObjectOfType<Player_Stats>();
         cont = FindObjectOfType<GameManager>();
@@ -120,114 +126,68 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        if (!stats.PlayerDead)
+        //Update controller or keyboard input
+        if (Input.anyKeyDown) joystick = false;
+        for (int i = 0; i < 20; i++)
         {
-            if (!joystick && !GameManager.gameIsPaused && !GameManager.gameIsOver)
+            if (Input.GetKeyDown("joystick 1 button " + i))
             {
-                if (invertControls)
+                Debug.Log("joystick 1 button " + i);
+                joystick = true;
+            }
+        }
+
+        if (!stats.PlayerDead && !GameManager.gameIsOver)
+        {
+            if (Input.GetButton("RotateLeft"))
+            {
+                Debug.Log("Pressing rotate left button");
+                //Debug.Log("rotateleft");
+                //transform.Rotate(0, 0, turnSpd * Time.deltaTime);
+                rotation.z -= turnSpd * Time.deltaTime;
+            }
+
+            if (Input.GetButton("RotateRight"))
+            {
+                Debug.Log("Pressing rotate right button");
+                //transform.Rotate(0, 0, turnSpd * Time.deltaTime);
+                rotation.z += turnSpd * Time.deltaTime;
+            }
+
+            if (!joystick && !GameManager.gameIsPaused)
+            {
+
+                if (!invertControls)
                 {
                     rotation.y += Input.GetAxis("Mouse X");
                     rotation.x += -Input.GetAxis("Mouse Y");
-                    //rotation.x = Mathf.Clamp(rotation.x, -15f, 15f);
-                    transform.eulerAngles = new Vector3(rotation.x, rotation.y, rotation.z) * lookSpd;
-                    //Camera.main.transform.localRotation = Quaternion.Euler(rotation.x * lookSpd * Time.deltaTime, 0, 0);
-                    /*
-                    if (screenMousePos.x < xViewThresL)
-                    {
-                        //Debug.Log("Move x view");
-                        transform.Rotate(0, -rotSpd * Time.fixedDeltaTime, 0);
-                    }
-
-                    if (screenMousePos.x > xViewThresR)
-                    {
-                        //Debug.Log("Move x view");
-                        transform.Rotate(0, rotSpd * Time.fixedDeltaTime, 0);
-                    }
-
-                    if (screenMousePos.y > yViewThresU)
-                    {
-                        //Debug.Log("Move y view");
-                        transform.Rotate(-rotSpd * Time.fixedDeltaTime, 0, 0);
-                    }
-
-                    if (screenMousePos.y < yViewThresD)
-                    {
-                        //Debug.Log("Move y view");
-                        transform.Rotate(rotSpd * Time.fixedDeltaTime, 0, 0);
-                    }
-                    */
                 }
                 else
                 {
                     rotation.y += -Input.GetAxis("Mouse X");
                     rotation.x += Input.GetAxis("Mouse Y");
-                    //rotation.x = Mathf.Clamp(rotation.x, -15f, 15f);
-                    transform.eulerAngles = new Vector3(rotation.x, rotation.y, rotation.z) * lookSpd;
-                    //Camera.main.transform.localRotation = Quaternion.Euler(rotation.x * lookSpd * Time.deltaTime, 0, 0);
-                    /*
-                    if (screenMousePos.x < xViewThresL)
-                    {
-                        //Debug.Log("Move x view");
-                        transform.Rotate(0, rotSpd * Time.fixedDeltaTime, 0);
-                    }
-
-                    if (screenMousePos.x > xViewThresR)
-                    {
-                        //Debug.Log("Move x view");
-                        transform.Rotate(0, -rotSpd * Time.fixedDeltaTime, 0);
-                    }
-
-                    if (screenMousePos.y > yViewThresU)
-                    {
-                        //Debug.Log("Move y view");
-                        transform.Rotate(rotSpd * Time.fixedDeltaTime, 0, 0);
-                    }
-
-                    if (screenMousePos.y < yViewThresD)
-                    {
-                        //Debug.Log("Move y view");
-                        transform.Rotate(-rotSpd * Time.fixedDeltaTime, 0, 0);
-                    }
-                    */
                 }
             }
 
-            if (joystick && !GameManager.gameIsPaused && !GameManager.gameIsOver)
+            if (joystick && !GameManager.gameIsPaused)
             {
                 if (hor2 != 0)
                 {
-                    if (invertControls) transform.Rotate(0, rotSpd * Time.deltaTime * hor2, 0);
-                    else transform.Rotate(0, -rotSpd * Time.deltaTime * hor2, 0);
+                    //if (invertControls) transform.Rotate(0, rotSpd * Time.deltaTime * hor2, 0);
+                    //else transform.Rotate(0, -rotSpd * Time.deltaTime * hor2, 0);
+                    if (!invertControls) rotation.y += rotSpd * Time.deltaTime * hor2;
+                    else rotation.y -= rotSpd * Time.deltaTime * hor2;
                 }
 
                 if (vert2 != 0)
                 {
-                    if (invertControls) transform.Rotate(rotSpd * Time.deltaTime * vert2, 0, 0);
-                    else transform.Rotate(-rotSpd * Time.deltaTime * vert2, 0, 0);
+                    //if (invertControls) transform.Rotate(rotSpd * Time.deltaTime * vert2, 0, 0);
+                    //else transform.Rotate(-rotSpd * Time.deltaTime * vert2, 0, 0);
+                    if (!invertControls) rotation.x += rotSpd * Time.deltaTime * vert2;
+                    else rotation.x -= rotSpd * Time.deltaTime * vert2;
                 }
             }
-            if (Input.GetButton("RotateLeft"))
-            {
-                Debug.Log("rotateleft");
-                //transform.Rotate(0, 0, turnSpd * Time.deltaTime);
-                rotation.z += turnSpd * Time.deltaTime;
-            }
-
-            if (Input.GetButton("RotateRight"))
-            {
-                transform.Rotate(0, 0, -turnSpd * Time.deltaTime);
-                rotation.z -= turnSpd * Time.deltaTime;
-            }
-
-            if (Input.GetKey(KeyCode.Space))
-            {
-                //transform.position -= Vector3.up * speed * Time.deltaTime;
-            }
-
-            if (Input.GetKey(KeyCode.LeftShift))
-            {
-                //transform.position += Vector3.up * speed * Time.deltaTime;
-            }
+            transform.eulerAngles = new Vector3(rotation.x, rotation.y, rotation.z) * lookSpd;
 
             /**/
             //Vector2 screenMousePos = Camera.main.ScreenToViewportPoint(Input.mousePosition);
@@ -261,17 +221,6 @@ public class PlayerController : MonoBehaviour
             {
                 //Hide cursor
                 Cursor.visible = true;
-            }
-
-            //Update controller or keyboard input
-            if (Input.anyKeyDown) joystick = false;
-            for (int i = 0; i < 20; i++)
-            {
-                if (Input.GetKeyDown("joystick 1 button " + i))
-                {
-                    Debug.Log("joystick 1 button " + i);
-                    joystick = true;
-                }
             }
 
             //float h = joystick ? Input.GetAxis("Horizontal") : Input.GetAxis("Mouse X");
@@ -446,7 +395,7 @@ public class PlayerController : MonoBehaviour
 
     public void AfterImage()
     {
-        if (!GameManager.gameIsPaused)
+        if (!GameManager.gameIsPaused && !GameManager.gameIsOver)
         {
             if (!afterimages[0].activeInHierarchy)
             {
@@ -467,12 +416,5 @@ public class PlayerController : MonoBehaviour
 
             curActiveTime -= oneCharge;
         }
-    }
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(aimTarget.position, .5f);
-        Gizmos.DrawSphere(aimTarget.position, .15f);
     }
 }

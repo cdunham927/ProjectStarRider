@@ -31,8 +31,10 @@ public class SceneSwitch : MonoBehaviour
     public GameObject pauseMenu;
     public GameObject startGameButton;
 
+    // Start is called before the first frame update
     void Awake()
     {
+        //src = GetComponent<AudioSource>();
         cont = FindObjectOfType<GameManager>();
 
         //Spawn options menu
@@ -47,8 +49,9 @@ public class SceneSwitch : MonoBehaviour
         if (cont != null) pauseMenu = cont.pauseMenuUI;
     }
 
-    public void NextScene() 
+    public void NextScene()
     {
+        MusicController.instance.PlaySound();
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
@@ -75,19 +78,25 @@ public class SceneSwitch : MonoBehaviour
         }
         yield return new WaitForSeconds(waitTime);
         if (music != null)  music.ChangeSong(menuSong);
-        SceneManager.LoadScene(menuName);
+        SceneManager.LoadScene(0);
     }
 
-    public void QuitGame() 
+    public void QuitGame()
     {
-        UnityEngine.Debug.Log("ButtonPresed");
+        MusicController.instance.PlaySound();
+        Invoke("Quit", 0.5f);
+    }
+
+    void Quit()
+    {
         Application.Quit();
     }
 
     GameObject lastSelected;
 
-    public void Options() 
+    public void Options()
     {
+        MusicController.instance.PlaySound();
         lastSelected = EventSystem.current.currentSelectedGameObject;
         if (pauseMenu == null && cont != null)
         {
@@ -107,7 +116,7 @@ public class SceneSwitch : MonoBehaviour
 
     public void Back()
     {
-        optionsMenu.SetActive(false);
+        MusicController.instance.PlaySound();
         if (pauseMenu == null && cont != null)
         {
             pauseMenu = cont.pauseMenuUI;
@@ -120,16 +129,14 @@ public class SceneSwitch : MonoBehaviour
         {
             startGameButton.SetActive(true);
         }
+        optionsMenu.SetActive(false);
         EventSystem.current.SetSelectedGameObject(null);
-        //if (mainMenuButton == null)
-        //{
-        //    mainMenuButton = cont.mainMenuButton;
-        //}
         EventSystem.current.SetSelectedGameObject(lastSelected);
     }
 
     public void Restart()
     {
+        MusicController.instance.PlaySound();
         if (cont.tutorialLevel)
         {
             MusicController.instance.ChangeSong(MusicController.instance.tutorialSong);
@@ -150,12 +157,14 @@ public class SceneSwitch : MonoBehaviour
 
     public void GoToMainMenu()
     {
+        MusicController.instance.PlaySound();
         Time.timeScale = 1f;
         StartCoroutine(ToMenuScene());
     }
 
     public void GoToTutorial()
     {
+        MusicController.instance.PlaySound();
         Time.timeScale = 1f;
         StartCoroutine(ToTutorialScene());
     }

@@ -8,9 +8,12 @@ public class MusicController : MonoBehaviour
 
     public static MusicController instance;
     public AudioSource src;
+    public AudioSource soundSrc;
     public AudioClip deathClip;
     public AudioClip winClip;
     public AudioClip tutorialSong;
+
+    public AudioClip buttonClick;
 
     //Gotta save audio settings to playerprefs, then load those prefs on awake
 
@@ -18,7 +21,6 @@ public class MusicController : MonoBehaviour
     {
         if (instance == null)
         {
-            src = GetComponent<AudioSource>();
             DontDestroyOnLoad(gameObject);
             instance = this;
         }
@@ -29,5 +31,16 @@ public class MusicController : MonoBehaviour
     {
         src.clip = ns;
         src.Play();
+    }
+
+    public void PlaySound()
+    {
+        if (soundSrc != null)
+        {
+            //soundSrc.volume = volume;
+            //soundSrc.clip = buttonClick;
+            soundSrc.Play();
+            //soundSrc.PlayOneShot(clip);
+        }
     }
 }
