@@ -107,10 +107,11 @@ public class Player_Stats : MonoBehaviour
         if (anim != null) anim.SetTrigger("Hit");
         //anything that takes place when the hp is zero should go here
         Curr_hp -= damageAmount;
-        ShakeCamera();
+       
         //Play damage sound
         if (Curr_hp > 0)
-        {
+        { 
+            ShakeCamera();
             src.volume = hitVolume;
             src.PlayOneShot(takeDamageClip);
         }
