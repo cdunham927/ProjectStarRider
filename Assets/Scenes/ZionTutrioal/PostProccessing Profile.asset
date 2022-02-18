@@ -1,5 +1,28 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-6205182991246100607
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5485954d14dfb9a4c8ead8edb0ded5b1, type: 3}
+  m_Name: LiftGammaGain
+  m_EditorClassIdentifier: 
+  active: 0
+  m_AdvancedMode: 0
+  lift:
+    m_OverrideState: 1
+    m_Value: {x: 1, y: 0.61902237, z: 0.97083944, w: 0}
+  gamma:
+    m_OverrideState: 1
+    m_Value: {x: 0.82365394, y: 0.87992173, z: 1, w: 0}
+  gain:
+    m_OverrideState: 1
+    m_Value: {x: 0.88805366, y: 0.7209283, z: 1, w: 0}
 --- !u!114 &-4889369582577986814
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -12,7 +35,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b2db86121404754db890f4c8dfe81b2, type: 3}
   m_Name: Bloom
   m_EditorClassIdentifier: 
-  active: 0
+  active: 1
   m_AdvancedMode: 0
   threshold:
     m_OverrideState: 1
@@ -20,15 +43,15 @@ MonoBehaviour:
     min: 0
   intensity:
     m_OverrideState: 1
-    m_Value: 3.09
+    m_Value: 0.32
     min: 0
   scatter:
     m_OverrideState: 1
-    m_Value: 0.7
+    m_Value: 0.641
     min: 0
     max: 1
   clamp:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value: 65472
     min: 0
   tint:
@@ -71,7 +94,7 @@ MonoBehaviour:
     m_Value: 1.5
   contrast:
     m_OverrideState: 1
-    m_Value: 3.4
+    m_Value: 18
     min: -100
     max: 100
   colorFilter:
@@ -102,17 +125,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ccf1aba9553839d41ae37dd52e9ebcce, type: 3}
   m_Name: MotionBlur
   m_EditorClassIdentifier: 
-  active: 0
+  active: 1
   m_AdvancedMode: 0
   mode:
     m_OverrideState: 0
     m_Value: 0
   quality:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: 2
   intensity:
     m_OverrideState: 1
-    m_Value: 1
+    m_Value: 0.1
     min: 0
     max: 1
   clamp:
@@ -136,3 +159,22 @@ MonoBehaviour:
   - {fileID: -4889369582577986814}
   - {fileID: -2466108567745402115}
   - {fileID: -2171662622174136458}
+  - {fileID: 2163668186579357619}
+  - {fileID: -6205182991246100607}
+--- !u!114 &2163668186579357619
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97c23e3b12dc18c42a140437e53d3951, type: 3}
+  m_Name: Tonemapping
+  m_EditorClassIdentifier: 
+  active: 1
+  m_AdvancedMode: 0
+  mode:
+    m_OverrideState: 1
+    m_Value: 2
