@@ -98,7 +98,9 @@ public class PlayerController : MonoBehaviour
     //Dashing ability
     public float dashSpd;
     public float dashCooldown;
+    public float dashTime;
     float curDashCools;
+    float curDashTime;
 
     private void Awake()
     {
@@ -128,14 +130,31 @@ public class PlayerController : MonoBehaviour
     {
         //Update controller or keyboard input
         if (Input.anyKeyDown) joystick = false;
+        if (Input.GetAxis("Mouse X") != 0 || Input.GetAxis("Mouse Y") != 0) {
+            joystick = false;
+        }
         for (int i = 0; i < 20; i++)
         {
             if (Input.GetKeyDown("joystick 1 button " + i))
             {
-                Debug.Log("joystick 1 button " + i);
+                //Debug.Log("joystick 1 button " + i);
                 joystick = true;
             }
         }
+        float ltaxis = Input.GetAxis("XboxLeftTrigger");
+        float rtaxis = Input.GetAxis("XboxRightTrigger");
+        float dhaxis = Input.GetAxis("XboxDpadHorizontal");
+        float dvaxis = Input.GetAxis("XboxDpadVertical"); 
+        float hAxis = Input.GetAxis("XboxHorizontal");
+        float vAxis = Input.GetAxis("XboxVertical");
+        float aAxis = Input.GetAxis("XboxAltitude");
+        float htAxis = Input.GetAxis("XboxHorizontalTurn");
+        float vtAxis = Input.GetAxis("XboxVerticalTurn");
+        if (ltaxis != 0 || rtaxis != 0 || dhaxis != 0 || dvaxis != 0 || hAxis != 0 || vAxis != 0 || aAxis != 0 || htAxis != 0 || vtAxis != 0)
+        {
+            joystick = true;
+        }
+
 
         if (!stats.PlayerDead && !GameManager.gameIsOver)
         {
@@ -246,6 +265,21 @@ public class PlayerController : MonoBehaviour
             vert2 = Input.GetAxis("Vertical2");
             hor2 = Input.GetAxis("Horizontal2");
 
+            //button press for dash
+            if (Input.GetButtonDown("Fire3") && curDashCools <= 0)
+            {
+                curDashTime = dashTime;
+                curDashCools = dashCooldown;
+            }
+
+            if (curDashTime > 0) curDashTime -= Time.deltaTime;
+
+            //Actual dash code
+            if (curDashTime > 0)
+            {
+                bod.AddForce(bod.velocity * dashSpd * Time.deltaTime, ForceMode.Impulse);
+            }
+
             //Move(hor,vert,speed);
             //Movement
             //transform.position -= transform.forward * speed * Time.deltaTime;
@@ -327,6 +361,8 @@ public class PlayerController : MonoBehaviour
                     afterimageUI[3].sprite = emptyImage;
                 }
             }
+
+            if (curDashCools > 0) curDashCools -= Time.deltaTime;
         }
 
         if (Application.isEditor)
