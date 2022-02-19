@@ -14,16 +14,18 @@ public class Player_Stats : MonoBehaviour
     public bool PlayerDead = false;
     public Animator anim;
 
-    [Header("Visual Effects")]
+    [Header("Visual Effects: ")]
     public GameObject deathVFX;
     
-    [Header("UI Assets")]
+    [Header("UI Assets: ")]
     public Image healthImage;
 
+    [Header("Health/Shapes Settings: ")]
     //Shapes things
     public float size;
     public Shapes.Rectangle innerRect;
 
+    [Header("lerpsSpd (side to side movement) Setting: ")]
     public float lerpSpd = 7f;
 
     GameObject dVfx;
@@ -31,12 +33,14 @@ public class Player_Stats : MonoBehaviour
     //GameManager OverUI;
 
     //Audio stuff
+    [Header("Audio Settings: ")]
     AudioSource src;
     public AudioClip takeDamageClip;
     public AudioClip explodeClip;
     public float hitVolume;
     public float explodeVolume;
 
+    [Header("Camera Shake Settings: ")]
     //Camera shake on take damage
     CinemachineVirtualCamera cine;
     CinemachineBasicMultiChannelPerlin perlin;
@@ -44,10 +48,18 @@ public class Player_Stats : MonoBehaviour
     float curTime;
     public float shakeAmt;
 
+    [Header("Damage Blink Settings: ")]
+    public float blinkDuration;
+    public float blinkBrightness;
+    float blinkTimer;
+    MeshRenderer MeshRenderer;
+
     private void Awake()
     {
         //src = FindObjectOfType<GameManager>().GetComponent<AudioSource>();
 
+        MeshRenderer = GetComponentInChildren<MeshRenderer>();
+        
         //Camera shake things
         if (cine == null) cine = Camera.main.GetComponent<CinemachineVirtualCamera>();
         if (perlin == null) perlin = cine.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
@@ -114,7 +126,9 @@ public class Player_Stats : MonoBehaviour
             ShakeCamera();
             src.volume = hitVolume;
             src.PlayOneShot(takeDamageClip);
+            blinkTimer = blinkDuration;
         }
+        
         if (Curr_hp <= 0)
         {
             //Play explosion sound
@@ -141,5 +155,13 @@ public class Player_Stats : MonoBehaviour
     {
         FindObjectOfType<GameManager>().GameOver();
         gameObject.SetActive(false);
+    }
+
+    void DamageBlink() 
+    {
+        blinkTimer -= Time.deltaTime;
+        float lerp = Mathf.Clamp01(blinkTimer / blinkDuration);
+        float intesity = lerp * blinkBrightness;
+        MeshRenderer.material.color = Color.red * intesity;
     }
 }
