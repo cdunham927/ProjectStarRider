@@ -68,4 +68,14 @@ public class MenuFunctions : MonoBehaviour
     {
         scene.GoToMainMenu();
     }
+    public void OpenUrl()
+    {
+        Application.OpenURL("https://forms.gle/k1xtdKyJSixxRHkw9");
+        Debug.Log("Is this working?");
+    }
+
+    public void testclick()
+    {
+
+    }
 }
