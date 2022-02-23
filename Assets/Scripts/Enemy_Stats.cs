@@ -40,6 +40,12 @@ public class Enemy_Stats : MonoBehaviour
     [HideInInspector]
     public EnemyManager manager;
 
+    [Header("Damage Blink Settings: ")]
+    public float blinkDuration;
+    public float blinkBrightness;
+    float blinkTimer;
+    MeshRenderer MeshRenderer;
+
     private void Awake()
     {
         //hpBar = GetComponent<Healthbar>();

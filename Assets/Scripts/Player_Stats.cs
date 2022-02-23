@@ -159,6 +159,7 @@ public class Player_Stats : MonoBehaviour
 
     void DamageBlink() 
     {
+        Debug.Log("Player Blinking");
         blinkTimer -= Time.deltaTime;
         float lerp = Mathf.Clamp01(blinkTimer / blinkDuration);
         float intesity = lerp * blinkBrightness;
