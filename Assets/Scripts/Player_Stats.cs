@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using Shapes;
 using UnityEngine.Rendering;
 using Cinemachine;
+using System;
 
 public class Player_Stats : MonoBehaviour
 {
@@ -49,16 +50,17 @@ public class Player_Stats : MonoBehaviour
     public float shakeAmt;
 
     [Header("Damage Blink Settings: ")]
-    public float blinkDuration;
-    public float blinkBrightness;
-    float blinkTimer;
-    MeshRenderer MeshRenderer;
+    public float blinkDuration = 0.3f;
+    public float blinkIntensity = 2.0f;
+ 
+    MeshRenderer meshRenderer;
 
     private void Awake()
     {
         //src = FindObjectOfType<GameManager>().GetComponent<AudioSource>();
 
-        MeshRenderer = GetComponentInChildren<MeshRenderer>();
+        meshRenderer = GetComponentInChildren<MeshRenderer>();
+        
         
         //Camera shake things
         if (cine == null) cine = Camera.main.GetComponent<CinemachineVirtualCamera>();
@@ -82,6 +84,7 @@ public class Player_Stats : MonoBehaviour
 
     private void Update()
     {
+        
         if (curTime > 0)
         {
             curTime -= Time.deltaTime;
@@ -119,14 +122,16 @@ public class Player_Stats : MonoBehaviour
         if (anim != null) anim.SetTrigger("Hit");
         //anything that takes place when the hp is zero should go here
         Curr_hp -= damageAmount;
-       
+        DamageBlink();
         //Play damage sound
+
         if (Curr_hp > 0)
-        { 
+        {
+           
             ShakeCamera();
             src.volume = hitVolume;
             src.PlayOneShot(takeDamageClip);
-            blinkTimer = blinkDuration;
+            
         }
         
         if (Curr_hp <= 0)
@@ -148,21 +153,27 @@ public class Player_Stats : MonoBehaviour
                 Invoke("Death", 1f);
                 PlayerDead = true;
             }
-        }
+        } 
+        
     }
 
     void Death() 
     {
         FindObjectOfType<GameManager>().GameOver();
         gameObject.SetActive(false);
+        
     }
 
     void DamageBlink() 
     {
         Debug.Log("Player Blinking");
-        blinkTimer -= Time.deltaTime;
-        float lerp = Mathf.Clamp01(blinkTimer / blinkDuration);
-        float intesity = lerp * blinkBrightness;
-        MeshRenderer.material.color = Color.red * intesity;
+        meshRenderer.material.color = Color.red * blinkIntensity;
+        Invoke("ResetMaterial",blinkDuration);
     }
+
+   void ResetMaterial()
+   {
+
+        meshRenderer.material.color = Color.white;
+   }
 }

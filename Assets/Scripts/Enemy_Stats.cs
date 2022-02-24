@@ -10,8 +10,8 @@ public class Enemy_Stats : MonoBehaviour
     public Healthbar healthScript;
     public Animator anim;
 
-    [HideInInspector]
-    SkinnedMeshRenderer skinnedMeshRenderer;
+    
+    
     
     /*
     [Header(" Damage Blink Settings: ")]
@@ -41,11 +41,11 @@ public class Enemy_Stats : MonoBehaviour
     public EnemyManager manager;
 
     [Header("Damage Blink Settings: ")]
-    public float blinkDuration;
-    public float blinkBrightness;
+    public float blinkDuration = 0.5f;
+    public float blinkBrightness = 1.0f;
     float blinkTimer;
-    MeshRenderer MeshRenderer;
-
+    SkinnedMeshRenderer skinnedMeshRenderer;
+   
     private void Awake()
     {
         //hpBar = GetComponent<Healthbar>();
@@ -72,8 +72,9 @@ public class Enemy_Stats : MonoBehaviour
         hpBar.SwitchUIActive(true);
         CurrHP -= damageAmount;
         healthScript.SetHealth(CurrHP);
+        DamageBlink();
         //Debug.Log("Enemy took damage");
-        
+
         //DamageBlinking
         //blinkTimer -= Time.deltaTime;
         //float lerp = Mathf.Clamp01(blinkTimer / blinkDuration);
@@ -124,6 +125,13 @@ public class Enemy_Stats : MonoBehaviour
         CancelInvoke();
     }
 
-   
+    void DamageBlink()
+    {
+        Debug.Log("Enemy Blinking");
+        blinkTimer -= Time.deltaTime;
+        float lerp = Mathf.Clamp01(blinkTimer / blinkDuration);
+        float intesity = lerp * blinkBrightness;
+        skinnedMeshRenderer.material.color = Color.red * intesity;
+    }
 
 }
