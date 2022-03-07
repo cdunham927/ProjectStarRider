@@ -25,9 +25,11 @@ public class TurretController : MonoBehaviour
     //Player
     PlayerController player;
     GameManager cont;
+    AudioSource src;
 
     private void Awake()
     {
+        src = GetComponent<AudioSource>();
         cont = FindObjectOfType<GameManager>();
         bulletPool = cont.enemyBulPool;
     }
@@ -54,6 +56,7 @@ public class TurretController : MonoBehaviour
     public void Attack()
     {
         if (bulletPool == null) bulletPool = cont.enemyBulPool;
+        src.Play();
         //Get pooled bullet
         GameObject bul = bulletPool.GetPooledObject();
         if (bul != null)

@@ -14,6 +14,7 @@ public class SentinelRegular : EnemyControllerBase
 
     protected override void Attack()
     {
+        src.Play();
         if (bulletPool == null) bulletPool = cont.enemyBulPool;
         //Get pooled bullet
         GameObject bul = bulletPool.GetPooledObject();

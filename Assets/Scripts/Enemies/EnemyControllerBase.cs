@@ -31,9 +31,11 @@ public class EnemyControllerBase : MonoBehaviour
     //Player
     protected PlayerController player;
     protected GameManager cont;
+    protected AudioSource src;
 
     private void Awake()
     {
+        src = GetComponent<AudioSource>();
         cont = FindObjectOfType<GameManager>();
         bulletPool = cont.enemyBulPool;
     }
