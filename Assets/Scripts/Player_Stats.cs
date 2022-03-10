@@ -17,7 +17,8 @@ public class Player_Stats : MonoBehaviour
 
     [Header("Visual Effects: ")]
     public GameObject deathVFX;
-    
+    public GameObject healVFX;
+
     [Header("UI Assets: ")]
     public Image healthImage;
 
@@ -30,6 +31,7 @@ public class Player_Stats : MonoBehaviour
     public float lerpSpd = 7f;
 
     GameObject dVfx;
+    GameObject hVfx;
 
     //GameManager OverUI;
 
@@ -67,8 +69,13 @@ public class Player_Stats : MonoBehaviour
         if (perlin == null) perlin = cine.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
 
         src = GetComponent<AudioSource>();
+        
         dVfx = Instantiate(deathVFX);
         dVfx.SetActive(false);
+
+        hVfx = Instantiate(healVFX);
+        hVfx.SetActive(false);
+
         //OverUI = FindObjectOfType<GameManager>().GameOver();
         //healthImage = GameObject.FindGameObjectWithTag("Health").GetComponent<Image>();
         innerRect = GameObject.FindGameObjectWithTag("Health").GetComponent<Shapes.Rectangle>();
@@ -111,6 +118,17 @@ public class Player_Stats : MonoBehaviour
     {
         if (!PlayerDead)
         {
+            HealBlink();
+
+            if (!GameManager.gameIsPaused && !GameManager.gameIsOver)
+            {
+                if (!healVFX.activeInHierarchy)
+                {
+                    healVFX.SetActive(true);
+                }
+            }
+               
+            
             if (Curr_hp + amt <= Max_hp)
                 Curr_hp += amt;
             else Curr_hp = Max_hp; 
@@ -171,7 +189,16 @@ public class Player_Stats : MonoBehaviour
         Invoke("ResetMaterial",blinkDuration);
     }
 
-   void ResetMaterial()
+    void HealBlink()
+    {
+        Debug.Log("Player Healed");
+        meshRenderer.material.color = Color.green * blinkIntensity;
+        Invoke("ResetMaterial", blinkDuration);
+    }
+
+
+
+    void ResetMaterial()
    {
 
         meshRenderer.material.color = Color.white;
