@@ -9,7 +9,7 @@ public class Healthbar : MonoBehaviour
 {
     public GameObject canv;
     public Image slider;
-    public Enemy_Stats stats;
+    public EnemyControllerBase stats;
     PlayerController player;
     public Vector3 dir;
 
@@ -41,7 +41,7 @@ public class Healthbar : MonoBehaviour
     private void OnEnable()
     {
         SwitchUIActive(false);
-        SetMaxHealth(stats.MaxHP);
+        SetMaxHealth((int)stats.maxHp);
     }
 
     public void SetMaxHealth(int health)
@@ -53,6 +53,6 @@ public class Healthbar : MonoBehaviour
     public void SetHealth(int health)
     {
         //slider.fillAmount = (float)health / (float)stats.MaxHP;
-        innerRect.Width = ((float)stats.CurrHP / (float)stats.MaxHP) * size;
+        innerRect.Width = ((float)stats.GetHealth() / (float)stats.maxHp) * size;
     }
 }

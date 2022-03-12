@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyDetectionController : MonoBehaviour
 {
-    public TurretController parent;
+    public EnemyControllerBase parent;
     public Animator anim;
     public Healthbar hpBar;
 
@@ -24,8 +24,12 @@ public class EnemyDetectionController : MonoBehaviour
         {
             //hpBar.SwitchUIActive(true);
             anim.SetBool("InRange", true);
-            parent.playerInRange = true;
-            parent.SetCollider(true);
+
+            if (parent != null)
+            {
+                parent.playerInRange = true;
+                parent.SetCollider(true);
+            }
         }
     }
 
@@ -35,8 +39,11 @@ public class EnemyDetectionController : MonoBehaviour
         {
             hpBar.SwitchUIActive(false);
             anim.SetBool("InRange", false);
-            parent.playerInRange = false;
-            parent.SetCollider(false);
+            if (parent != null)
+            {
+                parent.playerInRange = false;
+                parent.SetCollider(false);
+            }
         }
     }
 
@@ -45,8 +52,12 @@ public class EnemyDetectionController : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             anim.SetBool("InRange", true);
-            parent.playerInRange = true;
-            parent.SetCollider(true);
+
+            if (parent != null)
+            {
+                parent.playerInRange = true;
+                parent.SetCollider(true);
+            }
         }
     }
 }
