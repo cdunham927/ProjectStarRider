@@ -42,7 +42,7 @@ public class Player_Bullet : Bullet
         if (col.CompareTag("Enemy"))
         {
             //Debug.Log("Hit Enemy");
-            col.gameObject.GetComponent<Enemy_Stats>().Damage(dmg);
+            col.gameObject.GetComponent<EnemyControllerBase>().Damage(dmg);
             Invoke("Disable", 0.01f);
             //ContactPoint cp = col.GetContact(0);
             if (hitVFXPool == null) hitVFXPool = cont.hitVFXPool;

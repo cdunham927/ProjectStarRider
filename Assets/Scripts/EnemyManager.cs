@@ -18,7 +18,7 @@ public class EnemyManager : MonoBehaviour
         hasClosed = false;
         for (int i = 0; i < enemies.Length; i++)
         {
-            Enemy_Stats s = enemies[i].GetComponent<Enemy_Stats>();
+            EnemyControllerBase s = enemies[i].GetComponent<EnemyControllerBase>();
             s.manager = this;
         }
     }
