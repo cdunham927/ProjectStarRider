@@ -24,6 +24,7 @@ public class EnemyControllerBase : MonoBehaviour
     //Set the radius for the detection collider
     public SphereCollider detectionCollider;
     public Collider col;
+    //is random is the variations for shots being produced
     public bool isRandom;
     public float accx;
     public float accy;
