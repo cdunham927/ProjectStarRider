@@ -28,6 +28,8 @@ public class EnemyControllerBase : MonoBehaviour
     public bool isRandom;
     public float accx;
     public float accy;
+    // number of bullets shot for SG
+    public int bulletShot;
 
     //Player
     protected PlayerController player;

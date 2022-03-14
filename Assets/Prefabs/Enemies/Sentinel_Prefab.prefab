@@ -41,7 +41,7 @@ GameObject:
   - component: {fileID: 331639249648433790}
   - component: {fileID: -1034466729906832040}
   - component: {fileID: 573377688435008515}
-  - component: {fileID: 6448889636297388432}
+  - component: {fileID: 7310131386521007457}
   - component: {fileID: 2550159598481487559}
   - component: {fileID: 7841334841566039865}
   m_Layer: 0
@@ -103,11 +103,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canv: {fileID: 5735672329957655316}
   slider: {fileID: 2998539813025873492}
-  stats: {fileID: 6448889636297388432}
+  stats: {fileID: 0}
   dir: {x: 0, y: 1, z: 0}
   size: 7.5
   innerRect: {fileID: 1053250144738254722}
---- !u!114 &6448889636297388432
+--- !u!114 &7310131386521007457
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -116,7 +116,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1139947883432206532}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8326c1bcf5849a5439eac3826cbb0e34, type: 3}
+  m_Script: {fileID: 11500000, guid: 62b66b90fc462f34bb7aac04f766d7c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   currentState: 0
@@ -130,6 +130,7 @@ MonoBehaviour:
   isRandom: 0
   accx: 5
   accy: 20
+  bulletShot: 0
   deathVFX: {fileID: 4593951957772366835, guid: 1e092bc34c05e7a4388b0d0c57e84ec9, type: 3}
   hpSpawnChance: 0.3
   hpPool: {fileID: 0}
@@ -138,8 +139,8 @@ MonoBehaviour:
   manager: {fileID: 0}
   blinkDuration: 0.5
   blinkBrightness: 1
-  healthScript: {fileID: 573377688435008515}
-  anim: {fileID: -1034466729906832040}
+  healthScript: {fileID: 0}
+  anim: {fileID: 0}
 --- !u!135 &2550159598481487559
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -163,7 +164,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: -5818701710252422464, guid: e94e86a227e4d4d4eb428bc609fd30dc, type: 2}
-  m_audioClip: {fileID: 8300000, guid: 9acc13becaf21c54585280149b678449, type: 3}
+  m_audioClip: {fileID: 8300000, guid: b1adeff9b0d052449b551e17b1942dae, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -339,7 +340,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49930d78fba51d7479ad67bfc3fa9d4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  parent: {fileID: 6448889636297388432}
+  parent: {fileID: 0}
   anim: {fileID: -1034466729906832040}
   hpBar: {fileID: 573377688435008515}
 --- !u!1 &2131027273301204764
@@ -717,7 +718,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3525987004321015860}
-  m_Mesh: {fileID: 43100795730674332, guid: a3d1f56cebf202c448b6fb479f61a9dc, type: 2}
+  m_Mesh: {fileID: 43100795730674332, guid: fc859f58b042f0c448924e58e9f8525c, type: 2}
 --- !u!23 &2682535102350811356
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -738,7 +739,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 7a2265fc202676141a8729ed7751f445, type: 2}
+  - {fileID: 2100000, guid: efa65614e74613d469ec49d05f0edbc9, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
