@@ -31,4 +31,14 @@ public class EnemyBullet : Bullet
     {
         rb.velocity = transform.forward * (speed + Random.Range(0, randSpdMod));
     }
+
+    public void PushHard()
+    {
+        rb.velocity = transform.forward * (fastSpd + Random.Range(0, randSpdMod));
+    }
+
+    public void PushSoft()
+    {
+        rb.velocity = transform.forward * (slowSpd + Random.Range(0, randSpdMod));
+    }
 }
