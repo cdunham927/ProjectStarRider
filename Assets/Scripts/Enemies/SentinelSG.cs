@@ -41,6 +41,7 @@ public class SentinelSG : EnemyControllerBase
         }
         //Reset attack cooldown
         attackCools = timeBetweenAttacks;
+        ChangeState(enemystates.alert);
     }
 
     protected override void Death()
@@ -74,6 +75,16 @@ public class SentinelSG : EnemyControllerBase
 
     protected override void Update()
     {
+        //If the player is close enough
+        if (playerInRange && player != null)
+        {
+            ChangeState(enemystates.alert);
+        }
+        else ChangeState(enemystates.idle);
+
+        //If the cooldown is greater than 0 we decrement it every frame
+        if (attackCools > 0) attackCools -= Time.deltaTime;
+
         base.Update();
     }
 
