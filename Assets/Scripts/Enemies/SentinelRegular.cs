@@ -8,8 +8,6 @@ public class SentinelRegular : EnemyControllerBase
     {
         //If the cooldown is at 0 then we can attack
         if (attackCools <= 0) Attack();
-        //If the cooldown is greater than 0 we decrement it every frame
-        if (attackCools > 0) attackCools -= Time.deltaTime;
     }
 
     protected override void Attack()
@@ -37,6 +35,8 @@ public class SentinelRegular : EnemyControllerBase
 
         //Reset attack cooldown
         attackCools = timeBetweenAttacks;
+
+        ChangeState(enemystates.alert);
     }
 
     protected override void Death()
@@ -46,11 +46,7 @@ public class SentinelRegular : EnemyControllerBase
 
     protected override void Idle()
     {
-        //If the player is close enough
-        if (playerInRange && player != null)
-        {
-            ChangeState(enemystates.alert);
-        }
+
     }
 
     protected override void Patrol()
@@ -70,6 +66,16 @@ public class SentinelRegular : EnemyControllerBase
 
     protected override void Update()
     {
+        //If the player is close enough
+        if (playerInRange && player != null)
+        {
+            ChangeState(enemystates.alert);
+        }
+        else ChangeState(enemystates.idle);
+
+        //If the cooldown is greater than 0 we decrement it every frame
+        if (attackCools > 0) attackCools -= Time.deltaTime;
+
         base.Update();
     }
 }
