@@ -108,7 +108,10 @@ public class GameManager : MonoBehaviour
         hitVFXPool = Instantiate(hitVFXPoolPrefab).GetComponent<ObjectPool>();
 
         //Spawn minimap
-        minimap = Instantiate(minimapPrefab);
+        //
+        //
+        //
+        //minimap = Instantiate(minimapPrefab);
 
         //GameOverUI.SetActive(false);
         //pauseMenuUI.SetActive(false);
@@ -219,7 +222,7 @@ public class GameManager : MonoBehaviour
             {
                 enemyCountText.gameObject.SetActive(false);
             }
-            minimap.SetActive(false);
+            if (minimap != null) minimap.SetActive(false);
             uiParent.SetActive(false);
             healthbar.SetActive(false);
             //If player is using keyboard, show the mouse
@@ -248,7 +251,7 @@ public class GameManager : MonoBehaviour
             {
                 enemyCountText.gameObject.SetActive(false);
             }
-            minimap.SetActive(false);
+            if (minimap != null) minimap.SetActive(false);
             uiParent.SetActive(false);
             healthbar.SetActive(false);
             //If player is using keyboard, show the mouse
@@ -275,7 +278,7 @@ public class GameManager : MonoBehaviour
         {
             enemyCountText.gameObject.SetActive(false);
         }
-        minimap.SetActive(false);
+        if (minimap != null) minimap.SetActive(false);
         uiParent.SetActive(false);
         healthbar.SetActive(false);
         optionsMenu.SetActive(false);
@@ -304,7 +307,7 @@ public class GameManager : MonoBehaviour
         {
             optionsMenu = scene.optionsMenu;
         }
-        minimap.SetActive(true);
+        if (minimap != null) minimap.SetActive(true);
         optionsMenu.SetActive(false);
         healthbar.SetActive(true);
         uiParent.SetActive(true);
