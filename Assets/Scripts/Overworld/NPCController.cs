@@ -13,7 +13,7 @@ public class NPCController : MonoBehaviour
         sentences = new Queue<string>();
     }
 
-    private void Update()
+    public virtual void Update()
     {
         if (inRange)
         {
@@ -25,7 +25,7 @@ public class NPCController : MonoBehaviour
         }
     }
 
-    public void StartDialogue(Dialogue d)
+    public virtual void StartDialogue(Dialogue d)
     {
         sentences.Clear();
 
@@ -37,7 +37,7 @@ public class NPCController : MonoBehaviour
         DisplayNextSentence();
     }
 
-    public void DisplayNextSentence()
+    public virtual void DisplayNextSentence()
     {
         if (sentences.Count == 0)
         {
@@ -48,7 +48,7 @@ public class NPCController : MonoBehaviour
         string sen = sentences.Dequeue();
     }
 
-    void EndDialogue()
+    public virtual void EndDialogue()
     {
         //End of conversation
     }
