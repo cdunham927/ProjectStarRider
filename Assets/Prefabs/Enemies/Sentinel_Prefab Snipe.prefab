@@ -598,9 +598,9 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 844cce823cdc1eb46b5b85e3fdc2a7b8, type: 2}
+  - {fileID: 2100000, guid: c002886ae3a172248a4204a9718e4335, type: 2}
   - {fileID: 2100000, guid: eb7b29d822d8c1241a12490fce6bb194, type: 2}
-  - {fileID: 2100000, guid: 844cce823cdc1eb46b5b85e3fdc2a7b8, type: 2}
+  - {fileID: 2100000, guid: c002886ae3a172248a4204a9718e4335, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -938,7 +938,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6201303047070625918}
-  m_Mesh: {fileID: 43100795730674332, guid: fc859f58b042f0c448924e58e9f8525c, type: 2}
+  m_Mesh: {fileID: 43100795730674332, guid: a3d1f56cebf202c448b6fb479f61a9dc, type: 2}
 --- !u!23 &4889749531792603286
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -959,7 +959,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: efa65614e74613d469ec49d05f0edbc9, type: 2}
+  - {fileID: 2100000, guid: 7a2265fc202676141a8729ed7751f445, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1172,7 +1172,7 @@ GameObject:
   - component: {fileID: 7096439497035653684}
   - component: {fileID: 1676873709667935506}
   - component: {fileID: 6995407178728094793}
-  - component: {fileID: 7579644704181778573}
+  - component: {fileID: 8871560330763901014}
   - component: {fileID: 5008665348598738573}
   - component: {fileID: 735109568785520499}
   m_Layer: 0
@@ -1234,11 +1234,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canv: {fileID: 2988302884722596702}
   slider: {fileID: 5727824662806029854}
-  stats: {fileID: 7579644704181778573}
+  stats: {fileID: 8871560330763901014}
   dir: {x: 0, y: 1, z: 0}
   size: 7.5
   innerRect: {fileID: 7528966694019205064}
---- !u!114 &7579644704181778573
+--- !u!114 &8871560330763901014
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1247,22 +1247,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 7579644704181778574}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a7801207aa925bd46999f35b565965e7, type: 3}
+  m_Script: {fileID: 11500000, guid: 9fd7f2a0810f85e48a162059b7249b9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   currentState: 0
   maxHp: 10
   timeBetweenAttacks: 1
-  attackRange: 100
+  attackRange: 0
   bulletPool: {fileID: 0}
   playerInRange: 0
   detectionCollider: {fileID: 3500183944546077826}
   col: {fileID: 5008665348598738573}
   isRandom: 0
-  accx: 0
-  accy: 0
-  bulletShot: 1
-  deathVFX: {fileID: 0}
+  accx: 30
+  accy: 30
+  bulletShot: 10
+  deathVFX: {fileID: 4593951957772366835, guid: 1e092bc34c05e7a4388b0d0c57e84ec9, type: 3}
   hpSpawnChance: 0.3
   hpPool: {fileID: 0}
   minimapObj: {fileID: 36262825962811491}
@@ -1295,7 +1295,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: -5818701710252422464, guid: e94e86a227e4d4d4eb428bc609fd30dc, type: 2}
-  m_audioClip: {fileID: 8300000, guid: b1adeff9b0d052449b551e17b1942dae, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 9acc13becaf21c54585280149b678449, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -1576,6 +1576,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49930d78fba51d7479ad67bfc3fa9d4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  parent: {fileID: 7579644704181778573}
+  parent: {fileID: 0}
   anim: {fileID: 1676873709667935506}
   hpBar: {fileID: 6995407178728094793}
