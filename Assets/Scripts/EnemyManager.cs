@@ -14,6 +14,7 @@ public class EnemyManager : MonoBehaviour
 
     private void Awake()
     {
+        enemyCount = enemies.Length;
         cont = FindObjectOfType<GameManager>();
         hasClosed = false;
         for (int i = 0; i < enemies.Length; i++)

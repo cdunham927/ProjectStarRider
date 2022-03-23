@@ -30,7 +30,12 @@ public class MovingWalls : MonoBehaviour
         if (currentMarker == 0)
         {
             currentMarker = 1;
+            gameObject.SetActive(true);
         }
-        else currentMarker = 0;
+        else
+        {
+            currentMarker = 0;
+            gameObject.SetActive(false);
+        }
     }
 }
