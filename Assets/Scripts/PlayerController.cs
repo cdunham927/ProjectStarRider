@@ -101,6 +101,14 @@ public class PlayerController : MonoBehaviour
     public float dashTime;
     float curDashCools;
     float curDashTime;
+    
+    //Dash blink vfx
+    float blinkDuration = 0.3f;
+    float blinkIntensity = 2.0f;
+    GameObject dashPS;
+    public GameObject DashVfx;
+
+    MeshRenderer meshRenderer;
 
     private void Awake()
     {
@@ -124,6 +132,10 @@ public class PlayerController : MonoBehaviour
         
         //4 charges max, so 1 charge is 1/4th of the max image time
         oneCharge = maxImagesTime / 4;
+
+        //instatie Inactive Gameobjects
+        dashPS = Instantiate(DashVfx);
+        dashPS.SetActive(false);
     }
 
     void Update()
@@ -278,6 +290,7 @@ public class PlayerController : MonoBehaviour
             if (curDashTime > 0)
             {
                 bod.AddForce(bod.velocity * dashSpd * Time.deltaTime, ForceMode.Impulse);
+                Dashvfx();
             }
 
             //Move(hor,vert,speed);
@@ -452,5 +465,27 @@ public class PlayerController : MonoBehaviour
 
             curActiveTime -= oneCharge;
         }
+    }
+
+    public void Dashvfx() 
+    {
+        Debug.Log("Player Healed");
+        meshRenderer.material.color = Color.yellow * blinkIntensity;
+        Invoke("ResetMaterial", blinkDuration);
+
+        if (!GameManager.gameIsPaused && !GameManager.gameIsOver)
+        {
+            if (!DashVfx.activeInHierarchy)
+            {
+                DashVfx.SetActive(true);
+            }
+        }
+
+    }
+
+    void ResetMaterial()
+    {
+
+        meshRenderer.material.color = Color.white;
     }
 }
