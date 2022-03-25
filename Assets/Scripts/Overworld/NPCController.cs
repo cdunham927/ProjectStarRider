@@ -1,12 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class NPCController : MonoBehaviour
 {
     public Dialogue dialogue;
     public Queue<string> sentences;
     public bool inRange = false;
+
+    public GameObject dialogueParent;
+    public Text dialogueText;
+    public Button continueButton;
+
+    public float timeBetweenTalks = 0.1f;
+    float talkCools;
 
     private void Awake()
     {
@@ -15,7 +23,7 @@ public class NPCController : MonoBehaviour
 
     public virtual void Update()
     {
-        if (inRange)
+        if (inRange && talkCools <= 0)
         {
             if (Input.GetButtonDown("Interact"))
             {
@@ -23,6 +31,8 @@ public class NPCController : MonoBehaviour
                 StartDialogue(dialogue);
             }
         }
+
+        if (talkCools > 0) talkCools -= Time.deltaTime;
     }
 
     public virtual void StartDialogue(Dialogue d)
@@ -34,8 +44,14 @@ public class NPCController : MonoBehaviour
             sentences.Enqueue(s);
         }
 
+        //Add continue button function to UI button
+        //continueButton => DisplayNextSentence();
+
+        dialogueParent.SetActive(true);
         DisplayNextSentence();
     }
+
+
 
     public virtual void DisplayNextSentence()
     {
@@ -46,11 +62,16 @@ public class NPCController : MonoBehaviour
         }
 
         string sen = sentences.Dequeue();
+        dialogueText.text = sen;
     }
 
     public virtual void EndDialogue()
     {
         //End of conversation
+        talkCools = timeBetweenTalks;
+        dialogueText.text = "";
+        inRange = false;
+        dialogueParent.SetActive(false);
     }
 
     public void OnTriggerEnter2D(Collider2D collision)
