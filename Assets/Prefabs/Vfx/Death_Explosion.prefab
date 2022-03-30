@@ -9712,7 +9712,7 @@ ParticleSystemRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_RenderMode: 0
+  m_RenderMode: 1
   m_SortMode: 0
   m_MinParticleSize: 0
   m_MaxParticleSize: 0.5
@@ -10532,7 +10532,7 @@ ParticleSystem:
     sphericalDirectionAmount: 0
     randomPositionAmount: 0
     radius:
-      value: 10
+      value: 23
       mode: 0
       spread: 0
       speed:
@@ -10651,7 +10651,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 6
+      scalar: 25
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -11081,7 +11081,7 @@ ParticleSystem:
         m_RotationOrder: 4
     separateAxes: 0
   ColorModule:
-    enabled: 0
+    enabled: 1
     gradient:
       serializedVersion: 2
       minMaxState: 1
@@ -11089,24 +11089,24 @@ ParticleSystem:
       maxColor: {r: 1, g: 1, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
-        key0: {r: 0.9433962, g: 0.87297356, b: 0.30704877, a: 1}
-        key1: {r: 1, g: 0.6465009, b: 0.042452812, a: 0}
+        key0: {r: 0.9433962, g: 0.87297356, b: 0.30704877, a: 0}
+        key1: {r: 0.9433962, g: 0.87297356, b: 0.30704877, a: 1}
         key2: {r: 1, g: 0.6465009, b: 0.042452812, a: 0}
         key3: {r: 0.9438282, g: 0.84291625, b: 0.030340908, a: 0}
         key4: {r: 0.9433962, g: 0.87290525, b: 0.031149892, a: 0}
         key5: {r: 0.9529412, g: 0.29016778, b: 0.07058825, a: 0}
         key6: {r: 0.9607843, g: 0.54701835, b: 0.16862741, a: 0}
         key7: {r: 0, g: 0, b: 0, a: 0}
-        ctime0: 771
-        ctime1: 64764
+        ctime0: 0
+        ctime1: 65535
         ctime2: 64764
         ctime3: 24865
         ctime4: 32960
         ctime5: 38357
         ctime6: 56476
         ctime7: 0
-        atime0: 0
-        atime1: 64764
+        atime0: 386
+        atime1: 13878
         atime2: 64764
         atime3: 64764
         atime4: 64764
@@ -11115,7 +11115,7 @@ ParticleSystem:
         atime7: 0
         m_Mode: 0
         m_NumColorKeys: 2
-        m_NumAlphaKeys: 2
+        m_NumAlphaKeys: 3
       minGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -13600,6 +13600,11 @@ ParticleSystem:
       type: 0
       properties: 0
       emitProbability: 1
+    - serializedVersion: 3
+      emitter: {fileID: 0}
+      type: 0
+      properties: 25
+      emitProbability: 1
   LightsModule:
     enabled: 0
     ratio: 0
@@ -14659,6 +14664,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7310131386521007457, guid: f1e5fbb1145447147be978a9ed219e5d, type: 3}
+      propertyPath: deathVFX
+      value: 
+      objectReference: {fileID: 4593951957772366835}
     - target: {fileID: 7676454518761160614, guid: f1e5fbb1145447147be978a9ed219e5d, type: 3}
       propertyPath: deathVFX
       value: 
