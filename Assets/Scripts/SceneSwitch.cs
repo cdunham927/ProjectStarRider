@@ -83,6 +83,7 @@ public class SceneSwitch : MonoBehaviour
 
     public void QuitGame()
     {
+        Time.timeScale = 1f;
         MusicController.instance.PlaySound();
         Invoke("Quit", 0.5f);
     }

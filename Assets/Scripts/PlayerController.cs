@@ -112,6 +112,7 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
+        meshRenderer = GetComponentInChildren<MeshRenderer>();
         stats = FindObjectOfType<Player_Stats>();
         cont = FindObjectOfType<GameManager>();
         //Lock cursor in screen;
@@ -469,8 +470,8 @@ public class PlayerController : MonoBehaviour
 
     public void Dashvfx() 
     {
-        Debug.Log("Player Healed");
-        meshRenderer.material.color = Color.yellow * blinkIntensity;
+        //Debug.Log("Player Healed");
+        if (meshRenderer != null) meshRenderer.material.color = Color.yellow * blinkIntensity;
         Invoke("ResetMaterial", blinkDuration);
 
         if (!GameManager.gameIsPaused && !GameManager.gameIsOver)
@@ -485,7 +486,6 @@ public class PlayerController : MonoBehaviour
 
     void ResetMaterial()
     {
-
-        meshRenderer.material.color = Color.white;
+        if (meshRenderer != null) meshRenderer.material.color = Color.white;
     }
 }
