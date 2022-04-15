@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using Shapes;
+//using Shapes;
 using UnityEngine.Rendering;
 using Cinemachine;
 using System;
@@ -25,7 +25,7 @@ public class Player_Stats : MonoBehaviour
     [Header("Health/Shapes Settings: ")]
     //Shapes things
     public float size;
-    public Shapes.Rectangle innerRect;
+    //public Shapes.Rectangle innerRect;
 
     [Header("lerpsSpd (side to side movement) Setting: ")]
     public float lerpSpd = 7f;
@@ -78,7 +78,7 @@ public class Player_Stats : MonoBehaviour
 
         //OverUI = FindObjectOfType<GameManager>().GameOver();
         //healthImage = GameObject.FindGameObjectWithTag("Health").GetComponent<Image>();
-        innerRect = GameObject.FindGameObjectWithTag("Health").GetComponent<Shapes.Rectangle>();
+        //innerRect = GameObject.FindGameObjectWithTag("Health").GetComponent<Shapes.Rectangle>();
 
         Curr_hp = Max_hp;
     }
@@ -111,7 +111,7 @@ public class Player_Stats : MonoBehaviour
         }
 
         //healthImage.fillAmount = Mathf.Lerp(healthImage.fillAmount, (float)Curr_hp / (float)Max_hp, lerpSpd * Time.deltaTime);
-        innerRect.Width = ((float)Curr_hp / (float)Max_hp) * size;
+        //innerRect.Width = ((float)Curr_hp / (float)Max_hp) * size;
     }
 
     public void Heal(int amt)
