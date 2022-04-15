@@ -5,6 +5,7 @@ using UnityEngine;
 using Cinemachine;
 //using UnityEngine.Rendering.PostProcessing;
 using UnityEngine.UI;
+using MPUIKIT;
 
 public class PlayerController : MonoBehaviour
 {
@@ -59,7 +60,7 @@ public class PlayerController : MonoBehaviour
     public float maxImagesTime = 40f;
     float curActiveTime;
     float oneCharge;
-    public Image[] afterimageUI;
+    public MPImage[] afterimageUI;
     public Sprite emptyImage;
     public Sprite filledImage;
     public float uiLerp = 10f;

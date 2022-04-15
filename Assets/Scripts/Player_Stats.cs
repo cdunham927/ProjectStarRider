@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using UnityEngine.Rendering;
 using Cinemachine;
 using System;
+using MPUIKIT;
 
 public class Player_Stats : MonoBehaviour
 {
@@ -20,7 +21,8 @@ public class Player_Stats : MonoBehaviour
     public GameObject healVFX;
 
     [Header("UI Assets: ")]
-    public Image healthImage;
+    //public Image healthImage;
+    public MPImage healthImage;
 
     [Header("Health/Shapes Settings: ")]
     //Shapes things
@@ -110,7 +112,7 @@ public class Player_Stats : MonoBehaviour
             }
         }
 
-        //healthImage.fillAmount = Mathf.Lerp(healthImage.fillAmount, (float)Curr_hp / (float)Max_hp, lerpSpd * Time.deltaTime);
+        healthImage.fillAmount = Mathf.Lerp(healthImage.fillAmount, (float)Curr_hp / (float)Max_hp, lerpSpd * Time.deltaTime);
         //innerRect.Width = ((float)Curr_hp / (float)Max_hp) * size;
     }
 

@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using MPUIKIT;
 
 public class GameManager : MonoBehaviour
 {
@@ -52,7 +53,7 @@ public class GameManager : MonoBehaviour
     public ObjectPool hitVFXPool;
     [HideInInspector]
     public ObjectPool enemyBulPool;
-    public Image[] afterimages;
+    public MPImage[] afterimages;
 
     public bool tutorialLevel;
     public EnemyManager[] enemyManager;
@@ -80,7 +81,7 @@ public class GameManager : MonoBehaviour
         scene = FindObjectOfType<SceneSwitch>();
         if (tutorialLevel)
         {
-            controlsText.gameObject.SetActive(true);
+            //controlsText.gameObject.SetActive(true);
         }
         player = FindObjectOfType<PlayerController>();
         //Spawn new event system
