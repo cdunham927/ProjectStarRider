@@ -1,26 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class NPCLoadLevel : NPCController
 {
     public string sceneName;
 
-    public override void DisplayNextSentence()
+    public override void StartDialogue(Dialogue d, string npcName, float tbc = 0f, string sName = "")
     {
-        base.DisplayNextSentence();
-    }
-
-    public override void EndDialogue()
-    {
-        base.EndDialogue();
-        SceneManager.LoadScene(sceneName);
-    }
-
-    public override void StartDialogue(Dialogue d)
-    {
-        base.StartDialogue(d);
+        base.StartDialogue(d, npcName, tbc, sName);
     }
 
     public override void Update()

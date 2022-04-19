@@ -9,15 +9,24 @@ public class NPCController : MonoBehaviour
     public Queue<string> sentences;
     public bool inRange = false;
 
-    public GameObject dialogueParent;
-    public Text dialogueText;
-    public Button continueButton;
+    Animator anim;
+    DialogueCanvasController dCanv;
+
+    public string npcName;
+    //public GameObject dialogueParent;
+    //public Text dialogueText;
+    //public Button continueButton;
+    //public Text nameText;
 
     public float timeBetweenTalks = 0.1f;
     float talkCools;
 
+    public float timeBetweenChars;
+
     private void Awake()
     {
+        //anim = GetComponent<Animator>();
+        dCanv = FindObjectOfType<DialogueCanvasController>();
         sentences = new Queue<string>();
     }
 
@@ -28,50 +37,20 @@ public class NPCController : MonoBehaviour
             if (Input.GetButtonDown("Interact"))
             {
                 //Do Dialogue
-                StartDialogue(dialogue);
+                dCanv.EndDialogue();
+                dCanv.StartDialogue(dialogue, npcName);
             }
         }
 
         if (talkCools > 0) talkCools -= Time.deltaTime;
     }
 
-    public virtual void StartDialogue(Dialogue d)
+    public virtual void StartDialogue(Dialogue d, string npcName, float tbc = 0f, string sName = "")
     {
-        sentences.Clear();
-
-        foreach (string s in d.sentences)
-        {
-            sentences.Enqueue(s);
-        }
-
-        //Add continue button function to UI button
-        //continueButton => DisplayNextSentence();
-
-        dialogueParent.SetActive(true);
-        DisplayNextSentence();
-    }
-
-
-
-    public virtual void DisplayNextSentence()
-    {
-        if (sentences.Count == 0)
-        {
-            EndDialogue();
-            return;
-        }
-
-        string sen = sentences.Dequeue();
-        dialogueText.text = sen;
-    }
-
-    public virtual void EndDialogue()
-    {
-        //End of conversation
-        talkCools = timeBetweenTalks;
-        dialogueText.text = "";
-        inRange = false;
-        dialogueParent.SetActive(false);
+        dCanv.EndDialogue();
+        dCanv.StartDialogue(d, npcName, tbc);
+        //pMove.canMove = false;
+        //pMove.ZeroVelocity();
     }
 
     public void OnTriggerEnter2D(Collider2D collision)
