@@ -172,6 +172,7 @@ public class PlayerController : MonoBehaviour
 
         if (!stats.PlayerDead && !GameManager.gameIsOver)
         {
+            /*
             if (Input.GetButton("RotateLeft"))
             {
                 Debug.Log("Pressing rotate left button");
@@ -179,17 +180,16 @@ public class PlayerController : MonoBehaviour
                 //transform.Rotate(0, 0, turnSpd * Time.deltaTime);
                 rotation.z -= turnSpd * Time.deltaTime;
             }
-
+            
             if (Input.GetButton("RotateRight"))
             {
                 Debug.Log("Pressing rotate right button");
                 //transform.Rotate(0, 0, turnSpd * Time.deltaTime);
                 rotation.z += turnSpd * Time.deltaTime;
             }
-
+            */
             if (!joystick && !GameManager.gameIsPaused)
             {
-
                 if (!invertControls)
                 {
                     rotation.y += Input.GetAxis("Mouse X");
