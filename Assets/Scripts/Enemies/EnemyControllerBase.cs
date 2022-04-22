@@ -11,6 +11,8 @@ public class EnemyControllerBase : MonoBehaviour
     public float maxHp;
     protected float curHp;
 
+    public float killScore = 100;
+
     //Time between attacks
     public float timeBetweenAttacks;
     //Range for when the enemy starts attacking
@@ -62,9 +64,11 @@ public class EnemyControllerBase : MonoBehaviour
 
     public Healthbar healthScript;
     public Animator anim;
+    Player_Stats pStats;
 
     private void Awake()
     {
+        pStats = FindObjectOfType<Player_Stats>();
         src = GetComponent<AudioSource>();
         cont = FindObjectOfType<GameManager>();
         bulletPool = cont.enemyBulPool;
@@ -186,6 +190,7 @@ public class EnemyControllerBase : MonoBehaviour
             //FindObjectOfType<GameManager>().EnemyDiedEvent();
             //if (anim != null) anim.SetTrigger("Death");
             //Invoke("Disable", deathClip.length);
+            pStats.AddScore(killScore);
             Instantiate(deathVFX, transform.position, transform.rotation);
             Invoke("Disable", 0.01f);
         }

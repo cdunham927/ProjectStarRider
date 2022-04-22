@@ -59918,6 +59918,9 @@ MonoBehaviour:
   shakeAmt: 5
   blinkDuration: 0.3
   blinkIntensity: 2
+  scoreText: {fileID: 0}
+  score: 0
+  hurtDecAmt: -9999
 --- !u!114 &8701767644159492045
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -59969,9 +59972,9 @@ MonoBehaviour:
   aimAtTarget: {fileID: 0}
   followTarget: {fileID: 8701767645949774035}
   bod: {fileID: 2009239985978953898}
-  pushBack: 650
-  timeToMove: 0.225
-  collisionDamage: 0
+  pushBack: 1000
+  timeToMove: 0.3125
+  collisionDamage: 1
   dashSpd: 75
   dashCooldown: 1.5
   dashTime: 0.25
@@ -60040,7 +60043,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1.35, y: 0.96, z: 2}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 0, z: 1.25}
 --- !u!82 &701194358528213671
 AudioSource:
   m_ObjectHideFlags: 0

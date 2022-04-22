@@ -289,7 +289,7 @@ public class PlayerController : MonoBehaviour
             if (curDashTime > 0) curDashTime -= Time.deltaTime;
 
             //Actual dash code
-            if (curDashTime > 0)
+            if (curDashTime > 0 && !hitWall)
             {
                 bod.AddForce(bod.velocity * dashSpd * Time.deltaTime, ForceMode.Impulse);
                 Dashvfx();
@@ -417,12 +417,15 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Wall"))
+        if (collision.gameObject.CompareTag("Wall") || collision.gameObject.CompareTag("Enemy"))
         {
             //Debug.Log("Hit wall");
             //bod.velocity = Vector3.Reflect(bod.velocity, collision.contacts[0].normal);
             hitWall = true;
             Invoke("ResetHitWall", timeToMove);
+            //float mag = bod.velocity.magnitude;
+            bod.velocity = Vector3.zero;
+            //bod.velocity = transform.forward * mag;
             //bod.velocity = transform.forward * pushBack;
             bod.AddForce(transform.forward * pushBack);
             //Take damage?

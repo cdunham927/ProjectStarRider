@@ -59,6 +59,10 @@ public class Player_Stats : MonoBehaviour
  
     MeshRenderer meshRenderer;
 
+    public Text scoreText;
+    public float score = 0;
+    public float hurtDecAmt = -9999;
+
     private void Awake()
     {
         //src = FindObjectOfType<GameManager>().GetComponent<AudioSource>();
@@ -85,6 +89,13 @@ public class Player_Stats : MonoBehaviour
         Curr_hp = Max_hp;
     }
 
+    public void AddScore(float amt)
+    {
+        score += amt;
+
+        if (score <= 0) score = 0;
+    }
+
     public void ShakeCamera()
     {
         perlin.m_AmplitudeGain = shakeAmt;
@@ -93,7 +104,6 @@ public class Player_Stats : MonoBehaviour
 
     private void Update()
     {
-        
         if (curTime > 0)
         {
             curTime -= Time.deltaTime;
@@ -113,6 +123,7 @@ public class Player_Stats : MonoBehaviour
         }
 
         healthImage.fillAmount = Mathf.Lerp(healthImage.fillAmount, (float)Curr_hp / (float)Max_hp, lerpSpd * Time.deltaTime);
+        scoreText.text = "Score: " + score.ToString();
         //innerRect.Width = ((float)Curr_hp / (float)Max_hp) * size;
     }
 
@@ -144,6 +155,7 @@ public class Player_Stats : MonoBehaviour
         Curr_hp -= damageAmount;
         DamageBlink();
         //Play damage sound
+        AddScore(hurtDecAmt);
 
         if (Curr_hp > 0)
         {

@@ -76,8 +76,8 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        can = GetComponent<Canvas>();
-        can.worldCamera = Instantiate(uiCamera).GetComponent<Camera>();
+        //can = GetComponent<Canvas>();
+        //can.worldCamera = Instantiate(uiCamera).GetComponent<Camera>();
         scene = FindObjectOfType<SceneSwitch>();
         if (tutorialLevel)
         {

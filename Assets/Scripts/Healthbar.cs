@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using Shapes;
+//using Shapes;
 using UnityEngine.Rendering;
 
 public class Healthbar : MonoBehaviour
@@ -15,7 +15,7 @@ public class Healthbar : MonoBehaviour
 
     //Shapes things
     public float size;
-    public Shapes.Rectangle innerRect;
+    //public Shapes.Rectangle innerRect;
 
 
     private void Awake()
@@ -34,7 +34,7 @@ public class Healthbar : MonoBehaviour
 
     public void SwitchUIActive(bool n)
     {
-        innerRect.gameObject.SetActive(n);
+        //innerRect.gameObject.SetActive(n);
         //canv.SetActive(!canv.activeInHierarchy);
     }
 
@@ -46,13 +46,13 @@ public class Healthbar : MonoBehaviour
 
     public void SetMaxHealth(int health)
     {
-        //slider.fillAmount = Mathf.Lerp(slider.fillAmount, health / stats.MaxHP, 10f * Time.deltaTime);
-        //slider.fillAmount = stats.MaxHP;
+        slider.fillAmount = Mathf.Lerp(slider.fillAmount, health / stats.maxHp, 10f * Time.deltaTime);
+        slider.fillAmount = stats.maxHp;
     }
 
     public void SetHealth(int health)
     {
-        //slider.fillAmount = (float)health / (float)stats.MaxHP;
-        innerRect.Width = ((float)stats.GetHealth() / (float)stats.maxHp) * size;
+        slider.fillAmount = (float)health / (float)stats.maxHp;
+        //innerRect.Width = ((float)stats.GetHealth() / (float)stats.maxHp) * size;
     }
 }

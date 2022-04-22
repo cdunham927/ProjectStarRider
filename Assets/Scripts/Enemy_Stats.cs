@@ -4,15 +4,43 @@ using UnityEngine;
 
 public class Enemy_Stats : MonoBehaviour
 {
+    //Dont use this enemy stats, its out of date
+    //use the scripts from the enemy folder instead
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
     public int MaxHP;
     public int CurrHP;
     
     public Healthbar healthScript;
     public Animator anim;
 
-    
-    
-    
+    public float killScore = 100;
     /*
     [Header(" Damage Blink Settings: ")]
     public float blinkIntesity;
@@ -45,9 +73,11 @@ public class Enemy_Stats : MonoBehaviour
     public float blinkBrightness = 1.0f;
     float blinkTimer;
     SkinnedMeshRenderer skinnedMeshRenderer;
+    Player_Stats pStats;
    
     private void Awake()
     {
+        pStats = FindObjectOfType<Player_Stats>();
         //hpBar = GetComponent<Healthbar>();
         cont = FindObjectOfType<GameManager>();
         hpPool = cont.hpPool;
@@ -107,6 +137,7 @@ public class Enemy_Stats : MonoBehaviour
             //FindObjectOfType<GameManager>().EnemyDiedEvent();
             //if (anim != null) anim.SetTrigger("Death");
             //Invoke("Disable", deathClip.length);
+            pStats.AddScore(killScore);
             Instantiate(deathVFX, transform.position, transform.rotation);
             Invoke("Disable", 0.01f);
         }
