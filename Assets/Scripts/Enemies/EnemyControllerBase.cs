@@ -12,6 +12,7 @@ public class EnemyControllerBase : MonoBehaviour
     protected float curHp;
 
     public float killScore = 100;
+    bool hasAdded = false;
 
     //Time between attacks
     public float timeBetweenAttacks;
@@ -79,6 +80,7 @@ public class EnemyControllerBase : MonoBehaviour
 
     protected virtual void OnEnable()
     {
+        hasAdded = false;
         player = FindObjectOfType<PlayerController>();
         detectionCollider.radius = attackRange;
         SetCollider(false);
@@ -190,7 +192,10 @@ public class EnemyControllerBase : MonoBehaviour
             //FindObjectOfType<GameManager>().EnemyDiedEvent();
             //if (anim != null) anim.SetTrigger("Death");
             //Invoke("Disable", deathClip.length);
-            pStats.AddScore(killScore);
+            if (!hasAdded) {
+                hasAdded = true;
+                pStats.AddScore(killScore);
+            }
             Instantiate(deathVFX, transform.position, transform.rotation);
             Invoke("Disable", 0.01f);
         }
