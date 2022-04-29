@@ -7,7 +7,7 @@ public class PlayerShooting : MonoBehaviour
     [Header("Shooting References: ")]
     public ObjectPool bulPool; 
     public GameObject bulSpawn;
-    //public ParticleSystem muzzle;
+    public ParticleSystem muzzle;
 
     [Header("shooting settings: ")]
     //public float bulletSpd;
@@ -45,7 +45,9 @@ public class PlayerShooting : MonoBehaviour
         {
             Shoot();
             PlaySound();
-            //muzzle.Play();
+            
+
+
 
 
         }
@@ -62,6 +64,8 @@ public class PlayerShooting : MonoBehaviour
         //bul.GetComponent<Rigidbody>().velocity = bod.velocity;
         bul.SetActive(true);
         curShootCools = shootCooldown;
+        PlayMuzzle();
+
     }
 
     public void PlaySound()
@@ -70,7 +74,7 @@ public class PlayerShooting : MonoBehaviour
     }
 
     
-    /*
+    
     public void PlayMuzzle() 
     {
 
@@ -78,7 +82,8 @@ public class PlayerShooting : MonoBehaviour
         {
             var muzzleVFX = Instantiate(muzzle, transform.position, Quaternion.identity);
             muzzleVFX.transform.forward = gameObject.transform.forward;
+            muzzle.Play();
         }
 
-    }*/
+    }
 }
