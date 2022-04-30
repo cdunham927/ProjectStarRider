@@ -389,6 +389,11 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void TakeAfterimage(float amt)
+    {
+        curActiveTime -= amt;
+    }
+
     public void GetMouseSensitivity()
     {
         lookSpd = PlayerPrefs.GetFloat("MouseSensitivity", lookSpd);

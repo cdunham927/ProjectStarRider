@@ -63,9 +63,12 @@ public class Player_Stats : MonoBehaviour
     public float score = 0;
     public float hurtDecAmt = -9999;
 
+    PlayerController pCont;
+
     private void Awake()
     {
         //src = FindObjectOfType<GameManager>().GetComponent<AudioSource>();
+        pCont = FindObjectOfType<PlayerController>();
 
         meshRenderer = GetComponentInChildren<MeshRenderer>();
         
