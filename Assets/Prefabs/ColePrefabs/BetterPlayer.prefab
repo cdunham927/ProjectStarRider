@@ -127,7 +127,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 493828346837487392}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 4.32}
+  m_LocalPosition: {x: 0, y: 0, z: 5.89}
   m_LocalScale: {x: 0.465965, y: 0.465965, z: 0.465965}
   m_Children:
   - {fileID: 4482461305011185282}
@@ -14649,7 +14649,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulPool: {fileID: 0}
   bulSpawn: {fileID: 6448657219224798944}
-  muzzle: {fileID: 5330494611136019476, guid: fa481e65223c37245956b364fa657277, type: 3}
+  muzzle: {fileID: 4937317143723883871}
   shootCooldown: 0.125
   ShotSounds: {fileID: 8300000, guid: 33f24126a410fcf4db6d9abd6cdef767, type: 3}
   parentShoot: {fileID: 5272638553245071613}
@@ -29365,7 +29365,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2738673796004638089}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 3.03}
   m_LocalScale: {x: 1, y: 1, z: 2}
   m_Children: []
   m_Father: {fileID: 5867249394819931440}
@@ -29691,8 +29691,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8450753367248140376}
-  - component: {fileID: 7905230225216867001}
-  - component: {fileID: 5355006170290131948}
   - component: {fileID: 4195462141346242727}
   m_Layer: 0
   m_Name: Trail_Right
@@ -29715,56 +29713,6 @@ Transform:
   m_Father: {fileID: 6780140894786045761}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &7905230225216867001
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3642816556324751850}
-  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!23 &5355006170290131948
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3642816556324751850}
-  m_Enabled: 0
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: aa1f567ae1ea4d44fb30c3c2e1851209, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!96 &4195462141346242727
 TrailRenderer:
   serializedVersion: 2
@@ -29807,7 +29755,7 @@ TrailRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Time: 0.25
+  m_Time: 0.2
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 1
@@ -29816,7 +29764,7 @@ TrailRenderer:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.4078948
+        value: 0
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -29824,13 +29772,22 @@ TrailRenderer:
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 0.4851188
-        value: 0
-        inSlope: -1.1501942
-        outSlope: -1.1501942
+        time: 0.30852172
+        value: 0.16518624
+        inSlope: 0
+        outSlope: 0
         tangentMode: 0
         weightedMode: 0
-        inWeight: 0.3773003
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.63677305
+        value: 0
+        inSlope: -0.03311575
+        outSlope: -0.03311575
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.48164335
         outWeight: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
@@ -29838,8 +29795,8 @@ TrailRenderer:
     colorGradient:
       serializedVersion: 2
       key0: {r: 1, g: 1, b: 1, a: 0}
-      key1: {r: 1, g: 1, b: 1, a: 1}
-      key2: {r: 0, g: 0, b: 0, a: 1}
+      key1: {r: 1, g: 1, b: 1, a: 0.6901961}
+      key2: {r: 0, g: 0, b: 0, a: 0.6901961}
       key3: {r: 0, g: 0, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
       key5: {r: 0, g: 0, b: 0, a: 0}
@@ -29854,8 +29811,8 @@ TrailRenderer:
       ctime6: 0
       ctime7: 0
       atime0: 386
-      atime1: 20046
-      atime2: 43947
+      atime1: 46646
+      atime2: 56669
       atime3: 65535
       atime4: 65535
       atime5: 0
@@ -34681,6 +34638,51 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
+--- !u!1 &4937317143723883871
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8488279934411207397}
+  - component: {fileID: 5614916160637790481}
+  m_Layer: 0
+  m_Name: MuzzlePS
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8488279934411207397
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4937317143723883871}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.22399998, z: 1.8699999}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_Children:
+  - {fileID: 8156241774836320665}
+  m_Father: {fileID: 8701767645712489585}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5614916160637790481
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4937317143723883871}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1549b51469aa80c438872d769261bfa7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeToDeactivate: 0.5
 --- !u!1 &4942849169860411727
 GameObject:
   m_ObjectHideFlags: 0
@@ -39559,7 +39561,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulPool: {fileID: 0}
   bulSpawn: {fileID: 8312821632896828730}
-  muzzle: {fileID: 5330494611136019476, guid: fa481e65223c37245956b364fa657277, type: 3}
+  muzzle: {fileID: 4937317143723883871}
   shootCooldown: 0.125
   ShotSounds: {fileID: 8300000, guid: 33f24126a410fcf4db6d9abd6cdef767, type: 3}
   parentShoot: {fileID: 5272638553245071613}
@@ -44564,20 +44566,20 @@ TrailRenderer:
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 0.47777778
-        value: 0.42857143
-        inSlope: 0
-        outSlope: 0
+        time: 0.4967292
+        value: 0
+        inSlope: -3.0479743
+        outSlope: -3.0479743
         tangentMode: 0
         weightedMode: 0
-        inWeight: 0
+        inWeight: 0.15561381
         outWeight: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 0, b: 0, a: 0}
+      key0: {r: 1, g: 0, b: 0, a: 0.32941177}
       key1: {r: 1, g: 0, b: 0, a: 1}
       key2: {r: 0, g: 0, b: 0, a: 1}
       key3: {r: 0, g: 0, b: 0, a: 1}
@@ -49455,11 +49457,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5991352319920838255}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.22399998, z: 1.8700004}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children: []
-  m_Father: {fileID: 8701767645712489585}
-  m_RootOrder: 4
+  m_Father: {fileID: 8488279934411207397}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!198 &2310171164337043289
 ParticleSystem:
@@ -54321,7 +54323,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6780140894786045761
 Transform:
   m_ObjectHideFlags: 0
@@ -64267,8 +64269,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6050561914200513784}
-  - component: {fileID: 149900590395127097}
-  - component: {fileID: 1709112777943906611}
   - component: {fileID: 383370005646937078}
   m_Layer: 0
   m_Name: Trail_Left
@@ -64285,62 +64285,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6958939098067316458}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -11.842, y: 25.374, z: -33.889}
+  m_LocalPosition: {x: -11.719, y: 25.488, z: -34.041}
   m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
   m_Children: []
   m_Father: {fileID: 6780140894786045761}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &149900590395127097
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6958939098067316458}
-  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!23 &1709112777943906611
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6958939098067316458}
-  m_Enabled: 0
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: aa1f567ae1ea4d44fb30c3c2e1851209, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!96 &383370005646937078
 TrailRenderer:
   serializedVersion: 2
@@ -64383,7 +64333,7 @@ TrailRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Time: 0.25
+  m_Time: 0.2
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 1
@@ -64392,7 +64342,7 @@ TrailRenderer:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.30263156
+        value: 0
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -64400,7 +64350,16 @@ TrailRenderer:
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 0.4851188
+        time: 0.28960577
+        value: 0.13370132
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.5964927
         value: 0
         inSlope: 0
         outSlope: 0
@@ -64414,8 +64373,8 @@ TrailRenderer:
     colorGradient:
       serializedVersion: 2
       key0: {r: 1, g: 1, b: 1, a: 0}
-      key1: {r: 1, g: 1, b: 1, a: 0.8117647}
-      key2: {r: 0, g: 0, b: 0, a: 0.8509804}
+      key1: {r: 1, g: 1, b: 1, a: 0.6901961}
+      key2: {r: 0, g: 0, b: 0, a: 0.6901961}
       key3: {r: 0, g: 0, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
       key5: {r: 0, g: 0, b: 0, a: 0}
@@ -64430,8 +64389,8 @@ TrailRenderer:
       ctime6: 0
       ctime7: 0
       atime0: 386
-      atime1: 14842
-      atime2: 51464
+      atime1: 44911
+      atime2: 53199
       atime3: 65535
       atime4: 65535
       atime5: 0
@@ -64512,7 +64471,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulPool: {fileID: 0}
   bulSpawn: {fileID: 6196601145558399737}
-  muzzle: {fileID: 5330494611136019476, guid: fa481e65223c37245956b364fa657277, type: 3}
+  muzzle: {fileID: 4937317143723883871}
   shootCooldown: 0.125
   ShotSounds: {fileID: 8300000, guid: 33f24126a410fcf4db6d9abd6cdef767, type: 3}
   parentShoot: {fileID: 5272638553245071613}
@@ -69592,7 +69551,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5749458324202568668}
   m_Layer: 0
-  m_Name: MuzzlePs
+  m_Name: JetStream
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -69645,7 +69604,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8701767644159492086}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 12.45}
+  m_LocalPosition: {x: 0, y: 0, z: 50.34}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children:
   - {fileID: 8701767645712489585}
@@ -69705,19 +69664,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   joystick: 1
-  aimTarget: {fileID: 8701767644159492043}
+  aimTarget: {fileID: 8701767644839538910}
   cameraParent: {fileID: 0}
   cam: {fileID: 0}
   turnSmoothTime: 0.1
   trails: {fileID: 0}
-  speed: 1
+  speed: 10
   slowSpd: -20
-  regSpd: -70
-  highSpd: -130
+  regSpd: -50
+  highSpd: -200
   superSpd: -170
   sideSpeed: -60
   rotSpd: 75
-  lookSpd: 1
+  lookSpd: 90
   turnSpd: 90
   sideRotSpd: 150
   realignRot: 0.5
@@ -69740,7 +69699,7 @@ MonoBehaviour:
   invertControls: 1
   speedUpTime: 10
   cinCam: {fileID: 0}
-  aimAtTarget: {fileID: 0}
+  aimAtTarget: {fileID: 8701767644839538911}
   followTarget: {fileID: 8701767645949774035}
   bod: {fileID: 2009239985978953898}
   pushBack: 1000
@@ -69764,7 +69723,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulPool: {fileID: 0}
   bulSpawn: {fileID: 7299137356408208994}
-  muzzle: {fileID: 5330494611136019476, guid: fa481e65223c37245956b364fa657277, type: 3}
+  muzzle: {fileID: 4937317143723883871}
   shootCooldown: 0.4
   ShotSounds: {fileID: 8300000, guid: 33f24126a410fcf4db6d9abd6cdef767, type: 3}
   parentShoot: {fileID: 0}
@@ -69973,7 +69932,7 @@ Transform:
   - {fileID: 8701767645786152104}
   - {fileID: 6901778982029659643}
   - {fileID: 8237395255162873035}
-  - {fileID: 8156241774836320665}
+  - {fileID: 8488279934411207397}
   m_Father: {fileID: 8701767644159492043}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -70003,7 +69962,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8701767645786152105}
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0.09, z: 0}
   m_LocalScale: {x: 50, y: -50, z: 50}
   m_Children:
   - {fileID: 6780140894786045761}
@@ -70155,7 +70114,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulPool: {fileID: 0}
   bulSpawn: {fileID: 6593996469369643299}
-  muzzle: {fileID: 5330494611136019476, guid: fa481e65223c37245956b364fa657277, type: 3}
+  muzzle: {fileID: 4937317143723883871}
   shootCooldown: 0.125
   ShotSounds: {fileID: 8300000, guid: 33f24126a410fcf4db6d9abd6cdef767, type: 3}
   parentShoot: {fileID: 5272638553245071613}
