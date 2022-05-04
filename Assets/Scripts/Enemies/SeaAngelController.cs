@@ -13,7 +13,7 @@ public class SeaAngelController : EnemyControllerBase
     protected override void Attack()
     {
         src.Play();
-        if (bulletPool == null) bulletPool = cont.enemyBulPool;
+        if (bulletPool == null) bulletPool = cont.seaAngelBulPool;
         //Get pooled bullet
         GameObject bul = bulletPool.GetPooledObject();
         if (bul != null)

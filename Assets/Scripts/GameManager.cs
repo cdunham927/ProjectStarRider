@@ -17,6 +17,8 @@ public class GameManager : MonoBehaviour
     public GameObject playerBulletPoolPrefab;
     //Enemies need to grab from this pool
     public GameObject enemyBulletPoolPrefab;
+    //Enemies need to grab from this pool
+    public GameObject seaAngelBulPoolPrefab;
     //Bullets need to grab from this pool
     public GameObject hitVFXPoolPrefab;
     //This object needs these references
@@ -53,6 +55,8 @@ public class GameManager : MonoBehaviour
     public ObjectPool hitVFXPool;
     [HideInInspector]
     public ObjectPool enemyBulPool;
+    [HideInInspector]
+    public ObjectPool seaAngelBulPool;
     public MPImage[] afterimages;
 
     public bool tutorialLevel;
@@ -106,6 +110,7 @@ public class GameManager : MonoBehaviour
         hpPool = Instantiate(hpPoolPrefab).GetComponent<ObjectPool>();
         bulPool = Instantiate(playerBulletPoolPrefab).GetComponent<ObjectPool>(); ;
         enemyBulPool = Instantiate(enemyBulletPoolPrefab).GetComponent<ObjectPool>();
+        seaAngelBulPool = Instantiate(seaAngelBulPoolPrefab).GetComponent<ObjectPool>();
         hitVFXPool = Instantiate(hitVFXPoolPrefab).GetComponent<ObjectPool>();
 
         //Spawn minimap
