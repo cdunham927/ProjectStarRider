@@ -14,12 +14,12 @@ OcclusionCullingSettings:
 RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 9
-  m_Fog: 0
-  m_FogColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-  m_FogMode: 3
-  m_FogDensity: 0.01
-  m_LinearFogStart: 0
-  m_LinearFogEnd: 300
+  m_Fog: 1
+  m_FogColor: {r: 0.509434, g: 0.509434, b: 0.509434, a: 1}
+  m_FogMode: 1
+  m_FogDensity: 0
+  m_LinearFogStart: 300
+  m_LinearFogEnd: 4000
   m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_LightingSettings: {fileID: 4890085278179872738, guid: 8f1375f597967b2478aa707de59cf48c, type: 2}
+  m_LightingSettings: {fileID: 4890085278179872738, guid: 3dcaf102173089c4e9b1938cc38da3d0, type: 2}
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -3765,7 +3765,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6521540015124966691, guid: 3408922f02325b046a750ecf096149c8, type: 3}
       propertyPath: far clip plane
-      value: 5000
+      value: 10000
       objectReference: {fileID: 0}
     - target: {fileID: 6521540015124966691, guid: 3408922f02325b046a750ecf096149c8, type: 3}
       propertyPath: m_TargetDisplay
@@ -3841,7 +3841,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6521540015124966693, guid: 3408922f02325b046a750ecf096149c8, type: 3}
       propertyPath: m_Lens.FarClipPlane
-      value: 5000
+      value: 10000
       objectReference: {fileID: 0}
     - target: {fileID: 6521540015124966693, guid: 3408922f02325b046a750ecf096149c8, type: 3}
       propertyPath: m_Lens.NearClipPlane
@@ -3849,7 +3849,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6521540015124966693, guid: 3408922f02325b046a750ecf096149c8, type: 3}
       propertyPath: m_Lens.m_SensorSize.x
-      value: 1.4716089
+      value: 0.9763407
       objectReference: {fileID: 0}
     - target: {fileID: 6521540015124966694, guid: 3408922f02325b046a750ecf096149c8, type: 3}
       propertyPath: m_Enabled
@@ -5424,6 +5424,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8701767644159492045, guid: 8327d579f0661e84a92587298fc1136f, type: 3}
+      propertyPath: cam
+      value: 
+      objectReference: {fileID: 1182243554}
     - target: {fileID: 8701767644159492045, guid: 8327d579f0661e84a92587298fc1136f, type: 3}
       propertyPath: speed
       value: 1
@@ -41836,6 +41840,11 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1181826374}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!4 &1182243554 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6521540015124966692, guid: 3408922f02325b046a750ecf096149c8, type: 3}
+  m_PrefabInstance: {fileID: 363299284}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1210511857
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -50993,7 +51002,7 @@ PrefabInstance:
     - target: {fileID: 5897411348583844969, guid: 42e2c69bde4b1944fa2c68d61837645c, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 3943362179025531529, guid: 417f7431a3ed5734786f31b9db10cb79, type: 3}
+      objectReference: {fileID: 2100000, guid: 5b299ce92e97d7f4485d67c769b376f5, type: 2}
     - target: {fileID: 5897411349651602664, guid: 42e2c69bde4b1944fa2c68d61837645c, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -51001,7 +51010,7 @@ PrefabInstance:
     - target: {fileID: 5897411349682055201, guid: 42e2c69bde4b1944fa2c68d61837645c, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 3943362179025531529, guid: 417f7431a3ed5734786f31b9db10cb79, type: 3}
+      objectReference: {fileID: 2100000, guid: 5b299ce92e97d7f4485d67c769b376f5, type: 2}
     - target: {fileID: 5897411349791209440, guid: 42e2c69bde4b1944fa2c68d61837645c, type: 3}
       propertyPath: m_RootOrder
       value: 6
