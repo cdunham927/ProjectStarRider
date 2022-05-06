@@ -13,8 +13,12 @@ public class PlayerMovement : MonoBehaviour
     private Animator animator;
     bool moving;
 
-    private void Start()
+    [HideInInspector]
+    public bool canMove;
+
+    private void Awake()
     {
+        canMove = true;
         animator = GetComponent<Animator>();
     }
 
@@ -26,15 +30,17 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update() //input
     {
-        movement.x = Input.GetAxisRaw("Horizontal");
-        movement.y = Input.GetAxisRaw("Vertical");
-        movement = new Vector2(movement.x, movement.y).normalized;
-        if(movement.x == 0 && movement.y == 0)
+        if (canMove)
         {
-            moving = false;
-        }
-        else
-         moving = true;
+            movement.x = Input.GetAxisRaw("Horizontal");
+            movement.y = Input.GetAxisRaw("Vertical");
+            movement = new Vector2(movement.x, movement.y).normalized;
+            if (movement.x == 0 && movement.y == 0)
+            {
+                moving = false;
+            }
+            else
+                moving = true;
             if (movement.x != 0)
             {
                 animator.SetFloat("LastDirX", movement.x);
@@ -43,9 +49,10 @@ public class PlayerMovement : MonoBehaviour
             {
                 animator.SetFloat("LastDirY", movement.y);
             }
-        animator.SetBool("moving",moving);
-        animator.SetFloat("AnimMoveY", movement.y);
-        animator.SetFloat("AnimMoveX", movement.x);
+            animator.SetBool("moving", moving);
+            animator.SetFloat("AnimMoveY", movement.y);
+            animator.SetFloat("AnimMoveX", movement.x);
+        }
     }
 
     void FixedUpdate() // movement

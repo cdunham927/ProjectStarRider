@@ -20,6 +20,11 @@ public class DialogueCanvasController : MonoBehaviour
     bool loadLevel = false;
     string levelName;
 
+    private void Awake()
+    {
+        pMove = FindObjectOfType<PlayerMovement>();
+    }
+
     public virtual void StartDialogue(Dialogue d, string npcName, float tbc = 0f, string sName = "")
     {
         if (sName != "")
@@ -38,6 +43,7 @@ public class DialogueCanvasController : MonoBehaviour
         {
             sentences.Enqueue(s);
         }
+        pMove.canMove = false;
 
         //Add continue button function to UI button
         //continueButton => DisplayNextSentence();
@@ -83,6 +89,7 @@ public class DialogueCanvasController : MonoBehaviour
         //dCanv.continueButton.onClick.RemoveListener(delegate { DisplayNextSentence(); });
         continueButton.onClick.RemoveAllListeners();
         dialogueParent.SetActive(false);
+        pMove.canMove = true;
 
         if (loadLevel)
         {

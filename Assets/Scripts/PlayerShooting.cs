@@ -23,6 +23,8 @@ public class PlayerShooting : MonoBehaviour
     Rigidbody bod;
     public PlayerShooting parentShoot;
 
+    public int dmg;
+
     private void Awake()
     {
         bod = GetComponentInParent<Rigidbody>();
@@ -60,6 +62,9 @@ public class PlayerShooting : MonoBehaviour
         GameObject bul = bulPool.GetPooledObject();
         bul.transform.position = bulSpawn.transform.position;
         bul.transform.rotation = bulSpawn.transform.rotation;
+        //Set bullet damage
+        Player_Bullet b = bul.GetComponent<Player_Bullet>();
+        b.damage = dmg;
         //bul.GetComponent<Rigidbody>().velocity = bod.velocity;
         bul.SetActive(true);
         curShootCools = shootCooldown;
@@ -71,14 +76,9 @@ public class PlayerShooting : MonoBehaviour
     {
         AS.PlayOneShot(ShotSounds);
     }
-
-    
     
     public void PlayMuzzle() 
     {
-
-
-
         if (!muzzle.activeInHierarchy)
         {
             muzzle.SetActive(true);
@@ -92,6 +92,5 @@ public class PlayerShooting : MonoBehaviour
             muzzle.Play();
         }
         */
-
     }
 }

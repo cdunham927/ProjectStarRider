@@ -5,9 +5,7 @@ using UnityEngine;
 public class Player_Bullet : Bullet
 {
     public GameObject hitPrefab;
-    //public GameObject muzzlePrefab; 
-    
-    public int dmg = 1;
+    //public GameObject muzzlePrefab;
 
     public TrailRenderer trail;
     public GameObject spawnPos;
@@ -42,7 +40,7 @@ public class Player_Bullet : Bullet
         if (col.CompareTag("Enemy"))
         {
             //Debug.Log("Hit Enemy");
-            col.gameObject.GetComponent<EnemyControllerBase>().Damage(dmg);
+            col.gameObject.GetComponent<EnemyControllerBase>().Damage(damage);
             Invoke("Disable", 0.01f);
             //ContactPoint cp = col.GetContact(0);
             if (hitVFXPool == null) hitVFXPool = cont.hitVFXPool;
@@ -74,7 +72,7 @@ public class Player_Bullet : Bullet
         if (col.gameObject.CompareTag("Enemy"))
         {
             //Debug.Log("Hit Enemy");
-            col.gameObject.GetComponent<Enemy_Stats>().Damage(dmg);
+            col.gameObject.GetComponent<Enemy_Stats>().Damage(damage);
             Invoke("Disable", 0.01f);
             //ContactPoint cp = col.GetContact(0);
             if (hitVFXPool == null) hitVFXPool = cont.hitVFXPool;
