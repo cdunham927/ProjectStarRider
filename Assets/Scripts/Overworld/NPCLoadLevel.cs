@@ -8,7 +8,10 @@ public class NPCLoadLevel : NPCController
 
     public override void StartDialogue(Dialogue d, string npcName, float tbc = 0f, string sName = "")
     {
-        base.StartDialogue(d, npcName, tbc, sName);
+        dCanv.EndDialogue();
+        dCanv.StartDialogue(d, npcName, tbc, sceneName);
+        //pMove.canMove = false;
+        //pMove.ZeroVelocity();
     }
 
     public override void Update()

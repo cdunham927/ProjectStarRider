@@ -9,8 +9,8 @@ public class NPCController : MonoBehaviour
     public Queue<string> sentences;
     public bool inRange = false;
 
-    Animator anim;
-    DialogueCanvasController dCanv;
+    protected Animator anim;
+    protected DialogueCanvasController dCanv;
 
     public string npcName;
     //public GameObject dialogueParent;
@@ -19,7 +19,7 @@ public class NPCController : MonoBehaviour
     //public Text nameText;
 
     public float timeBetweenTalks = 0.1f;
-    float talkCools;
+    protected float talkCools;
 
     public float timeBetweenChars;
 
@@ -37,8 +37,10 @@ public class NPCController : MonoBehaviour
             if (Input.GetButtonDown("Interact"))
             {
                 //Do Dialogue
-                dCanv.EndDialogue();
-                dCanv.StartDialogue(dialogue, npcName);
+                //dCanv.EndDialogue();
+
+                //dCanv.StartDialogue(dialogue, npcName);
+                StartDialogue(dialogue, npcName, timeBetweenChars);
             }
         }
 
