@@ -17,7 +17,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7884226138523982714
 Transform:
   m_ObjectHideFlags: 0
@@ -1113,18 +1113,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentState: 0
-  maxHp: 20
+  maxHp: 10
   killScore: 100
-  timeBetweenAttacks: 1
-  attackRange: 0
+  timeBetweenAttacks: 1.5
+  attackRange: 80
   bulletPool: {fileID: 0}
   playerInRange: 0
   detectionCollider: {fileID: 3500183944546077826}
   col: {fileID: 5008665348598738573}
   isRandom: 0
-  accx: 30
-  accy: 30
-  bulletShot: 10
+  accx: 40
+  accy: 40
+  bulletShot: 2
   deathVFX: {fileID: 4593951957772366835, guid: 1e092bc34c05e7a4388b0d0c57e84ec9, type: 3}
   hpSpawnChance: 0.3
   hpPool: {fileID: 0}
@@ -1425,7 +1425,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 6
+  m_Radius: 10
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &7258781344476555911
 MonoBehaviour:
@@ -1439,6 +1439,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49930d78fba51d7479ad67bfc3fa9d4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  parent: {fileID: 0}
+  parent: {fileID: 8871560330763901014}
   anim: {fileID: 1676873709667935506}
   hpBar: {fileID: 6995407178728094793}
