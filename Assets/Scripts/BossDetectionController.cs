@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BossDetectionController : MonoBehaviour
 {
-    public BossController parent;
+    public BossControllerBase parent;
 
     private void OnTriggerEnter(Collider other)
     {
