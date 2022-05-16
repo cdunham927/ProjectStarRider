@@ -9,11 +9,14 @@ public class BossControllerBase : EnemyControllerBase
     public float phase3ThresholdPercent;
     float phase3Thres;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         //Set threshold for different phases
         phase2Thres = maxHp * phase2ThresholdPercent;
         phase3Thres = maxHp * phase3ThresholdPercent;
+
+        healthScript = GameObject.FindGameObjectWithTag("BossHealth").GetComponent<Healthbar>();
     }
 
     protected override void Attack()

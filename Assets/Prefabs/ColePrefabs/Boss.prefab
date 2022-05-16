@@ -388,8 +388,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3708907511715343420}
-  - component: {fileID: 3708907511715343421}
-  - component: {fileID: 3708907511715343422}
+  - component: {fileID: 234939564494278299}
   - component: {fileID: 3708907511715343360}
   - component: {fileID: 3708907511715343423}
   - component: {fileID: 580019363345050847}
@@ -418,7 +417,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3708907511715343421
+--- !u!114 &234939564494278299
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -427,47 +426,35 @@ MonoBehaviour:
   m_GameObject: {fileID: 3708907511715343361}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dadc0ea586b08b149af28e9c91ad3647, type: 3}
+  m_Script: {fileID: 11500000, guid: a403a10f79b32a64088a855a1017461a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxHP: 50
-  CurrHP: 50
-  healthScript: {fileID: 3708907511715343360}
-  anim: {fileID: 3708907511715343423}
-  blinkIntesity: 10
-  blinkDuration: 0.2
-  deathFx: {fileID: 4593951957772366835, guid: 1e092bc34c05e7a4388b0d0c57e84ec9, type: 3}
---- !u!114 &3708907511715343422
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3708907511715343361}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2a694aa6cef038147841c98d3c76e9be, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  currentState: 0
+  maxHp: 100
+  killScore: 130
   timeBetweenAttacks: 2
-  attackRange: 25
+  attackRange: 75
   bulletPool: {fileID: 0}
   playerInRange: 0
   detectionCollider: {fileID: 3708907512613981943}
-  anim: {fileID: 6219241712527343524}
-  bulSpawn:
-  - {fileID: 3708907512169575424}
-  - {fileID: 3708907511730025476}
-  - {fileID: 3708907512488558096}
-  - {fileID: 3708907511401282137}
-  - {fileID: 3708907512602497850}
-  - {fileID: 3708907512058309498}
-  - {fileID: 3708907512870385210}
-  - {fileID: 3708907512812944184}
-  - {fileID: 3708907512686729702}
-  - {fileID: 3708907511038228485}
-  - {fileID: 3708907512349866342}
-  - {fileID: 3708907511439301323}
+  col: {fileID: 0}
+  isRandom: 0
+  accx: 0
+  accy: 0
+  bulletShot: 0
+  deathVFX: {fileID: 0}
+  hpSpawnChance: 0.3
+  hpPool: {fileID: 0}
+  minimapObj: {fileID: 0}
+  hpBar: {fileID: 0}
+  manager: {fileID: 0}
+  blinkDuration: 0.5
+  blinkBrightness: 1
+  healthScript: {fileID: 0}
+  anim: {fileID: 0}
+  phase2ThresholdPercent: 0
+  phase3ThresholdPercent: 0
+  bulSpawn: []
   lerpSpd: 0
 --- !u!114 &3708907511715343360
 MonoBehaviour:
@@ -481,8 +468,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65259cc6f8b30344aa1ac8eba18cca73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slider: {fileID: 3708907512333346787}
-  stats: {fileID: 3708907511715343421}
+  canv: {fileID: 0}
+  slider: {fileID: 0}
+  stats: {fileID: 0}
+  dir: {x: 0, y: 0, z: 0}
+  size: 0
 --- !u!95 &3708907511715343423
 Animator:
   serializedVersion: 3
@@ -1035,7 +1025,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5eb068eb74496346ac7e590c6558b42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  parent: {fileID: 3708907511715343422}
+  parent: {fileID: 0}
 --- !u!1 &3708907512686729702
 GameObject:
   m_ObjectHideFlags: 0
@@ -1675,11 +1665,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7975aa32b451d484288dd54ea28408dd, type: 3}
---- !u!95 &6219241712527343524 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: -1929932241685324859, guid: 7975aa32b451d484288dd54ea28408dd, type: 3}
-  m_PrefabInstance: {fileID: 3708907510879364193}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &744716544652165017 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4120068511477734392, guid: 7975aa32b451d484288dd54ea28408dd, type: 3}

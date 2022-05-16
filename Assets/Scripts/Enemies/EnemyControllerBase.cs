@@ -67,7 +67,7 @@ public class EnemyControllerBase : MonoBehaviour
     public Animator anim;
     Player_Stats pStats;
 
-    private void Awake()
+    protected virtual void Awake()
     {
         pStats = FindObjectOfType<Player_Stats>();
         src = GetComponent<AudioSource>();
