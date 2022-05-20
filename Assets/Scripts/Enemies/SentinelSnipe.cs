@@ -13,7 +13,7 @@ public class SentinelSnipe : EnemyControllerBase
     protected override void Attack()
     {
         src.Play();
-        if (bulletPool == null) bulletPool = cont.enemyBulPool;
+        if (bulletPool == null) bulletPool = cont.enemySnipePool;
         //Get pooled bullet
         GameObject bul = bulletPool.GetPooledObject();
         if (bul != null)

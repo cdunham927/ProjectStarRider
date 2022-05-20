@@ -72,7 +72,7 @@ public class EnemyControllerBase : MonoBehaviour
         pStats = FindObjectOfType<Player_Stats>();
         src = GetComponent<AudioSource>();
         cont = FindObjectOfType<GameManager>();
-        bulletPool = cont.enemyBulPool;
+        //bulletPool = cont.enemyBulPool;
 
         //hpBar = GetComponent<Healthbar>();
         hpPool = cont.hpPool;

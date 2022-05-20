@@ -17,7 +17,7 @@ public class SentinelSG : EnemyControllerBase
     protected override void Attack()
     {
         src.Play();
-        if (bulletPool == null) bulletPool = cont.enemyBulPool;
+        if (bulletPool == null) bulletPool = cont.enemySGPool;
         //Get pooled bullet
         for (int i = 0; i < bulletShot; i++)
         {
