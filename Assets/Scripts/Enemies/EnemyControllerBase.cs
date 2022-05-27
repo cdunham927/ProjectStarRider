@@ -58,8 +58,8 @@ public class EnemyControllerBase : MonoBehaviour
     public EnemyManager manager;
 
     [Header("Damage Blink Settings: ")]
-    public float blinkDuration = 0.5f;
-    public float blinkBrightness = 1.0f;
+    public float blinkDuration = 0.3f;
+    public float blinkBrightness = 2.0f;
     float blinkTimer;
     SkinnedMeshRenderer skinnedMeshRenderer;
 
@@ -217,9 +217,13 @@ public class EnemyControllerBase : MonoBehaviour
     void DamageBlink()
     {
         Debug.Log("Enemy Blinking");
-        blinkTimer -= Time.deltaTime;
-        float lerp = Mathf.Clamp01(blinkTimer / blinkDuration);
-        float intesity = lerp * blinkBrightness;
-        skinnedMeshRenderer.material.color = Color.red * intesity;
+        blinkDuration -= Time.deltaTime;
+        skinnedMeshRenderer.material.color = Color.red * blinkBrightness;
+        Invoke("ResetMaterial", blinkDuration);
+    }
+
+    void ResetMaterial()
+    {
+        skinnedMeshRenderer.material.color = Color.white;
     }
 }
