@@ -470,7 +470,7 @@ Transform:
   m_LocalScale: {x: 2.5, y: 2.5, z: 2.5}
   m_Children: []
   m_Father: {fileID: 9122466845976683802}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!212 &6235740410283532033
 SpriteRenderer:
@@ -860,7 +860,7 @@ RectTransform:
   - {fileID: 2756669135440473454}
   - {fileID: 4922633642503917774}
   m_Father: {fileID: 9122466845976683802}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -1504,11 +1504,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5196531661008905913}
   m_LocalRotation: {x: 0.50000006, y: -0.49999997, z: -0.5, w: -0.5}
-  m_LocalPosition: {x: 0.011445999, y: 8.541178, z: 0}
+  m_LocalPosition: {x: 0.011444092, y: 1.2311758, z: 0}
   m_LocalScale: {x: 100, y: 100, z: 100}
   m_Children: []
-  m_Father: {fileID: 8521881304187774348}
-  m_RootOrder: 1
+  m_Father: {fileID: 9122466845976683802}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!137 &5393009421036518780
 SkinnedMeshRenderer:
@@ -1994,7 +1994,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 8.38
+  m_Radius: 50
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &8673442982653504937
 MonoBehaviour:
@@ -2305,6 +2305,7 @@ Transform:
   m_Children:
   - {fileID: 4715614587499174156}
   - {fileID: 72874611234678081}
+  - {fileID: 8898233182569401499}
   - {fileID: 8521881304187774348}
   - {fileID: 8039415602125373602}
   - {fileID: 8180921464467823700}
@@ -2360,9 +2361,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentState: 0
-  maxHp: 6
+  maxHp: 5
   killScore: 150
-  timeBetweenAttacks: 0.75
+  timeBetweenAttacks: 1
   attackRange: 25
   bulletPool: {fileID: 0}
   playerInRange: 0
@@ -2371,7 +2372,7 @@ MonoBehaviour:
   isRandom: 0
   accx: 10
   accy: 30
-  bulletShot: 0
+  bulletShot: 5
   deathVFX: {fileID: 4593951957772366835, guid: 1e092bc34c05e7a4388b0d0c57e84ec9, type: 3}
   hpSpawnChance: 0.3
   hpPool: {fileID: 0}
@@ -2393,7 +2394,7 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 1.03
+  m_Radius: 2.3
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!82 &1644305477843603549
 AudioSource:
@@ -2550,9 +2551,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4155123587370457495}
-  - {fileID: 8898233182569401499}
   m_Father: {fileID: 9122466845976683802}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &9129979490528197841
 GameObject:
