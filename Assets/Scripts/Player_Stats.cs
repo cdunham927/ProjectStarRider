@@ -23,6 +23,7 @@ public class Player_Stats : MonoBehaviour
     [Header("UI Assets: ")]
     //public Image healthImage;
     public MPImage healthImage;
+    public Image reactionImage;
 
     [Header("Health/Shapes Settings: ")]
     //Shapes things
