@@ -31,10 +31,13 @@ public class SceneSwitch : MonoBehaviour
     public GameObject pauseMenu;
     public GameObject startGameButton;
 
+    OverworldMenuController overworld;
+
     // Start is called before the first frame update
     void Awake()
     {
         //src = GetComponent<AudioSource>();
+        overworld = FindObjectOfType<OverworldMenuController>();
         cont = FindObjectOfType<GameManager>();
 
         //Spawn options menu
@@ -47,6 +50,8 @@ public class SceneSwitch : MonoBehaviour
         optionsMenu.SetActive(false);
 
         if (cont != null) pauseMenu = cont.pauseMenuUI;
+        if (overworld != null) pauseMenu = overworld.pauseMenu;
+
     }
 
     public void NextScene()
@@ -108,7 +113,7 @@ public class SceneSwitch : MonoBehaviour
         //Else we're in the main menu so we activate the main menu stuff again
         else
         {
-            startGameButton.SetActive(true);
+            if (startGameButton != null)　startGameButton.SetActive(true);
         }
         optionsMenu.SetActive(true);
         EventSystem.current.SetSelectedGameObject(null);
@@ -128,7 +133,7 @@ public class SceneSwitch : MonoBehaviour
         }
         else
         {
-            startGameButton.SetActive(true);
+            if (startGameButton != null) startGameButton.SetActive(true);
         }
         optionsMenu.SetActive(false);
         EventSystem.current.SetSelectedGameObject(null);

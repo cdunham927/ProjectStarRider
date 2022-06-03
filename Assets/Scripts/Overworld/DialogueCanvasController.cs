@@ -15,6 +15,7 @@ public class DialogueCanvasController : MonoBehaviour
     Queue<string> sentences = new Queue<string>();
     float timeBetweenChars;
 
+    [HideInInspector]
     public PlayerMovement pMove;
 
     bool loadLevel = false;
