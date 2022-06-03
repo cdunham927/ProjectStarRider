@@ -23,7 +23,7 @@ public class Player_Stats : MonoBehaviour
     [Header("UI Assets: ")]
     //public Image healthImage;
     public MPImage healthImage;
-    public Image reactionImage;
+    public Animator reactionAnim;
 
     [Header("Health/Shapes Settings: ")]
     //Shapes things
@@ -57,7 +57,7 @@ public class Player_Stats : MonoBehaviour
     [Header("Damage Blink Settings: ")]
     public float blinkDuration = 0.3f;
     public float blinkIntensity = 2.0f;
- 
+
     MeshRenderer meshRenderer;
 
     public Text scoreText;
@@ -72,14 +72,14 @@ public class Player_Stats : MonoBehaviour
         pCont = FindObjectOfType<PlayerController>();
 
         meshRenderer = GetComponentInChildren<MeshRenderer>();
-        
-        
+
+
         //Camera shake things
         if (cine == null) cine = Camera.main.GetComponent<CinemachineVirtualCamera>();
         if (perlin == null) perlin = cine.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
 
         src = GetComponent<AudioSource>();
-        
+
         dVfx = Instantiate(deathVFX);
         dVfx.SetActive(false);
 
@@ -148,7 +148,7 @@ public class Player_Stats : MonoBehaviour
             
             if (Curr_hp + amt <= Max_hp)
                 Curr_hp += amt;
-            else Curr_hp = Max_hp; 
+            else Curr_hp = Max_hp;
         }
     }
 
@@ -167,7 +167,6 @@ public class Player_Stats : MonoBehaviour
             ShakeCamera();
             src.volume = hitVolume;
             src.PlayOneShot(takeDamageClip);
-            
         }
         
         if (Curr_hp <= 0)
@@ -189,8 +188,14 @@ public class Player_Stats : MonoBehaviour
                 Invoke("Death", 1f);
                 PlayerDead = true;
             }
-        } 
-        
+        }
+
+        //Reaction UI animations
+        if (reactionAnim != null)
+        {
+            reactionAnim.SetTrigger("Hurt");
+            reactionAnim.SetInteger("Hp", Curr_hp);
+        }
     }
 
     void Death() 
