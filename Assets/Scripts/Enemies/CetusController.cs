@@ -27,10 +27,9 @@ public class CetusController : BossControllerBase
             //If the cooldown is greater than 0 we decrement it every frame
             if (attackCools > 0) attackCools -= Time.deltaTime;
 
-
             //Probably have to rotate the boss towards the player
             //transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, 0, 0), lerpSpd * Time.deltaTime);
-            transform.LookAt(player.transform.position);
+            //transform.LookAt(player.transform.position);
 
         }
         //anim.SetBool("Detected", playerInRange);
@@ -40,16 +39,17 @@ public class CetusController : BossControllerBase
 
     protected override void AttackOne()
     {
-        //anim.SetTrigger("Attack");
+        anim.SetTrigger("AttackOne");
         //Get pooled bullet
         //Spawn a bunch of bullets
         Invoke("SpawnBullets", 0.5f);
 
         //Reset attack cooldown
-        attackCools = timeBetweenAttacks;
+        attackCools = atkCooldowns[0];
     }
     protected override void AttackTwo()
     {
+        anim.SetTrigger("AttackTwo");
         src.Play();
         if (bulletPool == null) bulletPool = cont.enemyBulPool;
         //Get pooled bullet
@@ -68,11 +68,11 @@ public class CetusController : BossControllerBase
             {
                 bul.transform.rotation = Quaternion.Euler(Random.Range(0, 360), Random.Range(0, 360), Random.Range(0, 360));
             }
-            bul.GetComponent<EnemyBullet>().Push();
+            bul.GetComponent<EnemyBullet>().PushHard();
         }
 
         //Reset attack cooldown
-        attackCools = timeBetweenAttacks;
+        attackCools = atkCooldowns[1];
 
         ChangeState(enemystates.alert);
     }
@@ -86,6 +86,7 @@ public class CetusController : BossControllerBase
             {
                 //Put it where the enemy position is
                 bul.transform.position = t.transform.position;
+                bul.transform.Rotate(Random.Range(-accx, accx), Random.Range(-accy, accy), 0);
 
                 //Aim it at the player
                 //

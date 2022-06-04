@@ -62,6 +62,7 @@ public class SentinelSnipe : EnemyControllerBase
     protected override void OnEnable()
     {
         base.OnEnable();
+        SetCollider(false);
     }
 
     protected override void Update()

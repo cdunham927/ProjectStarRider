@@ -71,6 +71,7 @@ public class SentinelSG : EnemyControllerBase
     protected override void OnEnable()
     {
         base.OnEnable();
+        SetCollider(false);
     }
 
     protected override void Update()

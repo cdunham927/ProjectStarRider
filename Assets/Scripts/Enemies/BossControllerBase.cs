@@ -9,8 +9,17 @@ public class BossControllerBase : EnemyControllerBase
     public float phase3ThresholdPercent;
     float phase3Thres;
 
+    public float[] atkCooldowns;
+
+    public float chanceForAtkTwo = 0.3f;
+
+    public ObjectPool bossBulletPool;
+
     protected override void Awake()
     {
+        bulletPool = Instantiate(bossBulletPool);
+        hpBar = GameObject.FindGameObjectWithTag("BossHealth").GetComponent<Healthbar>();
+
         base.Awake();
         //Set threshold for different phases
         phase2Thres = maxHp * phase2ThresholdPercent;
@@ -35,9 +44,9 @@ public class BossControllerBase : EnemyControllerBase
         //Choice of 2 attacks for phase 1
         else
         {
-            int x = Random.Range(0, 2);
-            if (x == 0) AttackOne();
-            else AttackTwo();
+            float v = Random.value;
+            if (v < chanceForAtkTwo) AttackTwo();
+            else AttackOne();
         }
     }
 

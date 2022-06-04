@@ -67,8 +67,16 @@ public class EnemyControllerBase : MonoBehaviour
     public Animator anim;
     Player_Stats pStats;
 
+    Color origCol;
+
     protected virtual void Awake()
     {
+        anim = GetComponent<Animator>();
+        //Get original color of material for damage flashes
+        skinnedMeshRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
+        origCol = skinnedMeshRenderer.material.color;
+
+        healthScript = GetComponent<Healthbar>();
         pStats = FindObjectOfType<Player_Stats>();
         src = GetComponent<AudioSource>();
         cont = FindObjectOfType<GameManager>();
@@ -83,11 +91,9 @@ public class EnemyControllerBase : MonoBehaviour
         hasAdded = false;
         player = FindObjectOfType<PlayerController>();
         detectionCollider.radius = attackRange;
-        SetCollider(false);
         ChangeState(enemystates.idle);
         curHp = maxHp;
 
-        skinnedMeshRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
         spawned = false;
         if (minimapObj != null) minimapObj.SetActive(true);
     }
@@ -188,7 +194,7 @@ public class EnemyControllerBase : MonoBehaviour
                 //FindObjectOfType<GameManager>().EnemyDiedEvent();
             }
             if (minimapObj != null) minimapObj.SetActive(false);
-            manager.EnemyDied();
+            if (manager != null) manager.EnemyDied();
             //FindObjectOfType<GameManager>().EnemyDiedEvent();
             //if (anim != null) anim.SetTrigger("Death");
             //Invoke("Disable", deathClip.length);
@@ -224,6 +230,6 @@ public class EnemyControllerBase : MonoBehaviour
 
     void ResetMaterial()
     {
-        skinnedMeshRenderer.material.color = Color.white;
+        skinnedMeshRenderer.material.color = origCol;
     }
 }

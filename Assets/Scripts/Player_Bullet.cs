@@ -50,6 +50,21 @@ public class Player_Bullet : Bullet
             //bul.GetComponent<Rigidbody>().velocity = bod.velocity;
             hit.SetActive(true);
         }
+
+        if (col.CompareTag("BossHitPoint"))
+        {
+            //Debug.Log("Hit Enemy");
+            col.gameObject.GetComponent<BossHitPointController>().Damage(damage);
+            Invoke("Disable", 0.01f);
+            //ContactPoint cp = col.GetContact(0);
+            if (hitVFXPool == null) hitVFXPool = cont.hitVFXPool;
+            GameObject hit = hitVFXPool.GetPooledObject();
+            hit.transform.position = spawnPos.transform.position;
+            hit.transform.rotation = spawnPos.transform.rotation;
+            //bul.GetComponent<Rigidbody>().velocity = bod.velocity;
+            hit.SetActive(true);
+        }
+
         if (col.CompareTag("Wall"))
         {
             Invoke("Disable", 0.01f);
