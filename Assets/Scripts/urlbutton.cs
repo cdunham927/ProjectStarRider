@@ -6,7 +6,7 @@ public class urlbutton : MonoBehaviour
 {
     public void openurl()
     {
-        Application.OpenURL("https://forms.gle/k1xtdKyJSixxRHkw9");
+        Application.OpenURL("https://forms.gle/mKKq3a3JGtJDyXNK7");
         Debug.Log("Is this working?");
     }
 }
