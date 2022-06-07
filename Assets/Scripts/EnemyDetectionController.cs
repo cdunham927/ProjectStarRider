@@ -11,11 +11,12 @@ public class EnemyDetectionController : MonoBehaviour
     private void Awake()
     {
         //hpBar = GetComponent<Healthbar>();
+        anim = parent.anim;
     }
 
     private void OnEnable()
     {
-        anim.SetBool("InRange", false);
+        if (anim != null) anim.SetBool("InRange", false);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -23,7 +24,7 @@ public class EnemyDetectionController : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             //hpBar.SwitchUIActive(true);
-            anim.SetBool("InRange", true);
+            if (anim != null) anim.SetBool("InRange", true);
 
             if (parent != null)
             {
@@ -38,7 +39,7 @@ public class EnemyDetectionController : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             hpBar.SwitchUIActive(false);
-            anim.SetBool("InRange", false);
+            if (anim != null) anim.SetBool("InRange", false);
             if (parent != null)
             {
                 parent.playerInRange = false;
@@ -51,7 +52,7 @@ public class EnemyDetectionController : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            anim.SetBool("InRange", true);
+            if (anim != null) anim.SetBool("InRange", true);
 
             if (parent != null)
             {

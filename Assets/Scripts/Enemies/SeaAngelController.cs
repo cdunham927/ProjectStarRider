@@ -4,6 +4,15 @@ using UnityEngine;
 
 public class SeaAngelController : EnemyControllerBase
 {
+
+    public GameObject seaAngelMesh;
+    protected override void OnEnable()
+    {
+        seaAngelMesh.SetActive(false);
+        seaAngelMesh.SetActive(true);
+        base.OnEnable();
+    }
+
     protected override void Alert()
     {
         //If the cooldown is at 0 then we can attack
@@ -64,11 +73,6 @@ public class SeaAngelController : EnemyControllerBase
     protected override void Retreat()
     {
 
-    }
-
-    protected override void OnEnable()
-    {
-        base.OnEnable();
     }
 
     protected override void Update()

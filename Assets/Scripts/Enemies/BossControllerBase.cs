@@ -1,9 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BossControllerBase : EnemyControllerBase
 {
+    public Text nameText;
+    public string bossName;
+
     public float phase2ThresholdPercent;
     float phase2Thres;
     public float phase3ThresholdPercent;
@@ -17,6 +21,10 @@ public class BossControllerBase : EnemyControllerBase
 
     protected override void Awake()
     {
+        //Set boss text
+        nameText = GameObject.FindGameObjectWithTag("BossHealth").GetComponentInChildren<Text>();
+        nameText.text = bossName;
+
         bulletPool = Instantiate(bossBulletPool);
         hpBar = GameObject.FindGameObjectWithTag("BossHealth").GetComponent<Healthbar>();
 

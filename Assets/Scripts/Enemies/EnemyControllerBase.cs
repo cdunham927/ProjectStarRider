@@ -71,7 +71,7 @@ public class EnemyControllerBase : MonoBehaviour
 
     protected virtual void Awake()
     {
-        anim = GetComponent<Animator>();
+        anim = GetComponentInChildren<Animator>();
         //Get original color of material for damage flashes
         skinnedMeshRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
         origCol = skinnedMeshRenderer.material.color;
