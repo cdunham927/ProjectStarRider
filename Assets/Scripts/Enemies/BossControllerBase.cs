@@ -18,6 +18,7 @@ public class BossControllerBase : EnemyControllerBase
     public float chanceForAtkTwo = 0.3f;
 
     public ObjectPool bossBulletPool;
+    public float deathTime;
 
     protected override void Awake()
     {
@@ -25,7 +26,7 @@ public class BossControllerBase : EnemyControllerBase
         nameText = GameObject.FindGameObjectWithTag("BossHealth").GetComponentInChildren<Text>();
         nameText.text = bossName;
 
-        bulletPool = Instantiate(bossBulletPool);
+        //bulletPool = Instantiate(bossBulletPool);
         hpBar = GameObject.FindGameObjectWithTag("BossHealth").GetComponent<Healthbar>();
 
         base.Awake();

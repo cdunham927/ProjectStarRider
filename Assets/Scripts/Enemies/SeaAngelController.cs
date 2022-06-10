@@ -13,6 +13,11 @@ public class SeaAngelController : EnemyControllerBase
         base.OnEnable();
     }
 
+    public override void Damage(int damageAmount)
+    {
+        base.Damage(damageAmount);
+    }
+
     protected override void Alert()
     {
         //If the cooldown is at 0 then we can attack

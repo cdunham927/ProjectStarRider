@@ -12,7 +12,7 @@ public class EnemyControllerBase : MonoBehaviour
     protected float curHp;
 
     public float killScore = 100;
-    bool hasAdded = false;
+    protected bool hasAdded = false;
 
     //Time between attacks
     public float timeBetweenAttacks;
@@ -61,11 +61,11 @@ public class EnemyControllerBase : MonoBehaviour
     public float blinkDuration = 0.3f;
     public float blinkBrightness = 2.0f;
     float blinkTimer;
-    SkinnedMeshRenderer skinnedMeshRenderer;
+    protected SkinnedMeshRenderer skinnedMeshRenderer;
 
     public Healthbar healthScript;
     public Animator anim;
-    Player_Stats pStats;
+    protected Player_Stats pStats;
 
     Color origCol;
 
@@ -110,10 +110,10 @@ public class EnemyControllerBase : MonoBehaviour
         currentState = toState;
     }
 
-    public void Damage(float amt = 1)
-    {
-        curHp -= amt;
-    }
+    //public void Damage(float amt = 1)
+    //{
+    //    curHp -= amt;
+    //}
 
     protected virtual void Update()
     {
@@ -157,7 +157,7 @@ public class EnemyControllerBase : MonoBehaviour
         return (int)curHp;
     }
 
-    public void Damage(int damageAmount)
+    public virtual void Damage(int damageAmount)
     {
         if (anim != null) anim.SetTrigger("Hit");
         hpBar.SwitchUIActive(true);
@@ -209,7 +209,7 @@ public class EnemyControllerBase : MonoBehaviour
         //blinkTimer = blinkDuration;
     }
 
-    void Disable()
+    protected void Disable()
     {
         //FindObjectOfType<GameManager>().Victory();
         gameObject.SetActive(false);
@@ -220,9 +220,9 @@ public class EnemyControllerBase : MonoBehaviour
         CancelInvoke();
     }
 
-    void DamageBlink()
+    protected void DamageBlink()
     {
-        Debug.Log("Enemy Blinking");
+        //Debug.Log("Enemy Blinking");
         blinkDuration -= Time.deltaTime;
         skinnedMeshRenderer.material.color = Color.red * blinkBrightness;
         Invoke("ResetMaterial", blinkDuration);

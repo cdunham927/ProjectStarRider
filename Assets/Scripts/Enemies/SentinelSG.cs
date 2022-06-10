@@ -14,6 +14,11 @@ public class SentinelSG : EnemyControllerBase
         if (attackCools > 0) attackCools -= Time.deltaTime;
     }
 
+    public override void Damage(int damageAmount)
+    {
+        base.Damage(damageAmount);
+    }
+
     protected override void Attack()
     {
         src.Play();

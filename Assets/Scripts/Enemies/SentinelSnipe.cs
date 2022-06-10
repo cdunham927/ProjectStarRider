@@ -59,6 +59,11 @@ public class SentinelSnipe : EnemyControllerBase
 
     }
 
+    public override void Damage(int damageAmount)
+    {
+        base.Damage(damageAmount);
+    }
+
     protected override void OnEnable()
     {
         base.OnEnable();

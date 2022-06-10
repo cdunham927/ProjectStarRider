@@ -6,7 +6,19 @@ public class CetusController : BossControllerBase
 {
     
     public GameObject[] bulSpawn;
+    public GameObject[] bulSpawnsTwo;
     public float lerpSpd;
+
+    //Charge attack stuff
+    public CapsuleCollider laserCollider;
+    public float laserStartSize;
+    public float laserStartHeight;
+    public float laserLerpSpd;
+
+    protected override void Awake()
+    {
+        base.Awake();
+    }
 
     protected override void OnEnable()
     {
@@ -30,11 +42,19 @@ public class CetusController : BossControllerBase
             //Probably have to rotate the boss towards the player
             //transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, 0, 0), lerpSpd * Time.deltaTime);
             //transform.LookAt(player.transform.position);
-
+            
         }
         //anim.SetBool("Detected", playerInRange);
 
         base.Update();
+
+        if (Application.isEditor)
+        {
+            if (Input.GetKeyDown(KeyCode.P))
+            {
+                Damage((int)maxHp / 2);
+            }
+        }
     }
 
     protected override void AttackOne()
@@ -42,37 +62,49 @@ public class CetusController : BossControllerBase
         anim.SetTrigger("AttackOne");
         //Get pooled bullet
         //Spawn a bunch of bullets
-        Invoke("SpawnBullets", 0.5f);
+        Invoke("SpawnBullets", 0.95f);
 
         //Reset attack cooldown
         attackCools = atkCooldowns[0];
     }
+
     protected override void AttackTwo()
     {
         anim.SetTrigger("AttackTwo");
-        src.Play();
-        if (bulletPool == null) bulletPool = cont.enemyBulPool;
-        //Get pooled bullet
-        GameObject bul = bulletPool.GetPooledObject();
-        if (bul != null)
-        {
-            //Put it where the enemy position is
-            bul.transform.position = transform.position;
-            //Aim it at the player
-            //bul.transform.rotation = transform.rotation;
-            //Activate it at the enemy position
-            bul.SetActive(true);
-            bul.transform.LookAt(player.transform);
-            bul.transform.Rotate(Random.Range(-accx, accx), Random.Range(-accy, accy), 0);
-            if (isRandom == true)
-            {
-                bul.transform.rotation = Quaternion.Euler(Random.Range(0, 360), Random.Range(0, 360), Random.Range(0, 360));
-            }
-            bul.GetComponent<EnemyBullet>().PushHard();
-        }
+        Invoke("SpawnBunchaBullets", 0.85f);
 
         //Reset attack cooldown
         attackCools = atkCooldowns[1];
+    }
+
+    public void SpawnBunchaBullets()
+    {
+        src.Play();
+        //if (bulletPool == null) bulletPool = cont.enemyBulPool;
+        //Get pooled bullet
+        foreach (GameObject t in bulSpawnsTwo)
+        {
+            GameObject bul = bulletPool.GetPooledObject();
+            if (bul != null)
+            {
+                //Put it where the enemy position is
+                bul.transform.position = t.transform.position;
+                //Aim it at the player
+                //bul.transform.rotation = transform.rotation;
+                //Activate it at the enemy position
+                bul.SetActive(true);
+                bul.transform.LookAt(player.transform);
+                bul.transform.Rotate(Random.Range(-accx, accx), Random.Range(-accy, accy), 0);
+                //if (isRandom == true)
+                //{
+                //    bul.transform.rotation = Quaternion.Euler(Random.Range(0, 360), Random.Range(0, 360), Random.Range(0, 360));
+                //}
+                bul.GetComponent<EnemyBullet>().PushHard();
+            }
+        }
+
+        //Reset attack cooldown
+        //attackCools = atkCooldowns[1];
 
         ChangeState(enemystates.alert);
     }
@@ -102,6 +134,51 @@ public class CetusController : BossControllerBase
                 bul.transform.rotation = Quaternion.Euler(Random.Range(0, 360), Random.Range(0, 360), Random.Range(0, 360));
                 bul.GetComponent<EnemyBullet>().Push();
             }
+        }
+
+        ChangeState(enemystates.alert);
+    }
+
+    protected override void Death()
+    {
+        skinnedMeshRenderer.material.color = Color.white;
+        anim.SetTrigger("Death");
+    }
+
+    public override void Damage(int damageAmount)
+    {
+        if (anim != null) anim.SetTrigger("Hit");
+        hpBar.SwitchUIActive(true);
+        curHp -= damageAmount;
+        healthScript.SetHealth((int)curHp);
+        if(curHp > 0) DamageBlink();
+        //Debug.Log("Enemy took damage");
+
+        //DamageBlinking
+        //blinkTimer -= Time.deltaTime;
+        //float lerp = Mathf.Clamp01(blinkTimer / blinkDuration);
+        //float intensity = (lerp * blinkIntesity) + 1.0f;
+        //skinnedMeshRenderer.materials[0].color = Color.white * intensity;
+        //skinnedMeshRenderer.materials[1].color = Color.white * intensity;
+        //skinnedMeshRenderer.materials[2].color = Color.white * intensity;
+
+        if (curHp <= 0)
+        {
+            if (minimapObj != null) minimapObj.SetActive(false);
+            if (manager != null) manager.EnemyDied();
+            //FindObjectOfType<GameManager>().EnemyDiedEvent();
+            //if (anim != null) anim.SetTrigger("Death");
+            //Invoke("Disable", deathClip.length);
+
+            //if (!hasAdded)
+            //{
+            //    hasAdded = true;
+            //    pStats.AddScore(killScore);
+            //}
+            Death();
+
+            Instantiate(deathVFX, transform.position, transform.rotation);
+            Invoke("Disable", deathTime);
         }
     }
 }

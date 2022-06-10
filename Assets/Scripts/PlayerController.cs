@@ -422,7 +422,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Wall") || collision.gameObject.CompareTag("Enemy"))
+        if (collision.gameObject.CompareTag("Wall") || collision.gameObject.CompareTag("BossHitPoint") || collision.gameObject.CompareTag("Enemy"))
         {
             //Debug.Log("Hit wall");
             //bod.velocity = Vector3.Reflect(bod.velocity, collision.contacts[0].normal);
