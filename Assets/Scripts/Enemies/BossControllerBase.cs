@@ -15,6 +15,8 @@ public class BossControllerBase : EnemyControllerBase
 
     public float[] atkCooldowns;
 
+    public float chanceForAtkFour = 0.3f;
+    public float chanceForAtkThree = 0.3f;
     public float chanceForAtkTwo = 0.3f;
 
     public ObjectPool bossBulletPool;
@@ -40,20 +42,25 @@ public class BossControllerBase : EnemyControllerBase
     protected override void Attack()
     {
         //Choose an attack based on the current phase
+        float v = Random.value;
         //Phase 3 attack
         if (curHp < phase3Thres)
         {
-            AttackFour();
+            if (v < chanceForAtkFour) AttackFour();
+            else if (v < chanceForAtkThree) AttackThree();
+            else if (v < chanceForAtkTwo) AttackTwo();
+            else AttackOne();
         }
         //Phase 2 attack
         else if (curHp < phase2Thres)
         {
-            AttackThree();
+            if (v < chanceForAtkThree) AttackThree();
+            else if (v < chanceForAtkTwo) AttackTwo();
+            else AttackOne();
         }
         //Choice of 2 attacks for phase 1
         else
         {
-            float v = Random.value;
             if (v < chanceForAtkTwo) AttackTwo();
             else AttackOne();
         }

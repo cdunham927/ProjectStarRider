@@ -109,6 +109,16 @@ public class CetusController : BossControllerBase
         ChangeState(enemystates.alert);
     }
 
+    protected override void AttackThree()
+    {
+
+    }
+
+    protected override void AttackFour()
+    {
+
+    }
+
     void SpawnBullets()
     {
         foreach (GameObject t in bulSpawn)
