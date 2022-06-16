@@ -106,8 +106,12 @@ public class PlayerController : MonoBehaviour
     //Dash blink vfx
     float blinkDuration = 0.3f;
     float blinkIntensity = 2.0f;
+    
     GameObject dashPS;
     public GameObject DashVfx;
+    
+    GameObject SpeedlinesPS;
+    public GameObject SpeedLineVfx;
 
     MeshRenderer meshRenderer;
 
@@ -138,6 +142,9 @@ public class PlayerController : MonoBehaviour
         //instatie Inactive Gameobjects
         dashPS = Instantiate(DashVfx);
         dashPS.SetActive(false);
+
+        SpeedlinesPS = Instantiate(SpeedLineVfx);
+        SpeedlinesPS.SetActive(false);
     }
 
     void Update()
@@ -412,6 +419,7 @@ public class PlayerController : MonoBehaviour
     public void SpeedUp()
     {
         speedUpTimer = speedUpTime;
+        Speedvfx();
     }
 
     void Move(float x, float y, float speed) 
@@ -488,6 +496,20 @@ public class PlayerController : MonoBehaviour
             if (!DashVfx.activeInHierarchy)
             {
                 DashVfx.SetActive(true);
+            }
+        }
+
+    }
+
+    public void Speedvfx()
+    {
+       
+
+        if (!GameManager.gameIsPaused && !GameManager.gameIsOver)
+        {
+            if (!SpeedLineVfx.activeInHierarchy)
+            {
+                SpeedLineVfx.SetActive(true);
             }
         }
 
