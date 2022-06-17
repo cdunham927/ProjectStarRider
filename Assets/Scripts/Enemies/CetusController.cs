@@ -14,9 +14,15 @@ public class CetusController : BossControllerBase
     public float laserStartSize;
     public float laserStartHeight;
     public float laserLerpSpd;
+    public bool laserOn;
+
 
     protected override void Awake()
     {
+        laserStartSize = laserCollider.radius;
+        laserStartHeight = laserCollider.height;
+        laserCollider.enabled = false;
+        laserOn = false;
         base.Awake();
     }
 
@@ -45,6 +51,18 @@ public class CetusController : BossControllerBase
             
         }
         //anim.SetBool("Detected", playerInRange);
+
+        if (laserOn)
+        {
+            laserCollider.radius = Mathf.Lerp(laserCollider.radius, 0, Time.deltaTime * laserLerpSpd);
+            //laserCollider.height = Mathf.Lerp(laserCollider.height, 0, Time.deltaTime * laserLerpSpd);
+        }
+
+        if (laserCollider.radius <= 0.5f)
+        {
+            laserCollider.enabled = false;
+            laserOn = false;
+        }
 
         base.Update();
 
@@ -111,7 +129,20 @@ public class CetusController : BossControllerBase
 
     protected override void AttackThree()
     {
+        anim.SetTrigger("AttackThree");
 
+        Invoke("SetLaser", 1.075f);
+
+        attackCools = atkCooldowns[2];
+    }
+
+    public void SetLaser()
+    {
+        //Activate laser
+        laserCollider.radius = laserStartSize;
+        laserCollider.height = laserStartHeight;
+        laserCollider.enabled = true;
+        laserOn = true;
     }
 
     protected override void AttackFour()

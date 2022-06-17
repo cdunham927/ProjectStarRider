@@ -19,6 +19,10 @@ public class EnemyBullet : Bullet
             collision.gameObject.GetComponent<Player_Stats>().Damage(1);
             Invoke("Disable", 0.001f);
         }
+        if (collision.CompareTag("Wall"))
+        {
+            Invoke("Disable", 0.001f);
+        }
     }
 
     public override void Disable()

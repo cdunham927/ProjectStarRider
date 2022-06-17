@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
 
 public class DialogueCanvasController : MonoBehaviour
 {
@@ -21,8 +22,11 @@ public class DialogueCanvasController : MonoBehaviour
     bool loadLevel = false;
     string levelName;
 
+    EventSystem ev;
+
     private void Awake()
     {
+        ev = FindObjectOfType<EventSystem>();
         pMove = FindObjectOfType<PlayerMovement>();
     }
 
@@ -45,6 +49,9 @@ public class DialogueCanvasController : MonoBehaviour
             sentences.Enqueue(s);
         }
         pMove.canMove = false;
+
+        ev.firstSelectedGameObject = null;
+        ev.firstSelectedGameObject = continueButton.gameObject;
 
         //Add continue button function to UI button
         //continueButton => DisplayNextSentence();
