@@ -268,6 +268,14 @@ public class PlayerController : MonoBehaviour
 
             vert = Input.GetAxis("Vertical");
             hor = Input.GetAxis("Horizontal");
+
+            vert *= Time.deltaTime;
+           
+            if (Input.GetKeyDown(KeyCode.W)) 
+            {
+                Speedvfx();
+            }
+
             //speed = (vert > 0) ? highSpd : slowSpd;
 
             if (vert > 0)
@@ -286,11 +294,16 @@ public class PlayerController : MonoBehaviour
             vert2 = Input.GetAxis("Vertical2");
             hor2 = Input.GetAxis("Horizontal2");
 
+            //button press for speed lines
+            
+
             //button press for dash
             if (Input.GetButtonDown("Fire3") && curDashCools <= 0)
             {
                 curDashTime = dashTime;
                 curDashCools = dashCooldown;
+                Speedvfx();
+                Dashvfx();
             }
 
             if (curDashTime > 0) curDashTime -= Time.deltaTime;
@@ -299,7 +312,7 @@ public class PlayerController : MonoBehaviour
             if (curDashTime > 0 && !hitWall)
             {
                 bod.AddForce(bod.velocity * dashSpd * Time.deltaTime, ForceMode.Impulse);
-                Dashvfx();
+                //Dashvfx();
             }
 
             //Move(hor,vert,speed);
