@@ -85,9 +85,18 @@ public class GameManager : MonoBehaviour
     Canvas can;
     public float waitTime = 1f;
 
-    // Start is called before the first frame update
+
+    //Shrink ALL GameObjects
+    GameObject[] allGameObjects;
+
     void Awake()
     {
+        //allGameObjects = FindObjectsOfType<GameObject>();
+        //foreach(GameObject t in allGameObjects)
+        //{
+        //    t.transform.localScale /= 10;
+        //}
+
         //can = GetComponent<Canvas>();
         //can.worldCamera = Instantiate(uiCamera).GetComponent<Camera>();
         scene = FindObjectOfType<SceneSwitch>();
@@ -137,6 +146,12 @@ public class GameManager : MonoBehaviour
         //eventSystem = EventSystem.current;
     }
 
+    private void OnDisable()
+    {
+        PlayerPrefs.SetInt("Joystick", (player.joystick == false) ? 0 : 1);
+        PlayerPrefs.Save();
+    }
+
     void FillEnemyCount()
     {
         if (tutorialLevel)
@@ -175,10 +190,12 @@ public class GameManager : MonoBehaviour
 
             if (gameIsPaused && !optionsMenu.activeInHierarchy)
             {
+                player.UnfreezeRotation();
                 Resume();
             }
             else if (!gameIsPaused && !optionsMenu.activeInHierarchy) {
                 //EventSystem.current.firstSelectedGameObject = mainMenuButton;
+                player.FreezeRotation();
                 Pause();
             }
             else

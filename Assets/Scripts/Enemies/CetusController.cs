@@ -15,6 +15,7 @@ public class CetusController : BossControllerBase
     public float laserStartHeight;
     public float laserLerpSpd;
     public bool laserOn;
+    public LineRenderer laserRend;
 
 
     protected override void Awake()
@@ -48,7 +49,9 @@ public class CetusController : BossControllerBase
             //Probably have to rotate the boss towards the player
             //transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, 0, 0), lerpSpd * Time.deltaTime);
             //transform.LookAt(player.transform.position);
-            
+            Vector3 targDir = player.transform.position - transform.position;
+            Vector3 newDir = Vector3.RotateTowards(transform.forward, targDir, lerpSpd * Time.deltaTime, 0.0f);
+            transform.rotation = Quaternion.LookRotation(newDir);
         }
         //anim.SetBool("Detected", playerInRange);
 
@@ -58,8 +61,9 @@ public class CetusController : BossControllerBase
             //laserCollider.height = Mathf.Lerp(laserCollider.height, 0, Time.deltaTime * laserLerpSpd);
         }
 
-        if (laserCollider.radius <= 0.5f)
+        if (laserCollider.radius <= 0.25f)
         {
+            laserRend.enabled = false;
             laserCollider.enabled = false;
             laserOn = false;
         }
@@ -143,6 +147,7 @@ public class CetusController : BossControllerBase
         laserCollider.height = laserStartHeight;
         laserCollider.enabled = true;
         laserOn = true;
+        laserRend.enabled = true;
     }
 
     protected override void AttackFour()

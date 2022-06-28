@@ -117,6 +117,9 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
+        GetSavedSettings();
+        joystick = true;
+
         meshRenderer = GetComponentInChildren<MeshRenderer>();
         stats = FindObjectOfType<Player_Stats>();
         cont = FindObjectOfType<GameManager>();
@@ -145,14 +148,17 @@ public class PlayerController : MonoBehaviour
 
         SpeedlinesPS = Instantiate(SpeedLineVfx);
         SpeedlinesPS.SetActive(false);
+
+        UnfreezeRotation();
     }
 
     void Update()
     {
         //Update controller or keyboard input
-        if (Input.anyKeyDown) joystick = false;
+        //if (Input.anyKeyDown) joystick = false;
         if (Input.GetAxis("Mouse X") != 0 || Input.GetAxis("Mouse Y") != 0) {
             joystick = false;
+            //PlayerPrefs.SetInt("Joystick", 0);
         }
         for (int i = 0; i < 20; i++)
         {
@@ -160,6 +166,7 @@ public class PlayerController : MonoBehaviour
             {
                 //Debug.Log("joystick 1 button " + i);
                 joystick = true;
+                //PlayerPrefs.SetInt("Joystick", 1);
             }
         }
         float ltaxis = Input.GetAxis("XboxLeftTrigger");
@@ -174,8 +181,8 @@ public class PlayerController : MonoBehaviour
         if (ltaxis != 0 || rtaxis != 0 || dhaxis != 0 || dvaxis != 0 || hAxis != 0 || vAxis != 0 || aAxis != 0 || htAxis != 0 || vtAxis != 0)
         {
             joystick = true;
+            //PlayerPrefs.SetInt("Joystick", 1);
         }
-
 
         if (!stats.PlayerDead && !GameManager.gameIsOver)
         {
@@ -209,10 +216,13 @@ public class PlayerController : MonoBehaviour
                 }
             }
 
-            if (joystick && !GameManager.gameIsPaused)
-            {
+            //if (joystick && !GameManager.gameIsPaused)
+            //{
+            if (!GameManager.gameIsPaused) 
+            { 
                 if (hor2 != 0)
                 {
+                    joystick = true;
                     //if (invertControls) transform.Rotate(0, rotSpd * Time.deltaTime * hor2, 0);
                     //else transform.Rotate(0, -rotSpd * Time.deltaTime * hor2, 0);
                     if (!invertControls) rotation.y += rotSpd * Time.deltaTime * hor2;
@@ -221,6 +231,7 @@ public class PlayerController : MonoBehaviour
 
                 if (vert2 != 0)
                 {
+                    joystick = true;
                     //if (invertControls) transform.Rotate(rotSpd * Time.deltaTime * vert2, 0, 0);
                     //else transform.Rotate(-rotSpd * Time.deltaTime * vert2, 0, 0);
                     if (!invertControls) rotation.x += rotSpd * Time.deltaTime * vert2;
@@ -396,24 +407,41 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void FreezeRotation()
+    {
+        bod.freezeRotation = true;
+    }
+
+    public void UnfreezeRotation()
+    {
+        bod.freezeRotation = false;
+    }
+
     public void TakeAfterimage(float amt)
     {
         curActiveTime -= amt;
     }
 
-    public void GetMouseSensitivity()
+    public void GetSavedSettings()
     {
-        lookSpd = PlayerPrefs.GetFloat("MouseSensitivity", lookSpd);
-    }
-
-    public void GetControllerSensitivity()
-    {
-        rotSpd = PlayerPrefs.GetFloat("ControllerSensitivity", rotSpd);
+        if (PlayerPrefs.HasKey("ControllerSensitivity")) rotSpd = PlayerPrefs.GetFloat("ControllerSensitivity", rotSpd);
+        if (PlayerPrefs.HasKey("MouseSensitivity")) lookSpd = PlayerPrefs.GetFloat("MouseSensitivity", lookSpd);
+        if (PlayerPrefs.HasKey("Invert")) invertControls = (PlayerPrefs.GetInt("Invert") == 1) ? true : false;
     }
 
     public void GetInvert()
     {
-        invertControls = (PlayerPrefs.GetInt("Invert") == 1)? true : false;
+        if (PlayerPrefs.HasKey("Invert")) invertControls = (PlayerPrefs.GetInt("Invert") == 1) ? true : false;
+    }
+
+    public void GetMouseSensitivity()
+    {
+        if (PlayerPrefs.HasKey("MouseSensitivity")) lookSpd = PlayerPrefs.GetFloat("MouseSensitivity", lookSpd);
+    }
+
+    public void GetControllerSensitivity()
+    {
+        if (PlayerPrefs.HasKey("ControllerSensitivity")) rotSpd = PlayerPrefs.GetFloat("ControllerSensitivity", rotSpd);
     }
 
     public void SpeedUp()
@@ -503,8 +531,6 @@ public class PlayerController : MonoBehaviour
 
     public void Speedvfx()
     {
-       
-
         if (!GameManager.gameIsPaused && !GameManager.gameIsOver)
         {
             if (!SpeedLineVfx.activeInHierarchy)

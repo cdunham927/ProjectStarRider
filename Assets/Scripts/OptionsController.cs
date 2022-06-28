@@ -35,12 +35,12 @@ public class OptionsController : MonoBehaviour
         if (PlayerPrefs.HasKey("MouseSensitivity")) mouseSensitivitySlider.value = PlayerPrefs.GetFloat("MouseSensitivity");
         if (PlayerPrefs.HasKey("Invert")) invertToggle.isOn = (PlayerPrefs.GetInt("Invert") == 1) ? true : false;
 
-        if (player != null)
-        {
-            player.GetControllerSensitivity();
-            player.GetMouseSensitivity();
-            player.GetInvert();
-        }
+        //if (player != null)
+        //{
+        //    player.GetControllerSensitivity();
+        //    player.GetMouseSensitivity();
+        //    player.GetInvert();
+        //}
     }
 
     float GetMasterVolume()
