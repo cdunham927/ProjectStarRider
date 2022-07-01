@@ -31,8 +31,8 @@ public class GameManager : MonoBehaviour
     public GameObject GameOverUIPrefab;
     public GameObject VictoryUIPrefab;
 
-    public static bool gameIsPaused = false;
-    public static bool gameIsOver = false;
+    public bool gameIsPaused = false;
+    public bool gameIsOver = false;
     
     [HideInInspector]
     public GameObject pauseMenuUI;

@@ -25,8 +25,11 @@ public class PlayerShooting : MonoBehaviour
 
     public int dmg;
 
+    GameManager gm;
+
     private void Awake()
     {
+        gm = FindObjectOfType<GameManager>();
         bod = GetComponentInParent<Rigidbody>();
         cont = FindObjectOfType<GameManager>();
         bulPool = cont.bulPool;
@@ -34,6 +37,8 @@ public class PlayerShooting : MonoBehaviour
 
         mVfx = Instantiate(muzzle);
         mVfx.SetActive(false);
+
+        curShootCools = 0f;
 
     }
 
@@ -47,13 +52,13 @@ public class PlayerShooting : MonoBehaviour
 
     private void Update()
     {
-        if ((Input.GetButton("Fire1") || Input.GetAxis("Altfire1") > 0) && curShootCools <= 0 && !GameManager.gameIsPaused)
+        if ((Input.GetButton("Fire1") || Input.GetAxis("Altfire1") > 0) && curShootCools <= 0f && !gm.gameIsPaused)
         {
             Shoot();
             PlaySound();
         }
 
-        if (curShootCools > 0) curShootCools -= Time.deltaTime;
+        if (curShootCools > 0f) curShootCools -= Time.deltaTime;
     }
 
     public void Shoot()

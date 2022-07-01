@@ -97,7 +97,8 @@ public class PlayerController : MonoBehaviour
     float rotAxis;
 
     //Dashing ability
-    public float dashSpd;
+    public float forDashSpd;
+    public float sideDashSpd;
     public float dashCooldown;
     public float dashTime;
     float curDashCools;
@@ -115,14 +116,20 @@ public class PlayerController : MonoBehaviour
 
     MeshRenderer meshRenderer;
 
+    public ParticleSystem sys;
+    public int sysEmit;
+
+    GameManager gm;
+
     private void Awake()
     {
+        gm = FindObjectOfType<GameManager>();
+
         GetSavedSettings();
         joystick = true;
 
         meshRenderer = GetComponentInChildren<MeshRenderer>();
         stats = FindObjectOfType<Player_Stats>();
-        cont = FindObjectOfType<GameManager>();
         //Lock cursor in screen;
         Cursor.lockState = CursorLockMode.Confined;
         //Hide cursor
@@ -152,10 +159,12 @@ public class PlayerController : MonoBehaviour
         UnfreezeRotation();
     }
 
+    Vector3 dashDir;
+
     void Update()
     {
         //Update controller or keyboard input
-        //if (Input.anyKeyDown) joystick = false;
+        if (Input.anyKeyDown) joystick = false;
         if (Input.GetAxis("Mouse X") != 0 || Input.GetAxis("Mouse Y") != 0) {
             joystick = false;
             //PlayerPrefs.SetInt("Joystick", 0);
@@ -184,7 +193,7 @@ public class PlayerController : MonoBehaviour
             //PlayerPrefs.SetInt("Joystick", 1);
         }
 
-        if (!stats.PlayerDead && !GameManager.gameIsOver)
+        if (!stats.PlayerDead && !gm.gameIsOver)
         {
             /*
             if (Input.GetButton("RotateLeft"))
@@ -202,7 +211,7 @@ public class PlayerController : MonoBehaviour
                 rotation.z += turnSpd * Time.deltaTime;
             }
             */
-            if (!joystick && !GameManager.gameIsPaused)
+            if (!joystick && !gm.gameIsPaused)
             {
                 if (!invertControls)
                 {
@@ -216,13 +225,13 @@ public class PlayerController : MonoBehaviour
                 }
             }
 
-            //if (joystick && !GameManager.gameIsPaused)
+            //if (joystick && !gm.gameIsPaused)
             //{
-            if (joystick && !GameManager.gameIsPaused) 
+            if (joystick && !gm.gameIsPaused) 
             { 
                 if (hor2 != 0)
                 {
-                    joystick = true;
+                    //joystick = true;
                     //if (invertControls) transform.Rotate(0, rotSpd * Time.deltaTime * hor2, 0);
                     //else transform.Rotate(0, -rotSpd * Time.deltaTime * hor2, 0);
                     if (!invertControls) rotation.y += rotSpd * Time.deltaTime * hor2;
@@ -231,7 +240,7 @@ public class PlayerController : MonoBehaviour
 
                 if (vert2 != 0)
                 {
-                    joystick = true;
+                    //joystick = true;
                     //if (invertControls) transform.Rotate(rotSpd * Time.deltaTime * vert2, 0, 0);
                     //else transform.Rotate(-rotSpd * Time.deltaTime * vert2, 0, 0);
                     if (!invertControls) rotation.x += rotSpd * Time.deltaTime * vert2;
@@ -260,16 +269,18 @@ public class PlayerController : MonoBehaviour
 
 
             //Hide cursor if we click into the game
-            if (Input.GetMouseButtonDown(0) && !GameManager.gameIsPaused && !GameManager.gameIsOver)
+            if (Input.GetMouseButtonDown(0) && !gm.gameIsPaused && !gm.gameIsOver)
             {
+                joystick = false;
                 //Lock cursor in screen;
                 Cursor.lockState = CursorLockMode.Confined;
                 //Hide cursor
                 Cursor.visible = false;
             }
             //Show the cursor if we click into the game and its paused
-            if (Input.GetMouseButtonDown(0) && (GameManager.gameIsPaused || GameManager.gameIsOver))
+            if (Input.GetMouseButtonDown(0) && (gm.gameIsPaused || gm.gameIsOver))
             {
+                joystick = false;
                 //Hide cursor
                 Cursor.visible = true;
             }
@@ -282,7 +293,7 @@ public class PlayerController : MonoBehaviour
 
             vert *= Time.deltaTime;
            
-            if (Input.GetKeyDown(KeyCode.W)) 
+            if (Input.GetKey(KeyCode.W)) 
             {
                 Speedvfx();
             }
@@ -311,6 +322,11 @@ public class PlayerController : MonoBehaviour
             //button press for dash
             if (Input.GetButtonDown("Fire3") && curDashCools <= 0)
             {
+                //float vDir = (vert > 0) ? 1 : -1;
+                //float hDir = (hor > 0) ? 1 : -1;
+                //if (joystick) dashDir = (transform.forward * vDir * forDashSpd) + (transform.right * hDir * sideDashSpd);
+                //if (!joystick) dashDir = (transform.forward * vert * forDashSpd) + (transform.right * hor * sideDashSpd);
+                dashDir = (transform.forward * vert * forDashSpd) + (transform.right * hor * sideDashSpd);
                 curDashTime = dashTime;
                 curDashCools = dashCooldown;
                 Speedvfx();
@@ -322,7 +338,8 @@ public class PlayerController : MonoBehaviour
             //Actual dash code
             if (curDashTime > 0 && !hitWall)
             {
-                bod.AddForce(bod.velocity * dashSpd * Time.deltaTime, ForceMode.Impulse);
+                
+                bod.AddForce(dashDir * Time.deltaTime, ForceMode.Impulse);
                 //Dashvfx();
             }
 
@@ -503,7 +520,7 @@ public class PlayerController : MonoBehaviour
 
     public void AfterImage()
     {
-        if (!GameManager.gameIsPaused && !GameManager.gameIsOver)
+        if (!gm.gameIsPaused && !gm.gameIsOver)
         {
             if (!afterimages[0].activeInHierarchy)
             {
@@ -532,7 +549,7 @@ public class PlayerController : MonoBehaviour
         if (meshRenderer != null) meshRenderer.material.color = Color.yellow * blinkIntensity;
         Invoke("ResetMaterial", blinkDuration);
 
-        if (!GameManager.gameIsPaused && !GameManager.gameIsOver)
+        if (!gm.gameIsPaused && !gm.gameIsOver)
         {
             if (!DashVfx.activeInHierarchy)
             {
@@ -544,12 +561,9 @@ public class PlayerController : MonoBehaviour
 
     public void Speedvfx()
     {
-        if (!GameManager.gameIsPaused && !GameManager.gameIsOver)
+        if (!gm.gameIsPaused && !gm.gameIsOver)
         {
-            if (!SpeedLineVfx.activeInHierarchy)
-            {
-                SpeedLineVfx.SetActive(true);
-            }
+            sys.Emit(sysEmit);
         }
 
     }
