@@ -65,10 +65,12 @@ public class Player_Stats : MonoBehaviour
     public float hurtDecAmt = -9999;
 
     PlayerController pCont;
+    GameManager gm;
 
     private void Awake()
     {
-        //src = FindObjectOfType<GameManager>().GetComponent<AudioSource>();
+        gm = FindObjectOfType<GameManager>();
+        //src = FindObjectOfType<gm>().GetComponent<AudioSource>();
         pCont = FindObjectOfType<PlayerController>();
 
         meshRenderer = GetComponentInChildren<MeshRenderer>();
@@ -86,7 +88,7 @@ public class Player_Stats : MonoBehaviour
         hVfx = Instantiate(healVFX);
         hVfx.SetActive(false);
 
-        //OverUI = FindObjectOfType<GameManager>().GameOver();
+        //OverUI = FindObjectOfType<gm>().GameOver();
         //healthImage = GameObject.FindGameObjectWithTag("Health").GetComponent<Image>();
         //innerRect = GameObject.FindGameObjectWithTag("Health").GetComponent<Shapes.Rectangle>();
 
@@ -137,7 +139,7 @@ public class Player_Stats : MonoBehaviour
         {
             HealBlink();
 
-            if (!GameManager.gameIsPaused && !GameManager.gameIsOver)
+            if (!gm.gameIsPaused && !gm.gameIsOver)
             {
                 if (!healVFX.activeInHierarchy)
                 {
