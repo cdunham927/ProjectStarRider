@@ -17,6 +17,7 @@ public class CetusController : BossControllerBase
     public bool laserOn;
     public LineRenderer laserRend;
 
+    bool playedDialogue = false;
 
     protected override void Awake()
     {
@@ -198,6 +199,13 @@ public class CetusController : BossControllerBase
         curHp -= damageAmount;
         healthScript.SetHealth((int)curHp);
         if(curHp > 0) DamageBlink();
+
+        if (curHp < phase3Thres && !playedDialogue)
+        {
+            playedDialogue = true;
+            FindObjectOfType<CombatDialogueController>().StartDialogue();
+        }
+        
         //Debug.Log("Enemy took damage");
 
         //DamageBlinking

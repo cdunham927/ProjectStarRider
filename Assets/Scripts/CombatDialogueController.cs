@@ -10,37 +10,40 @@ public class CombatDialogueController : MonoBehaviour
     public Dialogue firstDialogue;
     public Text nameText;
     public Text dialogueText;
-    public Button continueButton;
+    //public Button continueButton;
     Queue<string> sentences = new Queue<string>();
     float timeBetweenChars;
+
+    public string npcName;
 
     //Current dialogue
     Dialogue dialogue;
 
-    EventSystem ev;
+    //EventSystem ev;
 
     public float timeBetweenSentences = 5f;
 
     private void Awake()
     {
-        ev = FindObjectOfType<EventSystem>();
+        //ev = FindObjectOfType<EventSystem>();
     }
 
-    public virtual void StartDialogue(Dialogue d, string npcName, float tbc = 0f, string sName = "")
+    public virtual void StartDialogue()
     {
-        dialogue = d;
-        timeBetweenChars = tbc;
+        dialogue = firstDialogue;
+        //dialogue = d;
+        //timeBetweenChars = tbc;
         sentences.Clear();
         //pMove.canMove = false;
         //pMove.ZeroVelocity();
 
-        foreach (string s in d.sentences)
+        foreach (string s in dialogue.sentences)
         {
             sentences.Enqueue(s);
         }
 
-        ev.firstSelectedGameObject = null;
-        ev.firstSelectedGameObject = continueButton.gameObject;
+        //ev.firstSelectedGameObject = null;
+        //ev.firstSelectedGameObject = continueButton.gameObject;
 
         //Add continue button function to UI button
         //continueButton => DisplayNextSentence();

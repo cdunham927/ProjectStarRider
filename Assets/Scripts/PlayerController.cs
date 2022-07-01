@@ -218,7 +218,7 @@ public class PlayerController : MonoBehaviour
 
             //if (joystick && !GameManager.gameIsPaused)
             //{
-            if (!GameManager.gameIsPaused) 
+            if (joystick && !GameManager.gameIsPaused) 
             { 
                 if (hor2 != 0)
                 {

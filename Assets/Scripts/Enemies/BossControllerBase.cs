@@ -9,9 +9,9 @@ public class BossControllerBase : EnemyControllerBase
     public string bossName;
 
     public float phase2ThresholdPercent;
-    float phase2Thres;
+    protected float phase2Thres;
     public float phase3ThresholdPercent;
-    float phase3Thres;
+    protected float phase3Thres;
 
     public float[] atkCooldowns;
 
