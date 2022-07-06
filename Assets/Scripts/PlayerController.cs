@@ -495,10 +495,14 @@ public class PlayerController : MonoBehaviour
             hitWall = true;
             Invoke("ResetHitWall", timeToMove);
             //float mag = bod.velocity.magnitude;
-            bod.velocity = Vector3.zero;
             //bod.velocity = transform.forward * mag;
             //bod.velocity = transform.forward * pushBack;
-            bod.AddForce(transform.forward * pushBack);
+
+
+            //Push player back
+            //bod.velocity = Vector3.zero;
+            //bod.AddForce(transform.forward * pushBack);
+
             //Take damage?
             stats.Damage(collisionDamage);
         }
