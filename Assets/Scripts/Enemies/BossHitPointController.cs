@@ -5,6 +5,8 @@ using UnityEngine;
 public class BossHitPointController : MonoBehaviour
 {
     BossControllerBase boss;
+    [Range(1, 3)]
+    public float dmgMult;
 
     private void Awake()
     {
@@ -13,6 +15,7 @@ public class BossHitPointController : MonoBehaviour
 
     public void Damage(int amt)
     {
-        boss.Damage(amt);
+        int totDmg = Mathf.RoundToInt((float)amt * dmgMult);
+        boss.Damage(totDmg);
     }
 }
