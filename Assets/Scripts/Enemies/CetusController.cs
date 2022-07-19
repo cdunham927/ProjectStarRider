@@ -19,6 +19,21 @@ public class CetusController : BossControllerBase
 
     bool playedDialogue = false;
 
+    public GameObject[] waveOneSpawns;
+    public GameObject[] waveTwoSpawns;
+    public GameObject[] waveThreeSpawns;
+
+    float curHpLoss = 0;
+    //In the 1st phase, every 20% hp lost will do sonic laser attack
+    public bool phaseOneLossAttack = false;
+    public float phaseOneLossPerc = 0.20f;
+    //In the 2nd phase, every 15% hp lost will do sonic laser attack
+    public bool phaseTwoLossAttack = false;
+    public float phaseTwoLossPerc = 0.15f;
+    //In the 3rd phase, every 10% hp lost will do sonic laser attack
+    public bool phaseThreeLossAttack = false;
+    public float phaseThreeLossPerc = 0.10f;
+
     protected override void Awake()
     {
         laserStartSize = laserCollider.radius;
@@ -98,6 +113,21 @@ public class CetusController : BossControllerBase
 
         //Reset attack cooldown
         attackCools = atkCooldowns[1];
+    }
+
+    public void SonicBulletAttack()
+    {
+
+    }
+
+    public void SpawnAngels(int phase)
+    {
+        switch(phase)
+        {
+            case 1:
+
+                break;
+        }
     }
 
     public void SpawnBunchaBullets()
