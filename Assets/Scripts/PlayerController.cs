@@ -97,18 +97,30 @@ public class PlayerController : MonoBehaviour
     float rotAxis;
 
     //Dashing ability
+    [Header("Dash Settings")]
     public float forDashSpd;
     public float sideDashSpd;
     public float dashCooldown;
     public float dashTime;
     float curDashCools;
     float curDashTime;
-    
+
     //Dash blink vfx
+    [Header("Blink vfx Settings")]
     float blinkDuration = 0.3f;
     float blinkIntensity = 2.0f;
+
+    [Header("Mesh Settings")]
+    public float TrailTime = 2.0f;
+    public float meshRefreshRate = 0.1f;
+    public float meshDestoryDelay = 0.5f;
+    public Transform positionToSpawn;
+    private SkinnedMeshRenderer[] skinnedMeshRenderers;
+    public Material mat;
+
     
     GameObject dashPS;
+    [Header(" Player Vfx Settings")]
     public GameObject DashVfx;
     
     GameObject SpeedlinesPS;
@@ -331,6 +343,8 @@ public class PlayerController : MonoBehaviour
                 curDashCools = dashCooldown;
                 Speedvfx();
                 Dashvfx();
+
+                
             }
 
             if (curDashTime > 0) curDashTime -= Time.deltaTime;
@@ -553,6 +567,9 @@ public class PlayerController : MonoBehaviour
         if (meshRenderer != null) meshRenderer.material.color = Color.yellow * blinkIntensity;
         Invoke("ResetMaterial", blinkDuration);
 
+        
+        StartCoroutine(ActivateTrail(TrailTime));
+
         if (!gm.gameIsPaused && !gm.gameIsOver)
         {
             if (!DashVfx.activeInHierarchy)
@@ -576,4 +593,39 @@ public class PlayerController : MonoBehaviour
     {
         if (meshRenderer != null) meshRenderer.material.color = Color.white;
     }
+
+    IEnumerator ActivateTrail (float timeActive) 
+    { 
+        while (timeActive > 0) 
+        {
+
+            timeActive -= meshRefreshRate;
+
+            if (skinnedMeshRenderers == null)
+                skinnedMeshRenderers = GetComponentsInChildren<SkinnedMeshRenderer>();
+
+            for(int  i = 0; i<skinnedMeshRenderers.Length; i++)
+            {
+
+                GameObject obj = new GameObject();
+                obj.transform.SetPositionAndRotation(positionToSpawn.position, positionToSpawn.rotation);
+                MeshRenderer mr = obj.AddComponent<MeshRenderer>();
+                MeshFilter  mf  = obj.AddComponent<MeshFilter>();
+                
+                Mesh mesh = new Mesh();
+                skinnedMeshRenderers[i].BakeMesh(mesh);
+                
+                mf.mesh = mesh;
+                mr.material = mat;
+
+                Destroy(obj, meshDestoryDelay);
+            }
+
+            yield return new WaitForSeconds(meshRefreshRate);
+
+        }
+
+        
+    }
+
 }

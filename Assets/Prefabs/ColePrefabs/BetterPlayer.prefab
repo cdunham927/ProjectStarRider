@@ -69675,6 +69675,7 @@ MonoBehaviour:
   scoreText: {fileID: 0}
   score: 0
   hurtDecAmt: -9999
+  redBulletImpact: {fileID: 6108864283411289591, guid: 85fa723b1f3435f4fa8556c64a65d15b, type: 3}
 --- !u!114 &8701767644159492045
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -69733,10 +69734,15 @@ MonoBehaviour:
   sideDashSpd: 5000
   dashCooldown: 1.5
   dashTime: 0.25
+  TrailTime: 2
+  meshRefreshRate: 0.1
+  meshDestoryDelay: 0.5
+  positionToSpawn: {fileID: 8701767644159492043}
+  mat: {fileID: 2100000, guid: f18fe1169c46b2a46ae69874ab81131f, type: 2}
   DashVfx: {fileID: 6256742393646458637}
   SpeedLineVfx: {fileID: 6313195394958098897}
   sys: {fileID: 4825064967024776487}
-  sysEmit: 20
+  sysEmit: 2
 --- !u!114 &5272638553245071613
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -70319,7 +70325,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6112733783379680926, guid: 9efe292e6352f774cb8db649d82c2caa, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6757839915740705896, guid: 9efe292e6352f774cb8db649d82c2caa, type: 3}
       propertyPath: m_RootOrder

@@ -746,8 +746,8 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a0c5de4b0a3000b4d997943b21c60cf7, type: 2}
-  - {fileID: 2100000, guid: 186df673965e78344934e339c458afcd, type: 2}
+  - {fileID: 2100000, guid: 356906ffc22f4ae4f99b99806d0b1d87, type: 2}
+  - {fileID: 2100000, guid: f42829d729dae694aae0984de2c4c506, type: 2}
   - {fileID: 2100000, guid: 3e415d5a862890f438dbb2806680f9c9, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -2179,7 +2179,9 @@ MonoBehaviour:
   bulletShot: 0
   deathVFX: {fileID: 4593951957772366835, guid: 1e092bc34c05e7a4388b0d0c57e84ec9, type: 3}
   hpSpawnChance: 0
+  bombSpawnChance: 0.3
   hpPool: {fileID: 0}
+  bombPool: {fileID: 0}
   minimapObj: {fileID: 0}
   hpBar: {fileID: 0}
   manager: {fileID: 0}
@@ -2246,6 +2248,15 @@ MonoBehaviour:
   laserLerpSpd: 1.225
   laserOn: 0
   laserRend: {fileID: 562994800677401388}
+  waveOneSpawns: []
+  waveTwoSpawns: []
+  waveThreeSpawns: []
+  phaseOneLossAttack: 0
+  phaseOneLossPerc: 0.2
+  phaseTwoLossAttack: 0
+  phaseTwoLossPerc: 0.15
+  phaseThreeLossAttack: 0
+  phaseThreeLossPerc: 0.1
 --- !u!82 &6154660521567802429
 AudioSource:
   m_ObjectHideFlags: 0
@@ -3343,6 +3354,10 @@ PrefabInstance:
     - target: {fileID: 4369115719885263633, guid: 5d8e27c8746cd044faf9728027641475, type: 3}
       propertyPath: m_Name
       value: CetusLaser
+      objectReference: {fileID: 0}
+    - target: {fileID: 4369115719885263633, guid: 5d8e27c8746cd044faf9728027641475, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5d8e27c8746cd044faf9728027641475, type: 3}
