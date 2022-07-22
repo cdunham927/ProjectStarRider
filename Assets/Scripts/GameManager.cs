@@ -13,6 +13,8 @@ public class GameManager : MonoBehaviour
     public GameObject minimap;
     //Enemies need to grab from this pool
     public GameObject hpPoolPrefab;
+    //Enemies need to grab from this pool
+    public GameObject bombPoolPrefab;
     //Player needs to grab from this pool
     public GameObject playerBulletPoolPrefab;
     //Enemies need to grab from this pool
@@ -53,6 +55,8 @@ public class GameManager : MonoBehaviour
     //Instances of pools and minimap
     [HideInInspector]
     public ObjectPool hpPool;
+    [HideInInspector]
+    public ObjectPool bombPool;
     [HideInInspector]
     public ObjectPool bulPool;
     [HideInInspector]
@@ -125,6 +129,7 @@ public class GameManager : MonoBehaviour
 
         //Now spawn object pool objects
         hpPool = Instantiate(hpPoolPrefab).GetComponent<ObjectPool>();
+        bombPool = Instantiate(bombPoolPrefab).GetComponent<ObjectPool>();
         bulPool = Instantiate(playerBulletPoolPrefab).GetComponent<ObjectPool>(); ;
         enemyBulPool = Instantiate(enemyBulletPoolPrefab).GetComponent<ObjectPool>();
         enemySGPool = Instantiate(enemySGBulletPoolPrefab).GetComponent<ObjectPool>();

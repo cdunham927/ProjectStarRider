@@ -67,6 +67,13 @@ public class Player_Stats : MonoBehaviour
     PlayerController pCont;
     GameManager gm;
 
+
+    //
+    //
+    //
+    //Player takes damage, show bullet effect
+    public GameObject redBulletImpact;
+
     private void Awake()
     {
         gm = FindObjectOfType<GameManager>();
@@ -198,6 +205,12 @@ public class Player_Stats : MonoBehaviour
             reactionAnim.SetTrigger("Hurt");
             reactionAnim.SetInteger("Hp", Curr_hp);
         }
+        //pCont.FreezeRotation();
+        //pCont.UnfreezeRotation();
+
+        //Fix camera fucking up when colliding with stuff
+        Time.timeScale = 0f;
+        Time.timeScale = 1f;
     }
 
     void Death() 

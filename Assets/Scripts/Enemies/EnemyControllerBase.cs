@@ -45,9 +45,12 @@ public class EnemyControllerBase : MonoBehaviour
 
     [Range(0, 1)]
     public float hpSpawnChance = 0.3f;
+    [Range(0, 1)]
+    public float bombSpawnChance = 0.3f;
 
     //Object pool for hp pickups
     public ObjectPool hpPool;
+    public ObjectPool bombPool;
     bool spawned = false;
     public GameObject minimapObj;
 
@@ -84,6 +87,7 @@ public class EnemyControllerBase : MonoBehaviour
 
         //hpBar = GetComponent<Healthbar>();
         hpPool = cont.hpPool;
+        bombPool = cont.bombPool;
     }
 
     protected virtual void OnEnable()
@@ -192,6 +196,17 @@ public class EnemyControllerBase : MonoBehaviour
                 }
                 spawned = true;
                 //FindObjectOfType<GameManager>().EnemyDiedEvent();
+            }
+            if (Random.value < bombSpawnChance)
+            {
+                GameObject bomb = bombPool.GetPooledObject();
+                if (bomb != null)
+                {
+                    //Put it where the enemy position is
+                    bomb.transform.position = transform.position + new Vector3(Random.Range(-1.5f, 1.5f), Random.Range(-1.5f, 1.5f), Random.Range(-1.5f, 1.5f));
+                    bomb.transform.rotation = Quaternion.Euler(Random.Range(0, 360), Random.Range(0, 360), Random.Range(0, 360));
+                    bomb.SetActive(true);
+                }
             }
             if (minimapObj != null) minimapObj.SetActive(false);
             if (manager != null) manager.EnemyDied();

@@ -122,10 +122,26 @@ public class CetusController : BossControllerBase
 
     public void SpawnAngels(int phase)
     {
+        anim.SetTrigger("AttackFour");
         switch(phase)
         {
             case 1:
-
+                foreach (GameObject g in waveOneSpawns)
+                {
+                    g.SetActive(true);
+                }
+                break;
+            case 2:
+                foreach (GameObject g in waveTwoSpawns)
+                {
+                    g.SetActive(true);
+                }
+                break;
+            case 3:
+                foreach (GameObject g in waveThreeSpawns)
+                {
+                    g.SetActive(true);
+                }
                 break;
         }
     }
