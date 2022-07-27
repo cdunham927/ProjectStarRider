@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class CetusController : BossControllerBase
 {
-    
     public GameObject[] bulSpawn;
     public GameObject[] bulSpawnsTwo;
     public float lerpSpd;
@@ -27,15 +26,26 @@ public class CetusController : BossControllerBase
     //In the 1st phase, every 20% hp lost will do sonic laser attack
     public bool phaseOneLossAttack = false;
     public float phaseOneLossPerc = 0.20f;
+    float pOLA;
     //In the 2nd phase, every 15% hp lost will do sonic laser attack
     public bool phaseTwoLossAttack = false;
     public float phaseTwoLossPerc = 0.15f;
+    float pTLA;
     //In the 3rd phase, every 10% hp lost will do sonic laser attack
     public bool phaseThreeLossAttack = false;
     public float phaseThreeLossPerc = 0.10f;
+    float pTtLA;
+
+    public ObjectPool sonicBulletPool;
+    public int sonicBulletCount;
 
     protected override void Awake()
     {
+        //Boss does a special attack after losing a set amount of health per phase
+        pOLA = maxHp * phaseOneLossPerc;
+        pTLA = maxHp * phaseTwoLossPerc;
+        pTtLA = maxHp * phaseThreeLossPerc;
+
         laserStartSize = laserCollider.radius;
         laserStartHeight = laserCollider.height;
         laserCollider.enabled = false;
@@ -115,9 +125,16 @@ public class CetusController : BossControllerBase
         attackCools = atkCooldowns[1];
     }
 
+    //Spawn sea angel bullets
     public void SonicBulletAttack()
     {
-
+        for (int i = 0; i < sonicBulletCount; i++)
+        {
+            GameObject sBul = sonicBulletPool.GetPooledObject();
+            sBul.transform.position = transform.position;
+            sBul.transform.rotation = Quaternion.Euler(Random.Range(0, 360), Random.Range(0, 360), Random.Range(0, 360));
+            sBul.SetActive(true);
+        }
     }
 
     public void SpawnAngels(int phase)
@@ -245,6 +262,46 @@ public class CetusController : BossControllerBase
         curHp -= damageAmount;
         healthScript.SetHealth((int)curHp);
         if(curHp > 0) DamageBlink();
+
+        if (curHp < phase3Thres)
+        {
+            currentPhase = 3;
+        }
+        else if (curHp < phase2Thres)
+        {
+            currentPhase = 2;
+        }
+        else currentPhase = 1;
+
+        curHpLoss += damageAmount;
+
+        switch (currentPhase)
+        {
+            case 3:
+                if (curHpLoss > pTtLA)
+                {
+                    //Do sonic attack here then reset cooldown
+
+                    curHpLoss = 0;
+                }
+                break;
+            case 2:
+                if (curHpLoss > pTLA)
+                {
+                    //Do sonic attack here then reset cooldown
+
+                    curHpLoss = 0;
+                }
+                break;
+            case 1:
+                if (curHpLoss > pOLA)
+                {
+                    //Do sonic attack here then reset cooldown
+
+                    curHpLoss = 0;
+                }
+                break;
+        }
 
         if (curHp < phase3Thres && !playedDialogue)
         {
