@@ -2,10 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class BossControllerBase : EnemyControllerBase
 {
-    public Text nameText;
+    public TMP_Text nameText;
     public string bossName;
 
     public float phase2ThresholdPercent;
@@ -27,7 +28,7 @@ public class BossControllerBase : EnemyControllerBase
     protected override void Awake()
     {
         //Set boss text
-        nameText = GameObject.FindGameObjectWithTag("BossHealth").GetComponentInChildren<Text>();
+        nameText = GameObject.FindGameObjectWithTag("BossHealth").GetComponentInChildren<TMP_Text>();
         nameText.text = bossName;
 
         //bulletPool = Instantiate(bossBulletPool);

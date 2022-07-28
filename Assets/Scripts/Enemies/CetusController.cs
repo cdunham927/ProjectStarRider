@@ -281,7 +281,7 @@ public class CetusController : BossControllerBase
                 if (curHpLoss > pTtLA)
                 {
                     //Do sonic attack here then reset cooldown
-
+                    Debug.Log("Lost 10% hp");
                     curHpLoss = 0;
                 }
                 break;
@@ -289,7 +289,7 @@ public class CetusController : BossControllerBase
                 if (curHpLoss > pTLA)
                 {
                     //Do sonic attack here then reset cooldown
-
+                    Debug.Log("Lost 15% hp");
                     curHpLoss = 0;
                 }
                 break;
@@ -297,7 +297,7 @@ public class CetusController : BossControllerBase
                 if (curHpLoss > pOLA)
                 {
                     //Do sonic attack here then reset cooldown
-
+                    Debug.Log("Lost 20% hp");
                     curHpLoss = 0;
                 }
                 break;

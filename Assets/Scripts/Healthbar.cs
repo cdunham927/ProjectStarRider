@@ -4,11 +4,13 @@ using UnityEngine;
 using UnityEngine.UI;
 //using Shapes;
 using UnityEngine.Rendering;
+using MPUIKIT;
 
 public class Healthbar : MonoBehaviour
 {
     public GameObject canv;
     public Image slider;
+    public MPImage otherSlider;
     public EnemyControllerBase stats;
     PlayerController player;
     public Vector3 dir;
@@ -46,13 +48,23 @@ public class Healthbar : MonoBehaviour
 
     public void SetMaxHealth(int health)
     {
-        slider.fillAmount = Mathf.Lerp(slider.fillAmount, health / stats.maxHp, 10f * Time.deltaTime);
-        slider.fillAmount = stats.maxHp;
+        if (slider != null)
+        {
+            slider.fillAmount = Mathf.Lerp(slider.fillAmount, health / stats.maxHp, 10f * Time.deltaTime);
+            slider.fillAmount = stats.maxHp;
+        }
+
+        if (otherSlider != null)
+        {
+            otherSlider.fillAmount = Mathf.Lerp(otherSlider.fillAmount, health / stats.maxHp, 10f * Time.deltaTime);
+            otherSlider.fillAmount = stats.maxHp;
+        }
     }
 
     public void SetHealth(int health)
     {
-        slider.fillAmount = (float)health / (float)stats.maxHp;
+        if (slider != null) slider.fillAmount = (float)health / (float)stats.maxHp;
+        if (otherSlider != null) otherSlider.fillAmount = (float)health / (float)stats.maxHp;
         //innerRect.Width = ((float)stats.GetHealth() / (float)stats.maxHp) * size;
     }
 }
