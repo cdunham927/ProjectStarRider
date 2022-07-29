@@ -12,6 +12,12 @@ public class BombPickup : Pickup
     public float spd;
     bool dmg = false;
     public bool moves = true;
+    //explosion effect
+    public ParticleSystem BombBlast;
+    //timer for bomb explosion
+    public float timer;
+    public Sprite bomb;
+    public Sprite explo;
 
     //public AudioClip clip;
 
@@ -32,12 +38,32 @@ public class BombPickup : Pickup
         //transform.Rotate(xRot, yRot, zRot);
 
         if (distance <= pickupDistance && stats.Curr_hp > stats.Max_hp && moves)
+        {
             transform.position = Vector3.MoveTowards(transform.position, stats.transform.position, spd * Time.deltaTime);
+        }
+
+        if (timer > 0)
+        {
+            timer -= Time.deltaTime;
+        }
+            if (this.gameObject.GetComponent<SpriteRenderer>().sprite == bomb)
+            {
+            this.gameObject.GetComponent<SpriteRenderer>().sprite = explo;
+            this.gameObject.tag = "explosion";
+            timer = 0;
+            return;
+            }
+            
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player") && stats.Curr_hp > stats.Max_hp) GetPickup();
+        Debug.Log("trigger");
+        if (this.tag == "explosion")
+        {
+            Destroy(this);
+        }
     }
 
     public override void GetPickup()
