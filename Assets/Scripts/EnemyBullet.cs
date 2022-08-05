@@ -7,6 +7,16 @@ public class EnemyBullet : Bullet
     public GameObject collisonExplosion;
     public TrailRenderer trail;
 
+    public GameObject spawnPos;
+    public ObjectPool hitVFXPool;
+    GameManager cont;
+
+    private void Awake()
+    {
+        cont = FindObjectOfType<GameManager>();
+        hitVFXPool = cont.enemyHitVFXPool;
+    }
+
     public override void OnEnable()
     {
         base.OnEnable();
@@ -17,17 +27,29 @@ public class EnemyBullet : Bullet
         if (collision.CompareTag("Player"))
         {
             collision.gameObject.GetComponent<Player_Stats>().Damage(1);
+            if (hitVFXPool == null) hitVFXPool = cont.enemyHitVFXPool;
+            GameObject hit = hitVFXPool.GetPooledObject();
+            hit.transform.position = spawnPos.transform.position;
+            hit.transform.rotation = collision.transform.rotation;
+            //bul.GetComponent<Rigidbody>().velocity = bod.velocity;
+            hit.SetActive(true);
             Invoke("Disable", 0.001f);
         }
         if (collision.CompareTag("Wall"))
         {
+            if (hitVFXPool == null) hitVFXPool = cont.enemyHitVFXPool;
+            GameObject hit = hitVFXPool.GetPooledObject();
+            hit.transform.position = spawnPos.transform.position;
+            hit.transform.rotation = collision.transform.rotation;
+            //bul.GetComponent<Rigidbody>().velocity = bod.velocity;
+            hit.SetActive(true);
             Invoke("Disable", 0.001f);
         }
     }
 
     public override void Disable()
     {
-        if (trail != null)trail.Clear();
+        if (trail != null) trail.Clear();
         base.Disable();
     }
 

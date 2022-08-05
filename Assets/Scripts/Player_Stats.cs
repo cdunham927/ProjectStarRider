@@ -84,7 +84,7 @@ public class Player_Stats : MonoBehaviour
 
 
         //Camera shake things
-        if (cine == null) cine = Camera.main.GetComponent<CinemachineVirtualCamera>();
+        if (cine == null) cine = FindObjectOfType<CinemachineVirtualCamera>();
         if (perlin == null) perlin = cine.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
 
         src = GetComponent<AudioSource>();
@@ -209,8 +209,8 @@ public class Player_Stats : MonoBehaviour
         //pCont.UnfreezeRotation();
 
         //Fix camera fucking up when colliding with stuff
-        Time.timeScale = 0f;
-        Time.timeScale = 1f;
+        //Time.timeScale = 0f;
+        //Time.timeScale = 1f;
     }
 
     void Death() 

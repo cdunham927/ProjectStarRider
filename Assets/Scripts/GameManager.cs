@@ -27,6 +27,7 @@ public class GameManager : MonoBehaviour
     public GameObject seaAngelBulPoolPrefab;
     //Bullets need to grab from this pool
     public GameObject hitVFXPoolPrefab;
+    public GameObject enemyVFXPoolPrefab;
     //This object needs these references
     //Instantiate them, then grab references for the right buttons(probably with tags)
     public GameObject pauseMenuUIPrefab;
@@ -61,6 +62,8 @@ public class GameManager : MonoBehaviour
     public ObjectPool bulPool;
     [HideInInspector]
     public ObjectPool hitVFXPool;
+    [HideInInspector]
+    public ObjectPool enemyHitVFXPool;
     [HideInInspector]
     public ObjectPool enemyBulPool;
     [HideInInspector]
@@ -136,6 +139,7 @@ public class GameManager : MonoBehaviour
         enemySnipePool = Instantiate(enemySnipeBulletPoolPrefab).GetComponent<ObjectPool>();
         seaAngelBulPool = Instantiate(seaAngelBulPoolPrefab).GetComponent<ObjectPool>();
         hitVFXPool = Instantiate(hitVFXPoolPrefab).GetComponent<ObjectPool>();
+        enemyHitVFXPool = Instantiate(enemyVFXPoolPrefab).GetComponent<ObjectPool>();
 
         //Spawn minimap
         //

@@ -148,7 +148,7 @@ public class PlayerController : MonoBehaviour
         Cursor.visible = false;
 
         //Set cinemachine follow and aim targets
-        cinCam = Camera.main.GetComponent<CinemachineVirtualCamera>();
+        cinCam = FindObjectOfType<CinemachineVirtualCamera>();
         cinCam.m_Follow = followTarget.transform;
         cinCam.m_LookAt = aimTarget.transform;
 
@@ -352,7 +352,6 @@ public class PlayerController : MonoBehaviour
             //Actual dash code
             if (curDashTime > 0 && !hitWall)
             {
-                
                 bod.AddForce(dashDir * Time.deltaTime, ForceMode.Impulse);
                 //Dashvfx();
             }
@@ -442,11 +441,24 @@ public class PlayerController : MonoBehaviour
             if (curDashCools > 0) curDashCools -= Time.deltaTime;
         }
 
+        if (cinCam.transform.rotation.z != 0)
+        {
+            //cinCam.m_Follow = null;
+            //cinCam.m_LookAt = null;
+            //cinCam.transform.rotation = Quaternion.Euler(0, 0, 0);
+            //cinCam.m_Follow = followTarget.transform;
+            //cinCam.m_LookAt = aimTarget.transform;
+        }
+
         if (Application.isEditor)
         {
             if (Input.GetKeyDown(KeyCode.Alpha8))
             {
                 SpeedUp();
+            }
+            if (Input.GetKeyDown(KeyCode.C))
+            {
+                ResetCam();
             }
         }
     }
@@ -519,7 +531,22 @@ public class PlayerController : MonoBehaviour
 
             //Take damage?
             stats.Damage(collisionDamage);
+
+            Invoke("ResetCam", 0.12f);
         }
+    }
+
+    void ResetCam()
+    {
+        Debug.Log("Fixing Camera");
+
+        //cinCam.ForceCameraPosition(cinCam.transform.position, Quaternion.Euler(0, 0, 0));
+
+        cinCam.m_Follow = null;
+        //cinCam.m_LookAt = null;
+        cinCam.transform.rotation = Quaternion.Euler(0, 0, 0);
+        cinCam.m_Follow = followTarget.transform;
+        //cinCam.m_LookAt = aimTarget.transform;
     }
 
     void ResetHitWall()
