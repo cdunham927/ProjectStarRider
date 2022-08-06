@@ -689,7 +689,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2226964579352390210}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -40.25, y: 20.250008, z: -26}
+  m_LocalPosition: {x: -49.25, y: 13.38, z: -4.36}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3830464497169995282}
@@ -1400,7 +1400,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4017929787354566594}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -31.25, y: -22.499992, z: -14.25}
+  m_LocalPosition: {x: -48.5, y: 5.18, z: -17.35}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3830464497169995282}
@@ -1490,7 +1490,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4245639275438523250}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -37.25, y: 25.750008, z: -26.5}
+  m_LocalPosition: {x: -41.18, y: 4.21, z: -44.29}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3830464497169995282}
@@ -2203,6 +2203,7 @@ MonoBehaviour:
   chanceForAtkTwo: 0.65
   bossBulletPool: {fileID: 7156312672638498231, guid: 33db5574b421a7447ae3c861ddc2b3fb, type: 3}
   deathTime: 1
+  currentPhase: 1
   bulSpawn:
   - {fileID: 4245639275438523250}
   - {fileID: 2226964579352390210}
@@ -2257,6 +2258,8 @@ MonoBehaviour:
   phaseTwoLossPerc: 0.15
   phaseThreeLossAttack: 0
   phaseThreeLossPerc: 0.1
+  sonicBulletPool: {fileID: 0}
+  sonicBulletCount: 0
 --- !u!82 &6154660521567802429
 AudioSource:
   m_ObjectHideFlags: 0
@@ -3357,7 +3360,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4369115719885263633, guid: 5d8e27c8746cd044faf9728027641475, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5d8e27c8746cd044faf9728027641475, type: 3}
