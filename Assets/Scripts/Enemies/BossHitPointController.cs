@@ -17,5 +17,8 @@ public class BossHitPointController : MonoBehaviour
     {
         int totDmg = Mathf.RoundToInt((float)amt * dmgMult);
         boss.Damage(totDmg);
+
+        boss.retaliatePos = transform.position;
+        boss.Retaliate();
     }
 }

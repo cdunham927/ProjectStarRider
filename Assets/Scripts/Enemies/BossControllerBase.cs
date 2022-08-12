@@ -25,6 +25,9 @@ public class BossControllerBase : EnemyControllerBase
 
     public int currentPhase = 1;
 
+    public Vector3 retaliatePos;
+    public int retaliateShots;
+
     protected override void Awake()
     {
         //Set boss text
@@ -92,4 +95,6 @@ public class BossControllerBase : EnemyControllerBase
     protected virtual void AttackTwo() { }
     protected virtual void AttackThree() { }
     protected virtual void AttackFour() { }
+    //When weak points get hit, retaliate
+    public virtual void Retaliate() { }
 }

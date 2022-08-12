@@ -36,8 +36,13 @@ public class CetusController : BossControllerBase
     public float phaseThreeLossPerc = 0.10f;
     float pTtLA;
 
+    public ObjectPool homingBulletPool;
+
     public ObjectPool sonicBulletPool;
     public int sonicBulletCount;
+    public GameObject sonicSpawnPos;
+
+    public float spawnCooldown = 2f;
 
     protected override void Awake()
     {
@@ -55,6 +60,7 @@ public class CetusController : BossControllerBase
 
     protected override void OnEnable()
     {
+        SpawnAngels(currentPhase);
         player = FindObjectOfType<PlayerController>();
         //detection = GetComponentInChildren<BossDetectionController>();
         detectionCollider.radius = attackRange;
@@ -105,6 +111,34 @@ public class CetusController : BossControllerBase
         }
     }
 
+    protected override void Attack()
+    {
+        Sonic();
+
+        //After phase 2 we stop shooting off at all the fins
+        if (currentPhase < 3)
+        {
+            AttackOne();
+        }
+    }
+
+    //Retaliate by shooting in a shotgun-like pattern
+    public override void Retaliate()
+    {
+        for (int i = 0; i < retaliateShots; i++)
+        {
+            GameObject bul = bulletPool.GetPooledObject();
+            if (bul != null)
+            {
+                bul.transform.position = retaliatePos;
+                bul.SetActive(true);
+                bul.transform.rotation = Quaternion.Euler(Random.Range(0, 360), Random.Range(0, 360), Random.Range(0, 360));
+                bul.GetComponent<EnemyBullet>().PushHard();
+            }
+        }
+    }
+
+    //This attack shoots bullets out of all the fins
     protected override void AttackOne()
     {
         anim.SetTrigger("AttackOne");
@@ -116,6 +150,7 @@ public class CetusController : BossControllerBase
         attackCools = atkCooldowns[0];
     }
 
+    //This attack 
     protected override void AttackTwo()
     {
         anim.SetTrigger("AttackTwo");
@@ -131,10 +166,31 @@ public class CetusController : BossControllerBase
         for (int i = 0; i < sonicBulletCount; i++)
         {
             GameObject sBul = sonicBulletPool.GetPooledObject();
-            sBul.transform.position = transform.position;
+            sBul.transform.position = sonicSpawnPos.transform.position;
             sBul.transform.rotation = Quaternion.Euler(Random.Range(0, 360), Random.Range(0, 360), Random.Range(0, 360));
             sBul.SetActive(true);
+            sBul.GetComponent<EnemyBullet>().Push();
         }
+    }
+
+    //Single sea angel shot
+    public void SonicSingle()
+    {
+        GameObject sBul = sonicBulletPool.GetPooledObject();
+        sBul.transform.position = sonicSpawnPos.transform.position;
+        //sBul.transform.rotation = Quaternion.Euler(Random.Range(0, 360), Random.Range(0, 360), Random.Range(0, 360));
+        sBul.SetActive(true);
+        sBul.transform.LookAt(player.transform);
+        sBul.transform.Rotate(Random.Range(-accx, accx), Random.Range(-accy, accy), 0);
+        sBul.GetComponent<EnemyBullet>().Push();
+    }
+
+    public void Sonic()
+    {
+        Invoke("SonicSingle", 0.95f);
+
+        //Reset attack cooldown
+        attackCools = atkCooldowns[0];
     }
 
     public void SpawnAngels(int phase)
@@ -161,6 +217,8 @@ public class CetusController : BossControllerBase
                 }
                 break;
         }
+
+        attackCools = spawnCooldown;
     }
 
     public void SpawnBunchaBullets()
@@ -195,12 +253,11 @@ public class CetusController : BossControllerBase
         ChangeState(enemystates.alert);
     }
 
+    //Laser attack
     protected override void AttackThree()
     {
         anim.SetTrigger("AttackThree");
-
         Invoke("SetLaser", 1.075f);
-
         attackCools = atkCooldowns[2];
     }
 
@@ -223,7 +280,7 @@ public class CetusController : BossControllerBase
     {
         foreach (GameObject t in bulSpawn)
         {
-            GameObject bul = bulletPool.GetPooledObject();
+            GameObject bul = homingBulletPool.GetPooledObject();
             if (bul != null)
             {
                 //Put it where the enemy position is
@@ -242,7 +299,7 @@ public class CetusController : BossControllerBase
                 //bul.transform.rotation = Quaternion.Euler(Vector3.forward * (angle + offset));
                 //bul.transform.forward = Vector3.forward * (angle + offset);
                 bul.transform.rotation = Quaternion.Euler(Random.Range(0, 360), Random.Range(0, 360), Random.Range(0, 360));
-                bul.GetComponent<EnemyBullet>().Push();
+                //bul.GetComponent<EnemyBullet>().Push();
             }
         }
 
@@ -266,10 +323,12 @@ public class CetusController : BossControllerBase
         if (curHp < phase3Thres)
         {
             currentPhase = 3;
+            SpawnAngels(currentPhase);
         }
         else if (curHp < phase2Thres)
         {
             currentPhase = 2;
+            SpawnAngels(currentPhase);
         }
         else currentPhase = 1;
 
@@ -280,24 +339,27 @@ public class CetusController : BossControllerBase
             case 3:
                 if (curHpLoss > pTtLA)
                 {
-                    //Do sonic attack here then reset cooldown
+                    //Do laser attack here then reset cooldown
                     Debug.Log("Lost 10% hp");
+                    AttackThree();
                     curHpLoss = 0;
                 }
                 break;
             case 2:
                 if (curHpLoss > pTLA)
                 {
-                    //Do sonic attack here then reset cooldown
+                    //Do laser attack here then reset cooldown
                     Debug.Log("Lost 15% hp");
+                    AttackThree();
                     curHpLoss = 0;
                 }
                 break;
             case 1:
                 if (curHpLoss > pOLA)
                 {
-                    //Do sonic attack here then reset cooldown
+                    //Do laser attack here then reset cooldown
                     Debug.Log("Lost 20% hp");
+                    AttackThree();
                     curHpLoss = 0;
                 }
                 break;

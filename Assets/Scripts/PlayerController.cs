@@ -476,6 +476,7 @@ public class PlayerController : MonoBehaviour
     public void TakeAfterimage(float amt)
     {
         curActiveTime -= amt;
+        if (curActiveTime <= 0) curActiveTime = 0;
     }
 
     public void GetSavedSettings()
