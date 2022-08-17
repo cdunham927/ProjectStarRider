@@ -291,6 +291,7 @@ public class CetusController : BossControllerBase
                 //
                 //var offset = 0f;
                 //Vector2 direction = player.transform.position - t.transform.position;
+
                 //direction.Normalize();
                 //float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
 

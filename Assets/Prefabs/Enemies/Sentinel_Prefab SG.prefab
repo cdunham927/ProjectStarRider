@@ -530,7 +530,7 @@ MonoBehaviour:
   m_FillMethod: 0
   m_FillAmount: 1
   m_FillClockwise: 1
-  m_FillOrigin: 0
+  m_FillOrigin: 1
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
 --- !u!1 &3699088630854444213
@@ -738,7 +738,7 @@ MonoBehaviour:
   m_FillMethod: 0
   m_FillAmount: 1
   m_FillClockwise: 1
-  m_FillOrigin: 0
+  m_FillOrigin: 1
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
 --- !u!1 &5069486809487785197
@@ -1264,8 +1264,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canv: {fileID: 3699088630854444213}
   slider: {fileID: 6147424521737460213}
+  otherSlider: {fileID: 0}
   stats: {fileID: 8294810921843640164}
   dir: {x: 0, y: 1, z: 0}
+  rot: {x: 90, y: 0, z: 0}
   size: 7.5
 --- !u!114 &8294810921843640164
 MonoBehaviour:
@@ -1294,7 +1296,9 @@ MonoBehaviour:
   bulletShot: 5
   deathVFX: {fileID: 4593951957772366835, guid: 1e092bc34c05e7a4388b0d0c57e84ec9, type: 3}
   hpSpawnChance: 0.3
+  bombSpawnChance: 0.3
   hpPool: {fileID: 0}
+  bombPool: {fileID: 0}
   minimapObj: {fileID: 1922347646357933960}
   hpBar: {fileID: 8879398494648370082}
   manager: {fileID: 0}

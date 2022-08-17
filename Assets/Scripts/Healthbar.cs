@@ -8,12 +8,16 @@ using MPUIKIT;
 
 public class Healthbar : MonoBehaviour
 {
+    Vector3 startPos;
     public GameObject canv;
     public Image slider;
     public MPImage otherSlider;
     public EnemyControllerBase stats;
     PlayerController player;
     public Vector3 dir;
+
+    public Vector3 rot;
+    Camera cam;
 
     //Shapes things
     public float size;
@@ -22,15 +26,20 @@ public class Healthbar : MonoBehaviour
 
     private void Awake()
     {
+        cam = FindObjectOfType<Camera>();
+        //startPos = canv.transform.localPosition;
         player = FindObjectOfType<PlayerController>();
     }
 
-    private void Update()
+    private void LateUpdate()
     {
         if (player != null && player.gameObject.activeInHierarchy)
         {
             //slider.transform.LookAt(transform.position + Camera.main.transform.rotation * Vector3.forward, Camera.main.transform.rotation * Vector3.up);
-            canv.transform.LookAt(transform.position + Camera.main.transform.rotation * Vector3.forward, dir);
+
+            //canv.transform.LookAt(transform.position + Camera.main.transform.rotation * Vector3.forward, dir);
+            canv.transform.LookAt(cam.transform);
+            canv.transform.Rotate(rot);
         }
     }
 
@@ -44,6 +53,10 @@ public class Healthbar : MonoBehaviour
     {
         SwitchUIActive(false);
         SetMaxHealth((int)stats.maxHp);
+
+        //canv.transform.SetParent(stats.transform);
+        //canv.transform.localPosition = startPos;
+        //canv.transform.SetParent(null);
     }
 
     public void SetMaxHealth(int health)
