@@ -180,8 +180,13 @@ public class CetusController : BossControllerBase
         sBul.transform.position = sonicSpawnPos.transform.position;
         //sBul.transform.rotation = Quaternion.Euler(Random.Range(0, 360), Random.Range(0, 360), Random.Range(0, 360));
         sBul.SetActive(true);
-        sBul.transform.LookAt(player.transform);
+        //sBul.transform.LookAt(player.transform);
+        //sBul.transform.Rotate(Random.Range(-accx, accx), Random.Range(-accy, accy), Random.Range(-accx, accx));
+
+        //sBul.transform.forward = (player.transform.position - transform.position);
+        sBul.transform.forward = sonicSpawnPos.transform.forward;
         sBul.transform.Rotate(Random.Range(-accx, accx), Random.Range(-accy, accy), 0);
+
         sBul.GetComponent<EnemyBullet>().Push();
     }
 
