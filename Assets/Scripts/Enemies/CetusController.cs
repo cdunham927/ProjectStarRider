@@ -309,13 +309,19 @@ public class CetusController : BossControllerBase
             }
         }
 
+        //Shoot only like 4 or 5 bullets
+        //
+        //
+
+
         ChangeState(enemystates.alert);
     }
 
-    protected override void Death()
+    public void CetusDeath()
     {
         skinnedMeshRenderer.material.color = Color.white;
         anim.SetTrigger("Death");
+        Death();
     }
 
     public override void Damage(int damageAmount)
