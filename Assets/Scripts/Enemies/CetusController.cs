@@ -283,35 +283,64 @@ public class CetusController : BossControllerBase
 
     void SpawnBullets()
     {
-        foreach (GameObject t in bulSpawn)
-        {
-            GameObject bul = homingBulletPool.GetPooledObject();
-            if (bul != null)
-            {
-                //Put it where the enemy position is
-                bul.transform.position = t.transform.position;
-                bul.transform.Rotate(Random.Range(-accx, accx), Random.Range(-accy, accy), 0);
-
-                //Aim it at the player
-                //
-                //var offset = 0f;
-                //Vector2 direction = player.transform.position - t.transform.position;
-
-                //direction.Normalize();
-                //float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-
-                //Activate it at the enemy position
-                bul.SetActive(true);
-                //bul.transform.rotation = Quaternion.Euler(Vector3.forward * (angle + offset));
-                //bul.transform.forward = Vector3.forward * (angle + offset);
-                bul.transform.rotation = Quaternion.Euler(Random.Range(0, 360), Random.Range(0, 360), Random.Range(0, 360));
-                //bul.GetComponent<EnemyBullet>().Push();
-            }
-        }
+        //foreach (GameObject t in bulSpawn)
+        //{
+        //    GameObject bul = homingBulletPool.GetPooledObject();
+        //    if (bul != null)
+        //    {
+        //        //Put it where the enemy position is
+        //        bul.transform.position = t.transform.position;
+        //        bul.transform.Rotate(Random.Range(-accx, accx), Random.Range(-accy, accy), 0);
+        //
+        //        //Aim it at the player
+        //        //
+        //        //var offset = 0f;
+        //        //Vector2 direction = player.transform.position - t.transform.position;
+        //
+        //        //direction.Normalize();
+        //        //float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        //
+        //        //Activate it at the enemy position
+        //        bul.SetActive(true);
+        //        //bul.transform.rotation = Quaternion.Euler(Vector3.forward * (angle + offset));
+        //        //bul.transform.forward = Vector3.forward * (angle + offset);
+        //        bul.transform.rotation = Quaternion.Euler(Random.Range(0, 360), Random.Range(0, 360), Random.Range(0, 360));
+        //        //bul.GetComponent<EnemyBullet>().Push();
+        //    }
+        //}
 
         //Shoot only like 4 or 5 bullets
         //
         //
+        for (int i = 0; i < bulSpawn.Length; i++)
+        {
+            //Spawn at every other position(so we dont have 50 bullets spawn)
+            if (i % 2 == 0)
+            {
+                GameObject bul = homingBulletPool.GetPooledObject();
+                if (bul != null)
+                {
+                    //Put it where the enemy position is
+                    bul.transform.position = bulSpawn[i].transform.position;
+                    bul.transform.Rotate(Random.Range(-accx, accx), Random.Range(-accy, accy), 0);
+
+                    //Aim it at the player
+                    //
+                    //var offset = 0f;
+                    //Vector2 direction = player.transform.position - t.transform.position;
+
+                    //direction.Normalize();
+                    //float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+
+                    //Activate it at the enemy position
+                    bul.SetActive(true);
+                    //bul.transform.rotation = Quaternion.Euler(Vector3.forward * (angle + offset));
+                    //bul.transform.forward = Vector3.forward * (angle + offset);
+                    bul.transform.rotation = Quaternion.Euler(Random.Range(0, 360), Random.Range(0, 360), Random.Range(0, 360));
+                    //bul.GetComponent<EnemyBullet>().Push();
+                }
+            }
+        }
 
 
         ChangeState(enemystates.alert);
