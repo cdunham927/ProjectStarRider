@@ -71,7 +71,13 @@ public class MenuFunctions : MonoBehaviour
 
     public void OpenUrl()
     {
-        Application.OpenURL("https://forms.gle/k1xtdKyJSixxRHkw9");
+        Application.OpenURL("https://forms.gle/aBQ5QeqQaMoiWoMb8");
+        Debug.Log("Is this working?");
+    }
+
+    public void TwitterUrl()
+    {
+        Application.OpenURL("https://twitter.com/TeamStarDevs");
         Debug.Log("Is this working?");
     }
 
