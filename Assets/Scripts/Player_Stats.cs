@@ -161,7 +161,7 @@ public class Player_Stats : MonoBehaviour
         }
     }
 
-    public void Damage(int damageAmount) 
+    public void Damage(int damageAmount)
     {
         if (anim != null) anim.SetTrigger("Hit");
         //anything that takes place when the hp is zero should go here
@@ -172,12 +172,12 @@ public class Player_Stats : MonoBehaviour
 
         if (Curr_hp > 0)
         {
-           
+
             ShakeCamera();
             src.volume = hitVolume;
             src.PlayOneShot(takeDamageClip);
         }
-        
+
         if (Curr_hp <= 0)
         {
             //Play explosion sound
@@ -238,7 +238,6 @@ public class Player_Stats : MonoBehaviour
 
     void ResetMaterial()
    {
-
         meshRenderer.material.color = Color.white;
    }
 }

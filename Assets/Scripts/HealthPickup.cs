@@ -54,14 +54,8 @@ public class HealthPickup : Pickup
         }
     }
 
-    /*
-    private void OnDisable()
+    protected override void Disable()
     {
-        CancelInvoke();
+        base.Disable();
     }
-
-    void Disable()
-    {
-        gameObject.SetActive(false);
-    }*/
 }

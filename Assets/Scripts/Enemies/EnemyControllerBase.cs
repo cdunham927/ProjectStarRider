@@ -72,6 +72,10 @@ public class EnemyControllerBase : MonoBehaviour
 
     Color origCol;
 
+    public float pickupXRange = 1.5f;
+    public float pickupYRange = 1.5f;
+    public float pickupZRange = 1.5f;
+
     protected virtual void Awake()
     {
         anim = GetComponentInChildren<Animator>();
@@ -189,7 +193,7 @@ public class EnemyControllerBase : MonoBehaviour
                     if (pick != null)
                     {
                         //Put it where the enemy position is
-                        pick.transform.position = transform.position + new Vector3(Random.Range(-1.5f, 1.5f), Random.Range(-1.5f, 1.5f), Random.Range(-1.5f, 1.5f));
+                        pick.transform.position = transform.position + new Vector3(Random.Range(-pickupXRange, pickupXRange), Random.Range(-pickupYRange, pickupYRange), Random.Range(-pickupZRange, pickupZRange));
                         pick.transform.rotation = Quaternion.Euler(Random.Range(0, 360), Random.Range(0, 360), Random.Range(0, 360));
                         pick.SetActive(true);
                     }

@@ -12,7 +12,7 @@ public abstract class Pickup : MonoBehaviour
         CancelInvoke();
     }
 
-    void Disable()
+    protected virtual void Disable()
     {
         gameObject.SetActive(false);
     }
