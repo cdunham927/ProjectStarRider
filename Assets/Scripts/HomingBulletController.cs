@@ -46,12 +46,15 @@ public class HomingBulletController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //bod.AddForce(transform.forward * spd * Time.deltaTime);
-        bod.velocity = transform.forward * spd;
+        if (player != null && player.gameObject.activeInHierarchy)
+        {
+            //bod.AddForce(transform.forward * spd * Time.deltaTime);
+            bod.velocity = transform.forward * spd;
 
-        Vector3 targDir = player.transform.position - transform.position;
-        Vector3 newDir = Vector3.RotateTowards(transform.forward, targDir, lerpSpd * Time.deltaTime, 0.0f);
-        transform.rotation = Quaternion.LookRotation(newDir);
+            Vector3 targDir = player.transform.position - transform.position;
+            Vector3 newDir = Vector3.RotateTowards(transform.forward, targDir, lerpSpd * Time.deltaTime, 0.0f);
+            transform.rotation = Quaternion.LookRotation(newDir);
+        }
     }
     private void OnTriggerEnter(Collider collision)
     {
