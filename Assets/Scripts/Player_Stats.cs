@@ -163,54 +163,57 @@ public class Player_Stats : MonoBehaviour
 
     public void Damage(int damageAmount)
     {
-        if (anim != null) anim.SetTrigger("Hit");
-        //anything that takes place when the hp is zero should go here
-        Curr_hp -= damageAmount;
-        DamageBlink();
-        //Play damage sound
-        AddScore(hurtDecAmt);
-
-        if (Curr_hp > 0)
+        if (!gm.gameIsOver)
         {
+            if (anim != null) anim.SetTrigger("Hit");
+            //anything that takes place when the hp is zero should go here
+            Curr_hp -= damageAmount;
+            DamageBlink();
+            //Play damage sound
+            AddScore(hurtDecAmt);
 
-            ShakeCamera();
-            src.volume = hitVolume;
-            src.PlayOneShot(takeDamageClip);
-        }
-
-        if (Curr_hp <= 0)
-        {
-            //Play explosion sound
-            src.volume = explodeVolume;
-            src.PlayOneShot(explodeClip);
-            //Stop player movement
-            GetComponent<Rigidbody>().velocity = Vector3.zero;
-            //Spawn death vfx
-            dVfx.transform.position = transform.position;
-            foreach (Transform t in dVfx.GetComponentsInChildren<Transform>())
-                dVfx.transform.rotation = transform.rotation;
-            dVfx.SetActive(true);
-            //o.transform.SetParent(this.transform);
-            //Debug.Log("Player dying");
-            if (!PlayerDead)
+            if (Curr_hp > 0)
             {
-                Invoke("Death", 1f);
-                PlayerDead = true;
+
+                ShakeCamera();
+                src.volume = hitVolume;
+                src.PlayOneShot(takeDamageClip);
             }
-        }
 
-        //Reaction UI animations
-        if (reactionAnim != null)
-        {
-            reactionAnim.SetTrigger("Hurt");
-            reactionAnim.SetInteger("Hp", Curr_hp);
-        }
-        //pCont.FreezeRotation();
-        //pCont.UnfreezeRotation();
+            if (Curr_hp <= 0)
+            {
+                //Play explosion sound
+                src.volume = explodeVolume;
+                src.PlayOneShot(explodeClip);
+                //Stop player movement
+                GetComponent<Rigidbody>().velocity = Vector3.zero;
+                //Spawn death vfx
+                dVfx.transform.position = transform.position;
+                foreach (Transform t in dVfx.GetComponentsInChildren<Transform>())
+                    dVfx.transform.rotation = transform.rotation;
+                dVfx.SetActive(true);
+                //o.transform.SetParent(this.transform);
+                //Debug.Log("Player dying");
+                if (!PlayerDead)
+                {
+                    Invoke("Death", 1f);
+                    PlayerDead = true;
+                }
+            }
 
-        //Fix camera fucking up when colliding with stuff
-        //Time.timeScale = 0f;
-        //Time.timeScale = 1f;
+            //Reaction UI animations
+            if (reactionAnim != null)
+            {
+                reactionAnim.SetTrigger("Hurt");
+                reactionAnim.SetInteger("Hp", Curr_hp);
+            }
+            //pCont.FreezeRotation();
+            //pCont.UnfreezeRotation();
+
+            //Fix camera fucking up when colliding with stuff
+            //Time.timeScale = 0f;
+            //Time.timeScale = 1f;
+        }
     }
 
     void Death() 
