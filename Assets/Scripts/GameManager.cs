@@ -35,6 +35,7 @@ public class GameManager : MonoBehaviour
     public GameObject pauseMenuUIPrefab;
     public GameObject GameOverUIPrefab;
     public GameObject VictoryUIPrefab;
+    public GameObject ControllsUIPrefab;
 
     public bool gameIsPaused = false;
     public bool gameIsOver = false;
@@ -45,6 +46,8 @@ public class GameManager : MonoBehaviour
     public GameObject GameOverUI;
     [HideInInspector]
     public GameObject VictoryUI;
+    [HideInInspector]
+    public GameObject ControllsUI;
     //Current event system
     [HideInInspector]
     public EventSystem eventSystem;
@@ -125,6 +128,7 @@ public class GameManager : MonoBehaviour
         pauseMenuUI = Instantiate(pauseMenuUIPrefab);
         GameOverUI = Instantiate(GameOverUIPrefab);
         VictoryUI = Instantiate(VictoryUIPrefab);
+        ControllsUI = Instantiate(ControllsUIPrefab);
         //Get references for buttons
         mainMenuButton = GameObject.FindGameObjectWithTag("MainMenu");
         victoryButton = GameObject.FindGameObjectWithTag("VictoryRetry");
@@ -133,6 +137,7 @@ public class GameManager : MonoBehaviour
         pauseMenuUI.SetActive(false);
         GameOverUI.SetActive(false);
         VictoryUI.SetActive(false);
+        ControllsUI.SetActive(false);
 
         //Now spawn object pool objects
         hpPool = Instantiate(hpPoolPrefab).GetComponent<ObjectPool>();
@@ -329,6 +334,7 @@ public class GameManager : MonoBehaviour
         uiParent.SetActive(false);
         healthbar.SetActive(false);
         optionsMenu.SetActive(false);
+        ControllsUI.SetActive(false);
         //If player is using keyboard, show the mouse
         if (!player.joystick)
         {
@@ -341,6 +347,33 @@ public class GameManager : MonoBehaviour
         EventSystem.current.SetSelectedGameObject(mainMenuButton);
         Time.timeScale = 0f;
         gameIsPaused = true;
+    }
+
+    public void Controlls() 
+    {
+        //Deactivate enemycounttext
+        if (enemyCountText != null && enemyCountText.gameObject.activeInHierarchy)
+        {
+            enemyCountText.gameObject.SetActive(false);
+        }
+        if (minimap != null) minimap.SetActive(false);
+        uiParent.SetActive(false);
+        healthbar.SetActive(false);
+        optionsMenu.SetActive(false);
+        pauseMenuUI.SetActive(false);
+        //If player is using keyboard, show the mouse
+        if (!player.joystick)
+        {
+            //Show cursor
+            Cursor.visible = true;
+        }
+        if (controlsText != null) controlsText.SetActive(false);
+        ControllsUI.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(mainMenuButton);
+        Time.timeScale = 0f;
+        gameIsPaused = true;
+
     }
 
     public void Resume()
@@ -356,6 +389,7 @@ public class GameManager : MonoBehaviour
         }
         if (minimap != null) minimap.SetActive(true);
         optionsMenu.SetActive(false);
+        ControllsUI.SetActive(false);
         healthbar.SetActive(true);
         uiParent.SetActive(true);
         //If player is using keyboard, show the mouse

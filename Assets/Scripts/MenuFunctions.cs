@@ -85,4 +85,9 @@ public class MenuFunctions : MonoBehaviour
     {
 
     }
+
+    public void Controlls()
+    {
+        cont.Controlls();
+    }
 }
