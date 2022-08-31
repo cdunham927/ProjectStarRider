@@ -15,12 +15,15 @@ public class CetusController : BossControllerBase
     public float laserLerpSpd;
     public bool laserOn;
     public LineRenderer laserRend;
+    public GameObject laserObj;
 
     bool playedDialogue = false;
 
     public GameObject[] waveOneSpawns;
     public GameObject[] waveTwoSpawns;
+    public GameObject[] waveTwoWaterPillars;
     public GameObject[] waveThreeSpawns;
+    public GameObject[] waveThreeWaterPillars;
 
     float curHpLoss = 0;
     //In the 1st phase, every 20% hp lost will do sonic laser attack
@@ -89,12 +92,14 @@ public class CetusController : BossControllerBase
 
         if (laserOn)
         {
+            laserObj.SetActive(true);
             laserCollider.radius = Mathf.Lerp(laserCollider.radius, 0, Time.deltaTime * laserLerpSpd);
             //laserCollider.height = Mathf.Lerp(laserCollider.height, 0, Time.deltaTime * laserLerpSpd);
         }
 
         if (laserCollider.radius <= 0.25f)
         {
+            laserObj.SetActive(false);
             laserRend.enabled = false;
             laserCollider.enabled = false;
             laserOn = false;
@@ -113,12 +118,15 @@ public class CetusController : BossControllerBase
 
     protected override void Attack()
     {
-        Sonic();
-
-        //After phase 2 we stop shooting off at all the fins
-        if (currentPhase < 3)
+        if (!laserOn)
         {
-            AttackOne();
+            Sonic();
+
+            //After phase 2 we stop shooting off at all the fins
+            if (currentPhase < 3)
+            {
+                AttackOne();
+            }
         }
     }
 
@@ -214,9 +222,17 @@ public class CetusController : BossControllerBase
                 {
                     g.SetActive(true);
                 }
+                foreach (GameObject g in waveTwoWaterPillars)
+                {
+                    g.SetActive(true);
+                }
                 break;
             case 3:
                 foreach (GameObject g in waveThreeSpawns)
+                {
+                    g.SetActive(true);
+                }
+                foreach (GameObject g in waveThreeWaterPillars)
                 {
                     g.SetActive(true);
                 }
@@ -262,7 +278,7 @@ public class CetusController : BossControllerBase
     protected override void AttackThree()
     {
         anim.SetTrigger("AttackThree");
-        Invoke("SetLaser", 1.075f);
+        Invoke("SetLaser", 2f);
         attackCools = atkCooldowns[2];
     }
 
