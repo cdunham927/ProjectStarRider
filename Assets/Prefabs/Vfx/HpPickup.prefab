@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 11325994428283526}
   - component: {fileID: 11325994428283527}
   - component: {fileID: 11325994428283524}
-  - component: {fileID: 11325994428283520}
   - component: {fileID: 8573228472328169779}
   - component: {fileID: 1683897135455971342}
+  - component: {fileID: 11325994428283520}
   m_Layer: 0
   m_Name: HpPickup
   m_TagString: Untagged
@@ -97,27 +97,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 4.27
-  m_Height: 7.72
+  m_Radius: 5.75
+  m_Height: 8
   m_Direction: 1
   m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
---- !u!114 &11325994428283520
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 11325994428283525}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: edc538ede7311e64e858d9b7bcb45779, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pickupDistance: 35
-  amountToGive: 1
-  spd: 30
-  moves: 1
-  clip: {fileID: 8300000, guid: 028bc167f9e21d34daa7cb17b0bcf224, type: 3}
 --- !u!82 &8573228472328169779
 AudioSource:
   m_ObjectHideFlags: 0
@@ -229,6 +212,23 @@ MonoBehaviour:
   Zspeed: 0
   Xspeed: 0
   Yspeed: 100
+--- !u!114 &11325994428283520
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 11325994428283525}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: edc538ede7311e64e858d9b7bcb45779, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pickupDistance: 45
+  amountToGive: 1
+  spd: 30
+  moves: 1
+  clip: {fileID: 8300000, guid: 028bc167f9e21d34daa7cb17b0bcf224, type: 3}
 --- !u!1 &3834206728196565716
 GameObject:
   m_ObjectHideFlags: 0
