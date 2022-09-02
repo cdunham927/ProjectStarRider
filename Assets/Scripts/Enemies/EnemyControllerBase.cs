@@ -53,6 +53,7 @@ public class EnemyControllerBase : MonoBehaviour
     public ObjectPool bombPool;
     bool spawned = false;
     public GameObject minimapObj;
+    bool spawnedPickup = false;
 
     public Healthbar hpBar;
 
@@ -92,6 +93,8 @@ public class EnemyControllerBase : MonoBehaviour
         //hpBar = GetComponent<Healthbar>();
         hpPool = cont.hpPool;
         bombPool = cont.bombPool;
+        spawned = false;
+        spawnedPickup = false;
     }
 
     protected virtual void OnEnable()
@@ -184,7 +187,19 @@ public class EnemyControllerBase : MonoBehaviour
 
         if (curHp <= 0 && !spawned)
         {
-            if (Random.value < hpSpawnChance)
+            if (Random.value < bombSpawnChance && !spawnedPickup)
+            {
+                GameObject bomb = bombPool.GetPooledObject();
+                if (bomb != null)
+                {
+                    //Put it where the enemy position is
+                    bomb.transform.position = transform.position + new Vector3(Random.Range(-1.5f, 1.5f), Random.Range(-1.5f, 1.5f), Random.Range(-1.5f, 1.5f));
+                    bomb.transform.rotation = Quaternion.Euler(Random.Range(0, 360), Random.Range(0, 360), Random.Range(0, 360));
+                    bomb.SetActive(true);
+                }
+                spawnedPickup = true;
+            }
+            if (Random.value < hpSpawnChance && !spawnedPickup)
             {
                 int num = Random.Range(1, 4);
                 for (int i = 0; i < num; i++)
@@ -198,19 +213,10 @@ public class EnemyControllerBase : MonoBehaviour
                         pick.SetActive(true);
                     }
                 }
+                spawnedPickup = true;
                 spawned = true;
+
                 //FindObjectOfType<GameManager>().EnemyDiedEvent();
-            }
-            if (Random.value < bombSpawnChance)
-            {
-                GameObject bomb = bombPool.GetPooledObject();
-                if (bomb != null)
-                {
-                    //Put it where the enemy position is
-                    bomb.transform.position = transform.position + new Vector3(Random.Range(-1.5f, 1.5f), Random.Range(-1.5f, 1.5f), Random.Range(-1.5f, 1.5f));
-                    bomb.transform.rotation = Quaternion.Euler(Random.Range(0, 360), Random.Range(0, 360), Random.Range(0, 360));
-                    bomb.SetActive(true);
-                }
             }
             if (minimapObj != null) minimapObj.SetActive(false);
             if (manager != null) manager.EnemyDied();

@@ -8,9 +8,12 @@ public class ExplosionController : MonoBehaviour
     public bool hasDamaged = false;
     public float disableTime;
     public AnimationClip explosionClip;
+    public AudioClip explodeSound;
+    public float vol;
 
     private void OnEnable()
     {
+        MusicController.instance.soundSrc.PlayOneShot(explodeSound, vol);
         hasDamaged = false;
         if (explosionClip != null) disableTime = explosionClip.length;
         Invoke("Disable", disableTime);
