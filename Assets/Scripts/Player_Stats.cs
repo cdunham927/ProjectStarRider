@@ -74,6 +74,11 @@ public class Player_Stats : MonoBehaviour
     //Player takes damage, show bullet effect
     public GameObject redBulletImpact;
 
+    private void OnEnable()
+    {
+        Curr_hp = Max_hp;
+    }
+
     private void Awake()
     {
         gm = FindObjectOfType<GameManager>();
@@ -98,8 +103,6 @@ public class Player_Stats : MonoBehaviour
         //OverUI = FindObjectOfType<gm>().GameOver();
         //healthImage = GameObject.FindGameObjectWithTag("Health").GetComponent<Image>();
         //innerRect = GameObject.FindGameObjectWithTag("Health").GetComponent<Shapes.Rectangle>();
-
-        Curr_hp = Max_hp;
     }
 
     public void AddScore(float amt)
@@ -176,15 +179,13 @@ public class Player_Stats : MonoBehaviour
             {
 
                 ShakeCamera();
-                src.volume = hitVolume;
-                src.PlayOneShot(takeDamageClip);
+                src.PlayOneShot(takeDamageClip, hitVolume);
             }
 
             if (Curr_hp <= 0)
             {
                 //Play explosion sound
-                src.volume = explodeVolume;
-                src.PlayOneShot(explodeClip);
+                src.PlayOneShot(explodeClip, explodeVolume);
                 //Stop player movement
                 GetComponent<Rigidbody>().velocity = Vector3.zero;
                 //Spawn death vfx

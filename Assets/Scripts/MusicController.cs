@@ -14,7 +14,6 @@ public class MusicController : MonoBehaviour
     public AudioClip tutorialSong;
 
     public AudioClip buttonClick;
-
     //Gotta save audio settings to playerprefs, then load those prefs on awake
 
     private void Awake()

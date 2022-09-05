@@ -11,8 +11,10 @@ public class SceneSwitch : MonoBehaviour
 {
     GameManager cont;
     public AudioClip tutorialSong;
+    public AudioClip cetusSong;
     public AudioClip menuSong;
     public string tutorialName;
+    public string cetusName;
     public string menuName;
     MusicController music;
     Animator musicAnim;
@@ -56,7 +58,7 @@ public class SceneSwitch : MonoBehaviour
 
     public void NextScene()
     {
-        MusicController.instance.PlaySound();
+        //MusicController.instance.PlaySound();
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
@@ -71,6 +73,19 @@ public class SceneSwitch : MonoBehaviour
         yield return new WaitForSeconds(waitTime);
         if (music != null) music.ChangeSong(tutorialSong);
         SceneManager.LoadScene(tutorialName);
+    }
+
+    IEnumerator ToCetusScene()
+    {
+        music = FindObjectOfType<MusicController>();
+        if (music != null)
+        {
+            musicAnim = music.GetComponent<Animator>();
+            musicAnim.SetTrigger("fadeOut");
+        }
+        yield return new WaitForSeconds(waitTime);
+        if (music != null) music.ChangeSong(cetusSong);
+        SceneManager.LoadScene(cetusName);
     }
 
     IEnumerator ToMenuScene()
@@ -173,5 +188,12 @@ public class SceneSwitch : MonoBehaviour
         MusicController.instance.PlaySound();
         Time.timeScale = 1f;
         StartCoroutine(ToTutorialScene());
+    }
+
+    public void GoToCetus()
+    {
+        //MusicController.instance.PlaySound();
+        Time.timeScale = 1f;
+        StartCoroutine(ToCetusScene());
     }
 }

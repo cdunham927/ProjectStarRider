@@ -13,7 +13,6 @@ public class ExplosionController : MonoBehaviour
 
     private void OnEnable()
     {
-        MusicController.instance.soundSrc.PlayOneShot(explodeSound, vol);
         hasDamaged = false;
         if (explosionClip != null) disableTime = explosionClip.length;
         Invoke("Disable", disableTime);
@@ -44,6 +43,7 @@ public class ExplosionController : MonoBehaviour
 
     void Disable()
     {
+        if (MusicController.instance != null) MusicController.instance.soundSrc.PlayOneShot(explodeSound, vol);
         gameObject.SetActive(false);
     }
 }
