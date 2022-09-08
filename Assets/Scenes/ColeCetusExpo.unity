@@ -1196,6 +1196,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ea00e7b277ffc5541b99b3c2a51bc89f, type: 3}
+--- !u!1 &571287438 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8701767644159492086, guid: 8327d579f0661e84a92587298fc1136f, type: 3}
+  m_PrefabInstance: {fileID: 776243110}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &596946811
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1826,6 +1831,10 @@ PrefabInstance:
     - target: {fileID: 8701767644159492086, guid: 8327d579f0661e84a92587298fc1136f, type: 3}
       propertyPath: m_Name
       value: BetterPlayer
+      objectReference: {fileID: 0}
+    - target: {fileID: 8701767644159492086, guid: 8327d579f0661e84a92587298fc1136f, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8327d579f0661e84a92587298fc1136f, type: 3}
@@ -3721,6 +3730,22 @@ PrefabInstance:
       propertyPath: Wall
       value: 
       objectReference: {fileID: 1391767125}
+    - target: {fileID: 8165321670708023484, guid: 44e7115f02c47ce4684585ffc882ebd4, type: 3}
+      propertyPath: Player
+      value: 
+      objectReference: {fileID: 571287438}
+    - target: {fileID: 8165321670708023484, guid: 44e7115f02c47ce4684585ffc882ebd4, type: 3}
+      propertyPath: playerStats
+      value: 
+      objectReference: {fileID: 1266617228}
+    - target: {fileID: 8165321670708023484, guid: 44e7115f02c47ce4684585ffc882ebd4, type: 3}
+      propertyPath: playerShooting
+      value: 
+      objectReference: {fileID: 1266617226}
+    - target: {fileID: 8165321670708023484, guid: 44e7115f02c47ce4684585ffc882ebd4, type: 3}
+      propertyPath: playerController
+      value: 
+      objectReference: {fileID: 1266617227}
     - target: {fileID: 8323099749562329486, guid: 44e7115f02c47ce4684585ffc882ebd4, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -4212,6 +4237,39 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1266617226 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5272638553245071613, guid: 8327d579f0661e84a92587298fc1136f, type: 3}
+  m_PrefabInstance: {fileID: 776243110}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 571287438}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39bffa1c4ae4a9145b74387f8d2c1f95, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1266617227 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8701767644159492045, guid: 8327d579f0661e84a92587298fc1136f, type: 3}
+  m_PrefabInstance: {fileID: 776243110}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 571287438}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78e41724415e3c946ba085b5257d81b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1266617228 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1236896654648400342, guid: 8327d579f0661e84a92587298fc1136f, type: 3}
+  m_PrefabInstance: {fileID: 776243110}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 571287438}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a949a4def22ed1c40b38b25caf5c3ced, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1267119686
 GameObject:
   m_ObjectHideFlags: 0
@@ -4788,7 +4846,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1391767125}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 528.68, y: 50.23, z: -691.53}
+  m_LocalPosition: {x: 528.68, y: 50.23, z: -693.36}
   m_LocalScale: {x: 7.79, y: 5.81, z: 1.06}
   m_Children: []
   m_Father: {fileID: 0}
@@ -5914,6 +5972,18 @@ PrefabInstance:
     - target: {fileID: 1536775430695665607, guid: 18dc757549e406d4bb35ecba13b125b6, type: 3}
       propertyPath: m_Name
       value: CombatDialogueCanvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 1536775430695665656, guid: 18dc757549e406d4bb35ecba13b125b6, type: 3}
+      propertyPath: npcName
+      value: Sirius
+      objectReference: {fileID: 0}
+    - target: {fileID: 1536775430695665656, guid: 18dc757549e406d4bb35ecba13b125b6, type: 3}
+      propertyPath: firstDialogue.sentences.Array.data[0]
+      value: Danger!!  Danger!!
+      objectReference: {fileID: 0}
+    - target: {fileID: 1536775430695665656, guid: 18dc757549e406d4bb35ecba13b125b6, type: 3}
+      propertyPath: firstDialogue.sentences.Array.data[1]
+      value: Be carefull Rider a powerfull attack is coming.
       objectReference: {fileID: 0}
     - target: {fileID: 1536775430695665660, guid: 18dc757549e406d4bb35ecba13b125b6, type: 3}
       propertyPath: m_Pivot.x

@@ -8,9 +8,11 @@ public class CountDown : MonoBehaviour
 {
     public GameObject CountD;
     public GameObject Wall;
-    //public GameObject border;
-    //float currentTime = 0f;
-    //float startingTime = 10f;
+    //public PlayerController playerController;
+    public PlayerShooting playerShooting;
+    public GameObject Player;
+    //public Player_Stats playerStats;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -25,14 +27,18 @@ public class CountDown : MonoBehaviour
         CountD.GetComponent<TMPro.TextMeshProUGUI>().text = "3";
         Wall.SetActive(true);
         CountD.SetActive(true);
+        //playerController.enabled = false;
+        playerShooting.enabled = false;
+        Player.SetActive(false);
+        //playerStats.enabled = false;
 
         yield return new WaitForSeconds(1.0f);
-        //CountD.SetActive(false);
+        
         CountD.GetComponent<TMPro.TextMeshProUGUI>().text = "2";
         CountD.SetActive(true);
 
         yield return new WaitForSeconds(1.5f);
-        //CountD.SetActive(false);
+        
         CountD.GetComponent<TMPro.TextMeshProUGUI>().text = "1";
         CountD.SetActive(true);
 
@@ -40,10 +46,14 @@ public class CountDown : MonoBehaviour
         CountD.GetComponent<TMPro.TextMeshProUGUI>().text = "Mission Start";
         CountD.SetActive(true);
         Wall.SetActive(false);
-        
-        yield return new WaitForSeconds(2.5f);
+        //playerController.enabled = true;
+        playerShooting.enabled = true;
+        //playerStats.enabled = true;
+
+        yield return new WaitForSeconds(2.2f);
         CountD.GetComponent<TMPro.TextMeshProUGUI>().text = " ";
         CountD.SetActive(true);
+        Player.SetActive(true);
         
 
         yield return null;
