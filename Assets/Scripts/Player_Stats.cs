@@ -144,7 +144,7 @@ public class Player_Stats : MonoBehaviour
 
         healthImage.fillAmount = Mathf.Lerp(healthImage.fillAmount, (float)Curr_hp / (float)Max_hp, lerpSpd * Time.deltaTime);
         scoreText.text = "Score: " + Mathf.Round(score).ToString();
-        multiplierText.text = "Multiplier: " + Mathf.Round(scoreMultiplier) + "x";
+        multiplierText.text = "Multiplier: " + scoreMultiplier + "x";
         //innerRect.Width = ((float)Curr_hp / (float)Max_hp) * size;
     }
 
