@@ -61,10 +61,6 @@ public class Player_Stats : MonoBehaviour
     MeshRenderer meshRenderer;
 
     public Text scoreText;
-    public Text multiplierText;
-    public float maxMultiplier;
-    public float multiplierIncrements = 0.125f;
-    public float scoreMultiplier = 1f;
     public float score = 0;
     public float hurtDecAmt = -9999;
 
@@ -109,11 +105,11 @@ public class Player_Stats : MonoBehaviour
         //innerRect = GameObject.FindGameObjectWithTag("Health").GetComponent<Shapes.Rectangle>();
     }
 
-    public void AddScore(float amt = 0, bool resetMultiplier = false)
+    public void AddScore(float amt)
     {
-        score += amt * scoreMultiplier;
-        if (resetMultiplier) scoreMultiplier = 1f;
-        if (amt > 0 && scoreMultiplier < maxMultiplier) scoreMultiplier += multiplierIncrements;
+        score += amt;
+
+        if (score <= 0) score = 0;
     }
 
     public void ShakeCamera()
@@ -143,8 +139,7 @@ public class Player_Stats : MonoBehaviour
         }
 
         healthImage.fillAmount = Mathf.Lerp(healthImage.fillAmount, (float)Curr_hp / (float)Max_hp, lerpSpd * Time.deltaTime);
-        scoreText.text = "Score: " + Mathf.Round(score).ToString();
-        multiplierText.text = "Multiplier: " + scoreMultiplier + "x";
+        scoreText.text = "Score: " + score.ToString();
         //innerRect.Width = ((float)Curr_hp / (float)Max_hp) * size;
     }
 
@@ -178,7 +173,7 @@ public class Player_Stats : MonoBehaviour
             Curr_hp -= damageAmount;
             DamageBlink();
             //Play damage sound
-            AddScore(0, true);
+            AddScore(hurtDecAmt);
 
             if (Curr_hp > 0)
             {
