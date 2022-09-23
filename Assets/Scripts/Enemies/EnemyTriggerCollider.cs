@@ -16,7 +16,7 @@ public class EnemyTriggerCollider : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player") && iframes <= 0)
+        if (other.CompareTag("Player") && iframes <= 0) 
         {
             iframes = timeBetweenIframes;
             other.GetComponent<Player_Stats>().Damage(dmg);

@@ -11,7 +11,12 @@ public class WaterPillarController : MonoBehaviour
     [Tooltip("Change this to change the start position, from 0 to 2pi")]
     [Range(0f, 4.71f)]
     public float angle;
+
+    public float lowRotSpd;
+    public float highRotSpd;
     public float rotSpd;
+
+    int dir;
 
     public int damage;
     public float iframes = 0.3f;
@@ -19,13 +24,16 @@ public class WaterPillarController : MonoBehaviour
 
     private void Awake()
     {
+        dir = (Random.value > 0.5f) ? 1 : -1;
+        rotSpd = Random.Range(lowRotSpd, highRotSpd);
         startYPos = transform.position.y;
         radius = Vector3.Distance(transform.position, centerPos.transform.position);
     }
 
     private void Update()
     {
-        angle += rotSpd * Time.deltaTime;
+        if (dir == 1) angle += rotSpd * Time.deltaTime;
+        else angle -= rotSpd * Time.deltaTime;
         //angle = Mathf.Deg2Rad;
 
         var offset = new Vector3(Mathf.Sin(angle), 0, Mathf.Cos(angle)) * radius;
