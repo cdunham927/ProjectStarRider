@@ -11,6 +11,9 @@ public class BossHitPointController : MonoBehaviour
     float curDmg;
     public float breakHp;
 
+    public SkinnedMeshRenderer skinnedMeshRenderers;
+    public Material mat;
+
     private void Awake()
     {
         boss = FindObjectOfType<BossControllerBase>();
@@ -23,7 +26,13 @@ public class BossHitPointController : MonoBehaviour
         boss.Damage(totDmg);
         //Blow up the weakpoint if it takes too much damage;
         curDmg += totDmg;
-        if (curDmg >= breakHp) gameObject.SetActive(false);
+        if (curDmg >= breakHp)
+        {
+            skinnedMeshRenderers.materials[1] = mat;
+            //curMaterial = deadMaterial;
+            //boss.ChangeMaterial();
+            gameObject.SetActive(false);
+        }
         //Retaliate against attack
         boss.retaliatePos = transform.position;
         boss.Retaliate();
