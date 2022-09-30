@@ -77,6 +77,9 @@ public class EnemyControllerBase : MonoBehaviour
     public float pickupYRange = 1.5f;
     public float pickupZRange = 1.5f;
 
+    public BarrierController barrier;
+    bool hasReduced = true;
+
     protected virtual void Awake()
     {
         anim = GetComponentInChildren<Animator>();
@@ -104,6 +107,7 @@ public class EnemyControllerBase : MonoBehaviour
         detectionCollider.radius = attackRange;
         ChangeState(enemystates.idle);
         curHp = maxHp;
+        hasReduced = false;
 
         spawned = false;
         if (minimapObj != null) minimapObj.SetActive(true);
@@ -204,13 +208,16 @@ public class EnemyControllerBase : MonoBehaviour
                 int num = Random.Range(1, 4);
                 for (int i = 0; i < num; i++)
                 {
-                    GameObject pick = hpPool.GetPooledObject();
-                    if (pick != null)
+                    if (hpPool != null)
                     {
-                        //Put it where the enemy position is
-                        pick.transform.position = transform.position + new Vector3(Random.Range(-pickupXRange, pickupXRange), Random.Range(-pickupYRange, pickupYRange), Random.Range(-pickupZRange, pickupZRange));
-                        pick.transform.rotation = Quaternion.Euler(Random.Range(0, 360), Random.Range(0, 360), Random.Range(0, 360));
-                        pick.SetActive(true);
+                        GameObject pick = hpPool.GetPooledObject();
+                        if (pick != null)
+                        {
+                            //Put it where the enemy position is
+                            pick.transform.position = transform.position + new Vector3(Random.Range(-pickupXRange, pickupXRange), Random.Range(-pickupYRange, pickupYRange), Random.Range(-pickupZRange, pickupZRange));
+                            pick.transform.rotation = Quaternion.Euler(Random.Range(0, 360), Random.Range(0, 360), Random.Range(0, 360));
+                            pick.SetActive(true);
+                        }
                     }
                 }
                 spawnedPickup = true;
@@ -227,6 +234,14 @@ public class EnemyControllerBase : MonoBehaviour
                 hasAdded = true;
                 pStats.AddScore(killScore);
             }
+            //BarrierController barrier = FindObjectOfType<BarrierController>();
+            if (barrier != null && !hasReduced)
+            {
+                hasReduced = true;
+                barrier.redCnt();
+                barrier = null;
+            }
+
             Instantiate(deathVFX, transform.position, transform.rotation);
             Invoke("Disable", 0.01f);
         }

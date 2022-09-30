@@ -47,6 +47,8 @@ public class CetusController : BossControllerBase
 
     public float spawnCooldown = 2f;
 
+    //public BarrierController barrier;
+
     protected override void Awake()
     {
         //Boss does a special attack after losing a set amount of health per phase
@@ -212,14 +214,20 @@ public class CetusController : BossControllerBase
         switch(phase)
         {
             case 1:
+                barrier.gameObject.SetActive(true);
+                barrier.SetEnemies(waveOneSpawns.Length);
                 foreach (GameObject g in waveOneSpawns)
                 {
+                    g.GetComponent<EnemyControllerBase>().barrier = barrier;
                     g.SetActive(true);
                 }
                 break;
             case 2:
+                barrier.gameObject.SetActive(true);
+                barrier.SetEnemies(waveTwoSpawns.Length);
                 foreach (GameObject g in waveTwoSpawns)
                 {
+                    g.GetComponent<EnemyControllerBase>().barrier = barrier;
                     g.SetActive(true);
                 }
                 foreach (GameObject g in waveTwoWaterPillars)
@@ -228,8 +236,11 @@ public class CetusController : BossControllerBase
                 }
                 break;
             case 3:
+                barrier.gameObject.SetActive(true);
+                barrier.SetEnemies(waveThreeSpawns.Length);
                 foreach (GameObject g in waveThreeSpawns)
                 {
+                    g.GetComponent<EnemyControllerBase>().barrier = barrier;
                     g.SetActive(true);
                 }
                 foreach (GameObject g in waveThreeWaterPillars)
