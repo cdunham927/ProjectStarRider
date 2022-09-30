@@ -12,9 +12,10 @@ GameObject:
   - component: {fileID: 9006509095168818349}
   - component: {fileID: 9006509095168818346}
   - component: {fileID: 4212393056131086272}
+  - component: {fileID: 1212352961879085906}
   m_Layer: 0
   m_Name: BossBiggerStarHomingBullet
-  m_TagString: Untagged
+  m_TagString: DestructBullets
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -81,6 +82,22 @@ MonoBehaviour:
   spawnPos: {fileID: 9006509096367870079}
   hitVFXPool: {fileID: 0}
   startSpd: 0
+--- !u!114 &1212352961879085906
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9006509095168818344}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb7e77719db8404fb7fefbcdde67554, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  detectionCollider: {fileID: 9006509095168818346}
+  col: {fileID: 9006509095168818346}
+  maxHp: 0.5
+  killScore: 100
 --- !u!1 &9006509095415868167
 GameObject:
   m_ObjectHideFlags: 0
