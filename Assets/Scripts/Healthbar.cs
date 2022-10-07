@@ -12,12 +12,16 @@ public class Healthbar : MonoBehaviour
     public GameObject canv;
     public Image slider;
     public MPImage otherSlider;
+    public MPImage otherSliderRed;
     public EnemyControllerBase stats;
     PlayerController player;
     public Vector3 dir;
 
     public Vector3 rot;
     Camera cam;
+
+    public float lerpSpd;
+    public float slowLerpSpd;
 
     //Shapes things
     public float size;
@@ -69,15 +73,23 @@ public class Healthbar : MonoBehaviour
 
         if (otherSlider != null)
         {
-            otherSlider.fillAmount = Mathf.Lerp(otherSlider.fillAmount, health / stats.maxHp, 10f * Time.deltaTime);
+            otherSlider.fillAmount = Mathf.Lerp(otherSlider.fillAmount, health / stats.maxHp, lerpSpd * Time.deltaTime);
+            otherSliderRed.fillAmount = Mathf.Lerp(otherSliderRed.fillAmount, health / stats.maxHp, slowLerpSpd * Time.deltaTime);
             otherSlider.fillAmount = stats.maxHp;
         }
     }
 
-    public void SetHealth(int health)
+    //public void SetHealth(int health)
+    //{
+    //    if (slider != null) slider.fillAmount = (float)health / (float)stats.maxHp;
+    //    if (otherSlider != null) otherSlider.fillAmount = (float)health / (float)stats.maxHp;
+    //    if (otherSliderRed != null) otherSliderRed.fillAmount = (float)health / (float)stats.maxHp;
+    //    //innerRect.Width = ((float)stats.GetHealth() / (float)stats.maxHp) * size;
+    //}
+
+    private void Update()
     {
-        if (slider != null) slider.fillAmount = (float)health / (float)stats.maxHp;
-        if (otherSlider != null) otherSlider.fillAmount = (float)health / (float)stats.maxHp;
-        //innerRect.Width = ((float)stats.GetHealth() / (float)stats.maxHp) * size;
+        if (otherSlider != null) otherSlider.fillAmount = Mathf.Lerp(otherSlider.fillAmount, otherSlider.fillAmount = (float)stats.curHp / (float)stats.maxHp, lerpSpd * Time.deltaTime);
+        if (otherSliderRed != null) otherSliderRed.fillAmount = Mathf.Lerp(otherSliderRed.fillAmount, otherSliderRed.fillAmount = (float)stats.curHp / (float)stats.maxHp, slowLerpSpd * Time.deltaTime);
     }
 }

@@ -9,7 +9,7 @@ public class EnemyControllerBase : MonoBehaviour
     public enemystates currentState;
     //Stats
     public float maxHp;
-    protected float curHp;
+    public float curHp;
 
     public float killScore = 100;
     protected bool hasAdded = false;
@@ -177,7 +177,7 @@ public class EnemyControllerBase : MonoBehaviour
         if (anim != null) anim.SetTrigger("Hit");
         hpBar.SwitchUIActive(true);
         curHp -= damageAmount;
-        healthScript.SetHealth((int)curHp);
+        //healthScript.SetHealth((int)curHp);
         DamageBlink();
         //Debug.Log("Enemy took damage");
 

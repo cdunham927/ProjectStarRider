@@ -385,7 +385,7 @@ public class CetusController : BossControllerBase
         if (anim != null) anim.SetTrigger("Hit");
         hpBar.SwitchUIActive(true);
         curHp -= damageAmount;
-        healthScript.SetHealth((int)curHp);
+        //healthScript.SetHealth((int)curHp);
         if(curHp > 0) DamageBlink();
 
         if (curHp < phase3Thres)
