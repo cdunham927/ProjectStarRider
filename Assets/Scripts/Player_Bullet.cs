@@ -54,7 +54,7 @@ public class Player_Bullet : Bullet
         if (col.CompareTag("BossHitPoint"))
         {
             //Debug.Log("Hit Enemy");
-            //col.gameObject.GetComponent<BossHitPointController>().Damage(damage);
+            col.gameObject.GetComponent<BossHitPointController>().Damage(damage);
             Invoke("Disable", 0.01f);
             //ContactPoint cp = col.GetContact(0);
             if (hitVFXPool == null) hitVFXPool = cont.hitVFXPool;

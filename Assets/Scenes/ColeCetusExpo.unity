@@ -1209,7 +1209,7 @@ GameObject:
   - component: {fileID: 527000109}
   - component: {fileID: 527000108}
   - component: {fileID: 527000112}
-  m_Layer: 11
+  m_Layer: 6
   m_Name: CetusBarrier
   m_TagString: Barrier
   m_Icon: {fileID: 0}
@@ -1898,6 +1898,10 @@ PrefabInstance:
       value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 1236896654648400342, guid: 8327d579f0661e84a92587298fc1136f, type: 3}
+      propertyPath: flashTime
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1236896654648400342, guid: 8327d579f0661e84a92587298fc1136f, type: 3}
       propertyPath: scoreText
       value: 
       objectReference: {fileID: 1279355055}
@@ -1906,9 +1910,21 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1984382393}
     - target: {fileID: 1236896654648400342, guid: 8327d579f0661e84a92587298fc1136f, type: 3}
+      propertyPath: reactinImage
+      value: 
+      objectReference: {fileID: 1968057816}
+    - target: {fileID: 1236896654648400342, guid: 8327d579f0661e84a92587298fc1136f, type: 3}
       propertyPath: reactionAnim
       value: 
       objectReference: {fileID: 11353978}
+    - target: {fileID: 1236896654648400342, guid: 8327d579f0661e84a92587298fc1136f, type: 3}
+      propertyPath: reactionImage
+      value: 
+      objectReference: {fileID: 1968057816}
+    - target: {fileID: 1236896654648400342, guid: 8327d579f0661e84a92587298fc1136f, type: 3}
+      propertyPath: healthImageRed
+      value: 
+      objectReference: {fileID: 894897060}
     - target: {fileID: 1236896654648400342, guid: 8327d579f0661e84a92587298fc1136f, type: 3}
       propertyPath: multiplierText
       value: 
@@ -2696,6 +2712,17 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 4681925533324501004, guid: 335ca9451df25214c936bd64f2490752, type: 3}
   m_PrefabInstance: {fileID: 889716197}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &894897060 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3105607130617673779, guid: 44e7115f02c47ce4684585ffc882ebd4, type: 3}
+  m_PrefabInstance: {fileID: 1066208464}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 141109fb25f0083469e71ce8cb3e75c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &936837710
 GameObject:
   m_ObjectHideFlags: 0
@@ -3837,6 +3864,70 @@ PrefabInstance:
       propertyPath: pauseMenuUIPrefab
       value: 
       objectReference: {fileID: 2489705490535290615, guid: af5da650d249f2343a2cbed93de16899, type: 3}
+    - target: {fileID: 2618125795196594849, guid: 44e7115f02c47ce4684585ffc882ebd4, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2618125795196594849, guid: 44e7115f02c47ce4684585ffc882ebd4, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2618125795196594849, guid: 44e7115f02c47ce4684585ffc882ebd4, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2618125795639017978, guid: 44e7115f02c47ce4684585ffc882ebd4, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2618125795639017978, guid: 44e7115f02c47ce4684585ffc882ebd4, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2618125795639017978, guid: 44e7115f02c47ce4684585ffc882ebd4, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2618125795639017978, guid: 44e7115f02c47ce4684585ffc882ebd4, type: 3}
+      propertyPath: m_GradientEffect.m_Gradient.ctime1
+      value: 28527
+      objectReference: {fileID: 0}
+    - target: {fileID: 2618125795639017978, guid: 44e7115f02c47ce4684585ffc882ebd4, type: 3}
+      propertyPath: m_GradientEffect.m_Gradient.key0.b
+      value: 0.04705883
+      objectReference: {fileID: 0}
+    - target: {fileID: 2618125795639017978, guid: 44e7115f02c47ce4684585ffc882ebd4, type: 3}
+      propertyPath: m_GradientEffect.m_Gradient.key0.g
+      value: 0.14509805
+      objectReference: {fileID: 0}
+    - target: {fileID: 2618125795639017978, guid: 44e7115f02c47ce4684585ffc882ebd4, type: 3}
+      propertyPath: m_GradientEffect.m_Gradient.key0.r
+      value: 0.7058824
+      objectReference: {fileID: 0}
+    - target: {fileID: 2618125795639017978, guid: 44e7115f02c47ce4684585ffc882ebd4, type: 3}
+      propertyPath: m_GradientEffect.m_Gradient.key1.b
+      value: 0.06147541
+      objectReference: {fileID: 0}
+    - target: {fileID: 2618125795639017978, guid: 44e7115f02c47ce4684585ffc882ebd4, type: 3}
+      propertyPath: m_GradientEffect.m_Gradient.key1.g
+      value: 0.8285661
+      objectReference: {fileID: 0}
+    - target: {fileID: 2618125795639017978, guid: 44e7115f02c47ce4684585ffc882ebd4, type: 3}
+      propertyPath: m_GradientEffect.m_Gradient.m_NumColorKeys
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2618125796073928559, guid: 44e7115f02c47ce4684585ffc882ebd4, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2618125796073928559, guid: 44e7115f02c47ce4684585ffc882ebd4, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2618125796073928559, guid: 44e7115f02c47ce4684585ffc882ebd4, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4290475211835864220, guid: 44e7115f02c47ce4684585ffc882ebd4, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -5918,6 +6009,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e394fc6d70bc83d4d883aa3936afc51a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1968057816 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2618125796073928559, guid: 44e7115f02c47ce4684585ffc882ebd4, type: 3}
+  m_PrefabInstance: {fileID: 1066208464}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 141109fb25f0083469e71ce8cb3e75c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1979845810

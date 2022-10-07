@@ -23,6 +23,7 @@ public class Player_Stats : MonoBehaviour
     [Header("UI Assets: ")]
     //public Image healthImage;
     public MPImage healthImage;
+    public MPImage healthImageRed;
     public Animator reactionAnim;
 
     [Header("Health/Shapes Settings: ")]
@@ -32,6 +33,7 @@ public class Player_Stats : MonoBehaviour
 
     [Header("lerpsSpd (side to side movement) Setting: ")]
     public float lerpSpd = 7f;
+    public float slowLerpSpd = 7f;
 
     GameObject dVfx;
     GameObject hVfx;
@@ -71,10 +73,11 @@ public class Player_Stats : MonoBehaviour
     PlayerController pCont;
     GameManager gm;
 
+    public Color regColor;
+    public MPImage reactionImage;
+    public Color hitColor;
+    public float flashTime = 0.1f;
 
-    //
-    //
-    //
     //Player takes damage, show bullet effect
     public GameObject redBulletImpact;
 
@@ -143,6 +146,7 @@ public class Player_Stats : MonoBehaviour
         }
 
         healthImage.fillAmount = Mathf.Lerp(healthImage.fillAmount, (float)Curr_hp / (float)Max_hp, lerpSpd * Time.deltaTime);
+        healthImageRed.fillAmount = Mathf.Lerp(healthImageRed.fillAmount, (float)Curr_hp / (float)Max_hp, slowLerpSpd * Time.deltaTime);
         scoreText.text = "Score: " + Mathf.Round(score).ToString();
         multiplierText.text = "Multiplier: " + scoreMultiplier + "x";
         //innerRect.Width = ((float)Curr_hp / (float)Max_hp) * size;
@@ -169,6 +173,12 @@ public class Player_Stats : MonoBehaviour
         }
     }
 
+    public void ResetGradient()
+    {
+        //healthImage.color = regColor;
+        reactionImage.color = regColor;
+    }
+
     public void Damage(int damageAmount)
     {
         if (!gm.gameIsOver)
@@ -179,6 +189,10 @@ public class Player_Stats : MonoBehaviour
             DamageBlink();
             //Play damage sound
             AddScore(0, true);
+
+            //healthImage.color = hitColor;
+            reactionImage.color = hitColor;
+            Invoke("ResetGradient", flashTime);
 
             if (Curr_hp > 0)
             {

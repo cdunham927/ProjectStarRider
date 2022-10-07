@@ -101,7 +101,7 @@ public class Enemy_Stats : MonoBehaviour
         if (anim != null) anim.SetTrigger("Hit");
         hpBar.SwitchUIActive(true);
         CurrHP -= damageAmount;
-        healthScript.SetHealth(CurrHP);
+        //healthScript.SetHealth(CurrHP);
         DamageBlink();
         //Debug.Log("Enemy took damage");
 
