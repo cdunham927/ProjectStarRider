@@ -24,7 +24,10 @@ public class Player_Stats : MonoBehaviour
     //public Image healthImage;
     public MPImage healthImage;
     public MPImage healthImageRed;
+    public GameObject healthImageFlash;
     public Animator reactionAnim;
+    [Range(1, 10)]
+    public int flashThreshold;
 
     [Header("Health/Shapes Settings: ")]
     //Shapes things
@@ -143,6 +146,10 @@ public class Player_Stats : MonoBehaviour
             {
                 Damage(2);
             }
+            if (Input.GetKeyDown(KeyCode.H))
+            {
+                Heal(2);
+            }
         }
 
         healthImage.fillAmount = Mathf.Lerp(healthImage.fillAmount, (float)Curr_hp / (float)Max_hp, lerpSpd * Time.deltaTime);
@@ -165,8 +172,9 @@ public class Player_Stats : MonoBehaviour
                     healVFX.SetActive(true);
                 }
             }
-               
-            
+            if (Curr_hp > flashThreshold) healthImageFlash.SetActive(false);
+
+
             if (Curr_hp + amt <= Max_hp)
                 Curr_hp += amt;
             else Curr_hp = Max_hp;
@@ -184,6 +192,10 @@ public class Player_Stats : MonoBehaviour
         if (!gm.gameIsOver)
         {
             if (anim != null) anim.SetTrigger("Hit");
+
+            //If we have 1/3rd hp left, flash the healthbar
+            //if (Curr_hp < (Mathf.RoundToInt(Max_hp / 3))) healthImageFlash.SetActive(true);
+            if (Curr_hp <= flashThreshold) healthImageFlash.SetActive(true);
             //anything that takes place when the hp is zero should go here
             Curr_hp -= damageAmount;
             DamageBlink();
