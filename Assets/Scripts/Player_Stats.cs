@@ -24,6 +24,7 @@ public class Player_Stats : MonoBehaviour
     //public Image healthImage;
     public MPImage healthImage;
     public MPImage healthImageRed;
+    public MPImage healthImageGreen;
     public GameObject healthImageFlash;
     public Animator reactionAnim;
     [Range(1, 10)]
@@ -37,6 +38,7 @@ public class Player_Stats : MonoBehaviour
     [Header("lerpsSpd (side to side movement) Setting: ")]
     public float lerpSpd = 7f;
     public float slowLerpSpd = 7f;
+    public float fastLerpSpd = 20f;
 
     GameObject dVfx;
     GameObject hVfx;
@@ -79,6 +81,7 @@ public class Player_Stats : MonoBehaviour
     public Color regColor;
     public MPImage reactionImage;
     public Color hitColor;
+    public Color healColor;
     public float flashTime = 0.1f;
 
     //Player takes damage, show bullet effect
@@ -153,6 +156,7 @@ public class Player_Stats : MonoBehaviour
         }
 
         healthImage.fillAmount = Mathf.Lerp(healthImage.fillAmount, (float)Curr_hp / (float)Max_hp, lerpSpd * Time.deltaTime);
+        healthImageGreen.fillAmount = Mathf.Lerp(healthImageGreen.fillAmount, (float)Curr_hp / (float)Max_hp, fastLerpSpd * Time.deltaTime);
         healthImageRed.fillAmount = Mathf.Lerp(healthImageRed.fillAmount, (float)Curr_hp / (float)Max_hp, slowLerpSpd * Time.deltaTime);
         scoreText.text = "Score: " + Mathf.Round(score).ToString();
         multiplierText.text = "Multiplier: " + scoreMultiplier + "x";
@@ -164,6 +168,8 @@ public class Player_Stats : MonoBehaviour
         if (!PlayerDead)
         {
             HealBlink();
+            reactionImage.color = healColor;
+            Invoke("ResetGradient", flashTime);
 
             if (!gm.gameIsPaused && !gm.gameIsOver)
             {

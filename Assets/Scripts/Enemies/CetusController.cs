@@ -47,6 +47,10 @@ public class CetusController : BossControllerBase
 
     public float spawnCooldown = 2f;
 
+    public bool hasSpawnedPhaseOne = false;
+    public bool hasSpawnedPhaseTwo = false;
+    public bool hasSpawnedPhaseThree = false;
+
     //public BarrierController barrier;
 
     protected override void Awake()
@@ -66,6 +70,7 @@ public class CetusController : BossControllerBase
     protected override void OnEnable()
     {
         SpawnAngels(currentPhase);
+        hasSpawnedPhaseOne = true;
         player = FindObjectOfType<PlayerController>();
         //detection = GetComponentInChildren<BossDetectionController>();
         detectionCollider.radius = attackRange;
@@ -388,15 +393,17 @@ public class CetusController : BossControllerBase
         //healthScript.SetHealth((int)curHp);
         if(curHp > 0) DamageBlink();
 
-        if (curHp < phase3Thres)
+        if (curHp < phase3Thres && !hasSpawnedPhaseThree)
         {
             currentPhase = 3;
             SpawnAngels(currentPhase);
+            hasSpawnedPhaseThree = true;
         }
-        else if (curHp < phase2Thres)
+        else if (curHp < phase2Thres && !hasSpawnedPhaseTwo)
         {
             currentPhase = 2;
             SpawnAngels(currentPhase);
+            hasSpawnedPhaseTwo = true;
         }
         else currentPhase = 1;
 

@@ -108,6 +108,7 @@ public class EnemyControllerBase : MonoBehaviour
         ChangeState(enemystates.idle);
         curHp = maxHp;
         hasReduced = false;
+        skinnedMeshRenderer.material.color = origCol;
 
         spawned = false;
         if (minimapObj != null) minimapObj.SetActive(true);

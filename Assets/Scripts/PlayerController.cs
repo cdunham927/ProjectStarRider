@@ -305,7 +305,7 @@ public class PlayerController : MonoBehaviour
 
             vert *= Time.deltaTime;
            
-            if (Input.GetKey(KeyCode.W)) 
+            if (vert > 0) 
             {
                 Speedvfx();
             }
