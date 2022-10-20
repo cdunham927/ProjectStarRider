@@ -104,6 +104,7 @@ public class PlayerController : MonoBehaviour
     public float dashTime;
     float curDashCools;
     float curDashTime;
+    public GameObject decoy;
 
     //Dash blink vfx
     [Header("Blink vfx Settings")]
@@ -343,7 +344,7 @@ public class PlayerController : MonoBehaviour
                 curDashCools = dashCooldown;
                 Speedvfx();
                 Dashvfx();
-
+                Decoy();
                 
             }
 
@@ -614,6 +615,15 @@ public class PlayerController : MonoBehaviour
         {
             sys.Emit(sysEmit);
         }
+
+    }
+
+    public void Decoy() 
+    {
+        if (meshRenderer != null) meshRenderer.material.color = Color.yellow * blinkIntensity;
+        Invoke("ResetMaterial", blinkDuration);
+
+        Instantiate(decoy, positionToSpawn.transform.position, Quaternion.identity );
 
     }
 

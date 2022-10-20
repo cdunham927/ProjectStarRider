@@ -17,7 +17,7 @@ public class Decoy_Stats : MonoBehaviour
     [Header("Health Settings: ")]
     public float maxHp;
     public float curHp;
-    public Healthbar hpBar;
+    public DecoyHealthbar hpBar;
     
     Color origCol;
 
@@ -27,7 +27,7 @@ public class Decoy_Stats : MonoBehaviour
     float blinkTimer;
     protected SkinnedMeshRenderer skinnedMeshRenderer;
 
-    public Healthbar healthScript;
+    public DecoyHealthbar healthScript;
 
     [Header(" Attached Particle Systems: ")]
     public GameObject deathVFX;
@@ -45,7 +45,7 @@ public class Decoy_Stats : MonoBehaviour
         skinnedMeshRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
         origCol = skinnedMeshRenderer.material.color;
 
-        healthScript = GetComponent<Healthbar>();
+        healthScript = GetComponent<DecoyHealthbar>();
         //pStats = FindObjectOfType<Player_Stats>();
         src = GetComponent<AudioSource>();
         //cont = FindObjectOfType<GameManager>();
@@ -64,6 +64,15 @@ public class Decoy_Stats : MonoBehaviour
         
     }
 
+    public int GetHealth()
+    {
+        return (int)curHp;
+    }
+
+    public void SetCollider(bool cl = true)
+    {
+        col.enabled = cl;
+    }
 
     public virtual void Damage(int damageAmount)
     {
@@ -93,6 +102,7 @@ public class Decoy_Stats : MonoBehaviour
         //blinkTimer = blinkDuration;
     }
 
+   
     protected void Disable()
     {
         //FindObjectOfType<GameManager>().Victory();
@@ -104,10 +114,7 @@ public class Decoy_Stats : MonoBehaviour
         CancelInvoke();
     }
 
-    public void SetCollider(bool cl = true)
-    {
-        col.enabled = cl;
-    }
+    
 
     protected void DamageBlink()
     {
