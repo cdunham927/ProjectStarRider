@@ -94,7 +94,8 @@ public class BossControllerBase : EnemyControllerBase
     protected override void Death()
     {
         base.Death();
-        FindObjectOfType<GameManager>().Victory();
+        GameManager cont = FindObjectOfType<GameManager>();
+        cont.SlowTime();
     }
 
     protected virtual void AttackOne() { }

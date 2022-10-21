@@ -13,11 +13,26 @@ public class BossHitPointController : MonoBehaviour
 
     public SkinnedMeshRenderer skinnedMeshRenderers;
     public Material mat;
+    public int matNum = 1;
+    //public Material[] mats;
+    public GameObject deadWeakPoint;
 
     private void Awake()
     {
         boss = FindObjectOfType<BossControllerBase>();
     }
+
+    //private void Update()
+    //{
+    //    //if (Input.GetKeyDown(KeyCode.Alpha5))
+    //    //{
+    //    //    Material[] tempMats = skinnedMeshRenderers.materials;
+    //    //    tempMats[0] = mat;
+    //    //    skinnedMeshRenderers.materials = tempMats;
+    //    //}
+    //
+    //    if (Input.GetKeyDown(KeyCode.N)) Damage(25);
+    //}
 
     public void Damage(int amt)
     {
@@ -28,10 +43,25 @@ public class BossHitPointController : MonoBehaviour
         curDmg += totDmg;
         if (curDmg >= breakHp)
         {
-            skinnedMeshRenderers.materials[1] = mat;
+            if (matNum == 0)
+            {
+                Material[] tempMats = skinnedMeshRenderers.materials;
+                tempMats[0] = mat;
+                skinnedMeshRenderers.materials = tempMats;
+                //deadWeakPoint.SetActive(true);
+            }
+            else
+            {
+                Material[] tempMats = skinnedMeshRenderers.materials;
+                tempMats[2] = mat;
+                skinnedMeshRenderers.materials = tempMats;
+                //Debug.Log("Changing front mat");
+            }
+            //Debug.Log("Changing material");
             //curMaterial = deadMaterial;
             //boss.ChangeMaterial();
-            gameObject.SetActive(false);
+            GetComponent<Collider>().enabled = false;
+            //gameObject.SetActive(false);
         }
         //Retaliate against attack
         boss.retaliatePos = transform.position;

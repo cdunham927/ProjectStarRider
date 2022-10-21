@@ -80,12 +80,14 @@ public class EnemyControllerBase : MonoBehaviour
     public BarrierController barrier;
     bool hasReduced = true;
 
+    public int ind = 0;
+
     protected virtual void Awake()
     {
         anim = GetComponentInChildren<Animator>();
         //Get original color of material for damage flashes
         skinnedMeshRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
-        origCol = skinnedMeshRenderer.material.color;
+        origCol = skinnedMeshRenderer.materials[ind].color;
 
         healthScript = GetComponent<Healthbar>();
         pStats = FindObjectOfType<Player_Stats>();
@@ -102,13 +104,14 @@ public class EnemyControllerBase : MonoBehaviour
 
     protected virtual void OnEnable()
     {
+        ResetMaterial();
         hasAdded = false;
         player = FindObjectOfType<PlayerController>();
         detectionCollider.radius = attackRange;
         ChangeState(enemystates.idle);
         curHp = maxHp;
         hasReduced = false;
-        skinnedMeshRenderer.material.color = origCol;
+        //skinnedMeshRenderer.material.color = origCol;
 
         spawned = false;
         if (minimapObj != null) minimapObj.SetActive(true);
@@ -153,6 +156,11 @@ public class EnemyControllerBase : MonoBehaviour
             case (enemystates.death):
                 Death();
                 break;
+        }
+
+        if (Application.isEditor)
+        {
+            if (Input.GetKey(KeyCode.O)) Damage(1);
         }
     }
 
@@ -265,12 +273,20 @@ public class EnemyControllerBase : MonoBehaviour
     {
         //Debug.Log("Enemy Blinking");
         blinkDuration -= Time.deltaTime;
-        skinnedMeshRenderer.material.color = Color.red * blinkBrightness;
+
+        Material[] tempMats = skinnedMeshRenderer.materials;
+        tempMats[ind].color = Color.red * blinkBrightness;
+        skinnedMeshRenderer.materials = tempMats;
+
+        //skinnedMeshRenderer.material.color = Color.red * blinkBrightness;
         Invoke("ResetMaterial", blinkDuration);
     }
 
     void ResetMaterial()
     {
-        skinnedMeshRenderer.material.color = origCol;
+        //skinnedMeshRenderer.material.color = origCol;
+        Material[] tempMats = skinnedMeshRenderer.materials;
+        tempMats[ind].color = origCol;
+        skinnedMeshRenderer.materials = tempMats;
     }
 }

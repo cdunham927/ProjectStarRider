@@ -103,6 +103,13 @@ public class GameManager : MonoBehaviour
     //Shrink ALL GameObjects
     GameObject[] allGameObjects;
 
+
+    //Slow time when boss is killed
+    public float slowTimeAmt = 0.2f;
+    float lerpSpd = 10f;
+    public float slowTimeWait = 0.5f;
+    float wantedTime = 1f;
+
     void Awake()
     {
         //allGameObjects = FindObjectsOfType<GameObject>();
@@ -223,6 +230,11 @@ public class GameManager : MonoBehaviour
             }
         }
 
+        if (gameIsOver)
+        {
+            Time.timeScale = Mathf.Lerp(Time.timeScale, wantedTime, lerpSpd * Time.deltaTime);
+        }
+
         if (Input.GetButtonDown("Select"))
         {
             if (controlsText != null) controlsText.SetActive(!controlsText.activeInHierarchy);
@@ -246,7 +258,7 @@ public class GameManager : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.Slash))
             {
-                Victory();
+                //Victory();
             }
 
             if (Input.GetKeyDown(KeyCode.L))
@@ -319,8 +331,23 @@ public class GameManager : MonoBehaviour
             EventSystem.current.SetSelectedGameObject(victoryButton);
             Time.timeScale = 1f;
             gameIsOver = true;
-
         }
+    }
+
+    public void SlowTime()
+    {
+        wantedTime = slowTimeAmt;
+        Time.timeScale = wantedTime;
+
+        StartCoroutine(ReturnTime());
+        Invoke("Victory", slowTimeWait);
+    }
+
+    IEnumerator ReturnTime()
+    {
+        yield return new WaitForSeconds(slowTimeWait);
+
+        wantedTime = 1f;
     }
 
     public void Pause()
