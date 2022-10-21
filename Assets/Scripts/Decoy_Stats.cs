@@ -25,7 +25,7 @@ public class Decoy_Stats : MonoBehaviour
     public float blinkDuration = 0.3f;
     public float blinkBrightness = 2.0f;
     float blinkTimer;
-    protected SkinnedMeshRenderer skinnedMeshRenderer;
+    //protected SkinnedMeshRenderer skinnedMeshRenderer;
 
     public DecoyHealthbar healthScript;
 
@@ -42,8 +42,8 @@ public class Decoy_Stats : MonoBehaviour
     {
         
         //Get original color of material for damage flashes
-        skinnedMeshRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
-        origCol = skinnedMeshRenderer.material.color;
+        //skinnedMeshRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
+        //origCol = skinnedMeshRenderer.material.color;
 
         healthScript = GetComponent<DecoyHealthbar>();
         //pStats = FindObjectOfType<Player_Stats>();
@@ -59,7 +59,7 @@ public class Decoy_Stats : MonoBehaviour
        
         curHp = maxHp;
         //hasReduced = false;
-        skinnedMeshRenderer.material.color = origCol;
+        //skinnedMeshRenderer.material.color = origCol;
 
         
     }
@@ -80,7 +80,7 @@ public class Decoy_Stats : MonoBehaviour
         hpBar.SwitchUIActive(true);
         curHp -= damageAmount;
         //healthScript.SetHealth((int)curHp);
-        DamageBlink();
+        //DamageBlink();
         //Debug.Log("Enemy took damage");
 
         //DamageBlinking
@@ -120,13 +120,13 @@ public class Decoy_Stats : MonoBehaviour
     {
         //Debug.Log("Enemy Blinking");
         blinkDuration -= Time.deltaTime;
-        skinnedMeshRenderer.material.color = Color.red * blinkBrightness;
+        //skinnedMeshRenderer.material.color = Color.red * blinkBrightness;
         Invoke("ResetMaterial", blinkDuration);
     }
 
     void ResetMaterial()
     {
-        skinnedMeshRenderer.material.color = origCol;
+        //skinnedMeshRenderer.material.color = origCol;
     }
 
 }

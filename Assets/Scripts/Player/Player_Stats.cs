@@ -103,7 +103,7 @@ public class Player_Stats : MonoBehaviour
 
         //Camera shake things
         if (cine == null) cine = FindObjectOfType<CinemachineVirtualCamera>();
-        if (perlin == null) perlin = cine.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
+        if (perlin == null) perlin = FindObjectOfType<CinemachineVirtualCamera>().GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
 
         src = GetComponent<AudioSource>();
 
@@ -127,8 +127,11 @@ public class Player_Stats : MonoBehaviour
 
     public void ShakeCamera()
     {
-        perlin.m_AmplitudeGain = shakeAmt;
-        curTime = shakeTimer;
+        if (perlin != null)
+        {
+            perlin.m_AmplitudeGain = shakeAmt;
+            curTime = shakeTimer;
+        }
     }
 
     private void Update()

@@ -149,9 +149,9 @@ public class PlayerController : MonoBehaviour
         Cursor.visible = false;
 
         //Set cinemachine follow and aim targets
-        cinCam = FindObjectOfType<CinemachineVirtualCamera>();
-        cinCam.m_Follow = followTarget.transform;
-        cinCam.m_LookAt = aimTarget.transform;
+        //cinCam = FindObjectOfType<CinemachineVirtualCamera>();
+        //cinCam.m_Follow = followTarget.transform;
+        //cinCam.m_LookAt = aimTarget.transform;
 
         afterimageUI = FindObjectOfType<GameManager>().afterimages;
         bod = GetComponent<Rigidbody>();
@@ -442,7 +442,7 @@ public class PlayerController : MonoBehaviour
             if (curDashCools > 0) curDashCools -= Time.deltaTime;
         }
 
-        if (cinCam.transform.rotation.z != 0)
+        if (cinCam != null && cinCam.transform.rotation.z != 0)
         {
             //cinCam.m_Follow = null;
             //cinCam.m_LookAt = null;
