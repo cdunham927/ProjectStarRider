@@ -150,8 +150,8 @@ public class PlayerController : MonoBehaviour
 
         //Set cinemachine follow and aim targets
         //cinCam = FindObjectOfType<CinemachineVirtualCamera>();
-        //cinCam.m_Follow = followTarget.transform;
-        //cinCam.m_LookAt = aimTarget.transform;
+        cinCam.m_Follow = followTarget.transform;
+        cinCam.m_LookAt = aimTarget.transform;
 
         afterimageUI = FindObjectOfType<GameManager>().afterimages;
         bod = GetComponent<Rigidbody>();
