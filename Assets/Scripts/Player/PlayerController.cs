@@ -623,8 +623,7 @@ public class PlayerController : MonoBehaviour
         if (meshRenderer != null) meshRenderer.material.color = Color.yellow * blinkIntensity;
         Invoke("ResetMaterial", blinkDuration);
 
-        Instantiate(decoy, positionToSpawn.transform.position, Quaternion.identity );
-
+        Instantiate(decoy, positionToSpawn.transform.position, transform.rotation);
     }
 
     void ResetMaterial()
