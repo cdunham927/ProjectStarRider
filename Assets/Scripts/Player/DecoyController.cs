@@ -33,6 +33,9 @@ public class DecoyController : MonoBehaviour
 
     bool canSet = true;
 
+    public float radius;
+    public LayerMask enemyMask;
+
     private void Awake()
     {
         gm = FindObjectOfType<GameManager>();
@@ -45,21 +48,6 @@ public class DecoyController : MonoBehaviour
         mVfx.SetActive(false);
 
         curShootCools = 0f;
-        InvokeRepeating("ResetCanSet", 0.01f, 5f);
-    }
-
-    void ResetCanSet()
-    {
-        canSet = true;
-    }
-
-    public void SetTarget(GameObject nT)
-    {
-        if (canSet)
-        {
-            target = nT;
-            canSet = false;
-        }
     }
 
     private void OnEnable()
@@ -67,6 +55,54 @@ public class DecoyController : MonoBehaviour
         if (parentShoot != null)
         {
             shootCooldown = parentShoot.shootCooldown;
+        }
+
+        //Get all enemies nearby and change their targets
+        Collider[] enemyColliders = Physics.OverlapSphere(transform.position, radius, enemyMask);
+        if (enemyColliders.Length > 0)
+        {
+            if (enemyColliders.Length == 1)
+            {
+                target = enemyColliders[0].gameObject;
+                enemyColliders[0].GetComponent<EnemyControllerBase>().target = transform;
+                return;
+            }
+            Collider closestEnemy = enemyColliders[0];
+            float closest = 9999f;
+
+            foreach (Collider e in enemyColliders)
+            {
+                float dis = Vector3.Distance(transform.position, e.transform.position);
+                if (dis < closest)
+                {
+                    closest = dis;
+                    closestEnemy = e;
+                }
+                e.GetComponent<EnemyControllerBase>().target = transform;
+            }
+            target = closestEnemy.gameObject;
+        }
+
+    }
+
+    private void OnDisable()
+    {
+        //Reset all the enemy targets in range
+
+        //ResetTarget();
+        //Get all enemies nearby and change their targets
+        Collider[] enemyColliders = Physics.OverlapSphere(transform.position, radius, enemyMask);
+        if (enemyColliders.Length > 0)
+        {
+            if (enemyColliders.Length == 1)
+            {
+                enemyColliders[0].GetComponent<EnemyControllerBase>().ResetTarget();
+                return;
+            }
+            foreach (Collider e in enemyColliders)
+            {
+                e.GetComponent<EnemyControllerBase>().ResetTarget();
+            }
         }
     }
 
@@ -88,6 +124,33 @@ public class DecoyController : MonoBehaviour
 
         //If the target is disabled, we dont have a target anymore
         //if (target != null && !target.activeInHierarchy) target = null;
+
+        if (target != null && !target.activeInHierarchy)
+        {
+            //Get all enemies nearby and change their targets
+            Collider[] enemyColliders = Physics.OverlapSphere(transform.position, radius, enemyMask);
+            if (enemyColliders.Length > 0)
+            {
+                if (enemyColliders.Length == 1)
+                {
+                    target = enemyColliders[0].gameObject;
+                    return;
+                }
+                Collider closestEnemy = enemyColliders[0];
+                float closest = 9999f;
+
+                foreach (Collider e in enemyColliders)
+                {
+                    float dis = Vector3.Distance(transform.position, e.transform.position);
+                    if (dis < closest)
+                    {
+                        closest = dis;
+                        closestEnemy = e;
+                    }
+                }
+                target = closestEnemy.gameObject;
+            }
+        }
 
         if (target != null && target.activeInHierarchy)
         {

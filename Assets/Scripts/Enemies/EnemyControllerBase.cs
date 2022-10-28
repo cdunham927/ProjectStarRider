@@ -36,6 +36,7 @@ public class EnemyControllerBase : MonoBehaviour
 
     //Player
     protected PlayerController player;
+    public Transform target;
     protected GameManager cont;
     protected AudioSource src;
 
@@ -107,6 +108,7 @@ public class EnemyControllerBase : MonoBehaviour
         ResetMaterial();
         hasAdded = false;
         player = FindObjectOfType<PlayerController>();
+        target = player.transform;
         detectionCollider.radius = attackRange;
         ChangeState(enemystates.idle);
         curHp = maxHp;
@@ -162,6 +164,11 @@ public class EnemyControllerBase : MonoBehaviour
         {
             if (Input.GetKey(KeyCode.O)) Damage(1);
         }
+    }
+
+    public void ResetTarget()
+    {
+        target = player.transform;
     }
 
     public void SetCollider(bool cl = true)

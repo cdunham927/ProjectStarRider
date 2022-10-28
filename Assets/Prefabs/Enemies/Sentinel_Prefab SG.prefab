@@ -1205,7 +1205,7 @@ GameObject:
   - component: {fileID: 8294810921843640164}
   - component: {fileID: 6894732570565579110}
   - component: {fileID: 1161641064559945880}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Sentinel_Prefab SG
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -1265,9 +1265,12 @@ MonoBehaviour:
   canv: {fileID: 3699088630854444213}
   slider: {fileID: 6147424521737460213}
   otherSlider: {fileID: 0}
+  otherSliderRed: {fileID: 0}
   stats: {fileID: 8294810921843640164}
   dir: {x: 0, y: 1, z: 0}
   rot: {x: 90, y: 0, z: 0}
+  lerpSpd: 0
+  slowLerpSpd: 0
   size: 7.5
 --- !u!114 &8294810921843640164
 MonoBehaviour:
@@ -1283,6 +1286,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentState: 0
   maxHp: 20
+  curHp: 0
   killScore: 100
   timeBetweenAttacks: 2
   attackRange: 30
@@ -1294,6 +1298,7 @@ MonoBehaviour:
   accx: 25
   accy: 40
   bulletShot: 5
+  target: {fileID: 0}
   deathVFX: {fileID: 4593951957772366835, guid: 1e092bc34c05e7a4388b0d0c57e84ec9, type: 3}
   hpSpawnChance: 0.3
   bombSpawnChance: 0.3
@@ -1309,6 +1314,8 @@ MonoBehaviour:
   pickupXRange: 1.5
   pickupYRange: 2
   pickupZRange: 1.5
+  barrier: {fileID: 0}
+  ind: 0
 --- !u!135 &6894732570565579110
 SphereCollider:
   m_ObjectHideFlags: 0

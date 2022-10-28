@@ -304,16 +304,19 @@ public class PlayerController : MonoBehaviour
             vert = Input.GetAxis("Vertical");
             hor = Input.GetAxis("Horizontal");
 
+            vert2 = Input.GetAxis("Vertical2");
+            hor2 = Input.GetAxis("Horizontal2");
+
             vert *= Time.deltaTime;
            
-            if (vert > 0) 
+            if (vert > 0 || vert2 > 0) 
             {
                 Speedvfx();
             }
 
             //speed = (vert > 0) ? highSpd : slowSpd;
 
-            if (vert > 0)
+            if (vert > 0 || vert2 > 0)
             {
                 if (speedUpTimer > 0)
                     lerpToSpd = superSpd;
@@ -321,16 +324,13 @@ public class PlayerController : MonoBehaviour
             }
 
 
-            else if (vert < 0) lerpToSpd = slowSpd;
+            else if (vert < 0 || vert2 < 0) lerpToSpd = slowSpd;
             else lerpToSpd = regSpd;
 
             speed = Mathf.Lerp(speed, lerpToSpd, Time.deltaTime * spdLerpAmt);
 
-            vert2 = Input.GetAxis("Vertical2");
-            hor2 = Input.GetAxis("Horizontal2");
-
             //button press for speed lines
-            
+
 
             //button press for dash
             if (Input.GetButtonDown("Fire3") && curDashCools <= 0)
@@ -344,8 +344,8 @@ public class PlayerController : MonoBehaviour
                 curDashCools = dashCooldown;
                 Speedvfx();
                 Dashvfx();
-                Decoy();
-                
+                //Decoy();
+                if (curActiveTime > oneCharge) Decoy();
             }
 
             if (curDashTime > 0) curDashTime -= Time.deltaTime;
@@ -624,6 +624,8 @@ public class PlayerController : MonoBehaviour
         Invoke("ResetMaterial", blinkDuration);
 
         Instantiate(decoy, positionToSpawn.transform.position, transform.rotation);
+
+        curActiveTime -= oneCharge;
     }
 
     void ResetMaterial()

@@ -86,8 +86,6 @@ GameObject:
   - component: {fileID: 6033780518480723315}
   - component: {fileID: 750483477339891913}
   - component: {fileID: 2584959535944137086}
-  - component: {fileID: 3830229649323610560}
-  - component: {fileID: 1599190092744259345}
   - component: {fileID: 8129266902135108837}
   m_Layer: 0
   m_Name: Decoy
@@ -123,12 +121,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 672394538714028356}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 72b1e98ea0ab324448d7f10a1ec1fe5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeToDeactivate: 5
+  timeToDeactivate: 10
 --- !u!114 &2584959535944137086
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -149,51 +147,11 @@ MonoBehaviour:
   parentShoot: {fileID: 0}
   dmg: 1
   target: {fileID: 0}
-  lerpSpd: 0.5
---- !u!114 &3830229649323610560
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 672394538714028356}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 028642ae5bd88454197db747676d69f9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bulletPool: {fileID: 0}
-  detectionCollider: {fileID: 0}
-  col: {fileID: 0}
-  maxHp: 1
-  curHp: 1
-  hpBar: {fileID: 1599190092744259345}
-  blinkDuration: 0.3
-  blinkBrightness: 1
-  healthScript: {fileID: 1599190092744259345}
-  deathVFX: {fileID: 0}
---- !u!114 &1599190092744259345
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 672394538714028356}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 73a3ba169eafa984781e4f836577b2e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  canv: {fileID: 8829338799544179485}
-  slider: {fileID: 8087576854174025599}
-  otherSlider: {fileID: 0}
-  otherSliderRed: {fileID: 0}
-  stats: {fileID: 3830229649323610560}
-  dir: {x: 0, y: 0, z: 0}
-  rot: {x: 90, y: 0, z: 0}
-  lerpSpd: 15
-  slowLerpSpd: 5
-  size: 3
+  lerpSpd: 1
+  radius: 200
+  enemyMask:
+    serializedVersion: 2
+    m_Bits: 8
 --- !u!82 &8129266902135108837
 AudioSource:
   m_ObjectHideFlags: 0
@@ -20423,7 +20381,7 @@ ParticleSystem:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-  moveWithTransform: 0
+  moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 0
   randomSeed: 0
@@ -25299,7 +25257,7 @@ ParticleSystem:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-  moveWithTransform: 0
+  moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
   randomSeed: 0
@@ -34883,7 +34841,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1087732259652169064
 Transform:
   m_ObjectHideFlags: 0
@@ -35078,7 +35036,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &7561767430572171677
 RectTransform:
   m_ObjectHideFlags: 0

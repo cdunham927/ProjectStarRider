@@ -1037,7 +1037,7 @@ GameObject:
   - component: {fileID: 8871560330763901014}
   - component: {fileID: 5008665348598738573}
   - component: {fileID: 735109568785520499}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Sentinel_Prefab Snipe
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -1097,9 +1097,12 @@ MonoBehaviour:
   canv: {fileID: 2988302884722596702}
   slider: {fileID: 5727824662806029854}
   otherSlider: {fileID: 0}
+  otherSliderRed: {fileID: 0}
   stats: {fileID: 8871560330763901014}
   dir: {x: 0, y: 1, z: 0}
   rot: {x: 90, y: 0, z: 0}
+  lerpSpd: 0
+  slowLerpSpd: 0
   size: 7.5
 --- !u!114 &8871560330763901014
 MonoBehaviour:
@@ -1115,6 +1118,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentState: 0
   maxHp: 10
+  curHp: 0
   killScore: 100
   timeBetweenAttacks: 1
   attackRange: 80
@@ -1126,6 +1130,7 @@ MonoBehaviour:
   accx: 1
   accy: 1
   bulletShot: 5
+  target: {fileID: 0}
   deathVFX: {fileID: 4593951957772366835, guid: 1e092bc34c05e7a4388b0d0c57e84ec9, type: 3}
   hpSpawnChance: 0.3
   bombSpawnChance: 0.3
@@ -1141,6 +1146,8 @@ MonoBehaviour:
   pickupXRange: 1.5
   pickupYRange: 2
   pickupZRange: 1.5
+  barrier: {fileID: 0}
+  ind: 0
 --- !u!135 &5008665348598738573
 SphereCollider:
   m_ObjectHideFlags: 0
