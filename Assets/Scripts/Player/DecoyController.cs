@@ -82,7 +82,11 @@ public class DecoyController : MonoBehaviour
             }
             target = closestEnemy.gameObject;
         }
+    }
 
+    public void Damage()
+    {
+        gameObject.SetActive(false);
     }
 
     private void OnDisable()

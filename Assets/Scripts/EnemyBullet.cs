@@ -45,6 +45,17 @@ public class EnemyBullet : Bullet
             hit.SetActive(true);
             Invoke("Disable", 0.001f);
         }
+        if (collision.CompareTag("Decoy"))
+        {
+            collision.gameObject.GetComponent<DecoyController>().Damage();
+            if (hitVFXPool == null) hitVFXPool = cont.enemyHitVFXPool;
+            GameObject hit = hitVFXPool.GetPooledObject();
+            hit.transform.position = spawnPos.transform.position;
+            hit.transform.rotation = collision.transform.rotation;
+            //bul.GetComponent<Rigidbody>().velocity = bod.velocity;
+            hit.SetActive(true);
+            Invoke("Disable", 0.001f);
+        }
     }
 
     public override void Disable()
