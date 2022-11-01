@@ -4,15 +4,22 @@ using UnityEngine;
 
 public class RaceController : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    GameManager cont;
+
+    private void Awake()
     {
-        
+        cont = FindObjectOfType<GameManager>();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnTriggerEnter(Collider other)
     {
-        
+        if (other.CompareTag("Player"))
+        {
+            cont.Victory();
+        }
+        if (other.CompareTag("RaceEnemy"))
+        {
+            cont.GameOver();
+        }
     }
 }
