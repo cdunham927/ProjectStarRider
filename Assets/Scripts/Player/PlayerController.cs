@@ -73,6 +73,8 @@ public class PlayerController : MonoBehaviour
 
     //References for camera
     public CinemachineVirtualCamera cinCam;
+    //Vector3 camStartPos;
+    public Camera mainCam;
     public GameObject aimAtTarget;
     public GameObject followTarget;
 
@@ -136,6 +138,7 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
+        //camStartPos = mainCam.transform.position;
         gm = FindObjectOfType<GameManager>();
 
         GetSavedSettings();
@@ -170,6 +173,13 @@ public class PlayerController : MonoBehaviour
         SpeedlinesPS.SetActive(false);
 
         UnfreezeRotation();
+    }
+
+    private void OnEnable()
+    {
+        cinCam.m_Follow = followTarget.transform;
+        cinCam.m_LookAt = aimTarget.transform;
+        //mainCam.transform.position = camStartPos;
     }
 
     Vector3 dashDir;
