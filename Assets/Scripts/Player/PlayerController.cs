@@ -550,14 +550,14 @@ public class PlayerController : MonoBehaviour
 
     void ResetCam()
     {
-        Debug.Log("Fixing Camera");
+        //Debug.Log("Fixing Camera");
 
         //cinCam.ForceCameraPosition(cinCam.transform.position, Quaternion.Euler(0, 0, 0));
 
-        cinCam.m_Follow = null;
+        //cinCam.m_Follow = null;
         //cinCam.m_LookAt = null;
-        cinCam.transform.rotation = Quaternion.Euler(0, 0, 0);
-        cinCam.m_Follow = followTarget.transform;
+        //cinCam.transform.rotation = Quaternion.Euler(0, 0, 0);
+        //cinCam.m_Follow = followTarget.transform;
         //cinCam.m_LookAt = aimTarget.transform;
     }
 

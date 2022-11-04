@@ -16,10 +16,12 @@ public class RaceController : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             cont.Victory();
+            GetComponent<Collider>().enabled = false;
         }
         if (other.CompareTag("RaceEnemy"))
         {
             cont.GameOver();
+            GetComponent<Collider>().enabled = false;
         }
     }
 }
