@@ -112,6 +112,8 @@ public class Player_Bullet : Bullet
 
     private void OnCollisionEnter(Collision col)
     {
+        //Lock all axes movement and rotation
+        rb.constraints = RigidbodyConstraints.FreezeAll;
         if (col.gameObject.CompareTag("Enemy"))
         {
             //Debug.Log("Hit Enemy");
