@@ -20,6 +20,7 @@ public class Player_Stats : MonoBehaviour
     [Header("Visual Effects: ")]
     public GameObject deathVFX;
     public GameObject healVFX;
+    public Transform positionToSpawn;
 
     [Header("UI Assets: ")]
     //public Image healthImage;
@@ -111,8 +112,8 @@ public class Player_Stats : MonoBehaviour
         dVfx = Instantiate(deathVFX);
         dVfx.SetActive(false);
 
-        hVfx = Instantiate(healVFX);
-        hVfx.SetActive(false);
+        //hVfx = Instantiate(healVFX);
+        //hVfx.SetActive(false);
 
         //OverUI = FindObjectOfType<gm>().GameOver();
         //healthImage = GameObject.FindGameObjectWithTag("Health").GetComponent<Image>();
@@ -174,12 +175,20 @@ public class Player_Stats : MonoBehaviour
             HealBlink();
             reactionImage.color = healColor;
             Invoke("ResetGradient", flashTime);
-
+            Instantiate(healVFX, positionToSpawn.transform.position, transform.rotation);
             if (!gm.gameIsPaused && !gm.gameIsOver)
             {
-                if (!healVFX.activeInHierarchy)
+                //spawn Health vfx
+                
+
+                //hVfx.transform.position = transform.position;
+                //foreach (Transform t in hVfx.GetComponentsInChildren<Transform>())
+                //hVfx.transform.rotation = transform.rotation;
+                //hVfx.SetActive(true);
+                //if (!healVFX.activeInHierarchy)
                 {
-                    healVFX.SetActive(true);
+                    
+                    //healVFX.SetActive(true);
                 }
             }
             if (Curr_hp > flashThreshold) healthImageFlash.SetActive(false);

@@ -118,6 +118,7 @@ public class PlayerController : MonoBehaviour
     public float meshRefreshRate = 0.1f;
     public float meshDestoryDelay = 0.5f;
     public Transform positionToSpawn;
+
     private SkinnedMeshRenderer[] skinnedMeshRenderers;
     public Material mat;
 
