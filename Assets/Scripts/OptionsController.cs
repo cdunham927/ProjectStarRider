@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Audio;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 
 public class OptionsController : MonoBehaviour
 {
@@ -21,6 +23,19 @@ public class OptionsController : MonoBehaviour
 
     PlayerController player;
 
+    [Space]
+    [Header("For graphics settings")]
+    public VolumeProfile profile;
+    public Slider brightnessSlider;
+    public Slider bloomIntensitySlider;
+    public Toggle bloomToggle;
+    public Toggle blurToggle;
+    public Toggle dofToggle;
+    public float curBloomIntensity;
+    public float lowBloom;
+    public float medBloom;
+    public float highBloom;
+
     private void Awake()
     {
         cont = FindObjectOfType<GameManager>();
@@ -34,6 +49,9 @@ public class OptionsController : MonoBehaviour
         if (PlayerPrefs.HasKey("ControllerSensitivity")) controllerSensitivitySlider.value = PlayerPrefs.GetFloat("ControllerSensitivity");
         if (PlayerPrefs.HasKey("MouseSensitivity")) mouseSensitivitySlider.value = PlayerPrefs.GetFloat("MouseSensitivity");
         if (PlayerPrefs.HasKey("Invert")) invertToggle.isOn = (PlayerPrefs.GetInt("Invert") == 1) ? true : false;
+
+        profile.TryGet<Bloom>(out var bloom);
+        curBloomIntensity = bloom.intensity.value;
 
         //if (player != null)
         //{
@@ -136,5 +154,78 @@ public class OptionsController : MonoBehaviour
         PlayerPrefs.Save();
 
         if (player != null) player.GetInvert();
+    }
+
+    //GRAPHICS
+    //
+    //
+    //
+
+    public void SetBrightness(float val)
+    {
+        Screen.brightness = val;
+
+        PlayerPrefs.SetFloat("Brightness", val);
+        PlayerPrefs.Save();
+    }
+
+    public void SetBloom(int val)
+    {
+        if (!profile.TryGet<Bloom>(out var bloom)) {
+            bloom = profile.Add<Bloom>(false);
+        }
+
+        //bloom.intensity.value;
+        bloom.intensity.overrideState = true;
+        switch(val)
+        {
+            //None
+            case (0):
+                bloom.intensity.value = 0;
+                break;
+            //Low
+            case (1):
+                bloom.intensity.value = lowBloom;
+                break;
+            //Medium
+            case (2):
+                bloom.intensity.value = medBloom;
+                break;
+            //High
+            case (3):
+                bloom.intensity.value = highBloom;
+                break;
+        }
+
+        PlayerPrefs.SetInt("Bloom", val);
+        PlayerPrefs.Save();
+    }
+
+    public void SetMotionBlur(bool val)
+    {
+        if (!profile.TryGet<MotionBlur>(out var blur))
+        {
+            blur = profile.Add<MotionBlur>(false);
+        }
+
+        blur.intensity.overrideState = true;
+        //blur.intensity.value = (val == true) ? 1 : 0;
+
+        PlayerPrefs.SetInt("Blur", (val == true) ? 1 : 0);
+        PlayerPrefs.Save();
+    }
+
+    public void SetDOF(bool val)
+    {
+        if (!profile.TryGet<DepthOfField>(out var dof))
+        {
+            dof = profile.Add<DepthOfField>(false);
+        }
+
+        //dof.focusDistance.value = (val == true) ? 1 : 0;
+        //dof.focalLength.value = (val == true) ? 1 : 0;
+
+        PlayerPrefs.SetInt("Dof", (val == true) ? 1 : 0);
+        PlayerPrefs.Save();
     }
 }
