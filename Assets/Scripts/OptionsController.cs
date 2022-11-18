@@ -28,7 +28,7 @@ public class OptionsController : MonoBehaviour
     public VolumeProfile profile;
     public Slider brightnessSlider;
     public Slider bloomIntensitySlider;
-    //public Toggle bloomToggle;
+    public Toggle bloomToggle;
     public Toggle blurToggle;
     public Toggle dofToggle;
     public float curBloomIntensity;
