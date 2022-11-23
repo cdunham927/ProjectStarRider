@@ -53,6 +53,9 @@ public class CetusController : BossControllerBase
 
     //public BarrierController barrier;
 
+    public Dialogue thirdPhaseDialogue;
+    public Dialogue barrierDialogue;
+
     protected override void Awake()
     {
         //Boss does a special attack after losing a set amount of health per phase
@@ -417,6 +420,7 @@ public class CetusController : BossControllerBase
                     //Do laser attack here then reset cooldown
                     Debug.Log("Lost 10% hp");
                     AttackThree();
+                    FindObjectOfType<CombatDialogueController>().StartDialogue(barrierDialogue);
                     curHpLoss = 0;
                 }
                 break;
@@ -426,6 +430,7 @@ public class CetusController : BossControllerBase
                     //Do laser attack here then reset cooldown
                     Debug.Log("Lost 15% hp");
                     AttackThree();
+                    FindObjectOfType<CombatDialogueController>().StartDialogue(barrierDialogue);
                     curHpLoss = 0;
                 }
                 break;
@@ -435,6 +440,7 @@ public class CetusController : BossControllerBase
                     //Do laser attack here then reset cooldown
                     Debug.Log("Lost 20% hp");
                     AttackThree();
+                    FindObjectOfType<CombatDialogueController>().StartDialogue(barrierDialogue);
                     curHpLoss = 0;
                 }
                 break;
@@ -443,7 +449,7 @@ public class CetusController : BossControllerBase
         if (curHp < phase3Thres && !playedDialogue)
         {
             playedDialogue = true;
-            FindObjectOfType<CombatDialogueController>().StartDialogue();
+            FindObjectOfType<CombatDialogueController>().StartDialogue(thirdPhaseDialogue);
         }
         
         //Debug.Log("Enemy took damage");

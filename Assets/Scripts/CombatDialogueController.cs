@@ -28,9 +28,9 @@ public class CombatDialogueController : MonoBehaviour
         //ev = FindObjectOfType<EventSystem>();
     }
 
-    public virtual void StartDialogue()
+    public virtual void StartDialogue(Dialogue val)
     {
-        dialogue = firstDialogue;
+        dialogue = val;
         //dialogue = d;
         //timeBetweenChars = tbc;
         sentences.Clear();

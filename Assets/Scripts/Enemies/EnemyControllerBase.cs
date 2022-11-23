@@ -108,7 +108,7 @@ public class EnemyControllerBase : MonoBehaviour
         ResetMaterial();
         hasAdded = false;
         player = FindObjectOfType<PlayerController>();
-        target = player.transform;
+        if (player != null) target = player.transform;
         detectionCollider.radius = attackRange;
         ChangeState(enemystates.idle);
         curHp = maxHp;
