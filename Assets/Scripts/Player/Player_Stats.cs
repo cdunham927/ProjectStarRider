@@ -279,14 +279,14 @@ public class Player_Stats : MonoBehaviour
 
     void DamageBlink() 
     {
-        Debug.Log("Player Blinking");
+        //Debug.Log("Player Blinking");
         meshRenderer.material.color = Color.red * blinkIntensity;
         Invoke("ResetMaterial",blinkDuration);
     }
 
     void HealBlink()
     {
-        Debug.Log("Player Healed");
+        //Debug.Log("Player Healed");
         meshRenderer.material.color = Color.green * blinkIntensity;
         Invoke("ResetMaterial", blinkDuration);
     }

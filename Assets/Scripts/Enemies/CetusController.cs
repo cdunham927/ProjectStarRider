@@ -438,7 +438,7 @@ public class CetusController : BossControllerBase
                 if (curHpLoss > pOLA)
                 {
                     //Do laser attack here then reset cooldown
-                    Debug.Log("Lost 20% hp");
+                    //Debug.Log("Lost 20% hp");
                     AttackThree();
                     FindObjectOfType<CombatDialogueController>().StartDialogue(barrierDialogue);
                     curHpLoss = 0;
