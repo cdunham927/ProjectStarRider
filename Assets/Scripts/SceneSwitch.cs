@@ -36,8 +36,8 @@ public class SceneSwitch : MonoBehaviour
     OverworldMenuController overworld;
 
     // Start is called before the first frame update
-    
-  
+
+
 
     void Awake()
     {
@@ -56,6 +56,11 @@ public class SceneSwitch : MonoBehaviour
 
         if (cont != null) pauseMenu = cont.pauseMenuUI;
         if (overworld != null) pauseMenu = overworld.pauseMenu;
+
+    }
+
+    public void LoadScene()
+    {
 
     }
 
@@ -107,7 +112,7 @@ public class SceneSwitch : MonoBehaviour
     public void QuitGame()
     {
         Time.timeScale = 1f;
-        MusicController.instance.PlaySound();
+        //MusicController.instance.PlaySound();
         Invoke("Quit", 0.5f);
     }
 
@@ -120,7 +125,7 @@ public class SceneSwitch : MonoBehaviour
 
     public void Options()
     {
-        MusicController.instance.PlaySound();
+        //MusicController.instance.PlaySound();
         lastSelected = EventSystem.current.currentSelectedGameObject;
         if (pauseMenu == null && cont != null)
         {
@@ -140,7 +145,7 @@ public class SceneSwitch : MonoBehaviour
 
     public void Back()
     {
-        MusicController.instance.PlaySound();
+        //MusicController.instance.PlaySound();
         if (pauseMenu == null && cont != null)
         {
             pauseMenu = cont.pauseMenuUI;
@@ -160,7 +165,7 @@ public class SceneSwitch : MonoBehaviour
 
     public void Restart()
     {
-        MusicController.instance.PlaySound();
+        //MusicController.instance.PlaySound();
         if (cont.tutorialLevel)
         {
             MusicController.instance.ChangeSong(MusicController.instance.tutorialSong);
@@ -181,14 +186,14 @@ public class SceneSwitch : MonoBehaviour
 
     public void GoToMainMenu()
     {
-        MusicController.instance.PlaySound();
+        //MusicController.instance.PlaySound();
         Time.timeScale = 1f;
         StartCoroutine(ToMenuScene());
     }
 
     public void GoToTutorial()
     {
-        MusicController.instance.PlaySound();
+        //MusicController.instance.PlaySound();
         Time.timeScale = 1f;
         StartCoroutine(ToTutorialScene());
     }

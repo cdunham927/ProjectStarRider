@@ -19,6 +19,11 @@ public class MenuFunctions : MonoBehaviour
         scene = FindObjectOfType<SceneSwitch>();
     }
 
+    public void PlaySound()
+    {
+        if (MusicController.instance != null) MusicController.instance.PlaySound();
+    }
+
     public void GameOver()
     {
         cont.GameOver();
