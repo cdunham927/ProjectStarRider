@@ -7,20 +7,20 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: ShieldShader
-  m_Shader: {fileID: -6465566751694194690, guid: 5df3dc281029abd469cd73d8505d94b8, type: 3}
+  m_Name: BG_Crystal
+  m_Shader: {fileID: -6465566751694194690, guid: 22652bfb51ba66848a0899fc7f841c65, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 1
+  m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
   stringTagMap: {}
   disabledShaderPasses: []
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
-    - MainTex:
-        m_Texture: {fileID: 2800000, guid: d3df379129b2f054f9130d0445c4d54c, type: 3}
+    - Main_Texture:
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BaseMap:
@@ -81,7 +81,15 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - FresnelSpeed: 3.39
+    - Alpha: 1
+    - FresnelStrength: 71.13
+    - InnerLine: 0
+    - Metallic: 24.14
+    - NoiseScale: 0.13
+    - Opacity: 0.01
+    - OuterLine: 0
+    - ScrollSpeed: 3.3
+    - Smoothness: 0
     - _AlphaClip: 0
     - _Blend: 0
     - _BumpScale: 1
@@ -109,17 +117,14 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
-    - BackCOlor: {r: 0, g: 0, b: 0, a: 0}
-    - FresnelColor: {r: 0.40690637, g: 0.6375158, b: 0.6792453, a: 1}
-    - FresnelMovment: {r: 1.67, g: 2, b: 0, a: 0}
-    - FrontColor: {r: 0, g: 0, b: 0, a: 0}
-    - MainColor: {r: 0.8862745, g: 0.21176471, b: 0.7577373, a: 1}
+    - InnerColor: {r: 0.084905684, g: 0.084905684, b: 0.084905684, a: 1}
+    - OuterColor: {r: 38.490406, g: 5.9914317, b: 25.067024, a: 1}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _Color: {r: 0.37696338, g: 0.13691592, b: 0.27774373, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []
---- !u!114 &6120037213808265746
+--- !u!114 &60626703442507445
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}
