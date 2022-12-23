@@ -2,9 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SeaAngelController : EnemyControllerBase
+public class SeaAngelController : EnemyControllerBase 
 {
-
+    [Header("Private Variables: ")]
+    private Vector3 startPoint;
+    private const float radius = 1f;
     public GameObject seaAngelMesh;
     protected override void OnEnable()
     {
@@ -28,11 +30,15 @@ public class SeaAngelController : EnemyControllerBase
     {
         src.Play();
         if (bulletPool == null) bulletPool = cont.seaAngelBulPool;
+
+        float angleStep = 360f / bulletShot;
+        float angle = 0f;
+        
         //Get pooled bullet
-        for (int i = 0; i < bulletShot; i++)
+        for (int i = 0; i < bulletShot -1 ; i++)
         {
             GameObject bul = bulletPool.GetPooledObject();
-            if (bul != null)
+            /*if (bul != null) //base bullet controller
             {
                 //Put it where the enemy position is
                 bul.transform.position = transform.position;
@@ -47,7 +53,25 @@ public class SeaAngelController : EnemyControllerBase
                     bul.transform.rotation = Quaternion.Euler(Random.Range(0, 360), Random.Range(0, 360), Random.Range(0, 360));
                 }
                 bul.GetComponent<EnemyBullet>().Push();
-            }
+            }*/
+
+            if( bul != null) 
+            {
+
+                
+
+                
+                bul.SetActive(true);
+                
+                bul.transform.Rotate(Random.Range(-accx, accx), Random.Range(-accy, accy), 0);
+                if (isRandom == true)
+                {
+                    bul.transform.rotation = Quaternion.Euler(Random.Range(0, 360), Random.Range(0, 360), Random.Range(0, 360));
+                }
+                
+                
+                //bul.GetComponent<EnemyBullet>().PushRadial();
+            } 
 
         }
         //Reset attack cooldown
@@ -82,6 +106,7 @@ public class SeaAngelController : EnemyControllerBase
 
     protected override void Update()
     {
+        
         //If the player is close enough
         if (playerInRange && player != null)
         {

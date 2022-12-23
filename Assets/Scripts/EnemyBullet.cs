@@ -10,6 +10,9 @@ public class EnemyBullet : Bullet
     public GameObject spawnPos;
     public ObjectPool hitVFXPool;
     GameManager cont;
+    
+   
+    
 
     private void Awake()
     {
@@ -78,4 +81,22 @@ public class EnemyBullet : Bullet
     {
         rb.velocity = transform.forward * (slowSpd + Random.Range(0, randSpdMod));
     }
+
+    /*public void PushRadial() 
+    {
+        GameObject bul = bulletPool.GetPooledObject();
+
+        startPoint = transform.position;
+        float angleStep = 360f / bulletShot;
+        float angle = 0f;
+        
+        float projectileDirXPosition = startPoint.x + Mathf.Sin((angle * Mathf.PI) / 180) * radius;
+        float projectileDirYPosition = startPoint.x + Mathf.Sin((angle * Mathf.PI) / 180) * radius;
+
+        Vector3 projectileVector = new Vector3(projectileDirXPosition, projectileDirYPosition, 0);
+        Vector3 projectileMoveDirection = (projectileVector - startPoint).normalized * fastSpd;
+
+        GameObject tmpObj = Instantiate(bul, startPoint,Quaternion. identity);
+        tmpObj.GetComponent<Rigidbody>().velocity = new Vector3();
+    }*/
 }

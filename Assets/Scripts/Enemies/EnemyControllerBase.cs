@@ -8,6 +8,7 @@ public class EnemyControllerBase : MonoBehaviour
     public enum enemystates { idle, patrol, alert, attack, retreat, death };
     public enemystates currentState;
     //Stats
+    [Header(" Enemy Base Stats : ")]
     public float maxHp;
     public float curHp;
 
@@ -27,12 +28,19 @@ public class EnemyControllerBase : MonoBehaviour
     //Set the radius for the detection collider
     public SphereCollider detectionCollider;
     public Collider col;
+    
+    [Header(" Bullet accuracy Settingss: ")]
     //is random is the variations for shots being produced
     public bool isRandom;
     public float accx;
     public float accy;
-    // number of bullets shot for SG
+    // number of bullets spawn
     public int bulletShot;
+    //public float bulletSpeed;
+   
+    /*[Header("Private Variables: ")]
+    private Vector3 startPoint;
+    private const float radius = 1f;*/
 
     //Player
     protected PlayerController player;
@@ -44,6 +52,7 @@ public class EnemyControllerBase : MonoBehaviour
     [Header(" Attached Particle Systems: ")]
     public GameObject deathVFX;
 
+    [Header(" Pickups Spawn Chance: ")]
     [Range(0, 1)]
     public float hpSpawnChance = 0.3f;
     [Range(0, 1)]
@@ -69,11 +78,14 @@ public class EnemyControllerBase : MonoBehaviour
     protected SkinnedMeshRenderer skinnedMeshRenderer;
 
     public Healthbar healthScript;
+    [Header(" Animation controller: ")]
     public Animator anim;
+
     protected Player_Stats pStats;
 
     Color origCol;
 
+   [Header(" Pickup Items Range: ")]
     public float pickupXRange = 1.5f;
     public float pickupYRange = 1.5f;
     public float pickupZRange = 1.5f;
@@ -103,7 +115,7 @@ public class EnemyControllerBase : MonoBehaviour
         spawnedPickup = false;
     }
 
-    protected virtual void OnEnable()
+    protected virtual  void OnEnable()
     {
         ResetMaterial();
         hasAdded = false;
@@ -296,4 +308,24 @@ public class EnemyControllerBase : MonoBehaviour
         tempMats[ind].color = origCol;
         skinnedMeshRenderer.materials = tempMats;
     }
+
+    /*public void PushRaidal()
+    {
+        GameObject bul = bulletPool.GetPooledObject();
+
+        startPoint = transform.position;
+        float angleStep = 360f / bulletShot;
+        float angle = 0f;
+
+        float projectileDirXPosition = startPoint.x + Mathf.Sin((angle * Mathf.PI) / 180) * radius;
+        float projectileDirYPosition = startPoint.x + Mathf.Sin((angle * Mathf.PI) / 180) * radius;
+
+        Vector3 projectileVector = new Vector3(projectileDirXPosition, projectileDirYPosition, 0);
+        Vector3 projectileMoveDirection = (projectileVector - startPoint).normalized * speed;
+
+        GameObject tmpObj = Instantiate(bul, startPoint, Quaternion.identity);
+        tmpObj.GetComponent<Rigidbody>().velocity = new Vector3();
+
+        angle += angleStep;
+    }*/
 }

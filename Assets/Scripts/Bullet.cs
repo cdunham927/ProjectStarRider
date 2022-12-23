@@ -11,7 +11,9 @@ public class Bullet : MonoBehaviour
     public int damage;
     public Rigidbody rb;
     public float disableTime = 3f;
-    
+    //public const float radius = 1f;
+    //public Vector3 startPoint;
+    //public ObjectPool bulletPool;
     public virtual void OnEnable() 
     { 
         //float step =  (speed  + Random.Range(0, randSpdMod)) * Time.deltaTime;
