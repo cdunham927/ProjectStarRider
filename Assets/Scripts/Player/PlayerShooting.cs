@@ -21,6 +21,7 @@ public class PlayerShooting : MonoBehaviour
     
     GameManager cont;
     Rigidbody bod;
+    public float recoilForce;
     public PlayerShooting parentShoot;
 
     public int dmg;
@@ -74,7 +75,7 @@ public class PlayerShooting : MonoBehaviour
         bul.SetActive(true);
         curShootCools = shootCooldown;
         PlayMuzzle();
-
+        bod.AddForce(-bod.transform.forward * recoilForce * Time.deltaTime, ForceMode.Impulse);
     }
 
     public void PlaySound()
