@@ -12,6 +12,10 @@ public class OptionsController : MonoBehaviour
     SceneSwitch scene;
     public AudioMixer masterMixer;
 
+    public float defMasterVol;
+    public float defMusicVol;
+    public float defSoundVol;
+
     public Slider masterSlider;
     public Slider musicSlider;
     public Slider soundSlider;
@@ -25,6 +29,7 @@ public class OptionsController : MonoBehaviour
 
     [Space]
     [Header("For graphics settings")]
+    //public Volume volume;
     public VolumeProfile profile;
     public Slider brightnessSlider;
     public Slider bloomIntensitySlider;
@@ -50,6 +55,7 @@ public class OptionsController : MonoBehaviour
         if (PlayerPrefs.HasKey("MouseSensitivity")) mouseSensitivitySlider.value = PlayerPrefs.GetFloat("MouseSensitivity");
         if (PlayerPrefs.HasKey("Invert")) invertToggle.isOn = (PlayerPrefs.GetInt("Invert") == 1) ? true : false;
 
+        //profile = volume.sharedProfile;
         profile.TryGet<Bloom>(out var bloom);
         curBloomIntensity = bloom.intensity.value;
 
@@ -163,21 +169,27 @@ public class OptionsController : MonoBehaviour
 
     public void SetBrightness(float val)
     {
+        //profile.TryGet<Brightness>
+
         Screen.brightness = val;
 
         PlayerPrefs.SetFloat("Brightness", val);
         PlayerPrefs.Save();
     }
 
+    public Slider bloomSlider;
+
     public void SetBloom(int val)
     {
+        //profile = volume.sharedProfile;
+
         if (!profile.TryGet<Bloom>(out var bloom)) {
             bloom = profile.Add<Bloom>(false);
         }
 
         //bloom.intensity.value;
         bloom.intensity.overrideState = true;
-        switch(val)
+        switch(bloomSlider.value)
         {
             //None
             case (0):
@@ -203,6 +215,8 @@ public class OptionsController : MonoBehaviour
 
     public void SetMotionBlur(bool val)
     {
+        //profile = volume.sharedProfile;
+
         if (!profile.TryGet<MotionBlur>(out var blur))
         {
             blur = profile.Add<MotionBlur>(false);
@@ -217,6 +231,8 @@ public class OptionsController : MonoBehaviour
 
     public void SetDOF(bool val)
     {
+        //profile = volume.sharedProfile;
+
         if (!profile.TryGet<DepthOfField>(out var dof))
         {
             dof = profile.Add<DepthOfField>(false);
@@ -227,5 +243,27 @@ public class OptionsController : MonoBehaviour
 
         PlayerPrefs.SetInt("Dof", (val == true) ? 1 : 0);
         PlayerPrefs.Save();
+    }
+
+    //Reset defaults
+    public void ResetGraphicsOptions()
+    {
+
+    }
+
+    public void ResetGameplayOptions()
+    {
+
+    }
+
+    public void ResetAudioOptions()
+    {
+        masterSlider.value = defMasterVol;
+        musicSlider.value = defMusicVol;
+        soundSlider.value = defSoundVol;
+
+        masterMixer.SetFloat("masterVolume", defMasterVol);
+        masterMixer.SetFloat("musicVolume", defMusicVol);
+        masterMixer.SetFloat("soundVolume", defSoundVol);
     }
 }
