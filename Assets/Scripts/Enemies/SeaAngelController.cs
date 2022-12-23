@@ -8,6 +8,16 @@ public class SeaAngelController : EnemyControllerBase
     private Vector3 startPoint;
     private const float radius = 1f;
     public GameObject seaAngelMesh;
+
+    [Header("Audio Clips: ")]
+    public AudioClip ShotSounds;
+    private AudioSource AS;
+
+
+    private void Awake()
+    {
+        AS = GetComponent<AudioSource>();
+    }
     protected override void OnEnable()
     {
         seaAngelMesh.SetActive(false);
@@ -28,7 +38,7 @@ public class SeaAngelController : EnemyControllerBase
 
     protected override void Attack()
     {
-        src.Play();
+        PlaySound();
         if (bulletPool == null) bulletPool = cont.seaAngelBulPool;
 
         float angleStep = 360f / bulletShot;
@@ -119,4 +129,10 @@ public class SeaAngelController : EnemyControllerBase
 
         base.Update();
     }
+
+    public void PlaySound()
+    {
+        AS.PlayOneShot(ShotSounds);
+    }
+
 }
