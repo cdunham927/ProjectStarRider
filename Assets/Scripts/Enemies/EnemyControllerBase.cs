@@ -75,7 +75,7 @@ public class EnemyControllerBase : MonoBehaviour
     public float blinkDuration = 0.3f;
     public float blinkBrightness = 2.0f;
     float blinkTimer;
-    protected SkinnedMeshRenderer skinnedMeshRenderer;
+    public SkinnedMeshRenderer skinnedMeshRenderer;
 
     public Healthbar healthScript;
     [Header(" Animation controller: ")]
@@ -99,7 +99,7 @@ public class EnemyControllerBase : MonoBehaviour
     {
         anim = GetComponentInChildren<Animator>();
         //Get original color of material for damage flashes
-        skinnedMeshRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
+        if (skinnedMeshRenderer == null) skinnedMeshRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
         origCol = skinnedMeshRenderer.materials[ind].color;
 
         healthScript = GetComponent<Healthbar>();
@@ -258,7 +258,7 @@ public class EnemyControllerBase : MonoBehaviour
             //FindObjectOfType<GameManager>().EnemyDiedEvent();
             //if (anim != null) anim.SetTrigger("Death");
             //Invoke("Disable", deathClip.length);
-            if (!hasAdded) {
+            if (!hasAdded && pStats != null) {
                 hasAdded = true;
                 pStats.AddScore(killScore);
             }
