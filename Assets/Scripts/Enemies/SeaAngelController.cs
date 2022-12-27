@@ -72,7 +72,7 @@ public class SeaAngelController : EnemyControllerBase
 
                 
                 bul.SetActive(true);
-                
+                bul.transform.LookAt(player.transform);
                 bul.transform.Rotate(Random.Range(-accx, accx), Random.Range(-accy, accy), 0);
                 if (isRandom == true)
                 {
