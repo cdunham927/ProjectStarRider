@@ -39,7 +39,8 @@ public class SeaAngelController : EnemyControllerBase
     protected override void Attack()
     {
         PlaySound();
-        if (bulletPool == null) bulletPool = cont.seaAngelBulPool;
+        if (bulletPool == null) 
+            bulletPool = cont.seaAngelBulPool;
 
         float angleStep = 360f / bulletShot;
         float angle = 0f;

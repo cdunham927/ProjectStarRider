@@ -294,7 +294,7 @@ public class EnemyControllerBase : MonoBehaviour
         blinkDuration -= Time.deltaTime;
 
         Material[] tempMats = skinnedMeshRenderer.materials;
-        tempMats[ind].color = Color.red * blinkBrightness;
+        //tempMats[ind].color = Color.red * blinkBrightness;
         skinnedMeshRenderer.materials = tempMats;
 
         //skinnedMeshRenderer.material.color = Color.red * blinkBrightness;
@@ -305,7 +305,7 @@ public class EnemyControllerBase : MonoBehaviour
     {
         //skinnedMeshRenderer.material.color = origCol;
         Material[] tempMats = skinnedMeshRenderer.materials;
-        tempMats[ind].color = origCol;
+        //tempMats[ind].color = origCol;
         skinnedMeshRenderer.materials = tempMats;
     }
 
