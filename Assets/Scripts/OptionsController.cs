@@ -253,7 +253,11 @@ public class OptionsController : MonoBehaviour
 
     public void ResetGameplayOptions()
     {
+        if (player == null) player = FindObjectOfType<PlayerController>();
 
+        player.ResetInvert();
+        player.ResetMouseSensitivity();
+        player.ResetControllerSensitivity();
     }
 
     public void ResetAudioOptions()

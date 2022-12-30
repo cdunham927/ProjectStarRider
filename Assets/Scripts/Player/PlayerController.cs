@@ -40,6 +40,8 @@ public class PlayerController : MonoBehaviour
     public float sideSpeed;
     public float rotSpd;
     public float lookSpd;
+    public float defLookSpd;
+    public float defRotSpd;
     public float turnSpd;
     public float sideRotSpd;
     public float realignRot;
@@ -67,6 +69,7 @@ public class PlayerController : MonoBehaviour
     public float rechargeSpd = 2.5f;
 
     public bool invertControls = false;
+    public bool defInvert = false;
 
     public float speedUpTime;
     float speedUpTimer;
@@ -473,6 +476,21 @@ public class PlayerController : MonoBehaviour
                 ResetCam();
             }
         }
+    }
+
+    public void ResetInvert()
+    {
+        if (PlayerPrefs.HasKey("Invert")) invertControls = defInvert;
+    }
+
+    public void ResetMouseSensitivity()
+    {
+        if (PlayerPrefs.HasKey("MouseSensitivity")) lookSpd = defLookSpd;
+    }
+
+    public void ResetControllerSensitivity()
+    {
+        if (PlayerPrefs.HasKey("ControllerSensitivity")) rotSpd = defRotSpd;
     }
 
     public void FreezeRotation()
