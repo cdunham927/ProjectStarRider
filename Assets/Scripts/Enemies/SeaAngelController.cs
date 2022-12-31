@@ -46,7 +46,7 @@ public class SeaAngelController : EnemyControllerBase
         float angle = 0f;
         
         //Get pooled bullet
-        for (int i = 0; i < bulletShot -1 ; i++)
+        for (int i = 0; i < bulletShot  ; i++)
         {
             GameObject bul = bulletPool.GetPooledObject();
             /*if (bul != null) //base bullet controller
@@ -69,9 +69,9 @@ public class SeaAngelController : EnemyControllerBase
             if( bul != null) 
             {
 
-                
 
-                
+
+                bul.transform.position = transform.position;
                 bul.SetActive(true);
                 bul.transform.LookAt(player.transform);
                 bul.transform.Rotate(Random.Range(-accx, accx), Random.Range(-accy, accy), 0);
@@ -81,7 +81,7 @@ public class SeaAngelController : EnemyControllerBase
                 }
                 
                 
-                //bul.GetComponent<EnemyBullet>().PushRadial();
+                bul.GetComponent<EnemyBullet>().Push();
             } 
 
         }

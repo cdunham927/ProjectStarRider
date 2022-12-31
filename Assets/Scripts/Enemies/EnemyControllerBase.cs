@@ -38,9 +38,9 @@ public class EnemyControllerBase : MonoBehaviour
     public int bulletShot;
     //public float bulletSpeed;
    
-    /*[Header("Private Variables: ")]
+    [Header("Private Variables: ")]
     private Vector3 startPoint;
-    private const float radius = 1f;*/
+    private const float radius = 1f;
 
     //Player
     protected PlayerController player;
