@@ -28,6 +28,8 @@ public class SceneSwitch : MonoBehaviour
     [HideInInspector]
     public GameObject musicVolume;
     [HideInInspector]
+    public GameObject optionsFirstSelected;
+    [HideInInspector]
     public GameObject mainMenuButton;
     [HideInInspector]
     public GameObject pauseMenu;
@@ -50,6 +52,7 @@ public class SceneSwitch : MonoBehaviour
         optionsMenu = Instantiate(optionsPrefab);
         optionsButton = GameObject.FindGameObjectWithTag("OptionsButton");
         musicVolume = GameObject.FindGameObjectWithTag("MusicVolume");
+        optionsFirstSelected = GameObject.FindGameObjectWithTag("FirstSelected");
         mainMenuButton = GameObject.FindGameObjectWithTag("MainMenu");
         //resumeButton = GameObject.FindGameObjectWithTag("ResumeButton");
         optionsMenu.SetActive(false);
@@ -140,7 +143,7 @@ public class SceneSwitch : MonoBehaviour
         }
         optionsMenu.SetActive(true);
         EventSystem.current.SetSelectedGameObject(null);
-        EventSystem.current.SetSelectedGameObject(musicVolume);
+        EventSystem.current.SetSelectedGameObject(optionsFirstSelected);
     }
 
     public void Back()

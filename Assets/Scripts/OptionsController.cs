@@ -270,4 +270,9 @@ public class OptionsController : MonoBehaviour
         masterMixer.SetFloat("musicVolume", defMusicVol);
         masterMixer.SetFloat("soundVolume", defSoundVol);
     }
+    public void ResetAllOptions()
+    {
+        ResetAudioOptions();
+        ResetGameplayOptions();
+    }
 }
