@@ -20,6 +20,14 @@ public class OptionsController : MonoBehaviour
     public Slider musicSlider;
     public Slider soundSlider;
 
+    //Temp sliders for the options menu that has gameplay AND audio options(2nd demo, lvlupexpo)
+    public Slider tempMasterSlider;
+    public Slider tempMusicSlider;
+    public Slider tempSoundSlider;
+    public Slider tempControllerSensitivitySlider;
+    public Slider tempMouseSensitivitySlider;
+    public Toggle tempInvertToggle;
+
     //Set starting values for sliders;
     public Slider controllerSensitivitySlider;
     public Slider mouseSensitivitySlider;
@@ -51,6 +59,15 @@ public class OptionsController : MonoBehaviour
         masterSlider.value = GetMasterVolume();
         musicSlider.value = GetMusicVolume();
         soundSlider.value = GetSoundVolume();
+
+        //Temps
+        tempMasterSlider.value = GetMasterVolume();
+        tempMusicSlider.value = GetMusicVolume();
+        tempSoundSlider.value = GetSoundVolume();
+        if (PlayerPrefs.HasKey("ControllerSensitivity")) tempControllerSensitivitySlider.value = PlayerPrefs.GetFloat("ControllerSensitivity");
+        if (PlayerPrefs.HasKey("MouseSensitivity")) tempMouseSensitivitySlider.value = PlayerPrefs.GetFloat("MouseSensitivity");
+        if (PlayerPrefs.HasKey("Invert")) tempInvertToggle.isOn = (PlayerPrefs.GetInt("Invert") == 1) ? true : false;
+
         if (PlayerPrefs.HasKey("ControllerSensitivity")) controllerSensitivitySlider.value = PlayerPrefs.GetFloat("ControllerSensitivity");
         if (PlayerPrefs.HasKey("MouseSensitivity")) mouseSensitivitySlider.value = PlayerPrefs.GetFloat("MouseSensitivity");
         if (PlayerPrefs.HasKey("Invert")) invertToggle.isOn = (PlayerPrefs.GetInt("Invert") == 1) ? true : false;
@@ -258,6 +275,16 @@ public class OptionsController : MonoBehaviour
         player.ResetInvert();
         player.ResetMouseSensitivity();
         player.ResetControllerSensitivity();
+
+        //Reset initial values of sliders and toggles
+        controllerSensitivitySlider.value = player.defRotSpd;
+        mouseSensitivitySlider.value = player.defLookSpd;
+        invertToggle.isOn = player.defInvert;
+
+        //Temps
+        tempControllerSensitivitySlider.value = player.defRotSpd;
+        tempMouseSensitivitySlider.value = player.defLookSpd;
+        tempInvertToggle.isOn = player.defInvert;
     }
 
     public void ResetAudioOptions()
@@ -265,6 +292,11 @@ public class OptionsController : MonoBehaviour
         masterSlider.value = defMasterVol;
         musicSlider.value = defMusicVol;
         soundSlider.value = defSoundVol;
+
+        //Temps
+        tempMasterSlider.value = defMasterVol;
+        tempMusicSlider.value = defMusicVol;
+        tempSoundSlider.value = defSoundVol;
 
         masterMixer.SetFloat("masterVolume", defMasterVol);
         masterMixer.SetFloat("musicVolume", defMusicVol);
@@ -274,5 +306,6 @@ public class OptionsController : MonoBehaviour
     {
         ResetAudioOptions();
         ResetGameplayOptions();
+        ResetGraphicsOptions();
     }
 }
