@@ -31,4 +31,10 @@ public class LevelLoader : MonoBehaviour
             yield return null;
         }
     }
+
+
+    public void PlaySound()
+    {
+        if (MusicController.instance != null) MusicController.instance.PlaySound();
+    }
 }

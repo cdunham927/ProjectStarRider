@@ -821,7 +821,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: -5818701710252422464, guid: e94e86a227e4d4d4eb428bc609fd30dc, type: 2}
   m_audioClip: {fileID: 8300000, guid: 05875e58a53c1ff4795a44c2223ce62d, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.918
+  m_Volume: 1
   m_Pitch: 1.55
   Loop: 0
   Mute: 0
@@ -1071,7 +1071,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -17.000061, y: 41.90007}
+  m_AnchoredPosition: {x: -17.000061, y: 41.900085}
   m_SizeDelta: {x: -604, y: 30}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!1 &129268497443000919
@@ -1249,6 +1249,7 @@ MonoBehaviour:
   optionsMenu: {fileID: 0}
   optionsButton: {fileID: 0}
   musicVolume: {fileID: 0}
+  optionsFirstSelected: {fileID: 0}
   mainMenuButton: {fileID: 0}
   pauseMenu: {fileID: 0}
   startGameButton: {fileID: 6195988806687806546}
@@ -2509,6 +2510,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 976403595}
+        m_TargetAssemblyTypeName: LevelLoader, Assembly-CSharp
+        m_MethodName: PlaySound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!222 &6195988805058548467
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2535,7 +2548,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -17.000061, y: 2.9000654}
+  m_AnchoredPosition: {x: -17.000061, y: 2.900055}
   m_SizeDelta: {x: -604, y: 30}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!1 &6195988805058548471
@@ -2736,7 +2749,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 341, y: 2.9000654}
+  m_AnchoredPosition: {x: 341, y: 2.900055}
   m_SizeDelta: {x: -604, y: 30}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &6195988806687806508
@@ -2795,6 +2808,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 976403595}
+        m_TargetAssemblyTypeName: LevelLoader, Assembly-CSharp
+        m_MethodName: PlaySound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!224 &6195988806687806509
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2813,7 +2838,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -17.000061, y: 82.9}
+  m_AnchoredPosition: {x: -17.000061, y: 82.899994}
   m_SizeDelta: {x: -604, y: 30}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!222 &6195988806687806510
