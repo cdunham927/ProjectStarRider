@@ -57,11 +57,16 @@ public class PlayerController : MonoBehaviour
     //
     //
     // //int curActive;
-    
+    [Header("AfterImage Object")]
     public GameObject[] afterimages;
     public float maxImagesTime = 40f;
+    
+    
+    
     float curActiveTime;
     float oneCharge;
+    
+    [Header("AfterImage Icons")]
     public MPImage[] afterimageUI;
     public Sprite emptyImage;
     public Sprite filledImage;
@@ -75,6 +80,7 @@ public class PlayerController : MonoBehaviour
     float speedUpTimer;
 
     //References for camera
+    [Header("Camera Refernces: ")]
     public CinemachineVirtualCamera cinCam;
     //Vector3 camStartPos;
     public Camera mainCam;
@@ -140,6 +146,11 @@ public class PlayerController : MonoBehaviour
 
     GameManager gm;
 
+    [Header("Audio Clips: ")]
+    public AudioClip [] PlayerSfx;
+    private AudioSource AS;
+
+
     private void Awake()
     {
         //camStartPos = mainCam.transform.position;
@@ -177,6 +188,8 @@ public class PlayerController : MonoBehaviour
         SpeedlinesPS.SetActive(false);
 
         UnfreezeRotation();
+
+        AS = GetComponent<AudioSource>();
     }
 
     private void OnEnable()
@@ -596,6 +609,8 @@ public class PlayerController : MonoBehaviour
 
     public void AfterImage()
     {
+        //afterimage spawn sfx
+        AS.PlayOneShot(PlayerSfx[2]);
         if (!gm.gameIsPaused && !gm.gameIsOver)
         {
             if (!afterimages[0].activeInHierarchy)
@@ -635,6 +650,8 @@ public class PlayerController : MonoBehaviour
                 DashVfx.SetActive(true);
             }
         }
+        //dash sfx
+        AS.PlayOneShot(PlayerSfx[1]);
 
     }
 
@@ -655,6 +672,8 @@ public class PlayerController : MonoBehaviour
         Instantiate(decoy, positionToSpawn.transform.position, transform.rotation);
 
         curActiveTime -= oneCharge;
+        //decoy sfx
+        AS.PlayOneShot(PlayerSfx[0]);
     }
 
     void ResetMaterial()
@@ -695,5 +714,7 @@ public class PlayerController : MonoBehaviour
 
         
     }
+
+   
 
 }
