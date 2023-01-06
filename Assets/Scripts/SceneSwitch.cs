@@ -62,9 +62,9 @@ public class SceneSwitch : MonoBehaviour
 
     }
 
-    public void LoadScene()
+    public void LoadScene(string n)
     {
-
+        SceneManager.LoadScene(n);
     }
 
     public void NextScene()
