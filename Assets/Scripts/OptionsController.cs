@@ -49,11 +49,16 @@ public class OptionsController : MonoBehaviour
     public float medBloom;
     public float highBloom;
 
+    //For playing multiple sound effects
+    AudioSource src;
+    public AudioClip[] soundClips;
+
     private void Awake()
     {
         cont = FindObjectOfType<GameManager>();
         scene = FindObjectOfType<SceneSwitch>();
         player = FindObjectOfType<PlayerController>();
+        src = cont.GetComponent<AudioSource>();
 
         //Set initial slider values from loads
         masterSlider.value = GetMasterVolume();
@@ -82,6 +87,11 @@ public class OptionsController : MonoBehaviour
         //    player.GetMouseSensitivity();
         //    player.GetInvert();
         //}
+    }
+
+    public void PlaySound(int soundIndex)
+    {
+        src.PlayOneShot(soundClips[soundIndex]);
     }
 
     float GetMasterVolume()
