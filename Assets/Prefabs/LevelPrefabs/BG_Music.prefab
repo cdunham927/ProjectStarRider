@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 877252893838211537}
-  - component: {fileID: 877252893838211536}
   - component: {fileID: 6720885632238254949}
   - component: {fileID: 6107412951212038216}
+  - component: {fileID: 877252893838211536}
   - component: {fileID: 9003592745497180004}
   m_Layer: 0
   m_Name: BG_Music
@@ -34,6 +34,43 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6720885632238254949
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 877252893838211539}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95fc4ce2e4d4e6042bdf8823c77cda5b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  src: {fileID: 877252893838211536}
+  soundSrc: {fileID: 9003592745497180004}
+  deathClip: {fileID: 8300000, guid: c831c57820c006741a329bebefb6d796, type: 3}
+  winClip: {fileID: 8300000, guid: 54b11ef408a8efa41af37a51a91f2f26, type: 3}
+  tutorialSong: {fileID: 8300000, guid: 4ba83bbe1e1cbb94c9c67c327b74e963, type: 3}
+  buttonClick: {fileID: 8300000, guid: 58f208b77ff81ba4ba5f0e1f5308cf60, type: 3}
+--- !u!95 &6107412951212038216
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 877252893838211539}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: d1e6987ef7f5c5d4bbd57de355476612, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!82 &877252893838211536
 AudioSource:
   m_ObjectHideFlags: 0
@@ -46,13 +83,13 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: -6276289049990163111, guid: e94e86a227e4d4d4eb428bc609fd30dc, type: 2}
   m_audioClip: {fileID: 8300000, guid: 4ba83bbe1e1cbb94c9c67c327b74e963, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.29
+  m_Volume: 0.18
   m_Pitch: 1
   Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 122
+  Priority: 98
   DopplerLevel: 1
   MinDistance: 1
   MaxDistance: 500
@@ -130,43 +167,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &6720885632238254949
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 877252893838211539}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 95fc4ce2e4d4e6042bdf8823c77cda5b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  src: {fileID: 877252893838211536}
-  soundSrc: {fileID: 9003592745497180004}
-  deathClip: {fileID: 8300000, guid: c831c57820c006741a329bebefb6d796, type: 3}
-  winClip: {fileID: 8300000, guid: 54b11ef408a8efa41af37a51a91f2f26, type: 3}
-  tutorialSong: {fileID: 8300000, guid: 4ba83bbe1e1cbb94c9c67c327b74e963, type: 3}
-  buttonClick: {fileID: 8300000, guid: 58f208b77ff81ba4ba5f0e1f5308cf60, type: 3}
---- !u!95 &6107412951212038216
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 877252893838211539}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: d1e6987ef7f5c5d4bbd57de355476612, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!82 &9003592745497180004
 AudioSource:
   m_ObjectHideFlags: 0
