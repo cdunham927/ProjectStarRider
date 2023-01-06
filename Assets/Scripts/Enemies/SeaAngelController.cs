@@ -36,19 +36,21 @@ public class SeaAngelController : EnemyControllerBase
         if (attackCools <= 0) Attack();
     }
 
+    GameObject bul;
+
     protected override void Attack()
     {
         PlaySound();
-        if (bulletPool == null) 
-            bulletPool = cont.seaAngelBulPool;
+        //if (bulletPool == null) bulletPool = cont.seaAngelBulPool;
 
         float angleStep = 360f / bulletShot;
-        float angle = 0f;
+        //float angle = 0f;
         
         //Get pooled bullet
-        for (int i = 0; i < bulletShot  ; i++)
+        for (int i = 0; i < bulletShot; i++)
         {
-            GameObject bul = bulletPool.GetPooledObject();
+            //if (bulletPool == null) 
+                bul = cont.seaAngelBulPool.GetPooledObject();
             /*if (bul != null) //base bullet controller
             {
                 //Put it where the enemy position is
@@ -68,9 +70,6 @@ public class SeaAngelController : EnemyControllerBase
 
             if( bul != null) 
             {
-
-
-
                 bul.transform.position = transform.position;
                 bul.SetActive(true);
                 bul.transform.LookAt(player.transform);
@@ -80,10 +79,8 @@ public class SeaAngelController : EnemyControllerBase
                     bul.transform.rotation = Quaternion.Euler(Random.Range(0, 360), Random.Range(0, 360), Random.Range(0, 360));
                 }
                 
-                
                 bul.GetComponent<EnemyBullet>().Push();
             } 
-
         }
         //Reset attack cooldown
         attackCools = timeBetweenAttacks;

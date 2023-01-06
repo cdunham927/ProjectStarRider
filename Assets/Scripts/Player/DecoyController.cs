@@ -64,7 +64,8 @@ public class DecoyController : MonoBehaviour
             if (enemyColliders.Length == 1)
             {
                 target = enemyColliders[0].gameObject;
-                enemyColliders[0].GetComponent<EnemyControllerBase>().target = transform;
+                EnemyControllerBase eB = enemyColliders[0].GetComponent<EnemyControllerBase>();
+                if (eB != null) eB.target = transform;
                 return;
             }
             Collider closestEnemy = enemyColliders[0];
@@ -78,7 +79,8 @@ public class DecoyController : MonoBehaviour
                     closest = dis;
                     closestEnemy = e;
                 }
-                e.GetComponent<EnemyControllerBase>().target = transform;
+                EnemyControllerBase eB = GetComponent<EnemyControllerBase>();
+                if (eB != null) eB.target = transform;
             }
             target = closestEnemy.gameObject;
         }
@@ -100,12 +102,14 @@ public class DecoyController : MonoBehaviour
         {
             if (enemyColliders.Length == 1)
             {
-                enemyColliders[0].GetComponent<EnemyControllerBase>().ResetTarget();
+                EnemyControllerBase eB = enemyColliders[0].GetComponent<EnemyControllerBase>();
+                if (eB != null) eB.ResetTarget();
                 return;
             }
             foreach (Collider e in enemyColliders)
             {
-                e.GetComponent<EnemyControllerBase>().ResetTarget();
+                EnemyControllerBase eB = enemyColliders[0].GetComponent<EnemyControllerBase>();
+                if (eB != null) eB.ResetTarget();
             }
         }
     }

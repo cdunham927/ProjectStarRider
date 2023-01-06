@@ -715,6 +715,9 @@ public class PlayerController : MonoBehaviour
         
     }
 
-   
+   public void Push(float force, Vector3 dir)
+    {
+        bod.AddForce(dir * force);
+    }
 
 }

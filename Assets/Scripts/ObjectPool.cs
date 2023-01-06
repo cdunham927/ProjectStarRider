@@ -75,7 +75,7 @@ public class ObjectPool : MonoBehaviour
     public GameObject GetPooledObject()
     {
         //If our pool isnt empty
-        if (pool.Count > 0)
+        if (pool != null && pool.Count > 0)
         {
             //Loop through the list
             for (int i = 0; i < pool.Count; i++)

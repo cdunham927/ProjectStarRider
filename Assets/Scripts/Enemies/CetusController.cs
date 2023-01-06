@@ -56,6 +56,8 @@ public class CetusController : BossControllerBase
     public Dialogue thirdPhaseDialogue;
     public Dialogue barrierDialogue;
 
+    public GameObject barrierPushObj;
+
     protected override void Awake()
     {
         //Boss does a special attack after losing a set amount of health per phase
@@ -95,6 +97,7 @@ public class CetusController : BossControllerBase
             //transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, 0, 0), lerpSpd * Time.deltaTime);
             //transform.LookAt(player.transform.position);
             Vector3 targDir = player.transform.position - transform.position;
+            targDir.y = 0;
             Vector3 newDir = Vector3.RotateTowards(transform.forward, targDir, lerpSpd * Time.deltaTime, 0.0f);
             transform.rotation = Quaternion.LookRotation(newDir);
         }
@@ -208,6 +211,11 @@ public class CetusController : BossControllerBase
         sBul.GetComponent<EnemyBullet>().Push();
     }
 
+    public void TailAttack()
+    {
+        anim.SetTrigger("AttackFive");
+    }
+
     public void Sonic()
     {
         Invoke("SonicSingle", 0.95f);
@@ -222,7 +230,7 @@ public class CetusController : BossControllerBase
         switch(phase)
         {
             case 1:
-                barrier.gameObject.SetActive(true);
+                //barrier.gameObject.SetActive(true);
                 barrier.SetEnemies(waveOneSpawns.Length);
                 foreach (GameObject g in waveOneSpawns)
                 {
@@ -231,6 +239,7 @@ public class CetusController : BossControllerBase
                 }
                 break;
             case 2:
+                FindObjectOfType<CombatDialogueController>().StartDialogue(barrierDialogue);
                 barrier.gameObject.SetActive(true);
                 barrier.SetEnemies(waveTwoSpawns.Length);
                 foreach (GameObject g in waveTwoSpawns)
@@ -244,6 +253,7 @@ public class CetusController : BossControllerBase
                 }
                 break;
             case 3:
+                FindObjectOfType<CombatDialogueController>().StartDialogue(barrierDialogue);
                 barrier.gameObject.SetActive(true);
                 barrier.SetEnemies(waveThreeSpawns.Length);
                 foreach (GameObject g in waveThreeSpawns)
@@ -258,7 +268,15 @@ public class CetusController : BossControllerBase
                 break;
         }
 
-        attackCools = spawnCooldown;
+        barrierPushObj.SetActive(true);
+        Invoke("DeactivateBarrierPushObj", 0.75f);
+
+       attackCools = spawnCooldown;
+    }
+
+    void DeactivateBarrierPushObj()
+    {
+        barrierPushObj.SetActive(false);
     }
 
     public void SpawnBunchaBullets()
@@ -420,7 +438,6 @@ public class CetusController : BossControllerBase
                     //Do laser attack here then reset cooldown
                     Debug.Log("Lost 10% hp");
                     AttackThree();
-                    FindObjectOfType<CombatDialogueController>().StartDialogue(barrierDialogue);
                     curHpLoss = 0;
                 }
                 break;
@@ -430,7 +447,6 @@ public class CetusController : BossControllerBase
                     //Do laser attack here then reset cooldown
                     Debug.Log("Lost 15% hp");
                     AttackThree();
-                    FindObjectOfType<CombatDialogueController>().StartDialogue(barrierDialogue);
                     curHpLoss = 0;
                 }
                 break;
@@ -440,7 +456,6 @@ public class CetusController : BossControllerBase
                     //Do laser attack here then reset cooldown
                     //Debug.Log("Lost 20% hp");
                     AttackThree();
-                    FindObjectOfType<CombatDialogueController>().StartDialogue(barrierDialogue);
                     curHpLoss = 0;
                 }
                 break;

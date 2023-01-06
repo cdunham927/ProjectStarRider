@@ -105,12 +105,9 @@ public class EnemyControllerBase : MonoBehaviour
         healthScript = GetComponent<Healthbar>();
         pStats = FindObjectOfType<Player_Stats>();
         src = GetComponent<AudioSource>();
-        cont = FindObjectOfType<GameManager>();
         //bulletPool = cont.enemyBulPool;
 
         //hpBar = GetComponent<Healthbar>();
-        hpPool = cont.hpPool;
-        bombPool = cont.bombPool;
         spawned = false;
         spawnedPickup = false;
     }
@@ -126,6 +123,10 @@ public class EnemyControllerBase : MonoBehaviour
         curHp = maxHp;
         hasReduced = false;
         //skinnedMeshRenderer.material.color = origCol;
+
+        cont = FindObjectOfType<GameManager>();
+        hpPool = cont.hpPool;
+        bombPool = cont.bombPool;
 
         spawned = false;
         if (minimapObj != null) minimapObj.SetActive(true);
@@ -219,7 +220,7 @@ public class EnemyControllerBase : MonoBehaviour
 
         if (curHp <= 0 && !spawned)
         {
-            if (Random.value < bombSpawnChance && !spawnedPickup)
+            if (Random.value < bombSpawnChance && !spawnedPickup && bombPool != null)
             {
                 GameObject bomb = bombPool.GetPooledObject();
                 if (bomb != null)
