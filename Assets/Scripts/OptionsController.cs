@@ -58,7 +58,7 @@ public class OptionsController : MonoBehaviour
         cont = FindObjectOfType<GameManager>();
         scene = FindObjectOfType<SceneSwitch>();
         player = FindObjectOfType<PlayerController>();
-        src = cont.GetComponent<AudioSource>();
+        if (cont != null) src = cont.GetComponent<AudioSource>();
 
         //Set initial slider values from loads
         masterSlider.value = GetMasterVolume();

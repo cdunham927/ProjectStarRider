@@ -110,7 +110,7 @@ public class CetusController : BossControllerBase
             //laserCollider.height = Mathf.Lerp(laserCollider.height, 0, Time.deltaTime * laserLerpSpd);
         }
 
-        if (laserCollider.radius <= 0.25f)
+        if (laserCollider.radius <= 0.15f)
         {
             laserObj.SetActive(false);
             laserRend.enabled = false;
