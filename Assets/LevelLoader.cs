@@ -17,9 +17,13 @@ public class LevelLoader : MonoBehaviour
     public float waitTime;
     public AudioClip[] songs;
 
+    public GameObject optionsPrefab;
+    public GameObject optionsMenu;
+
     private void Awake()
     {
         //Spawn UI, get references
+        optionsMenu = Instantiate(optionsPrefab);
         levelLoaderUIInstance = Instantiate(levelLoaderUIPrefab);
 
         loadingScreen = levelLoaderUIInstance.transform.GetChild(0).gameObject;

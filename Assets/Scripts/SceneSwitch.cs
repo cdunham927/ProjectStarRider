@@ -21,7 +21,6 @@ public class SceneSwitch : MonoBehaviour
     public float waitTime;
 
     public GameObject optionsPrefab;
-    [HideInInspector]
     public GameObject optionsMenu;
     [HideInInspector]
     public GameObject optionsButton;
@@ -31,7 +30,6 @@ public class SceneSwitch : MonoBehaviour
     public GameObject optionsFirstSelected;
     [HideInInspector]
     public GameObject mainMenuButton;
-    [HideInInspector]
     public GameObject pauseMenu;
     public GameObject startGameButton;
 
@@ -46,10 +44,13 @@ public class SceneSwitch : MonoBehaviour
         //src = GetComponent<AudioSource>();
         overworld = FindObjectOfType<OverworldMenuController>();
         cont = FindObjectOfType<GameManager>();
+        if (optionsMenu == null) optionsMenu = FindObjectOfType<LevelLoader>().optionsMenu;
+        startGameButton = GameObject.FindGameObjectWithTag("StartGameButton");
 
         //Spawn options menu
         //Get references, then deactivate menu
-        optionsMenu = Instantiate(optionsPrefab);
+        //if (optionsMenu == null) optionsMenu = Instantiate(optionsPrefab);
+        optionsMenu.SetActive(true);
         optionsButton = GameObject.FindGameObjectWithTag("OptionsButton");
         musicVolume = GameObject.FindGameObjectWithTag("MusicVolume");
         optionsFirstSelected = GameObject.FindGameObjectWithTag("FirstSelected");
@@ -59,7 +60,6 @@ public class SceneSwitch : MonoBehaviour
 
         if (cont != null) pauseMenu = cont.pauseMenuUI;
         if (overworld != null) pauseMenu = overworld.pauseMenu;
-
     }
 
     public void LoadScene(string n)
@@ -139,7 +139,7 @@ public class SceneSwitch : MonoBehaviour
         //Else we're in the main menu so we activate the main menu stuff again
         else
         {
-            if (startGameButton != null)　startGameButton.SetActive(true);
+            if (startGameButton != null)　startGameButton.SetActive(false);
         }
         optionsMenu.SetActive(true);
         EventSystem.current.SetSelectedGameObject(null);
@@ -161,7 +161,7 @@ public class SceneSwitch : MonoBehaviour
         {
             if (startGameButton != null) startGameButton.SetActive(true);
         }
-        optionsMenu.SetActive(false);
+        optionsMenu.SetActive(false); 
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(lastSelected);
     }

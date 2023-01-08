@@ -91,7 +91,7 @@ public class OptionsController : MonoBehaviour
 
     public void PlaySound(int soundIndex)
     {
-        src.PlayOneShot(soundClips[soundIndex]);
+        if (src != null) src.PlayOneShot(soundClips[soundIndex]);
     }
 
     float GetMasterVolume()
@@ -282,19 +282,22 @@ public class OptionsController : MonoBehaviour
     {
         if (player == null) player = FindObjectOfType<PlayerController>();
 
-        player.ResetInvert();
-        player.ResetMouseSensitivity();
-        player.ResetControllerSensitivity();
+        if (player != null)
+        {
+            player.ResetInvert();
+            player.ResetMouseSensitivity();
+            player.ResetControllerSensitivity();
 
-        //Reset initial values of sliders and toggles
-        controllerSensitivitySlider.value = player.defRotSpd;
-        mouseSensitivitySlider.value = player.defLookSpd;
-        invertToggle.isOn = player.defInvert;
+            //Reset initial values of sliders and toggles
+            controllerSensitivitySlider.value = player.defRotSpd;
+            mouseSensitivitySlider.value = player.defLookSpd;
+            invertToggle.isOn = player.defInvert;
 
-        //Temps
-        tempControllerSensitivitySlider.value = player.defRotSpd;
-        tempMouseSensitivitySlider.value = player.defLookSpd;
-        tempInvertToggle.isOn = player.defInvert;
+            //Temps
+            tempControllerSensitivitySlider.value = player.defRotSpd;
+            tempMouseSensitivitySlider.value = player.defLookSpd;
+            tempInvertToggle.isOn = player.defInvert;
+        }
     }
 
     public void ResetAudioOptions()

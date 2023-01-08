@@ -61,7 +61,7 @@ public class MenuFunctions : MonoBehaviour
 
     public void Back()
     {
-        scene.Back();
+        FindObjectOfType<SceneSwitch>().Back();
     }
 
     public void Restart()
