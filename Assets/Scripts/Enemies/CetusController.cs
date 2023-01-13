@@ -58,6 +58,10 @@ public class CetusController : BossControllerBase
 
     public GameObject barrierPushObj;
 
+    [Header("Audio Clips: ")]
+    public AudioClip[] PlayerSfx;
+    private AudioSource AS;
+
     protected override void Awake()
     {
         //Boss does a special attack after losing a set amount of health per phase
@@ -70,6 +74,8 @@ public class CetusController : BossControllerBase
         laserCollider.enabled = false;
         laserOn = false;
         base.Awake();
+
+        AS = GetComponent<AudioSource>();
     }
 
     protected override void OnEnable()
@@ -192,6 +198,7 @@ public class CetusController : BossControllerBase
             sBul.SetActive(true);
             sBul.GetComponent<EnemyBullet>().Push();
         }
+        AS.PlayOneShot(PlayerSfx[0]);
     }
 
     //Single sea angel shot
@@ -222,6 +229,7 @@ public class CetusController : BossControllerBase
 
         //Reset attack cooldown
         attackCools = atkCooldowns[0];
+       
     }
 
     public void SpawnAngels(int phase)
@@ -270,8 +278,8 @@ public class CetusController : BossControllerBase
 
         barrierPushObj.SetActive(true);
         Invoke("DeactivateBarrierPushObj", 0.75f);
-
-       attackCools = spawnCooldown;
+        AS.PlayOneShot(PlayerSfx[3]);
+        attackCools = spawnCooldown;
     }
 
     void DeactivateBarrierPushObj()
@@ -327,6 +335,7 @@ public class CetusController : BossControllerBase
         laserCollider.enabled = true;
         laserOn = true;
         laserRend.enabled = true;
+        AS.PlayOneShot(PlayerSfx[2]);
     }
 
     protected override void AttackFour()
@@ -394,7 +403,7 @@ public class CetusController : BossControllerBase
                 }
             }
         }
-
+        AS.PlayOneShot(PlayerSfx[1]);
 
         ChangeState(enemystates.alert);
     }
