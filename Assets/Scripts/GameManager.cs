@@ -172,6 +172,24 @@ public class GameManager : MonoBehaviour
         //eventSystem = EventSystem.current;
     }
 
+    GameObject lastSelected;
+
+    private void OnApplicationFocus(bool focus)
+    {
+        if (!focus)
+        {
+            lastSelected = EventSystem.current.currentSelectedGameObject;
+        }
+        else
+        {
+            if (lastSelected != null)
+            {
+                EventSystem.current.SetSelectedGameObject(null);
+                EventSystem.current.SetSelectedGameObject(lastSelected);
+            }
+        }
+    }
+
     private void OnDisable()
     {
         PlayerPrefs.SetInt("Joystick", (player.joystick == false) ? 0 : 1);
@@ -229,6 +247,13 @@ public class GameManager : MonoBehaviour
                 scene.Back();
             }
         }
+
+        //If game is paused and we move the controller stick up and down, if nothing is selected then select the 1st object in the event system
+        //
+        //
+        //
+        //
+        //if (gameIsPaused && )
 
         if (gameIsOver)
         {

@@ -205,10 +205,10 @@ public class PlayerController : MonoBehaviour
     {
         //Update controller or keyboard input
         if (Input.anyKeyDown) joystick = false;
-        if (Input.GetAxis("Mouse X") != 0 || Input.GetAxis("Mouse Y") != 0) {
-            joystick = false;
-            //PlayerPrefs.SetInt("Joystick", 0);
-        }
+        //if (Input.GetAxis("Mouse X") != 0 || Input.GetAxis("Mouse Y") != 0) {
+        //    joystick = false;
+        //    //PlayerPrefs.SetInt("Joystick", 0);
+        //}
         for (int i = 0; i < 20; i++)
         {
             if (Input.GetKeyDown("joystick 1 button " + i))
@@ -311,18 +311,18 @@ public class PlayerController : MonoBehaviour
             //Hide cursor if we click into the game
             if (Input.GetMouseButtonDown(0) && !gm.gameIsPaused && !gm.gameIsOver)
             {
-                joystick = false;
-                //Lock cursor in screen;
-                Cursor.lockState = CursorLockMode.Confined;
-                //Hide cursor
-                Cursor.visible = false;
+                //joystick = false;
+                ////Lock cursor in screen;
+                //Cursor.lockState = CursorLockMode.Confined;
+                ////Hide cursor
+                //Cursor.visible = false;
             }
             //Show the cursor if we click into the game and its paused
             if (Input.GetMouseButtonDown(0) && (gm.gameIsPaused || gm.gameIsOver))
             {
-                joystick = false;
-                //Hide cursor
-                Cursor.visible = true;
+                //joystick = false;
+                ////Hide cursor
+                //Cursor.visible = true;
             }
 
             //float h = joystick ? Input.GetAxis("Horizontal") : Input.GetAxis("Mouse X");
