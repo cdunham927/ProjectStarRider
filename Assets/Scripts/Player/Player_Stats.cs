@@ -154,6 +154,10 @@ public class Player_Stats : MonoBehaviour
             {
                 Damage(2);
             }
+            if (Input.GetKeyDown(KeyCode.Alpha9))
+            {
+                Damage(20);
+            }
             if (Input.GetKeyDown(KeyCode.H))
             {
                 Heal(2);

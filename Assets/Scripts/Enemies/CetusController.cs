@@ -92,7 +92,7 @@ public class CetusController : BossControllerBase
     protected override void Update()
     {
         //If the player is close enough
-        if (playerInRange && curHp > 0 & player != null)
+        if (playerInRange && curHp > 0 & player != null && pStats != null && pStats.Curr_hp > 0)
         {
             //If the cooldown is at 0 then we can attack
             if (attackCools <= 0) Attack();

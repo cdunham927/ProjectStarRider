@@ -110,6 +110,10 @@ public class GameManager : MonoBehaviour
     public float slowTimeWait = 0.5f;
     float wantedTime = 1f;
 
+
+    //UI elements to disable/enable when paused or in victory/loss menus
+    public List<GameObject> nonMenuObjects = new List<GameObject>();
+
     void Awake()
     {
         //allGameObjects = FindObjectsOfType<GameObject>();
@@ -145,6 +149,8 @@ public class GameManager : MonoBehaviour
         GameOverUI.SetActive(false);
         VictoryUI.SetActive(false);
         ControllsUI.SetActive(false);
+
+        //GameObject a = GameObject.FindGameObjectWithTag("BossHealth");
 
         //Now spawn object pool objects
         hpPool = Instantiate(hpPoolPrefab).GetComponent<ObjectPool>();
@@ -327,6 +333,12 @@ public class GameManager : MonoBehaviour
             EventSystem.current.SetSelectedGameObject(gameoverButton);
             Time.timeScale = 1f;
             gameIsOver = true;
+
+            //Disable non-gameover ui
+            foreach (GameObject o in nonMenuObjects)
+            {
+                o.SetActive(false);
+            }
         }
     }
 
@@ -356,6 +368,12 @@ public class GameManager : MonoBehaviour
             EventSystem.current.SetSelectedGameObject(victoryButton);
             Time.timeScale = 1f;
             gameIsOver = true;
+
+            //Disable non-gameover ui
+            foreach (GameObject o in nonMenuObjects)
+            {
+                o.SetActive(false);
+            }
         }
     }
 
@@ -399,6 +417,12 @@ public class GameManager : MonoBehaviour
         EventSystem.current.SetSelectedGameObject(mainMenuButton);
         Time.timeScale = 0f;
         gameIsPaused = true;
+
+            //Disable non-gameover ui
+            foreach (GameObject o in nonMenuObjects)
+            {
+                o.SetActive(false);
+            }
     }
 
     public void Controlls() 
@@ -451,5 +475,11 @@ public class GameManager : MonoBehaviour
         pauseMenuUI.SetActive(false);
         Time.timeScale = 1f;
         gameIsPaused = false;
+
+        //Disable non-gameover ui
+        foreach (GameObject o in nonMenuObjects)
+        {
+            o.SetActive(true);
+        }
     }
 }
