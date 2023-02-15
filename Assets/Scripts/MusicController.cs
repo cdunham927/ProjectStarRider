@@ -13,7 +13,15 @@ public class MusicController : MonoBehaviour
     public AudioClip winClip;
     public AudioClip tutorialSong;
 
-    public AudioClip buttonClick;
+    //public AudioClip buttonClick;
+
+    [Header("UI Audio Clips: ")]
+    public AudioClip[] UISfx;
+    private AudioSource AS;
+
+    [Header("BGM Audio Clips: ")]
+    public AudioClip[] BGMSfx;
+    
     //Gotta save audio settings to playerprefs, then load those prefs on awake
 
     private void Awake()
