@@ -111,8 +111,21 @@ public class SceneSwitch : MonoBehaviour
             musicAnim.SetTrigger("fadeOut");
         }
         yield return new WaitForSeconds(waitTime);
-        if (music != null)  music.ChangeSong(menuSong);
+        if (music != null) music.ChangeSong(menuSong);
         SceneManager.LoadScene(0);
+    }
+
+    IEnumerator ToHubScene()
+    {
+        music = FindObjectOfType<MusicController>();
+        if (music != null)
+        {
+            musicAnim = music.GetComponent<Animator>();
+            musicAnim.SetTrigger("fadeOut");
+        }
+        yield return new WaitForSeconds(waitTime);
+        if (music != null) music.ChangeSong(menuSong);
+        SceneManager.LoadScene("OverWorld");
     }
 
     public void QuitGame()
@@ -195,6 +208,13 @@ public class SceneSwitch : MonoBehaviour
         //MusicController.instance.PlaySound();
         Time.timeScale = 1f;
         StartCoroutine(ToMenuScene());
+    }
+
+    public void GoToHub()
+    {
+        //MusicController.instance.PlaySound();
+        Time.timeScale = 1f;
+        StartCoroutine(ToHubScene());
     }
 
     public void GoToTutorial()
