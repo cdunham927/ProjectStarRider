@@ -50,13 +50,16 @@ public class SceneSwitch : MonoBehaviour
         //Spawn options menu
         //Get references, then deactivate menu
         //if (optionsMenu == null) optionsMenu = Instantiate(optionsPrefab);
-        optionsMenu.SetActive(true);
-        optionsButton = GameObject.FindGameObjectWithTag("OptionsButton");
-        musicVolume = GameObject.FindGameObjectWithTag("MusicVolume");
-        optionsFirstSelected = GameObject.FindGameObjectWithTag("FirstSelected");
-        mainMenuButton = GameObject.FindGameObjectWithTag("MainMenu");
-        //resumeButton = GameObject.FindGameObjectWithTag("ResumeButton");
-        optionsMenu.SetActive(false);
+        if (optionsMenu != null)
+        {
+            optionsMenu.SetActive(true);
+            optionsButton = GameObject.FindGameObjectWithTag("OptionsButton");
+            musicVolume = GameObject.FindGameObjectWithTag("MusicVolume");
+            optionsFirstSelected = GameObject.FindGameObjectWithTag("FirstSelected");
+            mainMenuButton = GameObject.FindGameObjectWithTag("MainMenu");
+            //resumeButton = GameObject.FindGameObjectWithTag("ResumeButton");
+            optionsMenu.SetActive(false);
+        }
 
         if (cont != null) pauseMenu = cont.pauseMenuUI;
         if (overworld != null) pauseMenu = overworld.pauseMenu;

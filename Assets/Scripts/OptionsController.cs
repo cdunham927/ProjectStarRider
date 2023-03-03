@@ -78,8 +78,9 @@ public class OptionsController : MonoBehaviour
         if (PlayerPrefs.HasKey("Invert")) invertToggle.isOn = (PlayerPrefs.GetInt("Invert") == 1) ? true : false;
 
         //profile = volume.sharedProfile;
-        profile.TryGet<Bloom>(out var bloom);
-        curBloomIntensity = bloom.intensity.value;
+        
+        //profile.TryGet<Bloom>(out var bloom);
+        //curBloomIntensity = bloom.intensity.value;
 
         //if (player != null)
         //{
