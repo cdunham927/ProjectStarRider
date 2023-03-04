@@ -14,6 +14,8 @@ public class HomingBulletController : MonoBehaviour
     GameManager cont;
     public float startSpd;
 
+    public GameObject minimapObj;
+
     private void Awake()
     {
         cont = FindObjectOfType<GameManager>();
@@ -24,6 +26,7 @@ public class HomingBulletController : MonoBehaviour
 
     public virtual void OnEnable()
     {
+        if (minimapObj != null) minimapObj.SetActive(true);
         //float step =  (speed  + Random.Range(0, randSpdMod)) * Time.deltaTime;
         Invoke("Disable", disableTime);
     }
@@ -35,6 +38,7 @@ public class HomingBulletController : MonoBehaviour
 
     public virtual void Disable()
     {
+        if (minimapObj != null) minimapObj.SetActive(false);
         bod.velocity = Vector2.zero;
         gameObject.SetActive(false);
     }

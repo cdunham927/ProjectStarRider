@@ -10,9 +10,9 @@ public class EnemyBullet : Bullet
     public GameObject spawnPos;
     public ObjectPool hitVFXPool;
     GameManager cont;
-    
-   
-    
+
+    public GameObject minimapObj;
+
 
     private void Awake()
     {
@@ -23,6 +23,7 @@ public class EnemyBullet : Bullet
     public override void OnEnable()
     {
         base.OnEnable();
+        if (minimapObj != null) minimapObj.SetActive(true);
     }
 
     private void OnTriggerEnter(Collider collision)
@@ -63,6 +64,7 @@ public class EnemyBullet : Bullet
 
     public override void Disable()
     {
+        if (minimapObj != null) minimapObj.SetActive(false);
         if (trail != null) trail.Clear();
         base.Disable();
     }
