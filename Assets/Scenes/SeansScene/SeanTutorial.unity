@@ -362,6 +362,67 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 82539706}
   m_CullTransparentMesh: 1
+--- !u!1001 &91752119
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 11325994428283520, guid: d8953bf54e210b1498777d3c3e8d80e3, type: 3}
+      propertyPath: spd
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 11325994428283521, guid: d8953bf54e210b1498777d3c3e8d80e3, type: 3}
+      propertyPath: m_RootOrder
+      value: 21
+      objectReference: {fileID: 0}
+    - target: {fileID: 11325994428283521, guid: d8953bf54e210b1498777d3c3e8d80e3, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -19.34
+      objectReference: {fileID: 0}
+    - target: {fileID: 11325994428283521, guid: d8953bf54e210b1498777d3c3e8d80e3, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 9.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 11325994428283521, guid: d8953bf54e210b1498777d3c3e8d80e3, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -3.36
+      objectReference: {fileID: 0}
+    - target: {fileID: 11325994428283521, guid: d8953bf54e210b1498777d3c3e8d80e3, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11325994428283521, guid: d8953bf54e210b1498777d3c3e8d80e3, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11325994428283521, guid: d8953bf54e210b1498777d3c3e8d80e3, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11325994428283521, guid: d8953bf54e210b1498777d3c3e8d80e3, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11325994428283521, guid: d8953bf54e210b1498777d3c3e8d80e3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11325994428283521, guid: d8953bf54e210b1498777d3c3e8d80e3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11325994428283521, guid: d8953bf54e210b1498777d3c3e8d80e3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11325994428283525, guid: d8953bf54e210b1498777d3c3e8d80e3, type: 3}
+      propertyPath: m_Name
+      value: SpeedPickup
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: d8953bf54e210b1498777d3c3e8d80e3, type: 3}
 --- !u!1 &102250281
 GameObject:
   m_ObjectHideFlags: 0
@@ -2520,14 +2581,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0e58ddc132672048a7f8680e69e438d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  disableTime: 0
+  bombClip: {fileID: 0}
   pickupDistance: 10
-  amountToTake: 10
   spd: 25
-  moves: 1
-  BombBlast: {fileID: 0}
-  timer: 0
-  bomb: {fileID: 0}
-  explo: {fileID: 0}
+  explosionPool: {fileID: 0}
 --- !u!136 &527066941
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -9194,9 +9252,12 @@ MonoBehaviour:
   canv: {fileID: 2036398475}
   slider: {fileID: 1274622606}
   otherSlider: {fileID: 0}
+  otherSliderRed: {fileID: 0}
   stats: {fileID: 234939565673871701}
   dir: {x: 0, y: 0, z: 0}
   rot: {x: 0, y: 0, z: 0}
+  lerpSpd: 0
+  slowLerpSpd: 0
   size: 0
 --- !u!224 &2036398480
 RectTransform:
