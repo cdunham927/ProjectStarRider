@@ -16,6 +16,8 @@ public class Player_Bullet : Bullet
     ParticleSystem[] curEmit;
     //public int amtToEmit = 5;
 
+    public GameObject minimapObj;
+
     private void Awake()
     {
         bod = GetComponentInParent<Rigidbody>();
@@ -27,10 +29,15 @@ public class Player_Bullet : Bullet
     {
         base.OnEnable();
         rb.velocity = transform.forward * speed;
+
+        //Get minimap object
+        if (minimapObj == null) minimapObj = GetComponentInChildren<MinimapObjController>().gameObject;
+        if (minimapObj != null) minimapObj.SetActive(true);
     }
 
     public override void Disable()
     {
+        if (minimapObj != null) minimapObj.SetActive(false);
         trail.Clear();
         base.Disable();
     }

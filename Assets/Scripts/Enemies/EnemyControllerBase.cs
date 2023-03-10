@@ -129,6 +129,9 @@ public class EnemyControllerBase : MonoBehaviour
         bombPool = cont.bombPool;
 
         spawned = false;
+
+        //Get minimap object
+        if (minimapObj == null) minimapObj = GetComponentInChildren<MinimapObjController>().gameObject;
         if (minimapObj != null) minimapObj.SetActive(true);
     }
 

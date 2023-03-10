@@ -26,7 +26,10 @@ public class HomingBulletController : MonoBehaviour
 
     public virtual void OnEnable()
     {
+        //Get minimap object
+        if (minimapObj == null) minimapObj = GetComponentInChildren<MinimapObjController>().gameObject;
         if (minimapObj != null) minimapObj.SetActive(true);
+
         //float step =  (speed  + Random.Range(0, randSpdMod)) * Time.deltaTime;
         Invoke("Disable", disableTime);
     }

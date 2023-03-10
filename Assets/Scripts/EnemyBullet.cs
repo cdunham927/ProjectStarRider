@@ -23,6 +23,9 @@ public class EnemyBullet : Bullet
     public override void OnEnable()
     {
         base.OnEnable();
+
+        //Get minimap object
+        if (minimapObj == null) minimapObj = GetComponentInChildren<MinimapObjController>().gameObject;
         if (minimapObj != null) minimapObj.SetActive(true);
     }
 

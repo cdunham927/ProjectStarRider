@@ -36,6 +36,8 @@ public class DecoyController : MonoBehaviour
     public float radius;
     public LayerMask enemyMask;
 
+    public GameObject minimapObj;
+
     private void Awake()
     {
         gm = FindObjectOfType<GameManager>();
@@ -48,6 +50,10 @@ public class DecoyController : MonoBehaviour
         mVfx.SetActive(false);
 
         curShootCools = 0f;
+
+        //Get minimap object
+        if (minimapObj == null) minimapObj = GetComponentInChildren<MinimapObjController>().gameObject;
+        if (minimapObj != null) minimapObj.SetActive(true);
     }
 
     private void OnEnable()
@@ -88,6 +94,7 @@ public class DecoyController : MonoBehaviour
 
     public void Damage()
     {
+        if (minimapObj != null) minimapObj.SetActive(false);
         gameObject.SetActive(false);
     }
 
