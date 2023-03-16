@@ -7,21 +7,17 @@ public class BombPickup : Pickup
     public float disableTime;
     public AnimationClip bombClip;
 
-    public float pickupDistance = 10f;
-    float distance;
-
-    public float spd;
-    Player_Stats stats;
     public ObjectPool explosionPool;
     GameManager cont;
 
     //public AudioClip clip;
 
-    private void OnEnable()
+    public override void OnEnable()
     {
+        base.OnEnable();
+
         cont = FindObjectOfType<GameManager>();
         explosionPool = cont.explosionPool;
-        stats = FindObjectOfType<Player_Stats>();
         if (bombClip != null) disableTime = bombClip.length;
         Invoke("Disable", disableTime);
     }
