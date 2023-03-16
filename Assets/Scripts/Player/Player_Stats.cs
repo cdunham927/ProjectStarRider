@@ -76,6 +76,7 @@ public class Player_Stats : MonoBehaviour
     public float scoreMultiplier = 1f;
     public float score = 0;
     public float hurtDecAmt = -9999;
+    public float invunerableTime = 3.0f;
 
     PlayerController pCont;
     GameManager gm;
@@ -203,7 +204,15 @@ public class Player_Stats : MonoBehaviour
             else Curr_hp = Max_hp;
         }
     }
-
+    public void SetInvunerable()
+    {
+        invulnerable = true;
+        Invoke("SetDamageable", invunerableTime);
+    }
+    public void SetDamageable()
+    {
+        invulnerable = false;
+    }
     public void ResetGradient()
     {
         //healthImage.color = regColor;
@@ -274,6 +283,7 @@ public class Player_Stats : MonoBehaviour
         }
     }
 
+  
     void Death() 
     {
         FindObjectOfType<GameManager>().GameOver();
