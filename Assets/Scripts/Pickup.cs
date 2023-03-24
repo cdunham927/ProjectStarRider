@@ -12,6 +12,7 @@ public abstract class Pickup : MonoBehaviour
     //public float rotSpd;
     //float xRot, yRot, zRot;
     public bool moves = true;
+    public bool canPickup = true;
 
     public AudioClip clip;
 
@@ -32,7 +33,12 @@ public abstract class Pickup : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    void Update()
+    protected void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player") && canPickup) GetPickup();
+    }
+
+    public virtual void Update()
     {
         //When the player gets close enough to the pickup, it starts to move towards the player
         if (stats != null && moves)
@@ -42,7 +48,7 @@ public abstract class Pickup : MonoBehaviour
             //transform.rotation = Random.rotation;
             //transform.Rotate(xRot, yRot, zRot);
 
-            if (distance <= pickupDistance && stats.Curr_hp < stats.Max_hp && moves)
+            if (distance <= pickupDistance && moves)
                 transform.position = Vector3.MoveTowards(transform.position, stats.transform.position, spd * Time.deltaTime);
         }
     }

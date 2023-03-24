@@ -15,7 +15,6 @@ GameObject:
   - component: {fileID: 4158029845545215404}
   - component: {fileID: 8573228472328169779}
   - component: {fileID: 1683897135455971342}
-  - component: {fileID: 11325994428283520}
   m_Layer: 0
   m_Name: SpeedPickup
   m_TagString: Untagged
@@ -114,12 +113,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6091b59047d82d649b3ae35329c553a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pickupDistance: 10
-  spd: 0
+  pickupDistance: 25
+  spd: 15
   moves: 1
-  clip: {fileID: 0}
-  speedBoost: 0
-  speedBoostTime: 0
+  clip: {fileID: 8300000, guid: 028bc167f9e21d34daa7cb17b0bcf224, type: 3}
 --- !u!82 &8573228472328169779
 AudioSource:
   m_ObjectHideFlags: 0
@@ -231,23 +228,6 @@ MonoBehaviour:
   Zspeed: 0
   Xspeed: 0
   Yspeed: 100
---- !u!114 &11325994428283520
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 11325994428283525}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: edc538ede7311e64e858d9b7bcb45779, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pickupDistance: 45
-  amountToGive: 1
-  spd: 30
-  moves: 1
-  clip: {fileID: 8300000, guid: 028bc167f9e21d34daa7cb17b0bcf224, type: 3}
 --- !u!1 &3834206728196565716
 GameObject:
   m_ObjectHideFlags: 0
