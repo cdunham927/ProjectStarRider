@@ -9,12 +9,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4355640831725905140}
-  - component: {fileID: 4355640831725905141}
   - component: {fileID: 4355640831725905138}
   - component: {fileID: 4355640831725905139}
   - component: {fileID: 4355640831725905136}
   - component: {fileID: 4355640831725905137}
+  - component: {fileID: 4355640831725905141}
   - component: {fileID: 7672304745712325697}
+  - component: {fileID: 124183990166035524}
   m_Layer: 7
   m_Name: HubPlayer
   m_TagString: Player
@@ -36,21 +37,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4355640831725905141
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4355640831725905134}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 20ca13a9602bcbf4683d2bc3663ca361, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveSpeed: 18
-  RB: {fileID: 4355640831725905138}
-  canMove: 0
 --- !u!50 &4355640831725905138
 Rigidbody2D:
   serializedVersion: 4
@@ -169,6 +155,21 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &4355640831725905141
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4355640831725905134}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20ca13a9602bcbf4683d2bc3663ca361, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 18
+  RB: {fileID: 4355640831725905138}
+  canMove: 0
 --- !u!114 &7672304745712325697
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -218,3 +219,17 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   debug: 0
+--- !u!114 &124183990166035524
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4355640831725905134}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42f17d3292d455242a47944a59dea99c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tagSpecificElements: []
+  layerSpecificElements: []
