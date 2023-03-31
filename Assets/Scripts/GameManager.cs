@@ -80,8 +80,6 @@ public class GameManager : MonoBehaviour
     [HideInInspector]
     public ObjectPool seaAngelBulPool;
     public MPImage[] afterimages;
-
-    public bool tutorialLevel;
     public EnemyManager[] enemyManager;
     public int enemyCount = 0;
     public GameObject controlsText;
@@ -114,6 +112,9 @@ public class GameManager : MonoBehaviour
     //UI elements to disable/enable when paused or in victory/loss menus
     public List<GameObject> nonMenuObjects = new List<GameObject>();
 
+    public enum levelTypes { battle, race, maze }
+    public levelTypes levelType;
+
     void Awake()
     {
         //allGameObjects = FindObjectsOfType<GameObject>();
@@ -125,7 +126,7 @@ public class GameManager : MonoBehaviour
         //can = GetComponent<Canvas>();
         //can.worldCamera = Instantiate(uiCamera).GetComponent<Camera>();
         scene = FindObjectOfType<SceneSwitch>();
-        if (tutorialLevel)
+        if (levelType == levelTypes.battle)
         {
             //controlsText.gameObject.SetActive(true);
         }
@@ -204,7 +205,7 @@ public class GameManager : MonoBehaviour
 
     void FillEnemyCount()
     {
-        if (tutorialLevel)
+        if (levelType == levelTypes.battle)
         {
             foreach (EnemyManager eM in enemyManager)
             {
@@ -219,7 +220,7 @@ public class GameManager : MonoBehaviour
 
     public void EnemyDiedEvent()
     {
-        if (tutorialLevel)
+        if (levelType == levelTypes.battle)
         {
             enemyCount--;
             if (enemyCountText != null && enemyCountText.gameObject.activeInHierarchy)

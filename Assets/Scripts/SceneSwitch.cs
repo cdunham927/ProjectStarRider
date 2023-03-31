@@ -185,7 +185,7 @@ public class SceneSwitch : MonoBehaviour
     public void Restart()
     {
         //MusicController.instance.PlaySound();
-        if (cont.tutorialLevel)
+        if (cont.levelType == GameManager.levelTypes.battle)
         {
             MusicController.instance.ChangeSong(MusicController.instance.tutorialSong);
         }
