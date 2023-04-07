@@ -14,6 +14,7 @@ public abstract class Pickup : MonoBehaviour
     public bool moves = true;
     public bool canPickup = true;
 
+
     public AudioClip clip;
 
     public virtual void GetPickup() { }
