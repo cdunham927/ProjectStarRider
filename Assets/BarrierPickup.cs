@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class BarrierPickup : Pickup
 {
-    float tempHp;
     public bool destructible = false;
+    public float barrierStrength;
+
     public void redCnt()
     {
-        tempHp--;
+        barrierStrength--;
 
-        if (tempHp <= 0)
+        if (barrierStrength <= 0)
         {
             Deactivate();
         }
@@ -20,9 +21,9 @@ public class BarrierPickup : Pickup
     {
         if (destructible)
         {
-            tempHp -= amt;
+            barrierStrength -= amt;
 
-            if (tempHp <= 0) gameObject.SetActive(false);
+            if (barrierStrength <= 0) gameObject.SetActive(false);
         }
     }
 
