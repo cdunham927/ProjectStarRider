@@ -114,7 +114,8 @@ public class PlayerController : MonoBehaviour
     public float dashCooldown;
     public float dashTime;
     float curDashCools;
-    float curDashTime;
+    [HideInInspector]
+    public float curDashTime;
     public GameObject decoy;
 
     //Dash blink vfx
