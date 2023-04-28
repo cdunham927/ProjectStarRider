@@ -276,10 +276,15 @@ public class CetusController : BossControllerBase
                 break;
         }
 
-        barrierPushObj.SetActive(true);
-        Invoke("DeactivateBarrierPushObj", 0.75f);
+        Invoke("ActivateBarrierPushObj", 0.75f);
+        Invoke("DeactivateBarrierPushObj", 2f);
         AS.PlayOneShot(PlayerSfx[3]);
         attackCools = spawnCooldown;
+    }
+
+    void ActivateBarrierPushObj()
+    {
+        barrierPushObj.SetActive(true);
     }
 
     void DeactivateBarrierPushObj()
