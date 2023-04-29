@@ -20,6 +20,8 @@ public class LevelLoader : MonoBehaviour
     public GameObject optionsPrefab;
     public GameObject optionsMenu;
 
+    //public int levelindexNumber;
+
     private void Awake()
     {
         //Spawn UI, get references
@@ -34,6 +36,11 @@ public class LevelLoader : MonoBehaviour
         loadingScreen.SetActive(false);
         //sl.gameObject.SetActive(false);
         //loadingScreen.gameObject.SetActive(false);
+    }
+
+    public void OnEnable()
+    {
+        //LoadLevel(levelindexNumber);
     }
 
     public void LoadLevel(int sceneIndex)
@@ -52,6 +59,7 @@ public class LevelLoader : MonoBehaviour
             musicAnim = music.GetComponent<Animator>();
             musicAnim.SetTrigger("fadeOut");
         }
+        
         yield return new WaitForSeconds(waitTime);
         if (music != null) music.ChangeSong(songs[sceneIndex]);
 

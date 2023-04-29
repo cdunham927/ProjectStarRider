@@ -5,8 +5,8 @@ using UnityEngine;
 public class Afterimage : MonoBehaviour
 {
     public float timeToDeactivate;
-    public GameObject fractured;
-    public float breakForce;
+    //public GameObject fractured;
+    //public float breakForce;
 
 
     private void OnEnable()
@@ -21,12 +21,12 @@ public class Afterimage : MonoBehaviour
 
     void Disable()
     {
-        BreakMesh();
+        //BreakMesh();
         gameObject.SetActive(false);
 
     }
 
-    public void BreakMesh()
+   /* public void BreakMesh()
     {
         GameObject frac = Instantiate(fractured, transform.position, transform.rotation); // sets fractured model to bas mdoel locations
 
@@ -38,5 +38,5 @@ public class Afterimage : MonoBehaviour
 
         Destroy(gameObject, 1f); //destroys gameobject 
 
-    }
+    }*/
 }
