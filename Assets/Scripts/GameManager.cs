@@ -56,7 +56,7 @@ public class GameManager : MonoBehaviour
     public GameObject mainMenuButton;
     [HideInInspector]
     public GameObject victoryButton;
-    [HideInInspector]
+    //[HideInInspector]
     public GameObject gameoverButton;
     //Instances of pools and minimap
     [HideInInspector]
