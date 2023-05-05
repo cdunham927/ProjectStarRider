@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class LevelLoader : MonoBehaviour
 {
+    GameManager Manager;
     public GameObject levelLoaderUIPrefab;
     GameObject levelLoaderUIInstance;
     public GameObject loadingScreen;
@@ -24,8 +25,14 @@ public class LevelLoader : MonoBehaviour
 
     private void Awake()
     {
+        //finds Game Manager for Ref
+
+        Manager = FindObjectOfType<GameManager>();
+
         //Spawn UI, get references
-        optionsMenu = Instantiate(optionsPrefab);
+        if (Manager != null) optionsMenu = Manager.pauseMenuUI;
+        else
+            optionsMenu = Instantiate(optionsPrefab);
         levelLoaderUIInstance = Instantiate(levelLoaderUIPrefab);
 
         loadingScreen = levelLoaderUIInstance.transform.GetChild(0).gameObject;
