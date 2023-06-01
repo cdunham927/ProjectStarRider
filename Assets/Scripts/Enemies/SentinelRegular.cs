@@ -12,25 +12,65 @@ public class SentinelRegular : EnemyControllerBase
 
     protected override void Attack()
     {
+        RadialAttack();
+
+        //src.Play();
+        //if (bulletPool == null) bulletPool = cont.enemyBulPool;
+        ////Get pooled bullet
+        //GameObject bul = bulletPool.GetPooledObject();
+        //if (bul != null)
+        //{
+        //    //Put it where the enemy position is
+        //    bul.transform.position = transform.position;
+        //    //Aim it at the player
+        //    //bul.transform.rotation = transform.rotation;
+        //    //Activate it at the enemy position
+        //    bul.SetActive(true);
+        //    bul.transform.LookAt(player.transform);
+        //    bul.transform.Rotate(Random.Range(-accx, accx), Random.Range(-accy, accy), 0);
+        //    if (isRandom == true)
+        //    {
+        //        bul.transform.rotation = Quaternion.Euler(Random.Range(0, 360), Random.Range(0, 360), Random.Range(0, 360));
+        //    }
+        //    bul.GetComponent<EnemyBullet>().Push();
+        //}
+        //
+        ////Reset attack cooldown
+        //attackCools = timeBetweenAttacks;
+        //
+        //ChangeState(enemystates.alert);
+    }
+
+    public int numBullets = 30;
+
+    void RadialAttack()
+    {
         src.Play();
         if (bulletPool == null) bulletPool = cont.enemyBulPool;
-        //Get pooled bullet
-        GameObject bul = bulletPool.GetPooledObject();
-        if (bul != null)
+        float angle = 0;
+        float increment = 360 / numBullets;
+        float x, y, x1 = 0, y1 = 0;
+        for (int i = 0; i < numBullets; i++)
         {
-            //Put it where the enemy position is
-            bul.transform.position = transform.position;
-            //Aim it at the player
-            //bul.transform.rotation = transform.rotation;
-            //Activate it at the enemy position
-            bul.SetActive(true);
-            bul.transform.LookAt(player.transform);
-            bul.transform.Rotate(Random.Range(-accx, accx), Random.Range(-accy, accy), 0);
-            if (isRandom == true)
+            //Get pooled bullet
+            GameObject bul = bulletPool.GetPooledObject();
+            if (bul != null)
             {
-                bul.transform.rotation = Quaternion.Euler(Random.Range(0, 360), Random.Range(0, 360), Random.Range(0, 360));
+                //Put it where the enemy position is
+                bul.transform.position = transform.position;
+                //Aim it at the player
+                //Activate it at the enemy position
+                bul.SetActive(true);
+                bul.transform.rotation = Quaternion.identity;
+
+                x = (Mathf.Cos(angle) + x1);
+                y = (Mathf.Sin(angle) + y1);
+
+                angle += increment;
+
+                bul.transform.Rotate(x, y, 0);
+                bul.GetComponent<EnemyBullet>().Push();
             }
-            bul.GetComponent<EnemyBullet>().Push();
         }
 
         //Reset attack cooldown
