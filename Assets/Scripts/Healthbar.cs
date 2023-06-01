@@ -91,5 +91,10 @@ public class Healthbar : MonoBehaviour
     {
         if (otherSlider != null) otherSlider.fillAmount = Mathf.Lerp(otherSlider.fillAmount, otherSlider.fillAmount = (float)stats.curHp / (float)stats.maxHp, lerpSpd * Time.deltaTime);
         if (otherSliderRed != null) otherSliderRed.fillAmount = Mathf.Lerp(otherSliderRed.fillAmount, otherSliderRed.fillAmount = (float)stats.curHp / (float)stats.maxHp, slowLerpSpd * Time.deltaTime);
+
+        if (otherSlider == null && otherSliderRed == null)
+        {
+            slider.fillAmount = Mathf.Lerp(slider.fillAmount, (float)stats.curHp / (float)stats.maxHp, 10f * Time.deltaTime);
+        }
     }
 }
