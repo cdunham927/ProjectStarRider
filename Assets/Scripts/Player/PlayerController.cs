@@ -46,7 +46,7 @@ public class PlayerController : MonoBehaviour
     public float sideRotSpd;
     public float realignRot;
     float lerpToSpd;
-    public float spdLerpAmt = 5f;
+    public float spdLerpAmt = 10f;
 
     public float xViewThresR;
     public float xViewThresL;
@@ -181,10 +181,11 @@ public class PlayerController : MonoBehaviour
         //4 charges max, so 1 charge is 1/4th of the max image time
         oneCharge = maxImagesTime / 4;
 
-        //instatie Inactive Gameobjects
+        //instatie Inactive Gameobjects Dash Particel System 
         dashPS = Instantiate(DashVfx);
         dashPS.SetActive(false);
 
+        //instatie Inactive Gameobjects Speed lines
         SpeedlinesPS = Instantiate(SpeedLineVfx);
         SpeedlinesPS.SetActive(false);
 
@@ -355,7 +356,14 @@ public class PlayerController : MonoBehaviour
             else if (vert < 0 || vert2 < 0) lerpToSpd = slowSpd;
             else lerpToSpd = regSpd;
 
-            speed = Mathf.Lerp(speed, lerpToSpd, Time.deltaTime * spdLerpAmt);
+            // equation to smooth the increase and decrease of speed and the begginng and end of movement
+            float t = Time.deltaTime * spdLerpAmt;
+            t = t * t * (3f - 2f * t);
+
+            //Speed phytsics equation lerp
+            //speed = Mathf.Lerp(speed, lerpToSpd, Time.deltaTime * spdLerpAmt); /// orginal equation dont delete
+            speed = Mathf.Lerp(speed, lerpToSpd, t);
+
 
             //button press for speed lines
 
