@@ -7,7 +7,8 @@ public class SentinelRegular : EnemyControllerBase
     protected override void Alert()
     {
         //If the cooldown is at 0 then we can attack
-        if (attackCools <= 0) Attack();
+        //if (attackCools <= 0) Attack();
+        if (attackCools <= 0) RadialAttack();
     }
 
     protected override void Attack()
