@@ -235,6 +235,12 @@ public class PlayerController : MonoBehaviour
             //PlayerPrefs.SetInt("Joystick", 1);
         }
 
+        vert = Input.GetAxis("Vertical");
+        hor = Input.GetAxis("Horizontal");
+
+        vert2 = Input.GetAxis("Vertical2");
+        hor2 = Input.GetAxis("Horizontal2");
+
         if (!stats.PlayerDead && !gm.gameIsOver)
         {
             /*
@@ -265,48 +271,86 @@ public class PlayerController : MonoBehaviour
                     rotation.y += -Input.GetAxis("Mouse X");
                     rotation.x += Input.GetAxis("Mouse Y");
                 }
+
+                //Accel/Decel
+                //vert *= Time.deltaTime;
+                if (vert > 0)
+                {
+                    Speedvfx();
+                }
+                if (vert > 0)
+                {
+                    if (speedUpTimer > 0)
+                        lerpToSpd = superSpd;
+                    else lerpToSpd = highSpd;
+                }
+                else if (vert < 0) lerpToSpd = slowSpd;
+                else lerpToSpd = regSpd;
             }
 
             //if (joystick && !gm.gameIsPaused)
             //{
-            if (joystick && !gm.gameIsPaused) 
-            { 
-                if (hor2 != 0)
+            if (joystick && !gm.gameIsPaused)
+            {
+                if (hor != 0)
                 {
                     //joystick = true;
                     //if (invertControls) transform.Rotate(0, rotSpd * Time.deltaTime * hor2, 0);
                     //else transform.Rotate(0, -rotSpd * Time.deltaTime * hor2, 0);
-                    if (!invertControls) rotation.y += rotSpd * Time.deltaTime * hor2;
-                    else rotation.y -= rotSpd * Time.deltaTime * hor2;
+                    if (!invertControls) rotation.y += rotSpd * Time.deltaTime * hor;
+                    else rotation.y -= rotSpd * Time.deltaTime * hor;
                 }
 
-                if (vert2 != 0)
+                if (vert != 0)
                 {
                     //joystick = true;
                     //if (invertControls) transform.Rotate(rotSpd * Time.deltaTime * vert2, 0, 0);
                     //else transform.Rotate(-rotSpd * Time.deltaTime * vert2, 0, 0);
-                    if (!invertControls) rotation.x += rotSpd * Time.deltaTime * vert2;
-                    else rotation.x -= rotSpd * Time.deltaTime * vert2;
+                    if (!invertControls) rotation.x -= rotSpd * Time.deltaTime * vert;
+                    else rotation.x += rotSpd * Time.deltaTime * vert;
                 }
+
+                //Accel
+                if (Input.GetAxisRaw("Accel") > 0)
+                {
+                    Speedvfx();
+                    if (speedUpTimer > 0)
+                        lerpToSpd = superSpd;
+                    else lerpToSpd = highSpd;
+                }
+                else lerpToSpd = regSpd;
+                
+                //lerpToSpd = regSpd;
+
+                //if (hor != 0)
+                //{
+                //    if (!invertControls) rotation.y += rotSpd * Time.deltaTime * hor;
+                //    else rotation.y -= rotSpd * Time.deltaTime * hor;
+                //}
+
+                //if (hor2 != 0)
+                //{
+                //    //joystick = true;
+                //    //if (invertControls) transform.Rotate(0, rotSpd * Time.deltaTime * hor2, 0);
+                //    //else transform.Rotate(0, -rotSpd * Time.deltaTime * hor2, 0);
+                //    if (!invertControls) rotation.y += rotSpd * Time.deltaTime * hor2;
+                //    else rotation.y -= rotSpd * Time.deltaTime * hor2;
+                //}
+                //
+                //if (vert2 != 0)
+                //{
+                //    //joystick = true;
+                //    //if (invertControls) transform.Rotate(rotSpd * Time.deltaTime * vert2, 0, 0);
+                //    //else transform.Rotate(-rotSpd * Time.deltaTime * vert2, 0, 0);
+                //    if (!invertControls) rotation.x += rotSpd * Time.deltaTime * vert2;
+                //    else rotation.x -= rotSpd * Time.deltaTime * vert2;
+                //}
             }
-            transform.eulerAngles = new Vector3(rotation.x, rotation.y, rotation.z) * lookSpd;
 
-            /**/
-            //Vector2 screenMousePos = Camera.main.ScreenToViewportPoint(Input.mousePosition);
-            //Debug.Log(screenMousePos);
+            //Move left and right with A/D keys and left/right joystick
+            //if (hor != 0) newVelX = -transform.right * sideSpeed * hor;
+            //else newVelX = Vector3.zero;
 
-            //Vector3 screenMousePos = Camera.main.ScreenToViewportPoint(Input.mousePosition);
-
-
-            /**/
-
-            //float hor = Input.GetAxis("Horizontal");
-
-
-            if (hor != 0) newVelX = -transform.right * sideSpeed * hor;
-            else newVelX = Vector3.zero;
-            if (!hitWall) newVelZ = -transform.forward * speed;
-            if (!hitWall) bod.velocity = newVelX + newVelZ;
             //if (hor != 0) transform.Rotate(0, hor * sideRotSpd * Time.fixedDeltaTime, 0);
 
 
@@ -330,32 +374,6 @@ public class PlayerController : MonoBehaviour
             //float h = joystick ? Input.GetAxis("Horizontal") : Input.GetAxis("Mouse X");
             //float v = joystick ? Input.GetAxis("Vertical") : Input.GetAxis("Mouse Y");
 
-            vert = Input.GetAxis("Vertical");
-            hor = Input.GetAxis("Horizontal");
-
-            vert2 = Input.GetAxis("Vertical2");
-            hor2 = Input.GetAxis("Horizontal2");
-
-            vert *= Time.deltaTime;
-           
-            if (vert > 0 || vert2 > 0) 
-            {
-                Speedvfx();
-            }
-
-            //speed = (vert > 0) ? highSpd : slowSpd;
-
-            if (vert > 0 || vert2 > 0)
-            {
-                if (speedUpTimer > 0)
-                    lerpToSpd = superSpd;
-                else lerpToSpd = highSpd;
-            }
-
-
-            else if (vert < 0 || vert2 < 0) lerpToSpd = slowSpd;
-            else lerpToSpd = regSpd;
-
             // equation to smooth the increase and decrease of speed and the begginng and end of movement
             float t = Time.deltaTime * spdLerpAmt;
             t = t * t * (3f - 2f * t);
@@ -363,10 +381,6 @@ public class PlayerController : MonoBehaviour
             //Speed phytsics equation lerp
             //speed = Mathf.Lerp(speed, lerpToSpd, Time.deltaTime * spdLerpAmt); /// orginal equation dont delete
             speed = Mathf.Lerp(speed, lerpToSpd, t);
-
-
-            //button press for speed lines
-
 
             //button press for dash
             if (Input.GetButtonDown("Fire3") && curDashCools <= 0)
@@ -381,7 +395,18 @@ public class PlayerController : MonoBehaviour
                 Speedvfx();
                 Dashvfx();
                 //Decoy();
-                if (curActiveTime > oneCharge) Decoy();
+                //if (curActiveTime > oneCharge) Decoy();
+            }
+
+            //controller button press for dash
+            if ((vert2 != 0 || hor2 != 0) && curDashCools <= 0)
+            {
+                dashDir = (transform.forward * -vert2 * forDashSpd) + (transform.right * hor2 * sideDashSpd);
+                curDashTime = dashTime;
+                curDashCools = dashCooldown;
+                Speedvfx();
+                Dashvfx();
+                //if (curActiveTime > oneCharge) Decoy();
             }
 
             if (curDashTime > 0) curDashTime -= Time.deltaTime;
@@ -476,6 +501,13 @@ public class PlayerController : MonoBehaviour
             }
 
             if (curDashCools > 0) curDashCools -= Time.deltaTime;
+
+            //Movement
+            if (!hitWall) newVelZ = -transform.forward * speed;
+            if (!hitWall) bod.velocity = newVelX + newVelZ;
+
+            //Rotate towards the new inputs
+            transform.eulerAngles = new Vector3(rotation.x, rotation.y, rotation.z) * lookSpd;
         }
 
         if (cinCam != null && cinCam.transform.rotation.z != 0)
@@ -670,7 +702,6 @@ public class PlayerController : MonoBehaviour
         {
             sys.Emit(sysEmit);
         }
-
     }
 
     public void Decoy() 

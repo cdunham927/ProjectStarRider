@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Player_Bullet : Bullet
 {
-    public GameObject hitPrefab;
+    //public GameObject hitPrefab;
     //public GameObject muzzlePrefab;
 
     public TrailRenderer trail;
@@ -18,6 +18,8 @@ public class Player_Bullet : Bullet
 
     public GameObject minimapObj;
 
+    bool spawned = false;
+
     private void Awake()
     {
         bod = GetComponentInParent<Rigidbody>();
@@ -27,6 +29,7 @@ public class Player_Bullet : Bullet
 
     public override void OnEnable()
     {
+        spawned = false;
         base.OnEnable();
         rb.velocity = transform.forward * speed;
 
@@ -38,7 +41,7 @@ public class Player_Bullet : Bullet
     public override void Disable()
     {
         if (minimapObj != null) minimapObj.SetActive(false);
-        trail.Clear();
+        if (trail != null) trail.Clear();
         base.Disable();
     }
 
@@ -48,79 +51,105 @@ public class Player_Bullet : Bullet
         {
             //Debug.Log("Hit Enemy");
             col.gameObject.GetComponent<EnemyControllerBase>().Damage(damage);
-            Invoke("Disable", 0.01f);
             //ContactPoint cp = col.GetContact(0);
             if (hitVFXPool == null) hitVFXPool = cont.hitVFXPool;
-            GameObject hit = hitVFXPool.GetPooledObject();
-            hit.transform.position = spawnPos.transform.position;
-            hit.transform.rotation = spawnPos.transform.rotation;
-            //bul.GetComponent<Rigidbody>().velocity = bod.velocity;
-            hit.SetActive(true);
+            if (!spawned)
+            {
+                GameObject hit = hitVFXPool.GetPooledObject();
+                hit.transform.position = spawnPos.transform.position;
+                hit.transform.rotation = col.transform.rotation;
+                //bul.GetComponent<Rigidbody>().velocity = bod.velocity;
+                hit.SetActive(true);
+                spawned = true;
+            }
+            Invoke("Disable", 0.001f);
         }
+
         if (col.CompareTag("DWall"))
         {
             col.gameObject.GetComponent<DestructibleObject>().TakeDamage(damage);
-            Invoke("Disable", 0.01f);
             //ContactPoint cp = col.GetContact(0);
             if (hitVFXPool == null) hitVFXPool = cont.hitVFXPool;
-            GameObject hit = hitVFXPool.GetPooledObject();
-            hit.transform.position = spawnPos.transform.position;
-            hit.transform.rotation = spawnPos.transform.rotation;
-            //bul.GetComponent<Rigidbody>().velocity = bod.velocity;
-            hit.SetActive(true);
+            if (!spawned)
+            {
+                GameObject hit = hitVFXPool.GetPooledObject();
+                hit.transform.position = spawnPos.transform.position;
+                hit.transform.rotation = col.transform.rotation;
+                //bul.GetComponent<Rigidbody>().velocity = bod.velocity;
+                hit.SetActive(true);
+                spawned = true;
+            }
+            Invoke("Disable", 0.001f);
         }
 
         if (col.CompareTag("BossHitPoint"))
         {
             //Debug.Log("Hit Enemy");
             col.gameObject.GetComponent<BossHitPointController>().Damage(damage);
-            Invoke("Disable", 0.01f);
             //ContactPoint cp = col.GetContact(0);
             if (hitVFXPool == null) hitVFXPool = cont.hitVFXPool;
-            GameObject hit = hitVFXPool.GetPooledObject();
-            hit.transform.position = spawnPos.transform.position;
-            hit.transform.rotation = spawnPos.transform.rotation;
-            //bul.GetComponent<Rigidbody>().velocity = bod.velocity;
-            hit.SetActive(true);
+            if (!spawned)
+            {
+                GameObject hit = hitVFXPool.GetPooledObject();
+                hit.transform.position = spawnPos.transform.position;
+                hit.transform.rotation = col.transform.rotation;
+                //bul.GetComponent<Rigidbody>().velocity = bod.velocity;
+                hit.SetActive(true);
+                spawned = true;
+            }
+            Invoke("Disable", 0.001f);
         }
 
         if (col.CompareTag("Barrier"))
         {
             //Debug.Log("Hit Enemy");
             col.gameObject.GetComponent<BarrierController>().Damage(damage);
-            Invoke("Disable", 0.01f);
             //ContactPoint cp = col.GetContact(0);
             if (hitVFXPool == null) hitVFXPool = cont.hitVFXPool;
-            GameObject hit = hitVFXPool.GetPooledObject();
-            hit.transform.position = spawnPos.transform.position;
-            hit.transform.rotation = spawnPos.transform.rotation;
-            //bul.GetComponent<Rigidbody>().velocity = bod.velocity;
-            hit.SetActive(true);
+            if (!spawned)
+            {
+                GameObject hit = hitVFXPool.GetPooledObject();
+                hit.transform.position = spawnPos.transform.position;
+                hit.transform.rotation = col.transform.rotation;
+                //bul.GetComponent<Rigidbody>().velocity = bod.velocity;
+                hit.SetActive(true);
+                spawned = true;
+            }
+            Invoke("Disable", 0.001f);
         }
 
         if (col.CompareTag("Wall"))
         {
-            Invoke("Disable", 0.01f);
             if (hitVFXPool == null) hitVFXPool = cont.hitVFXPool;
-            GameObject hit = hitVFXPool.GetPooledObject();
-            hit.transform.position = spawnPos.transform.position;
-            hit.transform.rotation = spawnPos.transform.rotation;
-            //bul.GetComponent<Rigidbody>().velocity = bod.velocity;
-            hit.SetActive(true);
+            if (!spawned) 
+            {
+                GameObject hit = hitVFXPool.GetPooledObject();
+                hit.transform.position = spawnPos.transform.position;
+                hit.transform.rotation = col.transform.rotation;
+                //bul.GetComponent<Rigidbody>().velocity = bod.velocity;
+                hit.SetActive(true);
+                spawned = true;
+            }
+            Invoke("Disable", 0.001f);
         }
 
         if (col.CompareTag("DestructBullets"))
         {
             //Debug.Log("Hit Enemy");
             col.gameObject.GetComponent<DestructableBullets>().Damage(damage);
-            Invoke("Disable", 0.01f);
             //ContactPoint cp = col.GetContact(0);
             if (hitVFXPool == null) hitVFXPool = cont.hitVFXPool;
-            GameObject hit = hitVFXPool.GetPooledObject();
-            hit.transform.position = spawnPos.transform.position;
-            hit.transform.rotation = spawnPos.transform.rotation;
+            if (!spawned)
+            {
+                GameObject hit = hitVFXPool.GetPooledObject();
+                hit.transform.position = spawnPos.transform.position;
+                hit.transform.rotation = col.transform.rotation;
+                //bul.GetComponent<Rigidbody>().velocity = bod.velocity;
+                hit.SetActive(true);
+                spawned = true;
+            }
             //bul.GetComponent<Rigidbody>().velocity = bod.velocity;
-            hit.SetActive(true);
+            Invoke("Disable", 0.01f);
         }
     }
 
@@ -151,6 +180,7 @@ public class Player_Bullet : Bullet
         }
         if (col.gameObject.CompareTag("Wall"))
         {
+            Invoke("Disable", 0.001f);
             //bod.velocity = Vector3.Reflect(bod.velocity, col.contacts[0].normal);
             if (hitVFXPool == null) hitVFXPool = cont.hitVFXPool;
             GameObject hit = hitVFXPool.GetPooledObject();
