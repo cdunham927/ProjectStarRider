@@ -7,7 +7,7 @@ public class ObjectPool : MonoBehaviour
 {
     public bool test;
     [Header("Object pool variables")]
-    public static ObjectPool SharedInstance;
+    //public static ObjectPool SharedInstance;
     //Object we want to be pooled
     public GameObject objectToPool;
     //Initial number of items we want in the pool
@@ -22,7 +22,7 @@ public class ObjectPool : MonoBehaviour
     //Start by populating the pool
     private void Awake()
     {
-        SharedInstance = this;
+        //SharedInstance = this;
         
         //Spawn x amount of items and add them to the pool
         for (int i = 0; i < amountToPool; i++)
@@ -35,25 +35,48 @@ public class ObjectPool : MonoBehaviour
     [Space]
     [Header("Check this if you want to test the object pooling with the Y and U keys")]
     bool spawned = false;
-    
+
 
     //Spawn the object and add it to the pool
     //Then deactivate the object until we want to use it
 
-    private void Start()
+    private void Update() 
     {
-        pool = new List<GameObject>();
-        GameObject tmp;
-        for (int i = 0; i < pool.Count; i++) 
-        {
 
-            tmp = Instantiate(objectToPool);
-            tmp.SetActive(false);
-            pool.Add(tmp);
+        /*
+       //If we're in the editor
+       if (Application.isEditor && test)
+        //If we push Y
+           if (Input.GetKeyDown(KeyCode.Y) && !spawned)
+           {
+               //Place 5 pooled objects in a line
+               for (int i = 0; i < 5; i++)
+               {
+                   //This is also an example of how to spawn a pooled object at a position
+                   ActivateAtPosition(new Vector3(-2.5f + (i * 2.5f), 0, 0), Quaternion.identity);
+               }
+               //Set the spawned flag, so we can only do it once
+               spawned = true;
+           }
 
-        }
+           //If we push U
+           if (Input.GetKeyDown(KeyCode.U))
+           {
+               //Place a pooled object at a random position
+               float ranX = Random.Range(-5f, 5f);
+               float ranY = Random.Range(-0.5f, 3f);
+               float ranZ = Random.Range(-5f, 5f);
+               ActivateAtPosition(new Vector3(ranX, ranY, ranZ), Quaternion.identity);
+           }
+       }*/
+
+
     }
 
+
+
+    //Spawn the object and add it to the pool
+    //Then deactivate the object until we want to use it
     void PoolObject()
     {
         //Spawn an object
@@ -64,6 +87,7 @@ public class ObjectPool : MonoBehaviour
         obj.SetActive(false);
     }
 
+   
     public GameObject GetPooledObject()
     {
         //If our pool isnt empty
