@@ -56,7 +56,7 @@ public class HomingBulletController : MonoBehaviour
         if (player != null && player.gameObject.activeInHierarchy)
         {
             //bod.AddForce(transform.forward * spd * Time.deltaTime);
-            bod.velocity = transform.forward * spd;
+            bod.velocity = transform.forward * spd; //velcoity algorthim for the porjectile
 
             Vector3 targDir = player.transform.position - transform.position;
             Vector3 newDir = Vector3.RotateTowards(transform.forward, targDir, lerpSpd * Time.deltaTime, 0.0f);
@@ -65,7 +65,7 @@ public class HomingBulletController : MonoBehaviour
     }
     private void OnTriggerEnter(Collider collision)
     {
-        if (collision.CompareTag("Player"))
+        if (collision.CompareTag("Player")) // // trigger on Player  tag object
         {
             collision.gameObject.GetComponent<Player_Stats>().Damage(1);
             if (hitVFXPool == null) hitVFXPool = cont.enemyHitVFXPool;
@@ -76,7 +76,8 @@ public class HomingBulletController : MonoBehaviour
             hit.SetActive(true);
             Invoke("Disable", 0.001f);
         }
-        if (collision.CompareTag("Wall"))
+        
+        if (collision.CompareTag("Wall")) // trigger on wall tag object
         {
             if (hitVFXPool == null) hitVFXPool = cont.enemyHitVFXPool;
             GameObject hit = hitVFXPool.GetPooledObject();

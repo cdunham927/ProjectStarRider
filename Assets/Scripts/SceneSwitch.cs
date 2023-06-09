@@ -15,6 +15,7 @@ public class SceneSwitch : MonoBehaviour
     public AudioClip menuSong;
     public string tutorialName;
     public string cetusName;
+    public string HubName;
     public string menuName;
     MusicController music;
     Animator musicAnim;
@@ -125,7 +126,7 @@ public class SceneSwitch : MonoBehaviour
         }
         yield return new WaitForSeconds(waitTime);
         if (music != null) music.ChangeSong(menuSong);
-        SceneManager.LoadScene("OverWorld");
+        SceneManager.LoadScene(HubName);
     }
 
     public void QuitGame()
@@ -230,4 +231,6 @@ public class SceneSwitch : MonoBehaviour
         Time.timeScale = 1f;
         StartCoroutine(ToCetusScene());
     }
+
+   
 }

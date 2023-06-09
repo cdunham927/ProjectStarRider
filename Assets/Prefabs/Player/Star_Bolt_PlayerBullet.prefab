@@ -27,6 +27,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -2.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5290036462192655792}
   m_RootOrder: 0
@@ -39,7 +40,7 @@ TrailRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5290036461244191075}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -151,11 +152,11 @@ GameObject:
   - component: {fileID: 404560450143345696}
   - component: {fileID: 5367139868374313488}
   - component: {fileID: 5290036462192655793}
-  - component: {fileID: 2751625065431831312}
   - component: {fileID: 5290036462192655799}
   - component: {fileID: 452718054820724912}
   - component: {fileID: 5554365443359293297}
-  m_Layer: 8
+  - component: {fileID: 2827329334059164033}
+  m_Layer: 0
   m_Name: Star_Bolt_PlayerBullet
   m_TagString: Bullet
   m_Icon: {fileID: 0}
@@ -172,6 +173,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 63.784996, y: 8.08, z: -56.32}
   m_LocalScale: {x: 3, y: 3, z: 3}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5290036461244191074}
   - {fileID: 1236350327493018139}
@@ -245,19 +247,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!65 &2751625065431831312
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5290036462192655796}
-  m_Material: {fileID: 13400000, guid: 520a736e230d2ca49a4da756d3fb9960, type: 2}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.5, y: 1.5, z: 1.5}
-  m_Center: {x: 0, y: 0, z: 1.47}
 --- !u!114 &5290036462192655799
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -277,7 +266,6 @@ MonoBehaviour:
   damage: 1
   rb: {fileID: 5290036462192655793}
   disableTime: 4
-  hitPrefab: {fileID: 6108864283411289591, guid: 9e2b4c671dccd3249a8c036627d515aa, type: 3}
   trail: {fileID: 5290036461244191085}
   spawnPos: {fileID: 5290036461244191075}
   hitVFXPool: {fileID: 0}
@@ -5090,6 +5078,7 @@ ParticleSystemRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_RenderMode: 4
+  m_MeshDistribution: 0
   m_SortMode: 0
   m_MinParticleSize: 0
   m_MaxParticleSize: 1
@@ -5113,7 +5102,24 @@ ParticleSystemRenderer:
   m_Mesh1: {fileID: 0}
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
+  m_MeshWeighting: 1
+  m_MeshWeighting1: 1
+  m_MeshWeighting2: 1
+  m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!135 &2827329334059164033
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5290036462192655796}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1.5
+  m_Center: {x: 0, y: 0, z: 1.81}
 --- !u!1 &8400325147632682615
 GameObject:
   m_ObjectHideFlags: 0
@@ -5140,6 +5146,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 1.55}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5290036462192655792}
   m_RootOrder: 1
