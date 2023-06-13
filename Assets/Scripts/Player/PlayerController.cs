@@ -318,10 +318,14 @@ public class PlayerController : MonoBehaviour
                         lerpToSpd = superSpd;
                     else lerpToSpd = highSpd;
                 }
+                //Decel
+                else if (Input.GetAxisRaw("Decel") > 0)
+                {
+                    lerpToSpd = slowSpd;
+                }
+                //Regular speed
                 else lerpToSpd = regSpd;
                 
-                //lerpToSpd = regSpd;
-
                 //if (hor != 0)
                 //{
                 //    if (!invertControls) rotation.y += rotSpd * Time.deltaTime * hor;
@@ -424,26 +428,32 @@ public class PlayerController : MonoBehaviour
             //bod.AddForce(-transform.forward * speed * Time.deltaTime);
 
 
+            //Player special - afterimages
             //If we hit fire button and we have one charge(the max clones is 4, so a fourth of the max images time is one charge
             if (Input.GetButtonDown("Fire2") && (curActiveTime > (oneCharge)))
             {
                 AfterImage();
             }
 
+            if (Input.GetButtonDown("Fire4") && (curActiveTime > (oneCharge)))
+            {
+                Decoy();
+            }
+
             //Alt fire with left trigger
-            if (Input.GetAxisRaw("Altfire2") == 1 && curActiveTime > oneCharge)
-            {
-                if (usingAxis == false)
-                {
-                    // Call your event function here.
-                    AfterImage();
-                    usingAxis = true;
-                }
-            }
-            if (Input.GetAxisRaw("Altfire2") == 0)
-            {
-                usingAxis = false;
-            }
+            //if (Input.GetAxisRaw("Altfire2") == 1 && curActiveTime > oneCharge)
+            //{
+            //    if (usingAxis == false)
+            //    {
+            //        // Call your event function here.
+            //        AfterImage();
+            //        usingAxis = true;
+            //    }
+            //}
+            //if (Input.GetAxisRaw("Altfire2") == 0)
+            //{
+            //    usingAxis = false;
+            //}
 
             if (speedUpTimer > 0) speedUpTimer -= Time.deltaTime;
 
