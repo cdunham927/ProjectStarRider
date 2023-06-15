@@ -15,6 +15,7 @@ public class EnemyControllerBase : MonoBehaviour
     public float killScore = 100;
     protected bool hasAdded = false;
 
+    [Header(" Enemy Attack Settingss : ")]
     //Time between attacks
     public float timeBetweenAttacks;
     //Range for when the enemy starts attacking
@@ -26,10 +27,11 @@ public class EnemyControllerBase : MonoBehaviour
     //Checks if the player is in range
     public bool playerInRange = false;
     //Set the radius for the detection collider
+    [Header(" Enemy site field : ")]
     public SphereCollider detectionCollider;
     public Collider col;
     
-    [Header(" Bullet accuracy Settingss: ")]
+    [Header(" Bullet accuracy Settingss : ")]
     //is random is the variations for shots being produced
     public bool isRandom;
     public float accx;
@@ -38,7 +40,7 @@ public class EnemyControllerBase : MonoBehaviour
     public int bulletShot;
     //public float bulletSpeed;
    
-    [Header("Private Variables: ")]
+    [Header("Private Variables : ")]
     private Vector3 startPoint;
     private const float radius = 1f;
 
@@ -49,10 +51,10 @@ public class EnemyControllerBase : MonoBehaviour
     protected AudioSource src;
 
     //public AnimationClip deathClip;
-    [Header(" Attached Particle Systems: ")]
+    [Header(" Attached Particle Systems : ")]
     public GameObject deathVFX;
 
-    [Header(" Pickups Spawn Chance: ")]
+    [Header(" Pickups Spawn Chance : ")]
     [Range(0, 1)]
     public float hpSpawnChance = 0.3f;
     [Range(0, 1)]
@@ -62,30 +64,33 @@ public class EnemyControllerBase : MonoBehaviour
     public ObjectPool hpPool;
     public ObjectPool bombPool;
     bool spawned = false;
-    public GameObject minimapObj;
     bool spawnedPickup = false;
 
+    [Header(" Icon for minimap : ")]
+    public GameObject minimapObj;
+    
     public Healthbar hpBar;
 
     //Enemy Manager for trap rooms
     [HideInInspector]
     public EnemyManager manager;
 
-    [Header("Damage Blink Settings: ")]
+    [Header("Damage Blink Settings : ")]
     public float blinkDuration = 0.3f;
     public float blinkBrightness = 2.0f;
     float blinkTimer;
     public SkinnedMeshRenderer skinnedMeshRenderer;
 
     public Healthbar healthScript;
-    [Header(" Animation controller: ")]
+    
+    [Header(" Animation controller : ")]
     public Animator anim;
 
     protected Player_Stats pStats;
 
     Color origCol;
 
-   [Header(" Pickup Items Range: ")]
+   [Header(" Pickup Items Range : ")]
     public float pickupXRange = 1.5f;
     public float pickupYRange = 1.5f;
     public float pickupZRange = 1.5f;

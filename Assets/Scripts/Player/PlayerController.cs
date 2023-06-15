@@ -151,6 +151,8 @@ public class PlayerController : MonoBehaviour
     public AudioClip [] PlayerSfx;
     private AudioSource AS;
 
+    [Header(" Animation controller : ")]
+    public Animator anim;
 
     private void Awake()
     {

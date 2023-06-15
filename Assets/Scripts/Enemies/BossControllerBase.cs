@@ -9,6 +9,7 @@ public class BossControllerBase : EnemyControllerBase
     public TMP_Text nameText;
     public string bossName;
 
+    [Header(" Boss Phase's settings : ")]
     public float phase2ThresholdPercent;
     protected float phase2Thres;
     public float phase3ThresholdPercent;
@@ -16,6 +17,7 @@ public class BossControllerBase : EnemyControllerBase
 
     public float[] atkCooldowns;
 
+    [Header(" Boss attack pattern chances: ")]
     public float chanceForAtkFour = 0.3f;
     public float chanceForAtkThree = 0.3f;
     public float chanceForAtkTwo = 0.3f;
