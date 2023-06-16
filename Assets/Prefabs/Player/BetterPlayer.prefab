@@ -47,6 +47,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 493828346837487392}
   m_CullTransparentMesh: 1
+--- !u!1 &1110835365118385367
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 206056868154908291}
+  m_Layer: 7
+  m_Name: LockOnStartPosition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &206056868154908291
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1110835365118385367}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 50}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8701767644159492043}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2352726062654617172
 GameObject:
   m_ObjectHideFlags: 0
@@ -15223,7 +15254,7 @@ TrailRenderer:
     textureMode: 0
     shadowBias: 0.5
     generateLightingData: 0
-  m_MinVertexDistance: 0.1
+  m_MinVertexDistance: 0.5
   m_Autodestruct: 0
   m_Emitting: 1
 --- !u!1 &6043556579944983250
@@ -15503,7 +15534,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8701767644159492086}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 50.34}
+  m_LocalPosition: {x: -19.320002, y: -7.3599973, z: 1354.8995}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -15516,6 +15547,7 @@ Transform:
   - {fileID: 5312442388205497396}
   - {fileID: 1878471350411177078}
   - {fileID: 3409502092083429858}
+  - {fileID: 206056868154908291}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -15590,10 +15622,10 @@ MonoBehaviour:
   turnSmoothTime: 0.1
   trails: {fileID: 0}
   speed: 10
-  slowSpd: 0
-  regSpd: -50
-  highSpd: -200
-  superSpd: -300
+  slowSpd: -50
+  regSpd: -150
+  highSpd: -275
+  superSpd: -325
   sideSpeed: -60
   rotSpd: 80
   lookSpd: 1.5
@@ -15623,8 +15655,8 @@ MonoBehaviour:
   speedUpTime: 10
   cinCam: {fileID: 0}
   mainCam: {fileID: 0}
-  aimAtTarget: {fileID: 8701767644839538911}
-  followTarget: {fileID: 8701767645949774035}
+  aimAtTarget: {fileID: 493828346837487392}
+  followTarget: {fileID: 8701767644159492086}
   bod: {fileID: 2009239985978953898}
   pushBack: 1000
   timeToMove: 0.3125
@@ -15648,6 +15680,12 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 9aac37e9dcecef049a8ce4e1d1549d6c, type: 3}
   - {fileID: 8300000, guid: 9aac37e9dcecef049a8ce4e1d1549d6c, type: 3}
   - {fileID: 8300000, guid: 133a4e0be6e755f488ae708b2509ca5a, type: 3}
+  lockonTarget: {fileID: 0}
+  targetLocation: {fileID: 1110835365118385367}
+  targetRadius: 95
+  enemyMask:
+    serializedVersion: 2
+    m_Bits: 256
 --- !u!114 &5272638553245071613
 MonoBehaviour:
   m_ObjectHideFlags: 0
