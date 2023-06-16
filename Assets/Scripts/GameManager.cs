@@ -5,7 +5,6 @@ using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using MPUIKIT;
-using Cinemachine;
 
 public class GameManager : MonoBehaviour
 {
@@ -116,9 +115,6 @@ public class GameManager : MonoBehaviour
     public enum levelTypes { battle, race, maze }
     public levelTypes levelType;
 
-    [HideInInspector]
-    public CinemachineTargetGroup targetGroup;
-
     void Awake()
     {
         //allGameObjects = FindObjectsOfType<GameObject>();
@@ -135,8 +131,6 @@ public class GameManager : MonoBehaviour
             //controlsText.gameObject.SetActive(true);
         }
         player = FindObjectOfType<PlayerController>();
-        targetGroup = GetComponent<CinemachineTargetGroup>();
-        targetGroup.m_Targets[0].target = player.aimTarget;
         //Spawn new event system
         if (FindObjectOfType<EventSystem>() == null)
         {

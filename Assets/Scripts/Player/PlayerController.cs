@@ -131,6 +131,7 @@ public class PlayerController : MonoBehaviour
 
     private SkinnedMeshRenderer[] skinnedMeshRenderers;
     public Material mat;
+
     
     GameObject dashPS;
     [Header(" Player Vfx Settings")]
@@ -150,12 +151,6 @@ public class PlayerController : MonoBehaviour
     public AudioClip [] PlayerSfx;
     private AudioSource AS;
 
-    bool decoyButtonHeld = false;
-    bool lockon = false;
-    public GameObject lockonTarget;
-    public GameObject targetLocation;
-    public float targetRadius;
-    public LayerMask enemyMask;
 
     private void Awake()
     {
@@ -175,7 +170,7 @@ public class PlayerController : MonoBehaviour
         //Set cinemachine follow and aim targets
         //cinCam = FindObjectOfType<CinemachineVirtualCamera>();
         cinCam.m_Follow = followTarget.transform;
-        //cinCam.m_LookAt = cont.targetGroup;
+        cinCam.m_LookAt = aimTarget.transform;
 
         afterimageUI = FindObjectOfType<GameManager>().afterimages;
         bod = GetComponent<Rigidbody>();
@@ -202,7 +197,7 @@ public class PlayerController : MonoBehaviour
     private void OnEnable()
     {
         cinCam.m_Follow = followTarget.transform;
-        //cinCam.m_LookAt = aimTarget.transform;
+        cinCam.m_LookAt = aimTarget.transform;
         //mainCam.transform.position = camStartPos;
     }
 
@@ -323,14 +318,10 @@ public class PlayerController : MonoBehaviour
                         lerpToSpd = superSpd;
                     else lerpToSpd = highSpd;
                 }
-                //Decel
-                else if (Input.GetAxisRaw("Decel") > 0)
-                {
-                    lerpToSpd = slowSpd;
-                }
-                //Regular speed
                 else lerpToSpd = regSpd;
                 
+                //lerpToSpd = regSpd;
+
                 //if (hor != 0)
                 //{
                 //    if (!invertControls) rotation.y += rotSpd * Time.deltaTime * hor;
@@ -403,7 +394,6 @@ public class PlayerController : MonoBehaviour
                 curDashCools = dashCooldown;
                 Speedvfx();
                 Dashvfx();
-                if (decoyButtonHeld) Decoy();
                 //Decoy();
                 //if (curActiveTime > oneCharge) Decoy();
             }
@@ -416,7 +406,6 @@ public class PlayerController : MonoBehaviour
                 curDashCools = dashCooldown;
                 Speedvfx();
                 Dashvfx();
-                if (decoyButtonHeld) Decoy();
                 //if (curActiveTime > oneCharge) Decoy();
             }
 
@@ -435,76 +424,26 @@ public class PlayerController : MonoBehaviour
             //bod.AddForce(-transform.forward * speed * Time.deltaTime);
 
 
-            //Player special - afterimages
             //If we hit fire button and we have one charge(the max clones is 4, so a fourth of the max images time is one charge
             if (Input.GetButtonDown("Fire2") && (curActiveTime > (oneCharge)))
             {
                 AfterImage();
             }
 
-            if (Input.GetButton("Fire4") && (curActiveTime > (oneCharge)))
-            {
-                decoyButtonHeld = true;
-            }
-            if (Input.GetButtonUp("Fire4")) decoyButtonHeld = false;
-
-            if (Input.GetButtonDown("Lockon"))
-            {
-                if (lockonTarget == null)
-                {
-                    //Find new target to look at
-                    Collider[] cols = Physics.OverlapSphere(targetLocation.transform.position, targetRadius, enemyMask);
-                    if (cols.Length > 0)
-                    {
-                        lockon = true;
-                        GameObject closestEnemy = cols[0].gameObject;
-                        float dist = Vector3.Distance(targetLocation.transform.position, cols[0].gameObject.transform.position);
-                        float closestDistance = Vector3.Distance(targetLocation.transform.position, cols[0].gameObject.transform.position);
-                        for (int i = 0; i < cols.Length; i++)
-                        {
-                            dist = Vector3.Distance(targetLocation.transform.position, cols[i].gameObject.transform.position);
-                            if (dist < closestDistance)
-                            {
-                                closestEnemy = cols[i].gameObject;
-                            }
-
-                            lockonTarget = closestEnemy;
-                        }
-                    }
-                }
-                //Else we already have a target and want to unlock the camera
-                else
-                {
-                    lockon = false;
-                    lockonTarget = null;
-                }
-            }
-
-            if (lockon)
-            {
-                //cinCam.m_LookAt = lockonTarget.transform;
-                //cinCam.m_Follow = lockonTarget.transform;
-                //transform.LookAt(lockonTarget.transform);
-            }
-            else
-            {
-                //cinCam.m_LookAt = aimTarget.transform;
-            }
-
             //Alt fire with left trigger
-            //if (Input.GetAxisRaw("Altfire2") == 1 && curActiveTime > oneCharge)
-            //{
-            //    if (usingAxis == false)
-            //    {
-            //        // Call your event function here.
-            //        AfterImage();
-            //        usingAxis = true;
-            //    }
-            //}
-            //if (Input.GetAxisRaw("Altfire2") == 0)
-            //{
-            //    usingAxis = false;
-            //}
+            if (Input.GetAxisRaw("Altfire2") == 1 && curActiveTime > oneCharge)
+            {
+                if (usingAxis == false)
+                {
+                    // Call your event function here.
+                    AfterImage();
+                    usingAxis = true;
+                }
+            }
+            if (Input.GetAxisRaw("Altfire2") == 0)
+            {
+                usingAxis = false;
+            }
 
             if (speedUpTimer > 0) speedUpTimer -= Time.deltaTime;
 
@@ -569,18 +508,6 @@ public class PlayerController : MonoBehaviour
 
             //Rotate towards the new inputs
             transform.eulerAngles = new Vector3(rotation.x, rotation.y, rotation.z) * lookSpd;
-
-            //Look at locked on target
-            //if (lockon)
-            //{
-            //    Vector3 targetDir = lockonTarget.transform.position - transform.position;
-            //    targetDir.y = 0;
-            //    float step = lookSpd * Time.deltaTime;
-            //
-            //    Vector3 newDir = Vector3.RotateTowards(transform.forward, targetDir, step, 0.0F);
-            //
-            //    transform.rotation = Quaternion.LookRotation(newDir);
-            //}
         }
 
         if (cinCam != null && cinCam.transform.rotation.z != 0)
@@ -833,9 +760,4 @@ public class PlayerController : MonoBehaviour
         bod.AddForce(dir * force);
     }
 
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(targetLocation.transform.position, targetRadius);
-    }
 }
