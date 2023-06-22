@@ -1,4 +1,4 @@
-Shader "Unlit/Outline"
+Shader "Unlit/OutLine"
 {
     HLSLINCLUDE
     #include "Packages/com.unity.postprocessing/PostProcessing/Shaders/StdLib.hlsl"
