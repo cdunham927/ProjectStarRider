@@ -66,8 +66,15 @@ public class SceneSwitch : MonoBehaviour
         if (overworld != null) pauseMenu = overworld.pauseMenu;
     }
 
-    public void LoadScene(string n)
+    IEnumerator LoadScene(string n)
     {
+        music = FindObjectOfType<MusicController>();
+        if (music != null)
+        {
+            musicAnim = music.GetComponent<Animator>();
+            musicAnim.SetTrigger("fadeOut");
+        }
+        yield return new WaitForSeconds(waitTime);
         SceneManager.LoadScene(n);
     }
 

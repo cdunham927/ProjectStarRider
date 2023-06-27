@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
+//using System;
 
 public class EnemyControllerBase : MonoBehaviour
 {
@@ -65,6 +67,14 @@ public class EnemyControllerBase : MonoBehaviour
     public ObjectPool bombPool;
     bool spawned = false;
     bool spawnedPickup = false;
+
+    [Header("Camera Shake Settings: ")]
+    //Camera shake on take damage
+    CinemachineVirtualCamera cine;
+    CinemachineBasicMultiChannelPerlin perlin;
+    public float shakeTimer = 0.1f;
+    float curTime;
+    public float shakeAmt = 5f;
 
     [Header(" Icon for minimap : ")]
     public GameObject minimapObj;
@@ -157,6 +167,17 @@ public class EnemyControllerBase : MonoBehaviour
     //    curHp -= amt;
     //}
 
+
+    public void ShakeCamera()
+    {
+        if (perlin != null)
+        {
+            perlin.m_AmplitudeGain = shakeAmt;
+            curTime = shakeTimer;
+        }
+    }
+
+
     protected virtual void Update()
     {
         switch (currentState)
@@ -225,7 +246,7 @@ public class EnemyControllerBase : MonoBehaviour
         //skinnedMeshRenderer.materials[0].color = Color.white * intensity;
         //skinnedMeshRenderer.materials[1].color = Color.white * intensity;
         //skinnedMeshRenderer.materials[2].color = Color.white * intensity;
-
+        ShakeCamera();
         if (curHp <= 0 && !spawned)
         {
             if (Random.value < bombSpawnChance && !spawnedPickup && bombPool != null)
@@ -316,7 +337,9 @@ public class EnemyControllerBase : MonoBehaviour
         Material[] tempMats = skinnedMeshRenderer.materials;
         //tempMats[ind].color = origCol;
         skinnedMeshRenderer.materials = tempMats;
+        //skinnedMeshRenderer.material.color = Color.white;
     }
+
 
     /*public void PushRaidal()
     {
