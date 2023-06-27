@@ -151,6 +151,13 @@ public class PlayerController : MonoBehaviour
     public AudioClip [] PlayerSfx;
     private AudioSource AS;
 
+    public CinemachineTargetGroup cineGroup;
+    bool lockedon;
+    public GameObject closestTarget;
+    public LayerMask enemyMask;
+    public GameObject lockonCastPos;
+    public float lockonRadius;
+
     //[Header(" Animation controller : ")]
     //public Animator anim;
 
@@ -172,7 +179,7 @@ public class PlayerController : MonoBehaviour
         //Set cinemachine follow and aim targets
         //cinCam = FindObjectOfType<CinemachineVirtualCamera>();
         cinCam.m_Follow = followTarget.transform;
-        cinCam.m_LookAt = aimTarget.transform;
+        //cinCam.m_LookAt = aimTarget.transform;
 
         afterimageUI = FindObjectOfType<GameManager>().afterimages;
         bod = GetComponent<Rigidbody>();
@@ -199,7 +206,7 @@ public class PlayerController : MonoBehaviour
     private void OnEnable()
     {
         cinCam.m_Follow = followTarget.transform;
-        cinCam.m_LookAt = aimTarget.transform;
+        //cinCam.m_LookAt = aimTarget.transform;
         //mainCam.transform.position = camStartPos;
     }
 
@@ -517,6 +524,40 @@ public class PlayerController : MonoBehaviour
             //Movement
             if (!hitWall) newVelZ = -transform.forward * speed;
             if (!hitWall) bod.velocity = newVelX + newVelZ;
+
+            //Lock on to closest enemy in front of the player
+            if (Input.GetButtonDown("Lockon"))
+            {
+                if (lockedon)
+                {
+                    lockedon = false;
+                    closestTarget = null;
+                }
+                else
+                {
+                    Collider[] cols = Physics.OverlapSphere(lockonCastPos.transform.position, lockonRadius, enemyMask);
+                    if (cols.Length > 0)
+                    {
+                        GameObject closestObj = cols[0].gameObject;
+                        float closestDistance = Vector3.Distance(transform.position, closestObj.transform.position);
+
+                        for (int i = 0; i < cols.Length; i++)
+                        {
+                            GameObject o = cols[i].gameObject;
+                            float dist = Vector3.Distance(transform.position, cols[i].transform.position);
+
+                            if (dist < closestDistance)
+                            {
+                                closestDistance = dist;
+                                closestObj = cols[i].gameObject;
+                            }
+                        }
+
+                        closestTarget = closestObj;
+                    }
+
+                }
+            }
 
             //Rotate towards the new inputs
             transform.eulerAngles = new Vector3(rotation.x, rotation.y, rotation.z) * lookSpd;
