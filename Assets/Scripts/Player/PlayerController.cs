@@ -180,6 +180,7 @@ public class PlayerController : MonoBehaviour
         //cinCam = FindObjectOfType<CinemachineVirtualCamera>();
         cinCam.m_Follow = followTarget.transform;
         //cinCam.m_LookAt = aimTarget.transform;
+        cinCam.m_LookAt = cineGroup.transform;
 
         afterimageUI = FindObjectOfType<GameManager>().afterimages;
         bod = GetComponent<Rigidbody>();
@@ -207,6 +208,7 @@ public class PlayerController : MonoBehaviour
     {
         cinCam.m_Follow = followTarget.transform;
         //cinCam.m_LookAt = aimTarget.transform;
+        cinCam.m_LookAt = cineGroup.transform;
         //mainCam.transform.position = camStartPos;
     }
 
@@ -532,6 +534,8 @@ public class PlayerController : MonoBehaviour
                 {
                     lockedon = false;
                     closestTarget = null;
+                    //cineGroup.m_Targets[2].target = cineGroup.m_Targets[1].target;
+                    cineGroup.m_Targets[2].target = null;
                 }
                 else
                 {
@@ -556,6 +560,9 @@ public class PlayerController : MonoBehaviour
                         closestTarget = closestObj;
                     }
 
+                    //cineGroup.m_Targets[1] = closestTarget;
+                    lockedon = true;
+                    if (closestTarget != null) cineGroup.m_Targets[2].target = closestTarget.transform;
                 }
             }
 
@@ -772,6 +779,12 @@ public class PlayerController : MonoBehaviour
     void ResetMaterial()
     {
         if (meshRenderer != null) meshRenderer.material.color = Color.white;
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(lockonCastPos.transform.position, lockonRadius);
     }
 
     IEnumerator ActivateTrail (float timeActive) 

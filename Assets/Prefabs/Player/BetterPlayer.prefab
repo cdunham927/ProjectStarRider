@@ -102,7 +102,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 515050528640081020}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 75}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -15380,7 +15380,7 @@ TrailRenderer:
     textureMode: 0
     shadowBias: 0.5
     generateLightingData: 0
-  m_MinVertexDistance: 0.1
+  m_MinVertexDistance: 0.5
   m_Autodestruct: 0
   m_Emitting: 1
 --- !u!1 &6043556579944983250
@@ -15873,10 +15873,10 @@ MonoBehaviour:
   turnSmoothTime: 0.1
   trails: {fileID: 0}
   speed: 10
-  slowSpd: 0
-  regSpd: -50
-  highSpd: -200
-  superSpd: -300
+  slowSpd: -50
+  regSpd: -150
+  highSpd: -275
+  superSpd: -325
   sideSpeed: -60
   rotSpd: 80
   lookSpd: 1.5
@@ -15935,9 +15935,9 @@ MonoBehaviour:
   closestTarget: {fileID: 0}
   enemyMask:
     serializedVersion: 2
-    m_Bits: 0
-  lockonCastPos: {fileID: 0}
-  lockonRadius: 0
+    m_Bits: 64
+  lockonCastPos: {fileID: 515050528640081020}
+  lockonRadius: 150
 --- !u!114 &5272638553245071613
 MonoBehaviour:
   m_ObjectHideFlags: 0
