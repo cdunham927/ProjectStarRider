@@ -13,14 +13,18 @@ public class SceneSwitch : MonoBehaviour
     public AudioClip tutorialSong;
     public AudioClip cetusSong;
     public AudioClip menuSong;
+
+    [Header("Level Names : Match in Build Settings ")]
     public string tutorialName;
     public string cetusName;
     public string HubName;
     public string menuName;
+    public string n;
+    
     MusicController music;
     Animator musicAnim;
     public float waitTime;
-
+    
     public GameObject optionsPrefab;
     public GameObject optionsMenu;
     [HideInInspector]
@@ -239,5 +243,12 @@ public class SceneSwitch : MonoBehaviour
         StartCoroutine(ToCetusScene());
     }
 
-   
+    public void GoToScene()
+    {
+        //MusicController.instance.PlaySound();
+        Time.timeScale = 1f;
+        StartCoroutine(LoadScene(n));
+    }
+
+
 }

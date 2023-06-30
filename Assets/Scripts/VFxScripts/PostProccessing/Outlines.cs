@@ -1,74 +1,89 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
-using UnityEngine.Rendering.PostProcessing;
+using UnityEngine.Rendering.Universal;
+using UnityEngine.Rendering;
 
+// Stores modified vert normals in the color data.
+// Skipping a lot of error checking for the sake of brevity.
 
-
-[Serializable]
-[PostProcess(typeof(PostProccessOutlines), PostProcessEvent.AfterStack, "Outline")]
-
-public sealed class Outlines : PostProcessEffectSettings 
-{
-    //Outline thickness and depth variables
-
-    public FloatParameter thickness = new FloatParameter { value = 1f };
-    public FloatParameter depthmin = new FloatParameter { value = 0f };
-    public FloatParameter depthmax = new FloatParameter { value = 1f };
-
-    //Outline Color Variables
-
-    public ColorParameter color = new ColorParameter { value = Color.white };
-
-}
-
-
-
-public  class PostProccessOutlines: PostProcessEffectRenderer<Outlines> 
+public class Outlines : MonoBehaviour
 {
 
+    public Mesh originalMesh;
 
-
-    public static RenderTexture outlineRendererTexture;
-    public override DepthTextureMode GetCameraFlags() 
+    [ContextMenu("DoTheThing")]
+    public void DoTheThing()
     {
-        return DepthTextureMode.Depth;
-    }
-    
-    
-    public override void Render(PostProcessRenderContext context)
-    {
-        //throw new NotImplementedException();
 
-        // Finds propeprty sheet for the actuall shader and assigned variables
-        PropertySheet sheet = context.propertySheets.Get(Shader.Find("Unlit/Outline"));
-        sheet.properties.SetFloat("_Thickness", settings.thickness);
-        sheet.properties.SetFloat("_MinDepth", settings.depthmin);
-        sheet.properties.SetFloat("_MaxDepth", settings.depthmax);
-        sheet.properties.SetColor("_Color", settings.color);
+        MeshFilter mf = GetComponent<MeshFilter>();
+        MeshRenderer mr = GetComponent<MeshRenderer>();
 
-        if(outlineRendererTexture  == null || outlineRendererTexture.width != Screen.width || outlineRendererTexture.height != Screen.height) 
+        if (originalMesh == null)
+            originalMesh = mf.sharedMesh;
+
+        Mesh newMesh = (Mesh)Instantiate(originalMesh);
+
+        newMesh.name += "_baked";
+
+        List<Color> vertColors = new List<Color>(newMesh.vertexCount);
+
+        // so it's not cloning the array on every iteration      
+        Vector3[] verts = newMesh.vertices;
+        Vector3[] norms = newMesh.normals;
+
+        for (int i = 0; i < newMesh.vertexCount; i++)
         {
-            outlineRendererTexture = new RenderTexture(Screen.width, Screen.height, 24);
-            context.camera.targetTexture = outlineRendererTexture;
-        
-        
+
+
+            // Faces associated with this vert
+            List<Vector3> activeFaces = new List<Vector3>();
+
+            // If a nother vert shares the same space as this one
+            // then we'll average in its normal
+            for (int a = 0; a < newMesh.vertexCount; a++)
+            {
+                if (a == i) continue;
+                if (verts[i] == verts[a])
+                    activeFaces.Add(norms[a]);
+            }
+
+            activeFaces.Add(norms[i]);
+
+            // average the faces (normals)
+            Vector3 vertColor = Vector3.zero;
+            for (int n = 0; n < activeFaces.Count; n++)
+            {
+                vertColor += activeFaces[n];
+            }
+            vertColor.Normalize();
+
+            // Even if it's orphaned, etc
+            vertColors.Add(V3ToColor(vertColor));
+
         }
-        
-        
-        
-        
-        
-        
-        context.command.BlitFullscreenTriangle(context.source, context.destination, sheet, 0);
 
+        newMesh.SetColors(vertColors);
 
+        mf.sharedMesh = newMesh;
 
+    }
 
+    Color V3ToColor(Vector3 inVector)
+    {
+        return new Color(inVector.x, inVector.y, inVector.z, 0);
     }
 
 
 
+    [ContextMenu("RestoreTheThing")]
+    public void RestoreTheThing()
+    {
+
+        if (originalMesh != null)
+            GetComponent<MeshFilter>().sharedMesh = originalMesh;
+
+    }
+
 
 }
+

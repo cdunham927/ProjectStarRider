@@ -59,10 +59,11 @@ public class Player_Stats : MonoBehaviour
     //Camera shake on take damage
     CinemachineVirtualCamera cine;
     CinemachineBasicMultiChannelPerlin perlin;
-    public float shakeTimer;
+    public float shakeTimer = 0.2f;
+    public float shakeAmt = 1f;
     float curTime;
-    public float shakeAmt;
-
+    
+    
     [Header("Damage Blink Settings: ")]
     public float blinkDuration = 0.3f;
     public float blinkIntensity = 2.0f;
@@ -104,9 +105,10 @@ public class Player_Stats : MonoBehaviour
         meshRenderer = GetComponentInChildren<MeshRenderer>();
 
 
+
         //Camera shake things
         if (cine == null) cine = FindObjectOfType<CinemachineVirtualCamera>();
-        if (perlin == null) perlin = FindObjectOfType<CinemachineVirtualCamera>().GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
+        if (perlin == null)  perlin = FindObjectOfType<CinemachineVirtualCamera>().GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
 
         src = GetComponent<AudioSource>();
 
@@ -121,6 +123,10 @@ public class Player_Stats : MonoBehaviour
         //innerRect = GameObject.FindGameObjectWithTag("Health").GetComponent<Shapes.Rectangle>();
     }
 
+    private void Start()
+    {
+        StopShakeCamera();
+    }
     public void AddScore(float amt = 0, bool resetMultiplier = false)
     {
         score += amt * scoreMultiplier;
@@ -134,6 +140,15 @@ public class Player_Stats : MonoBehaviour
         {
             perlin.m_AmplitudeGain = shakeAmt;
             curTime = shakeTimer;
+        }
+    }
+
+    public void StopShakeCamera()
+    {
+        if (perlin != null)
+        {
+            perlin.m_AmplitudeGain = 0f;
+            curTime = 0f;
         }
     }
 
@@ -244,6 +259,16 @@ public class Player_Stats : MonoBehaviour
                 {
 
                     ShakeCamera();
+                    if(curTime > 0) 
+                    {
+                        curTime -= Time.deltaTime;
+                        if(curTime <= 0) 
+                        {
+                            StopShakeCamera();
+                            
+                        }
+                    
+                    }
                     src.PlayOneShot(takeDamageClip, hitVolume);
                 }
 
@@ -282,8 +307,7 @@ public class Player_Stats : MonoBehaviour
             }
         }
     }
-
-  
+    
     void Death() 
     {
         FindObjectOfType<GameManager>().GameOver();
@@ -304,8 +328,6 @@ public class Player_Stats : MonoBehaviour
         meshRenderer.material.color = Color.green * blinkIntensity;
         Invoke("ResetMaterial", blinkDuration);
     }
-
-
 
     void ResetMaterial()
    {

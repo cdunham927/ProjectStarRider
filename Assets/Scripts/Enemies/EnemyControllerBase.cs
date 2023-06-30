@@ -74,7 +74,7 @@ public class EnemyControllerBase : MonoBehaviour
     CinemachineBasicMultiChannelPerlin perlin;
     public float shakeTimer = 0.1f;
     float curTime;
-    public float shakeAmt = 5f;
+    public float shakeAmt = .5f;
 
     [Header(" Icon for minimap : ")]
     public GameObject minimapObj;
