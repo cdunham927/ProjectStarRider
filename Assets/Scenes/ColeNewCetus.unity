@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.015739843, g: 0.018434415, b: 0.013260875, a: 1}
+  m_IndirectSpecularColor: {r: 0.0030581078, g: 0.000009840578, b: 0.019199207, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -149,6 +149,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -6.1000004, y: 1.6395787, z: -162.2}
   m_LocalScale: {x: 0.033333335, y: 0.1, z: 0.1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 496734264}
   - {fileID: 1141191287}
@@ -166,6 +167,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7318336}
   - component: {fileID: 7318335}
+  - component: {fileID: 7318337}
   m_Layer: 0
   m_Name: Directional Light
   m_TagString: Untagged
@@ -245,10 +247,31 @@ Transform:
   m_LocalRotation: {x: 0.40821788, y: -0.23456968, z: 0.10938163, w: 0.8754261}
   m_LocalPosition: {x: 8.7, y: 35.9, z: -15.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 15
+  m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!114 &7318337
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7318334}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Version: 1
+  m_UsePipelineSettings: 1
+  m_AdditionalLightsShadowResolutionTier: 2
+  m_LightLayerMask: 1
+  m_CustomShadowLayers: 0
+  m_ShadowLayerMask: 1
+  m_LightCookieSize: {x: 1, y: 1}
+  m_LightCookieOffset: {x: 0, y: 0}
 --- !u!1001 &67035989
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -262,7 +285,7 @@ PrefabInstance:
       objectReference: {fileID: 8300000, guid: 5df22a1e95dc68b4982ea0f90045f9b8, type: 3}
     - target: {fileID: 877252893838211537, guid: 6d3271e5ae24096479bd8dc3b11d13f7, type: 3}
       propertyPath: m_RootOrder
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 877252893838211537, guid: 6d3271e5ae24096479bd8dc3b11d13f7, type: 3}
       propertyPath: m_LocalPosition.x
@@ -341,6 +364,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 933}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 911680}
   m_RootOrder: 2
@@ -422,7 +446,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Shape:
-    id: 0
+    rid: 0
   m_Size: {x: 236.51965, y: 256.39136, z: -483.46082}
   m_Rotation: {x: -0.49999994, y: -0.49999994, z: 0.49999994, w: 0.49999994}
   m_PivotLocation: 0
@@ -432,8 +456,9 @@ MonoBehaviour:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 118.25983, y: 128.19568, z: -241.73041}
   references:
-    version: 1
-    00000000:
+    version: 2
+    RefIds:
+    - rid: 0
       type: {class: Pipe, ns: UnityEngine.ProBuilder.Shapes, asm: Unity.ProBuilder}
       data:
         m_Thickness: 0.25
@@ -1204,7 +1229,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 331639249648433790, guid: f1e5fbb1145447147be978a9ed219e5d, type: 3}
       propertyPath: m_RootOrder
-      value: 9
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 331639249648433790, guid: f1e5fbb1145447147be978a9ed219e5d, type: 3}
       propertyPath: m_LocalScale.x
@@ -1339,6 +1364,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0.7071069, w: 0.70710677}
   m_LocalPosition: {x: -45, y: 0.4, z: 17.312943}
   m_LocalScale: {x: 0.1, y: 0.033333328, z: 0.1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2123470729}
   m_RootOrder: 7
@@ -1420,7 +1446,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Shape:
-    id: 0
+    rid: 0
   m_Size: {x: 342.53412, y: 5, z: 10}
   m_Rotation: {x: 0, y: 0, z: 0, w: 1}
   m_PivotLocation: 0
@@ -1430,8 +1456,9 @@ MonoBehaviour:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 171.26706, y: 2.5, z: 5}
   references:
-    version: 1
-    00000000:
+    version: 2
+    RefIds:
+    - rid: 0
       type: {class: Cube, ns: UnityEngine.ProBuilder.Shapes, asm: Unity.ProBuilder}
 --- !u!114 &156590425
 MonoBehaviour:
@@ -1823,7 +1850,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 331639249648433790, guid: f1e5fbb1145447147be978a9ed219e5d, type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 331639249648433790, guid: f1e5fbb1145447147be978a9ed219e5d, type: 3}
       propertyPath: m_LocalScale.x
@@ -1940,7 +1967,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7156312672638498230, guid: 33db5574b421a7447ae3c861ddc2b3fb, type: 3}
       propertyPath: m_RootOrder
-      value: 21
+      value: 22
       objectReference: {fileID: 0}
     - target: {fileID: 7156312672638498230, guid: 33db5574b421a7447ae3c861ddc2b3fb, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2397,7 +2424,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6154660521567802399, guid: b3bdcf6ad6839414db7ff05e34850eda, type: 3}
       propertyPath: m_RootOrder
-      value: 11
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 6154660521567802399, guid: b3bdcf6ad6839414db7ff05e34850eda, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2638,6 +2665,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -10.176667, y: -16.560423, z: -19.7}
   m_LocalScale: {x: 0.033333335, y: 0.1, z: 0.1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2123470729}
   m_RootOrder: 5
@@ -2719,7 +2747,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Shape:
-    id: 0
+    rid: 0
   m_Size: {x: 1062.1995, y: 29.487625, z: -720.54224}
   m_Rotation: {x: 0, y: 0, z: 0, w: 1}
   m_PivotLocation: 0
@@ -2729,8 +2757,9 @@ MonoBehaviour:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 531.09973, y: 14.743813, z: 360.27112}
   references:
-    version: 1
-    00000000:
+    version: 2
+    RefIds:
+    - rid: 0
       type: {class: Cube, ns: UnityEngine.ProBuilder.Shapes, asm: Unity.ProBuilder}
 --- !u!114 &269610302
 MonoBehaviour:
@@ -3154,7 +3183,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1823756222400737355, guid: 13083403c3532c94aaa38d10a391ce1a, type: 3}
       propertyPath: m_RootOrder
-      value: 10
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 1823756222400737355, guid: 13083403c3532c94aaa38d10a391ce1a, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3627,6 +3656,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -16.891079, y: 0.59913635, z: 13.561043}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -3657,9 +3687,10 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 244.5, y: 153, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 20
+  m_RootOrder: 21
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &436987757
 GameObject:
@@ -3693,6 +3724,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0.7071068, w: 0.7071068}
   m_LocalPosition: {x: -9.9000025, y: 0.1, z: 17.1}
   m_LocalScale: {x: 0.1, y: 0.03333333, z: 0.1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2123470729}
   m_RootOrder: 4
@@ -3792,7 +3824,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Shape:
-    id: 0
+    rid: 0
   m_Size: {x: 360, y: 1075, z: 20}
   m_Rotation: {x: 0, y: 0, z: 0, w: 1}
   m_PivotLocation: 0
@@ -3802,8 +3834,9 @@ MonoBehaviour:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 180, y: 537.5, z: 10}
   references:
-    version: 1
-    00000000:
+    version: 2
+    RefIds:
+    - rid: 0
       type: {class: Cube, ns: UnityEngine.ProBuilder.Shapes, asm: Unity.ProBuilder}
 --- !u!114 &436987764
 MonoBehaviour:
@@ -4121,6 +4154,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_SendPointerHoverToParent: 1
   m_HorizontalAxis: Horizontal
   m_VerticalAxis: Vertical
   m_SubmitButton: Submit
@@ -4153,9 +4187,10 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 16
+  m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &496734263
 GameObject:
@@ -4188,6 +4223,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 911680}
   m_RootOrder: 0
@@ -4269,7 +4305,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Shape:
-    id: 0
+    rid: 0
   m_Size: {x: 236.51965, y: 256.39136, z: -483.46082}
   m_Rotation: {x: -0.49999994, y: -0.49999994, z: 0.49999994, w: 0.49999994}
   m_PivotLocation: 0
@@ -4279,8 +4315,9 @@ MonoBehaviour:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 118.25983, y: 128.19568, z: -241.73041}
   references:
-    version: 1
-    00000000:
+    version: 2
+    RefIds:
+    - rid: 0
       type: {class: Pipe, ns: UnityEngine.ProBuilder.Shapes, asm: Unity.ProBuilder}
       data:
         m_Thickness: 0.25
@@ -5068,9 +5105,10 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -16.891079, y: 0.59913635, z: 13.561043}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 18
+  m_RootOrder: 19
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &574602723
 GameObject:
@@ -5098,9 +5136,10 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -16.891079, y: 0.59913635, z: 13.561043}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 14
+  m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &639021386
 PrefabInstance:
@@ -5127,7 +5166,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6871444587545344447, guid: 44e7115f02c47ce4684585ffc882ebd4, type: 3}
       propertyPath: m_RootOrder
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 6871444587545344447, guid: 44e7115f02c47ce4684585ffc882ebd4, type: 3}
       propertyPath: m_AnchorMax.x
@@ -5398,6 +5437,17 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!114 &676499422 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 839120014534578353, guid: d07c4c6d9cfc41d478e128b6e2b52985, type: 3}
+  m_PrefabInstance: {fileID: 823382006}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5eb80d8e62d9d145bb50fb783c0f731, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &691775623
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5407,7 +5457,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 331639249648433790, guid: f1e5fbb1145447147be978a9ed219e5d, type: 3}
       propertyPath: m_RootOrder
-      value: 8
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 331639249648433790, guid: f1e5fbb1145447147be978a9ed219e5d, type: 3}
       propertyPath: m_LocalScale.x
@@ -5700,7 +5750,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8701767644159492043, guid: 8327d579f0661e84a92587298fc1136f, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8701767644159492043, guid: 8327d579f0661e84a92587298fc1136f, type: 3}
       propertyPath: m_LocalPosition.x
@@ -5742,6 +5792,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8701767644159492045, guid: 8327d579f0661e84a92587298fc1136f, type: 3}
+      propertyPath: cineGroup
+      value: 
+      objectReference: {fileID: 676499422}
     - target: {fileID: 8701767644159492086, guid: 8327d579f0661e84a92587298fc1136f, type: 3}
       propertyPath: m_Name
       value: BetterPlayer
@@ -5778,6 +5832,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -115.6, y: -12.960422, z: -120.1}
   m_LocalScale: {x: 50, y: 1, z: 100}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2123470729}
   m_RootOrder: 0
@@ -6974,6 +7029,76 @@ MonoBehaviour:
   m_SelectedFaces: 
   m_SelectedEdges: []
   m_SelectedVertices: 
+--- !u!1001 &823382006
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 839120014534578350, guid: d07c4c6d9cfc41d478e128b6e2b52985, type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 839120014534578350, guid: d07c4c6d9cfc41d478e128b6e2b52985, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 839120014534578350, guid: d07c4c6d9cfc41d478e128b6e2b52985, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 839120014534578350, guid: d07c4c6d9cfc41d478e128b6e2b52985, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 50.34
+      objectReference: {fileID: 0}
+    - target: {fileID: 839120014534578350, guid: d07c4c6d9cfc41d478e128b6e2b52985, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 839120014534578350, guid: d07c4c6d9cfc41d478e128b6e2b52985, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 839120014534578350, guid: d07c4c6d9cfc41d478e128b6e2b52985, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 839120014534578350, guid: d07c4c6d9cfc41d478e128b6e2b52985, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 839120014534578350, guid: d07c4c6d9cfc41d478e128b6e2b52985, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 839120014534578350, guid: d07c4c6d9cfc41d478e128b6e2b52985, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 839120014534578350, guid: d07c4c6d9cfc41d478e128b6e2b52985, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 839120014534578352, guid: d07c4c6d9cfc41d478e128b6e2b52985, type: 3}
+      propertyPath: m_Name
+      value: CameraGroup
+      objectReference: {fileID: 0}
+    - target: {fileID: 839120014534578353, guid: d07c4c6d9cfc41d478e128b6e2b52985, type: 3}
+      propertyPath: m_Targets.Array.data[0].target
+      value: 
+      objectReference: {fileID: 888099229}
+    - target: {fileID: 839120014534578353, guid: d07c4c6d9cfc41d478e128b6e2b52985, type: 3}
+      propertyPath: m_Targets.Array.data[1].target
+      value: 
+      objectReference: {fileID: 1447168203}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: d07c4c6d9cfc41d478e128b6e2b52985, type: 3}
+--- !u!4 &888099229 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8701767644839538910, guid: 8327d579f0661e84a92587298fc1136f, type: 3}
+  m_PrefabInstance: {fileID: 792023509}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1141191286
 GameObject:
   m_ObjectHideFlags: 0
@@ -7005,6 +7130,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 483.00003}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 911680}
   m_RootOrder: 1
@@ -7086,7 +7212,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Shape:
-    id: 0
+    rid: 0
   m_Size: {x: 236.51965, y: 256.39136, z: -483.46082}
   m_Rotation: {x: -0.49999994, y: -0.49999994, z: 0.49999994, w: 0.49999994}
   m_PivotLocation: 0
@@ -7096,8 +7222,9 @@ MonoBehaviour:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 118.25983, y: 128.19568, z: -241.73041}
   references:
-    version: 1
-    00000000:
+    version: 2
+    RefIds:
+    - rid: 0
       type: {class: Pipe, ns: UnityEngine.ProBuilder.Shapes, asm: Unity.ProBuilder}
       data:
         m_Thickness: 0.25
@@ -7884,7 +8011,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4896483693992398779, guid: 3146988a0840f1b478c0d3c83f37c90c, type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 4896483693992398779, guid: 3146988a0840f1b478c0d3c83f37c90c, type: 3}
       propertyPath: m_AnchorMax.x
@@ -7986,9 +8113,10 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -16.891079, y: 0.59913635, z: 13.561043}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 17
+  m_RootOrder: 18
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1316400883
 GameObject:
@@ -8021,6 +8149,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0.7071068, w: 0.7071068}
   m_LocalPosition: {x: -9.74, y: 1.7, z: -45.647175}
   m_LocalScale: {x: 0.1, y: 0.03333333, z: 0.1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2123470729}
   m_RootOrder: 3
@@ -8102,7 +8231,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Shape:
-    id: 0
+    rid: 0
   m_Size: {x: 360, y: 1075, z: 20}
   m_Rotation: {x: 0, y: 0, z: 0, w: 1}
   m_PivotLocation: 0
@@ -8112,8 +8241,9 @@ MonoBehaviour:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 180, y: 537.5, z: 10}
   references:
-    version: 1
-    00000000:
+    version: 2
+    RefIds:
+    - rid: 0
       type: {class: Cube, ns: UnityEngine.ProBuilder.Shapes, asm: Unity.ProBuilder}
 --- !u!114 &1316400889
 MonoBehaviour:
@@ -8363,6 +8493,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0.7071069, w: 0.70710677}
   m_LocalPosition: {x: 8.270637, y: 0.4212719, z: 17.312943}
   m_LocalScale: {x: 0.1, y: 0.033333328, z: 0.1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2123470729}
   m_RootOrder: 6
@@ -8444,7 +8575,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Shape:
-    id: 0
+    rid: 0
   m_Size: {x: 342.53412, y: 5, z: 10}
   m_Rotation: {x: 0, y: 0, z: 0, w: 1}
   m_PivotLocation: 0
@@ -8454,8 +8585,9 @@ MonoBehaviour:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 171.26706, y: 2.5, z: 5}
   references:
-    version: 1
-    00000000:
+    version: 2
+    RefIds:
+    - rid: 0
       type: {class: Cube, ns: UnityEngine.ProBuilder.Shapes, asm: Unity.ProBuilder}
 --- !u!114 &1387511588
 MonoBehaviour:
@@ -8674,6 +8806,11 @@ MonoBehaviour:
   m_SelectedFaces: 
   m_SelectedEdges: []
   m_SelectedVertices: 
+--- !u!4 &1447168203 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8701767644159492043, guid: 8327d579f0661e84a92587298fc1136f, type: 3}
+  m_PrefabInstance: {fileID: 792023509}
+  m_PrefabAsset: {fileID: 0}
 --- !u!43 &1487471740
 Mesh:
   m_ObjectHideFlags: 0
@@ -8849,6 +8986,10 @@ PrefabInstance:
       propertyPath: m_AmplitudeGain
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5861472979354335022, guid: 3408922f02325b046a750ecf096149c8, type: 3}
+      propertyPath: near clip plane
+      value: 0.001
+      objectReference: {fileID: 0}
     - target: {fileID: 6521540015124966688, guid: 3408922f02325b046a750ecf096149c8, type: 3}
       propertyPath: m_Name
       value: NewCamera
@@ -8867,7 +9008,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6521540015124966692, guid: 3408922f02325b046a750ecf096149c8, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 6521540015124966692, guid: 3408922f02325b046a750ecf096149c8, type: 3}
       propertyPath: m_LocalPosition.x
@@ -9320,7 +9461,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8671336082563210719, guid: b292ad3e85c3b294fa829c5aeb59ead8, type: 3}
       propertyPath: m_RootOrder
-      value: 12
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 8671336082563210719, guid: b292ad3e85c3b294fa829c5aeb59ead8, type: 3}
       propertyPath: m_LocalPosition.x
@@ -9406,6 +9547,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -10.018321, y: 0.8, z: -14.2}
   m_LocalScale: {x: 0.033333335, y: 0.1, z: 0.1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2123470729}
   m_RootOrder: 1
@@ -9487,7 +9629,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Shape:
-    id: 0
+    rid: 0
   m_Size: {x: 1000, y: 320, z: 600}
   m_Rotation: {x: 0, y: 0, z: 0, w: 1}
   m_PivotLocation: 0
@@ -9497,8 +9639,9 @@ MonoBehaviour:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 500, y: 320, z: 300}
   references:
-    version: 1
-    00000000:
+    version: 2
+    RefIds:
+    - rid: 0
       type: {class: Door, ns: UnityEngine.ProBuilder.Shapes, asm: Unity.ProBuilder}
       data:
         m_DoorHeight: 0.5
@@ -10129,6 +10272,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 16.3, y: 8.604214, z: 34}
   m_LocalScale: {x: 30, y: 10, z: 10}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 819817717}
   - {fileID: 1884694923}
@@ -10139,7 +10283,7 @@ Transform:
   - {fileID: 1387511583}
   - {fileID: 156590420}
   m_Father: {fileID: 0}
-  m_RootOrder: 19
+  m_RootOrder: 20
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1536775431679038104
 PrefabInstance:
@@ -10166,7 +10310,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1536775430695665660, guid: 18dc757549e406d4bb35ecba13b125b6, type: 3}
       propertyPath: m_RootOrder
-      value: 22
+      value: 23
       objectReference: {fileID: 0}
     - target: {fileID: 1536775430695665660, guid: 18dc757549e406d4bb35ecba13b125b6, type: 3}
       propertyPath: m_AnchorMax.x
@@ -10283,7 +10427,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1986786101339034579, guid: f5b07330235f80c4c826d51dd2f9c042, type: 3}
       propertyPath: m_RootOrder
-      value: 13
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 1986786101339034579, guid: f5b07330235f80c4c826d51dd2f9c042, type: 3}
       propertyPath: m_AnchorMax.x
