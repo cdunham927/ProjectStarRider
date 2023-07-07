@@ -14,7 +14,7 @@ public class SeaAngelController : EnemyControllerBase
     private AudioSource AS;
 
 
-    private void Awake()
+    protected override void Awake()
     {
         AS = GetComponent<AudioSource>();
     }
@@ -90,7 +90,7 @@ public class SeaAngelController : EnemyControllerBase
 
     protected override void Death()
     {
-
+        base.Death();
     }
 
     protected override void Idle()

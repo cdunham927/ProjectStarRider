@@ -185,7 +185,8 @@ public class PlayerController : MonoBehaviour
         afterimageUI = FindObjectOfType<GameManager>().afterimages;
         bod = GetComponent<Rigidbody>();
         playerModel = transform.GetChild(0);
-        curActiveTime = maxImagesTime;
+        //curActiveTime = maxImagesTime;
+        curActiveTime = 0;
         speed = slowSpd;
         
         //4 charges max, so 1 charge is 1/4th of the max image time
@@ -762,6 +763,13 @@ public class PlayerController : MonoBehaviour
         {
             sys.Emit(sysEmit);
         }
+    }
+
+    //Restore special gauge
+    public void RestoreCharge(float amt = 1)
+    {
+        curActiveTime += amt;
+        if (curActiveTime > maxImagesTime) curActiveTime = maxImagesTime;
     }
 
     public void Decoy() 

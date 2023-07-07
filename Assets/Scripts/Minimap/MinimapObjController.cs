@@ -18,6 +18,10 @@ public class MinimapObjController : MonoBehaviour
 
     private void Update()
     {
-        if (par.gameObject.activeInHierarchy) transform.position = new Vector3(par.position.x, 0, par.position.z);
+        if (par.gameObject.activeInHierarchy)
+        {
+            transform.position = new Vector3(par.position.x, 0, par.position.z);
+            transform.rotation = Quaternion.Euler(90, par.eulerAngles.y, 0);
+        }
     }
 }

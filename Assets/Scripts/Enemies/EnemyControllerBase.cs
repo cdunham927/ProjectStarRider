@@ -32,7 +32,7 @@ public class EnemyControllerBase : MonoBehaviour
     [Header(" Enemy site field : ")]
     public SphereCollider detectionCollider;
     public Collider col;
-    
+
     [Header(" Bullet accuracy Settingss : ")]
     //is random is the variations for shots being produced
     public bool isRandom;
@@ -41,7 +41,7 @@ public class EnemyControllerBase : MonoBehaviour
     // number of bullets spawn
     public int bulletShot;
     //public float bulletSpeed;
-   
+
     [Header("Private Variables : ")]
     private Vector3 startPoint;
     private const float radius = 1f;
@@ -78,7 +78,7 @@ public class EnemyControllerBase : MonoBehaviour
 
     [Header(" Icon for minimap : ")]
     public GameObject minimapObj;
-    
+
     public Healthbar hpBar;
 
     //Enemy Manager for trap rooms
@@ -92,7 +92,7 @@ public class EnemyControllerBase : MonoBehaviour
     public SkinnedMeshRenderer skinnedMeshRenderer;
 
     public Healthbar healthScript;
-    
+
     [Header(" Animation controller : ")]
     public Animator anim;
 
@@ -100,7 +100,7 @@ public class EnemyControllerBase : MonoBehaviour
 
     Color origCol;
 
-   [Header(" Pickup Items Range : ")]
+    [Header(" Pickup Items Range : ")]
     public float pickupXRange = 1.5f;
     public float pickupYRange = 1.5f;
     public float pickupZRange = 1.5f;
@@ -127,7 +127,7 @@ public class EnemyControllerBase : MonoBehaviour
         spawnedPickup = false;
     }
 
-    protected virtual  void OnEnable()
+    protected virtual void OnEnable()
     {
         ResetMaterial();
         hasAdded = false;
@@ -155,7 +155,10 @@ public class EnemyControllerBase : MonoBehaviour
     protected virtual void Alert() { }
     protected virtual void Attack() { }
     protected virtual void Retreat() { }
-    protected virtual void Death() { }
+    protected virtual void Death()
+    {
+        player.RestoreCharge();
+    }
 
     public void ChangeState(enemystates toState)
     {

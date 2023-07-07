@@ -39,10 +39,6 @@ public class SentinelSnipe : EnemyControllerBase
         ChangeState(enemystates.alert);
     }
 
-    protected override void Death()
-    {
-
-    }
 
     protected override void Idle()
     {

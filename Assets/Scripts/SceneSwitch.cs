@@ -49,7 +49,8 @@ public class SceneSwitch : MonoBehaviour
         //src = GetComponent<AudioSource>();
         overworld = FindObjectOfType<OverworldMenuController>();
         cont = FindObjectOfType<GameManager>();
-        if (optionsMenu == null) optionsMenu = FindObjectOfType<LevelLoader>().optionsMenu;
+        //if (optionsMenu == null) optionsMenu = FindObjectOfType<LevelLoader>().optionsMenu;
+        if (optionsMenu == null && FindObjectOfType<LevelLoader>() == null) optionsMenu = Instantiate(optionsPrefab);
         startGameButton = GameObject.FindGameObjectWithTag("StartGameButton");
 
         //Spawn options menu

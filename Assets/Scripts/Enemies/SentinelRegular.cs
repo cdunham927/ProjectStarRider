@@ -77,7 +77,7 @@ public class SentinelRegular : EnemyControllerBase
 
     protected override void Death()
     {
-
+        base.Death();
     }
 
     protected override void Idle()
