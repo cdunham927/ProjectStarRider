@@ -112,8 +112,11 @@ public class GameManager : MonoBehaviour
     //UI elements to disable/enable when paused or in victory/loss menus
     public List<GameObject> nonMenuObjects = new List<GameObject>();
 
-    public enum levelTypes { battle, race, maze }
+    public enum levelTypes { battle, race, maze, waves, timelimit }
     public levelTypes levelType;
+
+    WaveSpawner wave;
+    Timer timelimit;
 
     void Awake()
     {
@@ -129,6 +132,14 @@ public class GameManager : MonoBehaviour
         if (levelType == levelTypes.battle)
         {
             //controlsText.gameObject.SetActive(true);
+        }
+        if (levelType == levelTypes.waves)
+        {
+            wave = FindObjectOfType<WaveSpawner>();
+        }
+        if (levelType == levelTypes.timelimit)
+        {
+            timelimit = FindObjectOfType<Timer>();
         }
         player = FindObjectOfType<PlayerController>();
         //Spawn new event system
@@ -201,6 +212,15 @@ public class GameManager : MonoBehaviour
     {
         PlayerPrefs.SetInt("Joystick", (player.joystick == false) ? 0 : 1);
         PlayerPrefs.Save();
+    }
+
+    public void DeadEnemy()
+    {
+        if (levelType == levelTypes.waves)
+        {
+            Debug.Log("Enemy dead in gamecontroller");
+            wave.DeadEnemy();
+        }
     }
 
     void FillEnemyCount()

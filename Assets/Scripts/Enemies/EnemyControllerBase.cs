@@ -157,7 +157,9 @@ public class EnemyControllerBase : MonoBehaviour
     protected virtual void Retreat() { }
     protected virtual void Death()
     {
-        player.RestoreCharge();
+        //Debug.Log("Enemy dead in enemycontrollerbase");
+        //cont.DeadEnemy();
+        //player.RestoreCharge();
     }
 
     public void ChangeState(enemystates toState)
@@ -318,6 +320,9 @@ public class EnemyControllerBase : MonoBehaviour
 
     private void OnDisable()
     {
+        Debug.Log("Enemy dead in enemycontrollerbase");
+        cont.DeadEnemy();
+        player.RestoreCharge();
         CancelInvoke();
     }
 

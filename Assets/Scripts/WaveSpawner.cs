@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class WaveSpawner : MonoBehaviour
 {
@@ -18,12 +19,16 @@ public class WaveSpawner : MonoBehaviour
     //Determined by how many spawnpoints there are
     //Decrement this when an enemy dies
     int curEnemies;
+    public TMP_Text waveEnemiesText;
+
 
     private void Awake()
     {
         cont = FindObjectOfType<GameManager>();
         curWave = 0;
         curEnemies = 0;
+
+        waveEnemiesText = GameObject.FindGameObjectWithTag("WaveText").GetComponent<TMP_Text>();
     }
 
     private void Update()
@@ -58,6 +63,8 @@ public class WaveSpawner : MonoBehaviour
                     break;
             }
         }
+
+        waveEnemiesText.text = "Wave " + curWave.ToString() + " of " + numWaves.ToString() + " \nEnemies left: " + curEnemies.ToString();
     }
 
     public void DeadEnemy()
@@ -68,5 +75,6 @@ public class WaveSpawner : MonoBehaviour
         {
             cont.Victory();
         }
+        Debug.Log("Dead enemy: Remaining - " + curEnemies.ToString());
     }
 }

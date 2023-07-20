@@ -88,11 +88,6 @@ public class SeaAngelController : EnemyControllerBase
         ChangeState(enemystates.alert);
     }
 
-    protected override void Death()
-    {
-        base.Death();
-    }
-
     protected override void Idle()
     {
         //If the player is close enough
