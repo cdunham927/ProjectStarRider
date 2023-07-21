@@ -584,7 +584,7 @@ public class PlayerController : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Alpha8))
             {
-                SpeedUp();
+                speedUp();
             }
             if (Input.GetKeyDown(KeyCode.C))
             {
@@ -646,12 +646,16 @@ public class PlayerController : MonoBehaviour
         if (PlayerPrefs.HasKey("ControllerSensitivity")) rotSpd = PlayerPrefs.GetFloat("ControllerSensitivity", rotSpd);
     }
 
-    public void SpeedUp()
+    public void speedUp()
     {
         speedUpTimer = speedUpTime;
         Speedvfx();
     }
-
+    public void slowDown()
+    {
+        speedUpTimer = slowSpd;
+        Speedvfx();
+    }
     void Move(float x, float y, float speed) 
     {
         //transform.localPosition += new Vector3(x, y, 0) * speed * Time.deltaTime;
