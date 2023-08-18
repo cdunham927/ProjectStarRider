@@ -21,6 +21,8 @@ public class WaveSpawner : MonoBehaviour
     int curEnemies;
     public TMP_Text waveEnemiesText;
 
+    public string curWaveString;
+
 
     private void Awake()
     {
@@ -64,7 +66,8 @@ public class WaveSpawner : MonoBehaviour
             }
         }
 
-        waveEnemiesText.text = "Wave " + curWave.ToString() + " of " + numWaves.ToString() + " \nEnemies left: " + curEnemies.ToString();
+        curWaveString = "Wave " + curWave.ToString() + " of " + numWaves.ToString() + " \nEnemies left: " + curEnemies.ToString(); ;
+        waveEnemiesText.text = curWaveString;
     }
 
     public void DeadEnemy()
