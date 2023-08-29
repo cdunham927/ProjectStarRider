@@ -25,7 +25,7 @@ public class RaceEnemy : MonoBehaviour
         float distance = Vector3.Distance(transform.position, waypoints[curWaypoint].transform.position);
         if (distance < waypointProx && curWaypoint < waypoints.Length) curWaypoint++;
 
-        if (curWaypoint > 0 && curWaypoint < waypoints.Length) transform.LookAt(waypoints[curWaypoint].transform);
-        bod.AddForce(transform.forward * moveSpd * Time.deltaTime);
+        if (curWaypoint > 0 && curWaypoint < waypoints.Length) transform.LookAt(waypoints[curWaypoint].transform, Vector3.up);
+        bod.AddForce(transform.up * moveSpd * Time.deltaTime);
     }
 }
