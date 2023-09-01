@@ -4,12 +4,15 @@ using UnityEngine;
 
 public class SlowdownPickup : Pickup
 {
-    // Start is called before the first frame update
-    public override void GetPickup()
+
+    [SerializeField]
+    private float _speedDownAmount = 50;
+    [SerializeField]
+    private float _powerupDuration = 5;
+
+    private void OnTriggerEnter(Collider other)
     {
-        base.GetPickup();
-        FindObjectOfType<PlayerController>().slowDown();
-        Invoke("Disable", 0.001f);
+        
     }
 }
 
