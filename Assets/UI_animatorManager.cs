@@ -41,10 +41,10 @@ public class UI_animatorManager : MonoBehaviour
         upperText.DOLocalMove(UppermoveToPoint, animationTime).SetEase(Ease.InOutSine);
         lowerText.DOLocalMove(LowermoveToPoint, animationTime).SetEase(Ease.InOutSine);
         
-        if (animationTime <= 0f) 
+        if (animationTime <= 0) 
         {
             playerShooting.enabled = true;
-            Player.SetActive(true);
+            //Player.SetActive(true);
             
         }
        
@@ -52,7 +52,7 @@ public class UI_animatorManager : MonoBehaviour
     
     IEnumerator Fade() 
     {
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(3);
         isFaded = !isFaded;
         if (isFaded) 
         {
