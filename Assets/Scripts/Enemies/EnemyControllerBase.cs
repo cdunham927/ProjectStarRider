@@ -112,6 +112,7 @@ public class EnemyControllerBase : MonoBehaviour
 
     protected virtual void Awake()
     {
+        if (perlin == null) perlin = FindObjectOfType<CinemachineVirtualCamera>().GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
         anim = GetComponentInChildren<Animator>();
         //Get original color of material for damage flashes
         if (skinnedMeshRenderer == null) skinnedMeshRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
@@ -251,9 +252,9 @@ public class EnemyControllerBase : MonoBehaviour
         //skinnedMeshRenderer.materials[0].color = Color.white * intensity;
         //skinnedMeshRenderer.materials[1].color = Color.white * intensity;
         //skinnedMeshRenderer.materials[2].color = Color.white * intensity;
-        ShakeCamera();
         if (curHp <= 0 && !spawned)
         {
+            ShakeCamera();
             if (Random.value < bombSpawnChance && !spawnedPickup && bombPool != null)
             {
                 GameObject bomb = bombPool.GetPooledObject();
