@@ -215,7 +215,6 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-
         if (!joystick && !gm.gameIsPaused)
         {
             if (!invertControls)
@@ -283,9 +282,23 @@ public class PlayerController : MonoBehaviour
             //Regular speed
             else lerpToSpd = regSpd;
         }
+
+        //Movement
+        if (!hitWall) newVelZ = -transform.forward * speed;
+        if (!hitWall) bod.velocity = newVelX + newVelZ;
+        //if (!hitWall) bod.MovePosition(transform.position + newVelX + newVelZ * Time.fixedDeltaTime);
     }
 
     Vector3 dashDir;
+    float ltaxis;
+    float rtaxis;
+    float dhaxis;
+    float dvaxis;
+    float hAxis;
+    float vAxis;
+    float aAxis;
+    float htAxis;
+    float vtAxis;
 
     void Update()
     {
@@ -304,15 +317,15 @@ public class PlayerController : MonoBehaviour
                 //PlayerPrefs.SetInt("Joystick", 1);
             }
         }
-        float ltaxis = Input.GetAxis("XboxLeftTrigger");
-        float rtaxis = Input.GetAxis("XboxRightTrigger");
-        float dhaxis = Input.GetAxis("XboxDpadHorizontal");
-        float dvaxis = Input.GetAxis("XboxDpadVertical"); 
-        float hAxis = Input.GetAxis("XboxHorizontal");
-        float vAxis = Input.GetAxis("XboxVertical");
-        float aAxis = Input.GetAxis("XboxAltitude");
-        float htAxis = Input.GetAxis("XboxHorizontalTurn");
-        float vtAxis = Input.GetAxis("XboxVerticalTurn");
+        ltaxis = Input.GetAxis("XboxLeftTrigger");
+        rtaxis = Input.GetAxis("XboxRightTrigger");
+        dhaxis = Input.GetAxis("XboxDpadHorizontal");
+        dvaxis = Input.GetAxis("XboxDpadVertical"); 
+        hAxis = Input.GetAxis("XboxHorizontal");
+        vAxis = Input.GetAxis("XboxVertical");
+        aAxis = Input.GetAxis("XboxAltitude");
+        htAxis = Input.GetAxis("XboxHorizontalTurn");
+        vtAxis = Input.GetAxis("XboxVerticalTurn");
         if (ltaxis != 0 || rtaxis != 0 || dhaxis != 0 || dvaxis != 0 || hAxis != 0 || vAxis != 0 || aAxis != 0 || htAxis != 0 || vtAxis != 0)
         {
             joystick = true;
@@ -599,10 +612,6 @@ public class PlayerController : MonoBehaviour
 
             if (curDashCools > 0) curDashCools -= Time.deltaTime;
 
-            //Movement
-            if (!hitWall) newVelZ = -transform.forward * speed;
-            if (!hitWall) bod.velocity = newVelX + newVelZ;
-
             //Lock on to closest enemy in front of the player
             if (Input.GetButtonDown("Lockon"))
             {
@@ -668,6 +677,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+
     public void ResetInvert()
     {
         if (PlayerPrefs.HasKey("Invert")) invertControls = defInvert;
@@ -726,11 +736,13 @@ public class PlayerController : MonoBehaviour
         speedUpTimer = speedUpTime;
         Speedvfx();
     }
+
     public void slowDown()
     {
         speedUpTimer = slowSpd;
         Speedvfx();
     }
+
     void Move(float x, float y, float speed) 
     {
         //transform.localPosition += new Vector3(x, y, 0) * speed * Time.deltaTime;
@@ -874,7 +886,7 @@ public class PlayerController : MonoBehaviour
         Gizmos.DrawWireSphere(lockonCastPos.transform.position, lockonRadius);
     }
 
-    IEnumerator ActivateTrail (float timeActive) 
+    public IEnumerator ActivateTrail (float timeActive) 
     { 
         while (timeActive > 0) 
         {
@@ -904,8 +916,6 @@ public class PlayerController : MonoBehaviour
             yield return new WaitForSeconds(meshRefreshRate);
 
         }
-
-        
     }
 
    public void Push(float force, Vector3 dir)
@@ -913,4 +923,5 @@ public class PlayerController : MonoBehaviour
         bod.AddForce(dir * force);
     }
 
+    public virtual void Special() { }
 }
