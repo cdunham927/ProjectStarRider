@@ -10,8 +10,7 @@ public class UI_animatorManager : MonoBehaviour
 {
     // controls the palyer movement so animation plays
     [Header(" Player Ref Settings : ")]
-    public PlayerShooting playerShooting;
-    public GameObject Player;
+   
 
     //Fade in / out time Settings
 
@@ -35,16 +34,14 @@ public class UI_animatorManager : MonoBehaviour
 
     private void Start()
     { 
-        playerShooting.enabled = false;
-        Player.SetActive(false);
+       
         StartCoroutine(Fade());
         upperText.DOLocalMove(UppermoveToPoint, animationTime).SetEase(Ease.InOutSine);
         lowerText.DOLocalMove(LowermoveToPoint, animationTime).SetEase(Ease.InOutSine);
         
         if (animationTime <= 0) 
         {
-            playerShooting.enabled = true;
-            //Player.SetActive(true);
+            
             
         }
        
@@ -57,6 +54,7 @@ public class UI_animatorManager : MonoBehaviour
         if (isFaded) 
         {
             fadingGroup.DOFade(fadeInAmount, fadeTime);
+          
 
         }
         else
