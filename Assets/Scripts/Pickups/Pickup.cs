@@ -8,7 +8,8 @@ public abstract class Pickup : MonoBehaviour
     protected float distance;
     //PlayerController player;
     protected Player_Stats stats;
-    public float spd;
+    protected PlayerController Pcontroller;
+    public float PickUpSpd = 10f;
     //public float rotSpd;
     //float xRot, yRot, zRot;
     public bool moves = true;
@@ -27,6 +28,8 @@ public abstract class Pickup : MonoBehaviour
     public virtual void OnEnable()
     {
         stats = FindObjectOfType<Player_Stats>();
+        Pcontroller = FindObjectOfType<PlayerController>();
+
     }
 
     protected virtual void Disable()
@@ -50,7 +53,7 @@ public abstract class Pickup : MonoBehaviour
             //transform.Rotate(xRot, yRot, zRot);
 
             if (distance <= pickupDistance && moves)
-                transform.position = Vector3.MoveTowards(transform.position, stats.transform.position, spd * Time.deltaTime);
+                transform.position = Vector3.MoveTowards(transform.position, stats.transform.position, PickUpSpd * Time.deltaTime);
         }
     }
 }

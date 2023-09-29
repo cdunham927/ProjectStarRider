@@ -76,7 +76,7 @@ public class PlayerController : MonoBehaviour
     public bool invertControls = false;
     public bool defInvert = false;
 
-    public float speedUpTime;
+    public float speedUpTime = 10f;
     float speedUpTimer;
 
     //References for camera
@@ -144,6 +144,8 @@ public class PlayerController : MonoBehaviour
 
     public ParticleSystem sys;
     public int sysEmit;
+
+    public GameObject Barrier;
 
     GameManager gm;
 
@@ -668,7 +670,7 @@ public class PlayerController : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Alpha8))
             {
-                speedUp();
+                speedUp(-50);
             }
             if (Input.GetKeyDown(KeyCode.C))
             {
@@ -731,16 +733,28 @@ public class PlayerController : MonoBehaviour
         if (PlayerPrefs.HasKey("ControllerSensitivity")) rotSpd = PlayerPrefs.GetFloat("ControllerSensitivity", rotSpd);
     }
 
-    public void speedUp()
+    public void speedUp(float amt)
+    {
+        speedUpTime = speedUpTime - Time.deltaTime;
+        Speedvfx();
+        if (speedUpTime > 0)
+        {
+            regSpd = regSpd - amt;
+        }
+        else
+            regSpd = -75;
+    }
+
+    public void slowDown(float amt)
     {
         speedUpTimer = speedUpTime;
         Speedvfx();
-    }
-
-    public void slowDown()
-    {
-        speedUpTimer = slowSpd;
-        Speedvfx();
+        if (speedUpTime > 0)
+        {
+            highSpd = highSpd + amt;
+        }
+        else
+            highSpd = -275;
     }
 
     void Move(float x, float y, float speed) 

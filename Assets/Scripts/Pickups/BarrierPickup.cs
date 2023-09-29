@@ -7,6 +7,14 @@ public class BarrierPickup : Pickup
     public bool destructible = false;
     public float barrierStrength;
 
+    public void update()
+    { 
+        
+    
+    
+    
+    }
+
     public void redCnt()
     {
         barrierStrength--;
@@ -31,5 +39,7 @@ public class BarrierPickup : Pickup
     {
         gameObject.SetActive(false);
     }
+
+
 }
 

@@ -21,7 +21,7 @@ public class BombPickup : Pickup
         if (bombClip != null) disableTime = bombClip.length;
         Invoke("Disable", disableTime);
     }
-    private void Update()
+    public override void Update()
     {
         distance = Vector3.Distance(transform.position, stats.transform.position);
 
@@ -29,7 +29,7 @@ public class BombPickup : Pickup
         //transform.Rotate(xRot, yRot, zRot);
 
         if (distance <= pickupDistance)
-            transform.position = Vector3.MoveTowards(transform.position, stats.transform.position, spd * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, stats.transform.position, PickUpSpd * Time.deltaTime);
     }
 
     protected override void Disable()
@@ -43,13 +43,14 @@ public class BombPickup : Pickup
         base.Disable();
     }
 
+    /*
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
             Invoke("Disable", 0.001f);
         }
-    }
+    }*/
 
     private void OnTriggerStay(Collider other)
     {
