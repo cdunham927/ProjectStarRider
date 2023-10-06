@@ -32,11 +32,14 @@ public class PlayerController : MonoBehaviour
     [Header("Particles")]
     public ParticleSystem trails;
 
+    [Header(" Movement Speed Settings: ")]
     public float speed;
     public float slowSpd;
     public float regSpd;
     public float highSpd;
-    public float superSpd;
+    public float DefaultRegSpd;  //stored default vlaues for player speed
+    public float DefaultHighSpd; //stored default vlaues for player speed
+    //public float superSpd;
     public float sideSpeed;
     public float rotSpd;
     public float lookSpd;
@@ -168,7 +171,11 @@ public class PlayerController : MonoBehaviour
         //camStartPos = mainCam.transform.position;
         gm = FindObjectOfType<GameManager>();
 
-        GetSavedSettings();
+        //sets Defualt speed  value for player
+        DefaultRegSpd  = regSpd;  //stored default vlaues for player speed
+        DefaultHighSpd = highSpd; //stored default vlaues for player speed
+
+    GetSavedSettings();
         joystick = true;
 
         meshRenderer = GetComponentInChildren<MeshRenderer>();
@@ -238,9 +245,9 @@ public class PlayerController : MonoBehaviour
             }
             if (vert > 0)
             {
-                if (speedUpTimer > 0)
-                    lerpToSpd = superSpd;
-                else lerpToSpd = highSpd;
+                
+                   
+                lerpToSpd = highSpd;
             }
             else if (vert < 0) lerpToSpd = slowSpd;
             else lerpToSpd = regSpd;
@@ -272,9 +279,7 @@ public class PlayerController : MonoBehaviour
             if (Input.GetAxisRaw("Accel") > 0)
             {
                 Speedvfx();
-                if (speedUpTimer > 0)
-                    lerpToSpd = superSpd;
-                else lerpToSpd = highSpd;
+                 lerpToSpd = highSpd;
             }
             //Decel
             else if (Input.GetAxisRaw("Decel") > 0)
@@ -342,125 +347,16 @@ public class PlayerController : MonoBehaviour
 
         if (!stats.PlayerDead && !gm.gameIsOver)
         {
-            /*
-            if (Input.GetButton("RotateLeft"))
+
+            if (speedUpTimer <= 0) 
             {
-                Debug.Log("Pressing rotate left button");
-                //Debug.Log("rotateleft");
-                //transform.Rotate(0, 0, turnSpd * Time.deltaTime);
-                rotation.z -= turnSpd * Time.deltaTime;
+
+                regSpd = DefaultRegSpd;
+                highSpd = DefaultHighSpd;
+
             }
             
-            if (Input.GetButton("RotateRight"))
-            {
-                Debug.Log("Pressing rotate right button");
-                //transform.Rotate(0, 0, turnSpd * Time.deltaTime);
-                rotation.z += turnSpd * Time.deltaTime;
-            }
-            */
-
-
-            ////Movement
-            //if (!joystick && !gm.gameIsPaused)
-            //{
-            //    if (!invertControls)
-            //    {
-            //        rotation.y += Input.GetAxis("Mouse X");
-            //        rotation.x += -Input.GetAxis("Mouse Y");
-            //    }
-            //    else
-            //    {
-            //        rotation.y += -Input.GetAxis("Mouse X");
-            //        rotation.x += Input.GetAxis("Mouse Y");
-            //    }
-            //
-            //    //Accel/Decel
-            //    //vert *= Time.deltaTime;
-            //    if (vert > 0)
-            //    {
-            //        Speedvfx();
-            //    }
-            //    if (vert > 0)
-            //    {
-            //        if (speedUpTimer > 0)
-            //            lerpToSpd = superSpd;
-            //        else lerpToSpd = highSpd;
-            //    }
-            //    else if (vert < 0) lerpToSpd = slowSpd;
-            //    else lerpToSpd = regSpd;
-            //}
-            //
-            ////if (joystick && !gm.gameIsPaused)
-            ////{
-            //if (joystick && !gm.gameIsPaused)
-            //{
-            //    if (hor != 0)
-            //    {
-            //        //joystick = true;
-            //        //if (invertControls) transform.Rotate(0, rotSpd * Time.deltaTime * hor2, 0);
-            //        //else transform.Rotate(0, -rotSpd * Time.deltaTime * hor2, 0);
-            //        if (!invertControls) rotation.y += rotSpd * Time.deltaTime * hor;
-            //        else rotation.y -= rotSpd * Time.deltaTime * hor;
-            //    }
-            //
-            //    if (vert != 0)
-            //    {
-            //        //joystick = true;
-            //        //if (invertControls) transform.Rotate(rotSpd * Time.deltaTime * vert2, 0, 0);
-            //        //else transform.Rotate(-rotSpd * Time.deltaTime * vert2, 0, 0);
-            //        if (!invertControls) rotation.x -= rotSpd * Time.deltaTime * vert;
-            //        else rotation.x += rotSpd * Time.deltaTime * vert;
-            //    }
-            //
-            //    //Accel
-            //    if (Input.GetAxisRaw("Accel") > 0)
-            //    {
-            //        Speedvfx();
-            //        if (speedUpTimer > 0)
-            //            lerpToSpd = superSpd;
-            //        else lerpToSpd = highSpd;
-            //    }
-            //    //Decel
-            //    else if (Input.GetAxisRaw("Decel") > 0)
-            //    {
-            //        lerpToSpd = slowSpd;
-            //    }
-            //    //Regular speed
-            //    else lerpToSpd = regSpd;
-            //}
-                
-                //if (hor != 0)
-                //{
-                //    if (!invertControls) rotation.y += rotSpd * Time.deltaTime * hor;
-                //    else rotation.y -= rotSpd * Time.deltaTime * hor;
-                //}
-
-                //if (hor2 != 0)
-                //{
-                //    //joystick = true;
-                //    //if (invertControls) transform.Rotate(0, rotSpd * Time.deltaTime * hor2, 0);
-                //    //else transform.Rotate(0, -rotSpd * Time.deltaTime * hor2, 0);
-                //    if (!invertControls) rotation.y += rotSpd * Time.deltaTime * hor2;
-                //    else rotation.y -= rotSpd * Time.deltaTime * hor2;
-                //}
-                //
-                //if (vert2 != 0)
-                //{
-                //    //joystick = true;
-                //    //if (invertControls) transform.Rotate(rotSpd * Time.deltaTime * vert2, 0, 0);
-                //    //else transform.Rotate(-rotSpd * Time.deltaTime * vert2, 0, 0);
-                //    if (!invertControls) rotation.x += rotSpd * Time.deltaTime * vert2;
-                //    else rotation.x -= rotSpd * Time.deltaTime * vert2;
-                //}
-
-            //Move left and right with A/D keys and left/right joystick
-            //if (hor != 0) newVelX = -transform.right * sideSpeed * hor;
-            //else newVelX = Vector3.zero;
-
-            //if (hor != 0) transform.Rotate(0, hor * sideRotSpd * Time.fixedDeltaTime, 0);
-
-
-            //Hide cursor if we click into the game
+            
             if (Input.GetMouseButtonDown(0) && !gm.gameIsPaused && !gm.gameIsOver)
             {
                 //joystick = false;
@@ -735,14 +631,18 @@ public class PlayerController : MonoBehaviour
 
     public void speedUp(float amt)
     {
-        speedUpTime = speedUpTime - Time.deltaTime;
+        speedUpTimer = speedUpTime - Time.deltaTime;
         Speedvfx();
-        if (speedUpTime > 0)
+        if (speedUpTimer > 0)
         {
             regSpd = regSpd - amt;
+            highSpd = highSpd - amt;
         }
-        else
-            regSpd = -75;
+        else 
+        {
+            regSpd = DefaultRegSpd;
+            highSpd = DefaultHighSpd;
+        }
     }
 
     public void slowDown(float amt)
@@ -754,7 +654,7 @@ public class PlayerController : MonoBehaviour
             highSpd = highSpd + amt;
         }
         else
-            highSpd = -275;
+            highSpd = DefaultHighSpd;
     }
 
     void Move(float x, float y, float speed) 
@@ -867,6 +767,17 @@ public class PlayerController : MonoBehaviour
         if (!gm.gameIsPaused && !gm.gameIsOver)
         {
             sys.Emit(sysEmit);
+        }
+    }
+
+    public void ActivateBarrier()
+    {
+
+        if (!gm.gameIsPaused && !gm.gameIsOver)
+        {
+            Barrier.SetActive(true);
+            stats.invulnerable = true;
+
         }
     }
 

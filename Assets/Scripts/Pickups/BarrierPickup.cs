@@ -7,12 +7,14 @@ public class BarrierPickup : Pickup
     public bool destructible = false;
     public float barrierStrength;
 
-    public void update()
+    public override void GetPickup()
     { 
-        
-    
-    
-    
+        Pcontroller.ActivateBarrier();
+        base.GetPickup();
+        MusicController.instance.soundSrc.PlayOneShot(clip);
+        Invoke("Disable", 0.001f);
+       
+
     }
 
     public void redCnt()

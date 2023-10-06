@@ -14,6 +14,7 @@ public class BarrierController : MonoBehaviour
     private void OnEnable()
     {
         hp = maxHp;
+
     }
 
     public void SetEnemies(int cnt)

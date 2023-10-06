@@ -62,6 +62,20 @@ public class EnemyBullet : Bullet
             //bul.GetComponent<Rigidbody>().velocity = bod.velocity;
             hit.SetActive(true);
             Invoke("Disable", 0.001f);
+        }  
+        if(collision.CompareTag("PlayerBarrier"))
+        {
+            collision.gameObject.SetActive(false);
+            //Invoke("DelayDestruction" , 0.5f);
+            if (hitVFXPool == null) hitVFXPool = cont.enemyHitVFXPool;
+            GameObject hit = hitVFXPool.GetPooledObject();
+            hit.transform.position = spawnPos.transform.position;
+            hit.transform.rotation = collision.transform.rotation;
+            //bul.GetComponent<Rigidbody>().velocity = bod.velocity;
+            hit.SetActive(true);
+            FindObjectOfType<Player_Stats>().invulnerable = false;
+            Invoke("Disable", 0.001f);
+
         }
     }
 
@@ -104,4 +118,11 @@ public class EnemyBullet : Bullet
         GameObject tmpObj = Instantiate(bul, startPoint,Quaternion. identity);
         tmpObj.GetComponent<Rigidbody>().velocity = new Vector3();
     }*/
+
+    public void DelayDestruction(GameObject obj)
+    {
+        obj.SetActive(false);
+    
+    
+    }
 }
