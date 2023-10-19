@@ -156,6 +156,7 @@ public class Player_Bullet : Bullet
     private void Update()
     {
         //transform.forward = bod.velocity.normalized;
+        if (speedUp) bod.AddForce(transform.forward * pushSpd);
     }
 
     private void OnCollisionEnter(Collision col)

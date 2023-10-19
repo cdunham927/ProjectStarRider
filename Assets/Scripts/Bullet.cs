@@ -14,6 +14,8 @@ public class Bullet : MonoBehaviour
     //public const float radius = 1f;
     //public Vector3 startPoint;
     //public ObjectPool bulletPool;
+    public bool speedUp;
+    public float pushSpd;
 
     public virtual void OnEnable() 
     { 

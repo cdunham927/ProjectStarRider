@@ -29,6 +29,11 @@ public class EnemyBullet : Bullet
         if (minimapObj != null) minimapObj.SetActive(true);
     }
 
+    private void Update()
+    {
+        if (speedUp) rb.AddForce(transform.forward * pushSpd);
+    }
+
     private void OnTriggerEnter(Collider collision)
     {
         if (collision.CompareTag("Player"))
