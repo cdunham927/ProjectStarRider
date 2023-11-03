@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 431412863645596672}
   - component: {fileID: 431412863645596676}
   - component: {fileID: 431412863645596677}
+  - component: {fileID: 8732397619349112346}
   m_Layer: 0
   m_Name: RaceEnemy
   m_TagString: RaceEnemy
@@ -118,6 +119,8 @@ MonoBehaviour:
   - {fileID: 0}
   moveSpd: 10000
   waypointProx: 0.5
+  pointA: {fileID: 0}
+  pointB: {fileID: 0}
 --- !u!54 &431412863645596677
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -134,3 +137,26 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &8732397619349112346
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 431412863645596687}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37415fff28723104ab0ef133e5b8413c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Speed: 1000
+  TurnSpeed: 50
+  TotalPath: []
+  CornerPoints: []
+  _DebugPath: 0
+  _DebugPathColor: {r: 0, g: 0, b: 0, a: 0}
+  CurvePath: 0
+  PathCreator: {fileID: 0}
+  _PathCreatorPrefab: {fileID: 0}
+  _CornerSmooth: 0
+  Status: 2

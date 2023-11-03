@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [ExecuteInEditMode]
-public class CameraController : MonoBehaviour
+public class PathfindingCameraController : MonoBehaviour
 {
     [Header("Target")]
     public Transform target;
