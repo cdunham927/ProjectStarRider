@@ -69,7 +69,7 @@ public class PlayerShooting : MonoBehaviour
         bul.transform.position = bulSpawn.transform.position;
         bul.transform.rotation = bulSpawn.transform.rotation;
         //Set bullet damage
-        Player_Bullet b = bul.GetComponent<Player_Bullet>();
+        Bullet b = bul.GetComponent<Bullet>();
         b.damage = dmg;
         //bul.GetComponent<Rigidbody>().velocity = bod.velocity;
         bul.SetActive(true);

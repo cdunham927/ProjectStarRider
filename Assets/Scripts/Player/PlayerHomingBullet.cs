@@ -35,6 +35,8 @@ public class PlayerHomingBullet : Bullet
         if (minimapObj != null) minimapObj.SetActive(true);
 
         //float step =  (speed  + Random.Range(0, randSpdMod)) * Time.deltaTime;
+
+        Push();
         Invoke("Disable", disableTime);
     }
 
@@ -62,7 +64,7 @@ public class PlayerHomingBullet : Bullet
         if (target == null || (target != null && !target.gameObject.activeInHierarchy))
         {
             Collider[] cols = Physics.OverlapSphere(castPos.transform.position, castSize, enemyLayer);
-            if (cols != null)
+            if (cols.Length > 0 && cols != null)
             {
                 target = cols[0].transform;
             }
@@ -71,12 +73,21 @@ public class PlayerHomingBullet : Bullet
         if (target != null && target.gameObject.activeInHierarchy)
         {
             //bod.AddForce(transform.forward * spd * Time.deltaTime);
+
             bod.velocity = transform.forward * spd; //velcoity algorthim for the porjectile
 
             Vector3 targDir = target.position - transform.position;
             Vector3 newDir = Vector3.RotateTowards(transform.forward, targDir, lerpSpd * Time.deltaTime, 0.0f);
             transform.rotation = Quaternion.LookRotation(newDir);
         }
+
+        bod.AddForce(transform.forward * speed * Time.deltaTime);
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(castPos.transform.position, castSize);
     }
 
     private void OnTriggerEnter(Collider col)
