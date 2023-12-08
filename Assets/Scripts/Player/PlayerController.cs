@@ -99,6 +99,7 @@ public class PlayerController : MonoBehaviour
 
     Player_Stats stats;
     public int collisionDamage = 0;
+    public int spikeDamage = 0;
     GameManager cont;
 
     //For aiming with the mouse
@@ -513,40 +514,40 @@ public class PlayerController : MonoBehaviour
             //Lock on to closest enemy in front of the player
             if (Input.GetButtonDown("Lockon"))
             {
-                if (lockedon)
-                {
-                    lockedon = false;
-                    closestTarget = null;
-                    //cineGroup.m_Targets[2].target = cineGroup.m_Targets[1].target;
-                    cineGroup.m_Targets[2].target = null;
-                }
-                else
-                {
-                    Collider[] cols = Physics.OverlapSphere(lockonCastPos.transform.position, lockonRadius, enemyMask);
-                    if (cols.Length > 0)
-                    {
-                        GameObject closestObj = cols[0].gameObject;
-                        float closestDistance = Vector3.Distance(transform.position, closestObj.transform.position);
-
-                        for (int i = 0; i < cols.Length; i++)
-                        {
-                            GameObject o = cols[i].gameObject;
-                            float dist = Vector3.Distance(transform.position, cols[i].transform.position);
-
-                            if (dist < closestDistance)
-                            {
-                                closestDistance = dist;
-                                closestObj = cols[i].gameObject;
-                            }
-                        }
-
-                        closestTarget = closestObj;
-                    }
-
-                    //cineGroup.m_Targets[1] = closestTarget;
-                    lockedon = true;
-                    if (closestTarget != null) cineGroup.m_Targets[2].target = closestTarget.transform;
-                }
+                //if (lockedon)
+                //{
+                //    lockedon = false;
+                //    closestTarget = null;
+                //    //cineGroup.m_Targets[2].target = cineGroup.m_Targets[1].target;
+                //    cineGroup.m_Targets[2].target = null;
+                //}
+                //else
+                //{
+                //    Collider[] cols = Physics.OverlapSphere(lockonCastPos.transform.position, lockonRadius, enemyMask);
+                //    if (cols.Length > 0)
+                //    {
+                //        GameObject closestObj = cols[0].gameObject;
+                //        float closestDistance = Vector3.Distance(transform.position, closestObj.transform.position);
+                //
+                //        for (int i = 0; i < cols.Length; i++)
+                //        {
+                //            GameObject o = cols[i].gameObject;
+                //            float dist = Vector3.Distance(transform.position, cols[i].transform.position);
+                //
+                //            if (dist < closestDistance)
+                //            {
+                //                closestDistance = dist;
+                //                closestObj = cols[i].gameObject;
+                //            }
+                //        }
+                //
+                //        closestTarget = closestObj;
+                //    }
+                //
+                //    //cineGroup.m_Targets[1] = closestTarget;
+                //    lockedon = true;
+                //    if (closestTarget != null) cineGroup.m_Targets[2].target = closestTarget.transform;
+                //}
             }
 
             //Rotate towards the new inputs
@@ -682,6 +683,14 @@ public class PlayerController : MonoBehaviour
 
             //Take damage?
             stats.Damage(collisionDamage);
+
+            Invoke("ResetCam", 0.12f);
+        }
+        if (collision.gameObject.CompareTag("Spike"))
+        {
+            hitWall = true;
+            Invoke("ResetHitWall", timeToMove);
+            stats.Damage(spikeDamage);
 
             Invoke("ResetCam", 0.12f);
         }
