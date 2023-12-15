@@ -13,7 +13,7 @@ public class PlayerSelectController : MonoBehaviour
     private void Awake()
     {
         curSelected = 0;
-        curPlayerImage.sprite = playerImages[curSelected];
+        //curPlayerImage.sprite = playerImages[curSelected];
     }
 
     public void Next()

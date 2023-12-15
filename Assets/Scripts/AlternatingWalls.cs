@@ -16,6 +16,8 @@ public class AlternatingWalls : MonoBehaviour
     float curSpd;
     public float offsetX, offsetY, offsetZ;
     public float gizmoSize = 15f;
+    public bool canMove = true;
+    public bool looping = true;
 
     private void OnEnable()
     {
@@ -32,10 +34,11 @@ public class AlternatingWalls : MonoBehaviour
     {
         curSpd = (curPos == toPos) ? fwdSpd : backSpd;
 
-        transform.position = Vector3.MoveTowards(transform.position, curPos, Time.deltaTime * curSpd);
+        if (canMove) transform.position = Vector3.MoveTowards(transform.position, curPos, Time.deltaTime * curSpd);
+
         if (Vector3.Distance(transform.position, curPos) <= 0.2f)
         {
-            if (curPos == toPos)
+            if (curPos == toPos && looping)
             {
                 curPos = fromPos;
             }
