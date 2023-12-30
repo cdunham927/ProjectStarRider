@@ -21,16 +21,20 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: StarRiderBullet
-  m_Shader: {fileID: -6465566751694194690, guid: cac03c4db04e2844ba7d160595697440, type: 3}
-  m_ValidKeywords: []
+  m_Shader: {fileID: 4800000, guid: 650dd9526735d5b46b79224bc6e94025, type: 3}
+  m_ValidKeywords:
+  - _SURFACE_TYPE_TRANSPARENT
   m_InvalidKeywords:
   - _EMISSION
   m_LightmapFlags: 2
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 1
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
+  m_CustomRenderQueue: 3000
+  stringTagMap:
+    RenderType: Transparent
+  disabledShaderPasses:
+  - DepthOnly
+  - SHADOWCASTER
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
@@ -93,7 +97,8 @@ Material:
     m_Ints: []
     m_Floats:
     - _AlphaClip: 0
-    - _Blend: 0
+    - _Ambient_Strength: 0.55
+    - _Blend: 2
     - _BlendOp: 0
     - _BumpScale: 1
     - _CameraFadingEnabled: 0
@@ -107,13 +112,16 @@ Material:
     - _DistortionEnabled: 0
     - _DistortionStrength: 1
     - _DistortionStrengthScaled: 0
-    - _DstBlend: 0
+    - _DstBlend: 1
     - _EmissionEnabled: 1
+    - _Falloff_Amount: 0
     - _FlipbookMode: 0
+    - _Fresnel_Size: 0.06
     - _GlossMapScale: 1
     - _Glossiness: 0
     - _GlossinessSource: 0
     - _GlossyReflections: 1
+    - _Lightcutoff: 0.0001
     - _LightingEnabled: 1
     - _Metallic: 0
     - _Mode: 4
@@ -132,19 +140,20 @@ Material:
     - _SoftParticlesNearFadeDistance: 0
     - _SpecSource: 0
     - _SpecularHighlights: 1
-    - _SrcBlend: 1
-    - _Surface: 0
+    - _SrcBlend: 5
+    - _Surface: 1
     - _UVSec: 0
-    - _ZWrite: 1
+    - _ZWrite: 0
     m_Colors:
     - Fresnel_Color: {r: 9.734288, g: 8.205342, b: 0, a: 1}
     - Fresnel_Strength: {r: 1.99, g: 0, b: 0, a: 0}
     - Main_Color: {r: 2, g: 0, b: 0.015686275, a: 1}
-    - _BaseColor: {r: 0.9716981, g: 0.91631746, b: 0.47209862, a: 1}
+    - _BaseColor: {r: 0.8962264, g: 0.84547985, b: 0.3931559, a: 1}
     - _CameraFadeParams: {r: 0, g: Infinity, b: 0, a: 0}
-    - _Color: {r: 766.9961, g: 758.9647, b: 0, a: 0.9372549}
+    - _Color: {r: 0.8962264, g: 0.84547985, b: 0.39315587, a: 1}
     - _ColorAddSubDiff: {r: 1, g: 0, b: 0, a: 0}
     - _EmissionColor: {r: 0.4528302, g: 0.07048772, b: 0.07048772, a: 1}
+    - _Fresnel_Color: {r: 1, g: 1, b: 1, a: 0}
     - _SoftParticleFadeParams: {r: 0, g: 1, b: 0, a: 0}
     - _SpecColor: {r: 0.5, g: 0.5, b: 0.5, a: 0.5}
   m_BuildTextureStacks: []
