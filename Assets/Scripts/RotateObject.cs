@@ -7,9 +7,17 @@ public class RotateObject : MonoBehaviour
     public float rotSpdX;
     public float rotSpdY;
     public float rotSpdZ;
+    [Range(1, 5)]
+    public float rotMod;
+    float curRotMod;
+
+    private void Awake()
+    {
+        curRotMod = Random.Range(1, rotMod);
+    }
 
     private void Update()
     {
-        transform.Rotate(rotSpdX * Time.deltaTime, rotSpdY * Time.deltaTime, rotSpdZ * Time.deltaTime);
+        transform.Rotate(rotSpdX * Time.deltaTime * curRotMod, rotSpdY * Time.deltaTime * curRotMod, rotSpdZ * Time.deltaTime * curRotMod);
     }
 }

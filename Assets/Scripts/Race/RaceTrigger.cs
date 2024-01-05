@@ -15,31 +15,33 @@ public class RaceTrigger : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        switch (checkpointEffect)
-        {
-            case effect.none:
-                hasActivated = true;
-                break;
-            case effect.spawnEnemy:
-                foreach (GameObject t in enemies)
-                {
-                    t.SetActive(true);
-                }
-                hasActivated = true;
-                break;
-            case effect.spikes:
-                hasActivated = true;
-                break;
-            case effect.pillars:
-                hasActivated = true;
-                break;
-            case effect.obstacleWalls:
-                hasActivated = true;
-                break;
-            case effect.door:
-                foreach (AlternatingWalls aw in altWalls) aw.canMove = true;
-                hasActivated = true;
-                break;
+        if (!hasActivated) {
+            switch (checkpointEffect)
+            {
+                case effect.none:
+                    hasActivated = true;
+                    break;
+                case effect.spawnEnemy:
+                    foreach (GameObject t in enemies)
+                    {
+                        t.SetActive(true);
+                    }
+                    hasActivated = true;
+                    break;
+                case effect.spikes:
+                    hasActivated = true;
+                    break;
+                case effect.pillars:
+                    hasActivated = true;
+                    break;
+                case effect.obstacleWalls:
+                    hasActivated = true;
+                    break;
+                case effect.door:
+                    foreach (AlternatingWalls aw in altWalls) aw.canMove = true;
+                    hasActivated = true;
+                    break;
+            }
         }
     }
 }
