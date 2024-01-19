@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
 //using System;
-[RequireComponent(typeof(AStarAgent))]
+
 public class EnemyControllerBase : MonoBehaviour
 {
     //We only need idle, alert, attack for now

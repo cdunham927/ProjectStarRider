@@ -48,7 +48,7 @@ public class BossHitPointController : MonoBehaviour
                 Material[] tempMats = skinnedMeshRenderers.materials;
                 tempMats[0] = mat;
                 skinnedMeshRenderers.materials = tempMats;
-                //deadWeakPoint.SetActive(true);
+                deadWeakPoint.SetActive(true);
             }
             else
             {

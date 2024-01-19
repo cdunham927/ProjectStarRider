@@ -439,6 +439,11 @@ public class PlayerController : MonoBehaviour
                 Decoy();
             }
 
+            if (Application.isEditor && Input.GetKeyDown(KeyCode.Alpha6))
+            {
+                curActiveTime = maxImagesTime;
+            }
+
             //Alt fire with left trigger
             //if (Input.GetAxisRaw("Altfire2") == 1 && curActiveTime > oneCharge)
             //{
