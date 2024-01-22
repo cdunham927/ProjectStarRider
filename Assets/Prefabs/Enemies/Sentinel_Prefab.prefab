@@ -41,10 +41,10 @@ GameObject:
   m_Component:
   - component: {fileID: 331639249648433790}
   - component: {fileID: -1034466729906832040}
+  - component: {fileID: 7841334841566039865}
+  - component: {fileID: 2550159598481487559}
   - component: {fileID: 573377688435008515}
   - component: {fileID: 7310131386521007457}
-  - component: {fileID: 2550159598481487559}
-  - component: {fileID: 7841334841566039865}
   m_Layer: 6
   m_Name: Sentinel_Prefab
   m_TagString: Enemy
@@ -60,7 +60,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1139947883432206532}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -25.5, y: 79.1, z: 585}
+  m_LocalPosition: {x: 538.62366, y: 46.600006, z: -13286.9}
   m_LocalScale: {x: 6, y: 6, z: 6}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -93,89 +93,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &573377688435008515
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1139947883432206532}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 65259cc6f8b30344aa1ac8eba18cca73, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  canv: {fileID: 5735672329957655316}
-  slider: {fileID: 2998539813025873492}
-  otherSlider: {fileID: 0}
-  otherSliderRed: {fileID: 0}
-  stats: {fileID: 7310131386521007457}
-  dir: {x: 0, y: 1, z: 0}
-  rot: {x: 90, y: 0, z: 0}
-  lerpSpd: 10
-  slowLerpSpd: 5
-  size: 7.5
---- !u!114 &7310131386521007457
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1139947883432206532}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62b66b90fc462f34bb7aac04f766d7c6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  currentState: 0
-  maxHp: 20
-  curHp: 0
-  killScore: 100
-  timeBetweenAttacks: 0.75
-  attackRange: 25
-  bulletPool: {fileID: 0}
-  playerInRange: 0
-  detectionCollider: {fileID: 6229183058674865352}
-  col: {fileID: 2550159598481487559}
-  isRandom: 0
-  accx: 5
-  accy: 20
-  bulletShot: 0
-  target: {fileID: 0}
-  deathVFX: {fileID: 4593951957772366835, guid: 1e092bc34c05e7a4388b0d0c57e84ec9, type: 3}
-  hpSpawnChance: 0.3
-  bombSpawnChance: 0.3
-  hpPool: {fileID: 0}
-  bombPool: {fileID: 0}
-  shakeTimer: 0.1
-  shakeAmt: 5
-  minimapObj: {fileID: 1486347201177651429}
-  hpBar: {fileID: 573377688435008515}
-  manager: {fileID: 0}
-  blinkDuration: 0.3
-  blinkBrightness: 1
-  skinnedMeshRenderer: {fileID: 0}
-  healthScript: {fileID: 573377688435008515}
-  anim: {fileID: 0}
-  pickupXRange: 1.5
-  pickupYRange: 2
-  pickupZRange: 1.5
-  barrier: {fileID: 0}
-  ind: 0
-  numBullets: 30
---- !u!135 &2550159598481487559
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1139947883432206532}
-  m_Material: {fileID: 13400000, guid: 520a736e230d2ca49a4da756d3fb9960, type: 2}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 1.03
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!82 &7841334841566039865
 AudioSource:
   m_ObjectHideFlags: 0
@@ -272,6 +189,89 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!135 &2550159598481487559
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1139947883432206532}
+  m_Material: {fileID: 13400000, guid: 520a736e230d2ca49a4da756d3fb9960, type: 2}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1.03
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &573377688435008515
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1139947883432206532}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65259cc6f8b30344aa1ac8eba18cca73, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canv: {fileID: 5735672329957655316}
+  slider: {fileID: 2998539813025873492}
+  otherSlider: {fileID: 0}
+  otherSliderRed: {fileID: 0}
+  stats: {fileID: 7310131386521007457}
+  dir: {x: 0, y: 1, z: 0}
+  rot: {x: 90, y: 0, z: 0}
+  lerpSpd: 10
+  slowLerpSpd: 5
+  size: 7.5
+--- !u!114 &7310131386521007457
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1139947883432206532}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62b66b90fc462f34bb7aac04f766d7c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentState: 0
+  maxHp: 20
+  curHp: 0
+  killScore: 100
+  timeBetweenAttacks: 0.75
+  attackRange: 25
+  bulletPool: {fileID: 0}
+  playerInRange: 0
+  detectionCollider: {fileID: 6229183058674865352}
+  col: {fileID: 2550159598481487559}
+  isRandom: 0
+  accx: 5
+  accy: 20
+  bulletShot: 0
+  target: {fileID: 0}
+  deathVFX: {fileID: 4593951957772366835, guid: 1e092bc34c05e7a4388b0d0c57e84ec9, type: 3}
+  hpSpawnChance: 0.3
+  bombSpawnChance: 0.3
+  hpPool: {fileID: 0}
+  bombPool: {fileID: 0}
+  shakeTimer: 0.1
+  shakeAmt: 5
+  minimapObj: {fileID: 1486347201177651429}
+  hpBar: {fileID: 573377688435008515}
+  manager: {fileID: 0}
+  blinkDuration: 0.3
+  blinkBrightness: 1
+  skinnedMeshRenderer: {fileID: 0}
+  healthScript: {fileID: 573377688435008515}
+  anim: {fileID: 0}
+  pickupXRange: 1.5
+  pickupYRange: 2
+  pickupZRange: 1.5
+  barrier: {fileID: 0}
+  ind: 0
+  numBullets: 30
 --- !u!1 &1481282251394324850
 GameObject:
   m_ObjectHideFlags: 0
