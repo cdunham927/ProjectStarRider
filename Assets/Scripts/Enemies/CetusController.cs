@@ -65,6 +65,8 @@ public class CetusController : BossControllerBase
     public AudioClip[] PlayerSfx;
     private AudioSource AS;
 
+    public float startAttackCools = 15f;
+
     protected override void Awake()
     {
         //Boss does a special attack after losing a set amount of health per phase
@@ -79,6 +81,8 @@ public class CetusController : BossControllerBase
         base.Awake();
 
         AS = GetComponent<AudioSource>();
+
+        attackCools = startAttackCools;
     }
 
     protected override void OnEnable()
@@ -127,7 +131,7 @@ public class CetusController : BossControllerBase
             laserOn = false;
         }
 
-        base.Update();
+        //base.Update();
 
         if (Application.isEditor)
         {
@@ -142,12 +146,14 @@ public class CetusController : BossControllerBase
     {
         if (!laserOn)
         {
-            Sonic();
+            //Sonic();
 
             //After phase 2 we stop shooting off at all the fins
             if (currentPhase < 3)
             {
-                AttackOne();
+                if (Random.value < 0.65f)
+                    AttackOne();
+                else AttackTwo();
             }
         }
     }
@@ -174,7 +180,7 @@ public class CetusController : BossControllerBase
         anim.SetTrigger("AttackOne");
         //Get pooled bullet
         //Spawn a bunch of bullets
-        Invoke("SpawnBullets", 0.95f);
+        Invoke("SpawnBunchaBullets", 0.85f);
 
         //Reset attack cooldown
         attackCools = atkCooldowns[0];
@@ -184,7 +190,7 @@ public class CetusController : BossControllerBase
     protected override void AttackTwo()
     {
         anim.SetTrigger("AttackTwo");
-        Invoke("SpawnBunchaBullets", 0.85f);
+        Invoke("SpawnBullets", 1.15f);
 
         //Reset attack cooldown
         attackCools = atkCooldowns[1];
@@ -262,6 +268,7 @@ public class CetusController : BossControllerBase
                 {
                     g.SetActive(true);
                 }
+                attackCools = spawnCooldown;
                 break;
             case 3:
                 FindObjectOfType<CombatDialogueController>().StartDialogue(barrierDialogue);
@@ -276,13 +283,13 @@ public class CetusController : BossControllerBase
                 {
                     g.SetActive(true);
                 }
+                attackCools = spawnCooldown;
                 break;
         }
 
         Invoke("ActivateBarrierPushObj", 0.75f);
         Invoke("DeactivateBarrierPushObj", 2f);
         AS.PlayOneShot(PlayerSfx[3]);
-        attackCools = spawnCooldown;
     }
 
     void ActivateBarrierPushObj()
@@ -338,6 +345,7 @@ public class CetusController : BossControllerBase
     public void SetLaser()
     {
         //Activate laser
+        laserObj.SetActive(true);
         laserCollider.radius = laserStartSize;
         laserCollider.height = laserStartHeight;
         laserCollider.enabled = true;
@@ -385,8 +393,8 @@ public class CetusController : BossControllerBase
         for (int i = 0; i < bulSpawn.Length; i++)
         {
             //Spawn at every other position(so we dont have 50 bullets spawn)
-            if (i % 2 == 0)
-            {
+            //if (i % 2 == 0)
+            //{
                 GameObject bul = homingBulletPool.GetPooledObject();
                 if (bul != null)
                 {
@@ -409,7 +417,7 @@ public class CetusController : BossControllerBase
                     bul.transform.rotation = Quaternion.Euler(Random.Range(0, 360), Random.Range(0, 360), Random.Range(0, 360));
                     //bul.GetComponent<EnemyBullet>().Push();
                 }
-            }
+            //}
         }
         AS.PlayOneShot(PlayerSfx[1]);
 
@@ -425,7 +433,7 @@ public class CetusController : BossControllerBase
 
     public override void Damage(int damageAmount)
     {
-        if (anim != null) anim.SetTrigger("Hit");
+        //if (anim != null) anim.SetTrigger("Hit");
         hpBar.SwitchUIActive(true);
         curHp -= damageAmount;
         //healthScript.SetHealth((int)curHp);

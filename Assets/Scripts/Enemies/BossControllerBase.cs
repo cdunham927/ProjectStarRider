@@ -50,25 +50,29 @@ public class BossControllerBase : EnemyControllerBase
     protected override void Attack()
     {
         //Choose an attack based on the current phase
-        float v = Random.value;
 
-        switch(currentPhase)
+        if (attackCools <= 0)
         {
-            case 3:
-                if (v < chanceForAtkFour) AttackFour();
-                else if (v < chanceForAtkThree) AttackThree();
-                else if (v < chanceForAtkTwo) AttackTwo();
-                else AttackOne();
-                break;
-            case 2:
-                if (v < chanceForAtkThree) AttackThree();
-                else if (v < chanceForAtkTwo) AttackTwo();
-                else AttackOne();
-                break;
-            case 1:
-                if (v < chanceForAtkTwo) AttackTwo();
-                else AttackOne();
-                break;
+            float v = Random.value;
+
+            switch (currentPhase)
+            {
+                case 3:
+                    if (v < chanceForAtkFour) AttackFour();
+                    else if (v < chanceForAtkThree) AttackThree();
+                    else if (v < chanceForAtkTwo) AttackTwo();
+                    else AttackOne();
+                    break;
+                case 2:
+                    if (v < chanceForAtkThree) AttackThree();
+                    else if (v < chanceForAtkTwo) AttackTwo();
+                    else AttackOne();
+                    break;
+                case 1:
+                    if (v < chanceForAtkTwo) AttackTwo();
+                    else AttackOne();
+                    break;
+            }
         }
         ////Phase 3 attack
         //if (curHp < phase3Thres)
