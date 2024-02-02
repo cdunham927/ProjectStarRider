@@ -411,4 +411,14 @@ public class EnemyControllerBase : MonoBehaviour
 
         angle += angleStep;
     }*/
+    public void ChangeAnimationState(string newState)
+    {
+
+        // stop the same animation from interrutping itself
+        //if (currentState == newState) return;
+
+        //plays the animation
+        anim.Play(newState);
+    }
+
 }

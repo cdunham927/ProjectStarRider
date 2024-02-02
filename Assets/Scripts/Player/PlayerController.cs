@@ -66,8 +66,15 @@ public class PlayerController : MonoBehaviour
 
     //Animation
     [Header("Player Animator : ")]
-     Animator anim;
-    private string State;
+    Animator anim;
+    //private string currentState;
+
+    //Aniamtion State  make sure string match name of animations
+    const string StarRiderIdle = "StarRiderIdle";
+    const string StarRiderShip_BarrelRoll = "StarRiderShip|BarrelRoll";
+    const string StarRiderShip_Go_Fast = "StarRiderShip|Go_Fast";
+    const string StarRiderShip_Go_Slow = "StarRiderShip|Go_Slow";
+    const string StarRiderShip_Spin = "StarRiderShip|Spin";
 
     float curActiveTime;
     float oneCharge;
@@ -180,9 +187,10 @@ public class PlayerController : MonoBehaviour
         
         
         
+        
         //camStartPos = mainCam.transform.position;
         gm = FindObjectOfType<GameManager>();
-
+        
         //sets Defualt speed  value for player
         DefaultRegSpd  = regSpd;  //stored default vlaues for player speed
         DefaultHighSpd = highSpd; //stored default vlaues for player speed
@@ -294,14 +302,17 @@ public class PlayerController : MonoBehaviour
             {
                 Speedvfx();
                  lerpToSpd = highSpd;
+                ChangeAnimationState(StarRiderShip_Go_Fast);
             }
             //Decel
             else if (Input.GetAxisRaw("Decel") > 0)
             {
                 lerpToSpd = slowSpd;
+                ChangeAnimationState(StarRiderShip_Go_Fast);
             }
             //Regular speed
             else lerpToSpd = regSpd;
+            ChangeAnimationState(StarRiderShip_Go_Fast);
         }
 
         //Movement
@@ -412,6 +423,7 @@ public class PlayerController : MonoBehaviour
                 Dashvfx();
                 //Decoy();
                 //if (curActiveTime > oneCharge) Decoy();
+                ChangeAnimationState(StarRiderShip_BarrelRoll);
             }
 
             //controller button press for dash
@@ -431,6 +443,7 @@ public class PlayerController : MonoBehaviour
             if (curDashTime > 0 && !hitWall)
             {
                 bod.AddForce(dashDir * Time.deltaTime, ForceMode.Impulse);
+                ChangeAnimationState(StarRiderShip_BarrelRoll);
                 //Dashvfx();
             }
 
@@ -656,6 +669,7 @@ public class PlayerController : MonoBehaviour
         {
             regSpd = regSpd - amt;
             highSpd = highSpd - amt;
+            ChangeAnimationState(StarRiderShip_Go_Fast);
         }
         else 
         {
@@ -671,10 +685,11 @@ public class PlayerController : MonoBehaviour
         if (speedUpTime > 0)
         {
             highSpd = highSpd + amt;
+            ChangeAnimationState(StarRiderShip_Go_Slow);
         }
         else
             highSpd = DefaultHighSpd;
-        anim.Play("StarRiderShip|Spin");
+       
     }
 
     void Move(float x, float y, float speed) 
@@ -784,12 +799,13 @@ public class PlayerController : MonoBehaviour
             if (!DashVfx.activeInHierarchy)
             {
                 DashVfx.SetActive(true);
+                ChangeAnimationState(StarRiderShip_BarrelRoll);
             }
         }
         //dash sfx
         AS.PlayOneShot(PlayerSfx[1]);
-        //anim.SetTrigger("AttackOne");
-        anim.Play("StarRiderShip|Go_Fast");
+       
+        
     }
 
     public void Speedvfx()
@@ -797,6 +813,7 @@ public class PlayerController : MonoBehaviour
         if (!gm.gameIsPaused && !gm.gameIsOver)
         {
             sys.Emit(sysEmit);
+            ChangeAnimationState(StarRiderShip_Go_Fast);
         }
     }
 
@@ -883,8 +900,17 @@ public class PlayerController : MonoBehaviour
         Vector3 playerPosition = new Vector3(transform.position.x, 0, transform.position.z);
         Vector3 knockbackDirection = (playerPosition - transform.forward).normalized;
         rb.AddForce(knockbackDirection * KnockBackForce, ForceMode.Impulse);
-        //anim.SetTrigger("AttackOne");
-        anim.Play("StarRiderShip|Spin");
+        ChangeAnimationState(StarRiderShip_Spin);
     }
     public virtual void Special() { }
+
+    void ChangeAnimationState( string newState) 
+    {
+
+        // stop the same animation from interrutping itself
+        //if (currentState == newState) return;
+        
+        //plays the animation
+        anim.Play(newState);
+    }
 }
