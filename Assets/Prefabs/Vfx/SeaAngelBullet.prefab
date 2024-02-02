@@ -28,6 +28,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3552816378729011971}
   m_RootOrder: 0
@@ -4827,6 +4828,7 @@ ParticleSystemRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_RenderMode: 4
+  m_MeshDistribution: 0
   m_SortMode: 0
   m_MinParticleSize: 0
   m_MaxParticleSize: 0.5
@@ -4850,6 +4852,10 @@ ParticleSystemRenderer:
   m_Mesh1: {fileID: 0}
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
+  m_MeshWeighting: 1
+  m_MeshWeighting1: 1
+  m_MeshWeighting2: 1
+  m_MeshWeighting3: 1
   m_MaskInteraction: 0
 --- !u!1 &3552816378729011975
 GameObject:
@@ -4881,6 +4887,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.11, y: 0, z: 0.65}
   m_LocalScale: {x: 6, y: 6, z: 6}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6603836095057015298}
   - {fileID: 8628557657987923879}
@@ -4935,6 +4942,8 @@ MonoBehaviour:
   damage: 1
   rb: {fileID: 3552816378729011970}
   disableTime: 2
+  speedUp: 0
+  pushSpd: 0
   collisonExplosion: {fileID: 0}
   trail: {fileID: 0}
   spawnPos: {fileID: 3552816378729011975}
@@ -4956,9 +4965,11 @@ MonoBehaviour:
   slowSpd: 25
   fastSpd: 80
   randSpdMod: 5
-  damage: 1
+  damage: 2
   rb: {fileID: 3552816378729011970}
   disableTime: 3
+  speedUp: 0
+  pushSpd: 0
   collisonExplosion: {fileID: 0}
   trail: {fileID: 0}
   redAmt: 15

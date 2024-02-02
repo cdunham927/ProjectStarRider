@@ -98,13 +98,13 @@ public class CetusController : BossControllerBase
 
     protected override void Update()
     {
+        //If the cooldown is at 0 then we can attack
+        if (attackCools <= 0) Attack();
+        //If the cooldown is greater than 0 we decrement it every frame
+        if (attackCools > 0) attackCools -= Time.deltaTime;
         //If the player is close enough
         if (playerInRange && curHp > 0 & player != null && pStats != null && pStats.Curr_hp > 0)
         {
-            //If the cooldown is at 0 then we can attack
-            if (attackCools <= 0) Attack();
-            //If the cooldown is greater than 0 we decrement it every frame
-            if (attackCools > 0) attackCools -= Time.deltaTime;
 
             //Probably have to rotate the boss towards the player
             //transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, 0, 0), lerpSpd * Time.deltaTime);
@@ -256,7 +256,7 @@ public class CetusController : BossControllerBase
                 }
                 break;
             case 2:
-                FindObjectOfType<CombatDialogueController>().StartDialogue(barrierDialogue);
+                //FindObjectOfType<CombatDialogueController>().StartDialogue(barrierDialogue);
                 barrier.gameObject.SetActive(true);
                 barrier.SetEnemies(waveTwoSpawns.Length);
                 foreach (GameObject g in waveTwoSpawns)
@@ -271,7 +271,7 @@ public class CetusController : BossControllerBase
                 attackCools = spawnCooldown;
                 break;
             case 3:
-                FindObjectOfType<CombatDialogueController>().StartDialogue(barrierDialogue);
+                //FindObjectOfType<CombatDialogueController>().StartDialogue(barrierDialogue);
                 barrier.gameObject.SetActive(true);
                 barrier.SetEnemies(waveThreeSpawns.Length);
                 foreach (GameObject g in waveThreeSpawns)
@@ -461,7 +461,7 @@ public class CetusController : BossControllerBase
                 if (curHpLoss > pTtLA)
                 {
                     //Do laser attack here then reset cooldown
-                    Debug.Log("Lost 10% hp");
+                    //Debug.Log("Lost 10% hp");
                     AttackThree();
                     curHpLoss = 0;
                 }
@@ -470,7 +470,7 @@ public class CetusController : BossControllerBase
                 if (curHpLoss > pTLA)
                 {
                     //Do laser attack here then reset cooldown
-                    Debug.Log("Lost 15% hp");
+                    //Debug.Log("Lost 15% hp");
                     AttackThree();
                     curHpLoss = 0;
                 }
@@ -489,7 +489,7 @@ public class CetusController : BossControllerBase
         if (curHp < phase3Thres && !playedDialogue)
         {
             playedDialogue = true;
-            FindObjectOfType<CombatDialogueController>().StartDialogue(thirdPhaseDialogue);
+            //FindObjectOfType<CombatDialogueController>().StartDialogue(thirdPhaseDialogue);
         }
         
         //Debug.Log("Enemy took damage");
@@ -515,7 +515,7 @@ public class CetusController : BossControllerBase
             //    hasAdded = true;
             //    pStats.AddScore(killScore);
             //}
-            Death();
+            CetusDeath();
 
             Instantiate(deathVFX, transform.position, transform.rotation);
             Invoke("Disable", deathTime);

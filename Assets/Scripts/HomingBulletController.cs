@@ -15,6 +15,7 @@ public class HomingBulletController : MonoBehaviour
     public float startSpd;
 
     public GameObject minimapObj;
+    public int atk;
 
     private void Awake()
     {
@@ -53,10 +54,10 @@ public class HomingBulletController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        bod.velocity = transform.forward * spd; //velcoity algorthim for the porjectile
         if (player != null && player.gameObject.activeInHierarchy)
         {
             //bod.AddForce(transform.forward * spd * Time.deltaTime);
-            bod.velocity = transform.forward * spd; //velcoity algorthim for the porjectile
 
             Vector3 targDir = player.transform.position - transform.position;
             Vector3 newDir = Vector3.RotateTowards(transform.forward, targDir, lerpSpd * Time.deltaTime, 0.0f);
@@ -67,7 +68,7 @@ public class HomingBulletController : MonoBehaviour
     {
         if (collision.CompareTag("Player")) // // trigger on Player  tag object
         {
-            collision.gameObject.GetComponent<Player_Stats>().Damage(1);
+            collision.gameObject.GetComponent<Player_Stats>().Damage(atk);
             if (hitVFXPool == null) hitVFXPool = cont.enemyHitVFXPool;
             GameObject hit = hitVFXPool.GetPooledObject();
             hit.transform.position = spawnPos.transform.position;
