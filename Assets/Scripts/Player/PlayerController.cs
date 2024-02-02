@@ -176,7 +176,7 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         //Finds Attached Animator to the player
-        anim = GetComponent<Animator>();
+        anim = GetComponentInChildren<Animator>();
         
         
         
