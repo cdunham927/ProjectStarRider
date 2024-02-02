@@ -60,16 +60,19 @@ public class PlayerController : MonoBehaviour
     //
     //
     // //int curActive;
-    [Header("AfterImage Object")]
+    [Header("AfterImage Object : ")]
     public GameObject[] afterimages;
     public float maxImagesTime = 40f;
-    
-    
-    
+
+    //Animation
+    [Header("Player Animator : ")]
+     Animator anim;
+    private string State;
+
     float curActiveTime;
     float oneCharge;
     
-    [Header("AfterImage Icons")]
+    [Header("AfterImage Icons : ")]
     public MPImage[] afterimageUI;
     public Sprite emptyImage;
     public Sprite filledImage;
@@ -83,7 +86,7 @@ public class PlayerController : MonoBehaviour
     float speedUpTimer;
 
     //References for camera
-    [Header("Camera Refernces: ")]
+    [Header("Camera Refernces : ")]
     public CinemachineVirtualCamera cinCam;
     //Vector3 camStartPos;
     public Camera mainCam;
@@ -101,6 +104,9 @@ public class PlayerController : MonoBehaviour
     public int collisionDamage = 0;
     public int spikeDamage = 0;
     GameManager cont;
+    
+    [SerializeField]
+    private float KnockBackForce  = 2f;
 
     //For aiming with the mouse
     Vector3 newVelZ;
@@ -169,6 +175,11 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
+        //Finds Attached Animator to the player
+        anim = GetComponent<Animator>();
+        
+        
+        
         //camStartPos = mainCam.transform.position;
         gm = FindObjectOfType<GameManager>();
 
@@ -213,6 +224,8 @@ public class PlayerController : MonoBehaviour
         UnfreezeRotation();
 
         AS = GetComponent<AudioSource>();
+
+
     }
 
     private void OnEnable()
@@ -661,6 +674,7 @@ public class PlayerController : MonoBehaviour
         }
         else
             highSpd = DefaultHighSpd;
+        anim.Play("StarRiderShip|Spin");
     }
 
     void Move(float x, float y, float speed) 
@@ -696,8 +710,9 @@ public class PlayerController : MonoBehaviour
             hitWall = true;
             Invoke("ResetHitWall", timeToMove);
             stats.Damage(spikeDamage);
-
+            Invoke("KnockBack", 0.5f);
             Invoke("ResetCam", 0.12f);
+
         }
     }
 
@@ -773,7 +788,8 @@ public class PlayerController : MonoBehaviour
         }
         //dash sfx
         AS.PlayOneShot(PlayerSfx[1]);
-
+        //anim.SetTrigger("AttackOne");
+        anim.Play("StarRiderShip|Go_Fast");
     }
 
     public void Speedvfx()
@@ -862,5 +878,13 @@ public class PlayerController : MonoBehaviour
         bod.AddForce(dir * force);
     }
 
+    public void KnockBack(float KnockBackForce, Vector3 dir , Rigidbody rb)
+    {
+        Vector3 playerPosition = new Vector3(transform.position.x, 0, transform.position.z);
+        Vector3 knockbackDirection = (playerPosition - transform.forward).normalized;
+        rb.AddForce(knockbackDirection * KnockBackForce, ForceMode.Impulse);
+        //anim.SetTrigger("AttackOne");
+        anim.Play("StarRiderShip|Spin");
+    }
     public virtual void Special() { }
 }
