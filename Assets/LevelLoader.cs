@@ -57,6 +57,13 @@ public class LevelLoader : MonoBehaviour
         StartCoroutine(LoadAsynchronously(sceneIndex));
     }
 
+    public void LoadLevel(string sceneName)
+    {
+        //loads the scene in the background
+        //AsyncOperation operation = SceneManager.LoadSceneAsync(name);
+        SceneManager.LoadScene(sceneName);
+    }
+
     IEnumerator LoadAsynchronously (int sceneIndex)
     {
         //Music stuff
