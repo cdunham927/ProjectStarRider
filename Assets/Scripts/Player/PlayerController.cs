@@ -897,6 +897,8 @@ public class PlayerController : MonoBehaviour
 
     public void KnockBack(float KnockBackForce, Vector3 dir , Rigidbody rb)
     {
+        hitWall = true;
+        Invoke("ResetHitWall", timeToMove);
         Vector3 playerPosition = new Vector3(transform.position.x, 0, transform.position.z);
         Vector3 knockbackDirection = (playerPosition - transform.forward).normalized;
         rb.AddForce(knockbackDirection * KnockBackForce, ForceMode.Impulse);

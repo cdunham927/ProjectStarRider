@@ -49,7 +49,7 @@ public class SceneSwitch : MonoBehaviour
         //src = GetComponent<AudioSource>();
         overworld = FindObjectOfType<OverworldMenuController>();
         cont = FindObjectOfType<GameManager>();
-        //if (optionsMenu == null) optionsMenu = FindObjectOfType<LevelLoader>().optionsMenu;
+        if (optionsMenu == null && FindObjectOfType<LevelLoader>() != null) optionsMenu = FindObjectOfType<LevelLoader>().optionsMenu;
         if (optionsMenu == null && FindObjectOfType<LevelLoader>() == null) optionsMenu = Instantiate(optionsPrefab);
         startGameButton = GameObject.FindGameObjectWithTag("StartGameButton");
 
@@ -170,7 +170,7 @@ public class SceneSwitch : MonoBehaviour
         {
             if (startGameButton != null)　startGameButton.SetActive(false);
         }
-        optionsMenu.SetActive(true);
+        if (optionsMenu != null) optionsMenu.SetActive(true);
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(optionsFirstSelected);
     }
@@ -190,7 +190,7 @@ public class SceneSwitch : MonoBehaviour
         {
             if (startGameButton != null) startGameButton.SetActive(true);
         }
-        optionsMenu.SetActive(false); 
+        if (optionsMenu != null) optionsMenu.SetActive(false); 
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(lastSelected);
     }

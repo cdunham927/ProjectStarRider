@@ -7,7 +7,7 @@ public class CetusTailController : MonoBehaviour
     public CetusController cetus;
     public float cooldown = 3f;
     float curCools;
-    public Collider otherCollider;
+    public Collider[] otherCollider;
     public float activateTime = 0.35f;
     public float deactivateTime = 1.25f;
     public float activationAmt = 1f;
@@ -41,12 +41,12 @@ public class CetusTailController : MonoBehaviour
 
     void ActivateCollider()
     {
-        otherCollider.enabled = true;
+        foreach(Collider col in otherCollider) col.enabled = true;
     }
 
     void DeactivateCollider()
     {
-        otherCollider.enabled = false;
+        foreach (Collider col in otherCollider) col.enabled = false;
     }
 
     private void Update()
