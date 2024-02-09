@@ -10,6 +10,7 @@ public class RaceController : MonoBehaviour
     public RaceEnemy raceEnemy;
     public PlayerController player;
     public int checkpointsHit;
+    public int enemyCheckpointsHit;
 
     public Slider playerImage;
     public Slider enemyImage;
@@ -34,6 +35,7 @@ public class RaceController : MonoBehaviour
         enemyImage = GameObject.FindGameObjectWithTag("RaceProgressE").GetComponent<Slider>();
 
         checkpointsHit = 0;
+        enemyCheckpointsHit = 0;
         endofrace = false;
 
         startDistance = 0;
@@ -57,21 +59,31 @@ public class RaceController : MonoBehaviour
         }
     }
 
+    public void WinRace()
+    {
+        cont.Victory();
+        GetComponent<Collider>().enabled = false;
+        endofrace = true;
+        playerImage.value = 1;
+    }
+
+    public void LoseRace()
+    {
+        cont.GameOver();
+        GetComponent<Collider>().enabled = false;
+        endofrace = true;
+        enemyImage.value = 1;
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player") && checkpointsHit >= checkpoints.Length - 1)
         {
-            cont.Victory();
-            GetComponent<Collider>().enabled = false;
-            endofrace = true;
-            playerImage.value = 1;
+            WinRace();
         }
         if (other.CompareTag("RaceEnemy"))
         {
-            cont.GameOver();
-            GetComponent<Collider>().enabled = false;
-            endofrace = true;
-            enemyImage.value = 1;
+            LoseRace();
         }
     }
 }

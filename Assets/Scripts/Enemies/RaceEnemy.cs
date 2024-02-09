@@ -6,6 +6,8 @@ public class RaceEnemy : MonoBehaviour
 {
     public GameObject[] waypoints;
     public float moveSpd;
+    public float maxSlow;
+    float curMove;
     public float waypointProx;
     int curWaypoint = 0;
 
@@ -19,6 +21,11 @@ public class RaceEnemy : MonoBehaviour
     float distance;
 
     public float turnSpd;
+
+    public float slowdownPerShot;
+    float curSlowdown;
+    [Range(1, 999)]
+    public int slowdownReduceAmt;
 
     private void Start()
     {
@@ -64,9 +71,22 @@ public class RaceEnemy : MonoBehaviour
         curWaypoint = 0;
     }
 
+    public void Shot()
+    {
+        curSlowdown += slowdownPerShot;
+    }
+
     private void Update()
     {
-        distance = Vector3.Distance(transform.position, waypoints[curWaypoint].transform.position);
+        if (curSlowdown > 0)
+        {
+            curSlowdown -= Time.deltaTime * slowdownReduceAmt;
+        }
+        curSlowdown = Mathf.Clamp(curSlowdown, 0, maxSlow);
+
+        curMove = moveSpd - curSlowdown;
+
+        if (curWaypoint < waypoints.Length) distance = Vector3.Distance(transform.position, waypoints[curWaypoint].transform.position);
         if (distance < waypointProx && curWaypoint < waypoints.Length) curWaypoint++;
 
         if (curWaypoint >= 0 && curWaypoint < waypoints.Length)
@@ -76,6 +96,6 @@ public class RaceEnemy : MonoBehaviour
             transform.rotation = lookRot;
         }
         //if (curWaypoint >= 0 && curWaypoint < waypoints.Length) transform.LookAt(waypoints[curWaypoint].transform, new Vector3(-1, 0, 1));
-        bod.AddForce(transform.forward * moveSpd * Time.deltaTime);
+        bod.AddForce(transform.forward * curMove * Time.deltaTime);
     }
 }

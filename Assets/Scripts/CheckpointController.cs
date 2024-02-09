@@ -15,8 +15,20 @@ public class CheckpointController : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            //if (race.checkpointsHit >= race.checkpoints.Length - 1)
+            //{
+            //    race.WinRace();
+            //}
             race.checkpointsHit++;
             this.enabled = false;
         }
+        //if (other.CompareTag("RaceEnemy"))
+        //{
+        //    if (race.enemyCheckpointsHit >= race.checkpoints.Length - 1)
+        //    {
+        //        race.LoseRace();
+        //    }
+        //}
+        //race.enemyCheckpointsHit++;
     }
 }

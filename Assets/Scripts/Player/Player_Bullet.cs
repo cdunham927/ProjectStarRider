@@ -64,7 +64,24 @@ public class Player_Bullet : Bullet
             }
             Invoke("Disable", 0.001f);
         }
-    
+        if (col.CompareTag("RaceEnemy"))
+        {
+            //Debug.Log("Hit Enemy");
+            col.gameObject.GetComponent<RaceEnemy>().Shot();
+            //ContactPoint cp = col.GetContact(0);
+            if (hitVFXPool == null) hitVFXPool = cont.hitVFXPool;
+            if (!spawned)
+            {
+                GameObject hit = hitVFXPool.GetPooledObject();
+                hit.transform.position = spawnPos.transform.position;
+                hit.transform.rotation = col.transform.rotation;
+                //bul.GetComponent<Rigidbody>().velocity = bod.velocity;
+                hit.SetActive(true);
+                spawned = true;
+            }
+            Invoke("Disable", 0.001f);
+        }
+
         if (col.CompareTag("DWall"))
         {
             col.gameObject.GetComponent<DestructibleObject>().TakeDamage(damage);
