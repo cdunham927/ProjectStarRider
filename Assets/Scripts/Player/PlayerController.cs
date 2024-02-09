@@ -24,9 +24,14 @@ public class PlayerController : MonoBehaviour
     [Space]
 
     [Header("Rotation Settings")]
-    public float turnSmoothTime = 0.1f;
-    float turnSmoothVelocity;
-    
+    public float yawSpeed;
+    public float pitchSpeed;
+    private float turnSmoothTime = 0.1f;
+    public Vector3 InputSteering;
+    //public float turnSmoothVelocity;
+    public float leanAmount_X;
+    public float leanAmount_Y;
+
     [Space]
 
     [Header("Particles")]
@@ -246,6 +251,7 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        TurnShip();
         if (!joystick && !gm.gameIsPaused)
         {
             if (!invertControls)
@@ -915,4 +921,45 @@ public class PlayerController : MonoBehaviour
         //plays the animation
         anim.Play(newState);
     }
+
+    void TurnShip() 
+    {
+
+
+        Vector3 newTorque = new Vector3(InputSteering.x * pitchSpeed, -InputSteering.z * yawSpeed, 0);
+        bod.AddRelativeTorque(newTorque);
+
+        bod.rotation =
+            Quaternion.Slerp(bod.rotation, Quaternion.Euler(new Vector3(transform.localEulerAngles.x, transform.localEulerAngles.y, 0)), .5f);
+
+        VisualTurnShip();
+
+
+    }
+
+    void VisualTurnShip()
+    {
+
+        playerModel.localEulerAngles = new Vector3(InputSteering.x * leanAmount_Y
+            , playerModel.localEulerAngles.y, InputSteering.z * leanAmount_X);
+
+
+
+    }
+
+
+    public void UpdateInput(Vector3 newSteering) 
+    {
+
+
+            InputSteering = newSteering;
+            //thrustInput = newThrust;
+            //shootInput = newShoot;
+        
+
+
+
+    }
+
+
 }

@@ -6,14 +6,15 @@ public class PlayerShooting : MonoBehaviour
 {
     [Header("Shooting References: ")]
     public ObjectPool bulPool; 
-    public GameObject bulSpawn;
+    public Transform bulSpawn;
     public GameObject muzzle;
+    bool PlayerIsShooting;
     GameObject mVfx;
 
     [Header("shooting settings: ")]
     //public float bulletSpd;
     public float shootCooldown;
-    float curShootCools;
+    float curShootCools = 0.0f;
    
     [Header("Audio Clips: ")]
     public AudioClip ShotSounds; 
@@ -39,7 +40,7 @@ public class PlayerShooting : MonoBehaviour
         mVfx = Instantiate(muzzle);
         mVfx.SetActive(false);
 
-        curShootCools = 0f;
+        
 
     }
 
@@ -55,27 +56,32 @@ public class PlayerShooting : MonoBehaviour
     {
         if ((Input.GetButton("Fire1") || Input.GetAxis("Altfire1") > 0) && curShootCools <= 0f && !gm.gameIsPaused)
         {
-            Shoot();
+            Shoot(true);
             PlaySound();
         }
 
-        if (curShootCools > 0f) curShootCools -= Time.deltaTime;
+        if (curShootCools > 0f) 
+            curShootCools -= Time.deltaTime;
     }
 
-    public void Shoot()
+    public void Shoot( bool newShooting)
     {
         if (bulPool == null) bulPool = cont.bulPool;
         GameObject bul = bulPool.GetPooledObject();
-        bul.transform.position = bulSpawn.transform.position;
-        bul.transform.rotation = bulSpawn.transform.rotation;
+        bul.transform.position = bulSpawn.position;
+        bul.transform.rotation = bulSpawn.rotation;
+        bul.SetActive(true);
+       
         //Set bullet damage
         Bullet b = bul.GetComponent<Bullet>();
         b.damage = dmg;
         //bul.GetComponent<Rigidbody>().velocity = bod.velocity;
-        bul.SetActive(true);
+       
         curShootCools = shootCooldown;
         PlayMuzzle();
+        //Player Recoil
         bod.AddForce(-bod.transform.forward * recoilForce * Time.deltaTime, ForceMode.Impulse);
+        PlayerIsShooting = newShooting;
     }
 
     public void PlaySound()

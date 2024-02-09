@@ -70,16 +70,16 @@ public class CetusController : BossControllerBase
     //Aniamtion State  make sure string match name of animations
     const string Cetus_Reflect = "Armature|Reflect";
     const string Cetus_Idle = "Armature|Idle";
-    const string Cetus_Attack_1 = "Armature|Idle";
-    const string Cetus_Attack_2 = "Armature|Idle";
+    const string Cetus_Attack_1 = "Armature|Attack1";
+    const string Cetus_Attack_2 = "Armature|Attack2";
     const string Cetus_Wings_R = "Armature|Idle";
     const string Cetus_Wings_L= "Armature|Idle";
-    const string Cetus_Wings_All = "Armature|Idle";
+    const string Cetus_Wings_All = "CetusArmature|WingSlaps_All";
     const string Cetus_Bite = "CetusArmature|BiteBack";
     const string Cetus_Tail_Swipe = "Armature|TailWhip";
     const string Cetus_Dive = "Armature|Idle";
     const string Cetus_Flustered = "Armature|Idle";
-    const string Cetus_Death = "Armature|Idle";
+    const string Cetus_Death = "Armature|Death";
     const string Cetus_Roar = "CetusArmature|Roaring";
     const string Cetus_Charge_Laser = "Charge Attack Edit";
     const string Cetus_Charging = "Charge Attack Edit";
@@ -175,6 +175,7 @@ public class CetusController : BossControllerBase
             {
                 if (Random.value < 0.65f)
                     AttackOne();
+                    
                 else AttackTwo();
             }
         }
@@ -199,7 +200,8 @@ public class CetusController : BossControllerBase
     //This attack shoots bullets out of all the fins
     protected override void AttackOne()
     {
-        anim.SetTrigger("AttackOne");
+        //anim.SetTrigger("AttackOne");
+        ChangeAnimationState(Cetus_Attack_1);
         //Get pooled bullet
         //Spawn a bunch of bullets
         Invoke("SpawnBunchaBullets", 0.85f);
@@ -211,7 +213,8 @@ public class CetusController : BossControllerBase
     //This attack 
     protected override void AttackTwo()
     {
-        anim.SetTrigger("AttackTwo");
+        //anim.SetTrigger("AttackTwo");
+        ChangeAnimationState(Cetus_Attack_2);
         Invoke("SpawnBullets", 1.15f);
 
         //Reset attack cooldown
@@ -255,6 +258,24 @@ public class CetusController : BossControllerBase
         ChangeAnimationState(Cetus_Tail_Swipe);
     }
 
+    public void BiteAttack()
+    {
+        //anim.SetTrigger("AttackFive");
+        ChangeAnimationState(Cetus_Bite);
+    }
+
+    public void WingAttack()
+    {
+        //anim.SetTrigger("AttackFive");
+        ChangeAnimationState(Cetus_Wings_All);
+    }
+
+    public void WhirlWindAttack()
+    {
+        //anim.SetTrigger("AttackFive");
+        ChangeAnimationState(Cetus_Whirlwind);
+    }
+
     public void Sonic()
     {
         Invoke("SonicSingle", 0.95f);
@@ -267,13 +288,13 @@ public class CetusController : BossControllerBase
     public void SpawnAngels(int phase)
     {
         
-        //ChangeAnimationState(Cetus_Roar);
+        ChangeAnimationState(Cetus_Roar);
         switch (phase)
         {
             case 1:
                 //barrier.gameObject.SetActive(true);
                 barrier.SetEnemies(waveOneSpawns.Length);
-                ChangeAnimationState(Cetus_Reflect);
+                //ChangeAnimationState(Cetus_Reflect);
                 foreach (GameObject g in waveOneSpawns)
                 {
                     g.GetComponent<EnemyControllerBase>().barrier = barrier;
@@ -283,7 +304,7 @@ public class CetusController : BossControllerBase
             case 2:
                 //FindObjectOfType<CombatDialogueController>().StartDialogue(barrierDialogue);
                 barrier.gameObject.SetActive(true);
-                ChangeAnimationState(Cetus_Reflect);
+                //ChangeAnimationState(Cetus_Reflect);
                 barrier.SetEnemies(waveTwoSpawns.Length);
                 foreach (GameObject g in waveTwoSpawns)
                 {
@@ -299,7 +320,7 @@ public class CetusController : BossControllerBase
             case 3:
                 //FindObjectOfType<CombatDialogueController>().StartDialogue(barrierDialogue);
                 barrier.gameObject.SetActive(true);
-                ChangeAnimationState(Cetus_Reflect);
+                //ChangeAnimationState(Cetus_Reflect);
                 barrier.SetEnemies(waveThreeSpawns.Length);
                 foreach (GameObject g in waveThreeSpawns)
                 {
@@ -364,7 +385,8 @@ public class CetusController : BossControllerBase
     //Laser attack
     protected override void AttackThree()
     {
-        anim.SetTrigger("AttackThree");
+        //anim.SetTrigger("AttackThree");
+        ChangeAnimationState(Cetus_Charge_Laser);
         Invoke("SetLaser", 2f);
         attackCools = atkCooldowns[2];
     }
@@ -383,7 +405,7 @@ public class CetusController : BossControllerBase
 
     protected override void AttackFour()
     {
-
+        ChangeAnimationState(Cetus_Whirlwind);
     }
 
     void SpawnBullets()
@@ -454,7 +476,8 @@ public class CetusController : BossControllerBase
     public void CetusDeath()
     {
         skinnedMeshRenderer.material.color = Color.white;
-        anim.SetTrigger("Death");
+        //anim.SetTrigger("Death");
+        ChangeAnimationState(Cetus_Death);
         Death();
     }
 
