@@ -7,7 +7,7 @@ public class TurretController : MonoBehaviour
     //Time between attacks
     public float timeBetweenAttacks;
     //Range for when the enemy starts attacking
-    public float attackRange;
+    //public float attackRange;
     //Current cooldown time for attacking
     float attackCools;
     //Object pool for bullets to shoot
@@ -15,8 +15,8 @@ public class TurretController : MonoBehaviour
     //Checks if the player is in range
     public bool playerInRange = false;
     //Set the radius for the detection collider
-    public SphereCollider detectionCollider;
-    public Collider col;
+    //public SphereCollider detectionCollider;
+    //public Collider col;
 	public bool isRandom;
     public float accx;
     public float accy;
@@ -37,8 +37,8 @@ public class TurretController : MonoBehaviour
     private void OnEnable()
     {
         player = FindObjectOfType<PlayerController>();
-        detectionCollider.radius = attackRange;
-        SetCollider(false);
+        //detectionCollider.radius = attackRange;
+        //SetCollider(false);
     }
 
     private void Update()
@@ -82,6 +82,22 @@ public class TurretController : MonoBehaviour
 
     public void SetCollider(bool cl = true)
     {
-        col.enabled = cl;
+        //col.enabled = cl;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Player")
+        {
+            playerInRange = true;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.tag == "Player")
+        {
+            playerInRange = false;
+        }
     }
 }
