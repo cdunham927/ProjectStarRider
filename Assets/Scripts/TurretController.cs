@@ -20,7 +20,9 @@ public class TurretController : MonoBehaviour
 	public bool isRandom;
     public float accx;
     public float accy;
-    
+
+    public bool aimAtPlayer;
+    public float gizmoLength = 10f;
 
     //Player
     PlayerController player;
@@ -55,7 +57,7 @@ public class TurretController : MonoBehaviour
 
     public void Attack()
     {
-        if (bulletPool == null) bulletPool = cont.enemyBulPool;
+        if (bulletPool == null) bulletPool = cont.bigTurretBulletPool;
         src.Play();
         //Get pooled bullet
         GameObject bul = bulletPool.GetPooledObject();
@@ -67,11 +69,18 @@ public class TurretController : MonoBehaviour
             //bul.transform.rotation = transform.rotation;
             //Activate it at the enemy position
             bul.SetActive(true);
-            bul.transform.LookAt(player.transform);
-            bul.transform.Rotate(Random.Range(-accx,accx), Random.Range(-accy, accy), 0);
-            if (isRandom == true)
+            if (aimAtPlayer)
+            {
+                bul.transform.LookAt(player.transform);
+                bul.transform.Rotate(Random.Range(-accx, accx), Random.Range(-accy, accy), 0);
+            }
+            else if (isRandom == true)
             {
                 bul.transform.rotation = Quaternion.Euler(Random.Range(0, 360), Random.Range(0, 360), Random.Range(0, 360));
+            }
+            else
+            {
+                bul.transform.rotation = transform.rotation;
             }
             bul.GetComponent<EnemyBullet>().Push();
         }
@@ -99,5 +108,11 @@ public class TurretController : MonoBehaviour
         {
             playerInRange = false;
         }
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawLine(transform.position, transform.position + transform.forward * gizmoLength);
     }
 }

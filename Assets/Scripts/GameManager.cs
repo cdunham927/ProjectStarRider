@@ -27,6 +27,8 @@ public class GameManager : MonoBehaviour
     public GameObject enemySnipeBulletPoolPrefab;
     //Enemies need to grab from this pool
     public GameObject seaAngelBulPoolPrefab;
+    //BEEG TURRET BULLETS
+    public GameObject bigTurretBulletPrefab;
     //Bullets need to grab from this pool
     public GameObject hitVFXPoolPrefab;
     public GameObject enemyVFXPoolPrefab;
@@ -79,6 +81,10 @@ public class GameManager : MonoBehaviour
     public ObjectPool enemySnipePool;
     [HideInInspector]
     public ObjectPool seaAngelBulPool;
+    [HideInInspector]
+    public ObjectPool bigTurretBulletPool;
+
+
     public MPImage[] afterimages;
     public EnemyManager[] enemyManager;
     public int enemyCount = 0;
@@ -173,6 +179,7 @@ public class GameManager : MonoBehaviour
         enemySGPool = Instantiate(enemySGBulletPoolPrefab).GetComponent<ObjectPool>();
         enemySnipePool = Instantiate(enemySnipeBulletPoolPrefab).GetComponent<ObjectPool>();
         seaAngelBulPool = Instantiate(seaAngelBulPoolPrefab).GetComponent<ObjectPool>();
+        bigTurretBulletPool = Instantiate(bigTurretBulletPrefab).GetComponent<ObjectPool>();
         hitVFXPool = Instantiate(hitVFXPoolPrefab).GetComponent<ObjectPool>();
         enemyHitVFXPool = Instantiate(enemyVFXPoolPrefab).GetComponent<ObjectPool>();
 

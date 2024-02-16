@@ -121,6 +121,7 @@ public class Player_Stats : MonoBehaviour
         //OverUI = FindObjectOfType<gm>().GameOver();
         //healthImage = GameObject.FindGameObjectWithTag("Health").GetComponent<Image>();
         //innerRect = GameObject.FindGameObjectWithTag("Health").GetComponent<Shapes.Rectangle>();
+        reactionAnim.SetInteger("Hp", Curr_hp);
     }
 
     private void Start()
@@ -180,9 +181,18 @@ public class Player_Stats : MonoBehaviour
             }
         }
 
-        healthImage.fillAmount = Mathf.Lerp(healthImage.fillAmount, (float)Curr_hp / (float)Max_hp, lerpSpd * Time.deltaTime);
-        healthImageGreen.fillAmount = Mathf.Lerp(healthImageGreen.fillAmount, (float)Curr_hp / (float)Max_hp, fastLerpSpd * Time.deltaTime);
-        healthImageRed.fillAmount = Mathf.Lerp(healthImageRed.fillAmount, (float)Curr_hp / (float)Max_hp, slowLerpSpd * Time.deltaTime);
+        if (Curr_hp > 0)
+        {
+            healthImage.fillAmount = Mathf.Lerp(healthImage.fillAmount, (float)Curr_hp / (float)Max_hp, lerpSpd * Time.deltaTime);
+            healthImageGreen.fillAmount = Mathf.Lerp(healthImageGreen.fillAmount, (float)Curr_hp / (float)Max_hp, fastLerpSpd * Time.deltaTime);
+            healthImageRed.fillAmount = Mathf.Lerp(healthImageRed.fillAmount, (float)Curr_hp / (float)Max_hp, slowLerpSpd * Time.deltaTime);
+        }
+        else
+        {
+            healthImage.fillAmount = 0;
+            healthImageGreen.fillAmount = 0;
+            healthImageRed.fillAmount = 0;
+        }
         scoreText.text = "Score: " + Mathf.Round(score).ToString();
         multiplierText.text = "Multiplier: " + scoreMultiplier + "x";
         //innerRect.Width = ((float)Curr_hp / (float)Max_hp) * size;
@@ -192,6 +202,7 @@ public class Player_Stats : MonoBehaviour
     {
         if (!PlayerDead)
         {
+            reactionAnim.SetInteger("Hp", Curr_hp);
             HealBlink();
             reactionImage.color = healColor;
             Invoke("ResetGradient", flashTime);
@@ -260,7 +271,6 @@ public class Player_Stats : MonoBehaviour
 
                 if (Curr_hp > 0)
                 {
-
                     ShakeCamera();
                     if(curTime > 0) 
                     {
@@ -270,7 +280,6 @@ public class Player_Stats : MonoBehaviour
                             StopShakeCamera();
                             
                         }
-                    
                     }
                     src.PlayOneShot(takeDamageClip, hitVolume);
                 }

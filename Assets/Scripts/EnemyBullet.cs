@@ -38,7 +38,7 @@ public class EnemyBullet : Bullet
     {
         if (collision.CompareTag("Player"))
         {
-            collision.gameObject.GetComponent<Player_Stats>().Damage(1);
+            collision.gameObject.GetComponent<Player_Stats>().Damage(damage);
             if (hitVFXPool == null) hitVFXPool = cont.enemyHitVFXPool;
             GameObject hit = hitVFXPool.GetPooledObject();
             hit.transform.position = spawnPos.transform.position;
