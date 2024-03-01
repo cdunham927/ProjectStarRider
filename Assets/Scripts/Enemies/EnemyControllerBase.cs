@@ -13,7 +13,8 @@ public class EnemyControllerBase : MonoBehaviour
     [Header(" Enemy Base Stats : ")]
     public float maxHp;
     public float curHp;
-
+   
+    [Header(" Enemy Score Rating : ")]
     public float killScore = 100;
     protected bool hasAdded = false;
 
@@ -28,9 +29,12 @@ public class EnemyControllerBase : MonoBehaviour
     public ObjectPool bulletPool;
     //Checks if the player is in range
     public bool playerInRange = false;
+    
     //Set the radius for the detection collider
     [Header(" Enemy site field : ")]
     public SphereCollider detectionCollider;
+    
+    [Header(" Enemy Hitbox : ")]
     public Collider col;
 
     [Header(" Bullet accuracy Settingss : ")]
@@ -63,6 +67,7 @@ public class EnemyControllerBase : MonoBehaviour
     public float bombSpawnChance = 0.3f;
 
     //Object pool for hp pickups
+    [Header("Item Drops: ")]
     public ObjectPool hpPool;
     public ObjectPool bombPool;
     bool spawned = false;
@@ -79,8 +84,10 @@ public class EnemyControllerBase : MonoBehaviour
     [Header(" Icon for minimap : ")]
     public GameObject minimapObj;
 
+    [Header(" HealthBar Icon: ")]
     public Healthbar hpBar;
-
+    public Healthbar healthScript;
+    
     //Enemy Manager for trap rooms
     [HideInInspector]
     public EnemyManager manager;
@@ -91,7 +98,7 @@ public class EnemyControllerBase : MonoBehaviour
     float blinkTimer;
     public SkinnedMeshRenderer skinnedMeshRenderer;
 
-    public Healthbar healthScript;
+   
 
     [Header(" Animation controller : ")]
     public Animator anim;
@@ -117,41 +124,10 @@ public class EnemyControllerBase : MonoBehaviour
 
     private void Start()
     {
-        //if (pathfindsToPlayer)
-        //{
-        //    _Agent = GetComponent<AStarAgent>();
-        //    //transform.position = pointA.position;
-        //    pointA = transform;
-        //    StartCoroutine(Coroutine_MoveAB());
-        //}
+     
     }
 
-    //IEnumerator Coroutine_MoveAB()
-    //{
-    //    yield return null;
-    //    while (true)
-    //    {
-    //        _Agent.Pathfinding(player.transform.position);
-    //        while (_Agent.Status == AStarAgentStatus.Invalid)
-    //        {
-    //            Transform pom1 = pointA;
-    //            pointA = pointB;
-    //            pointB = pom1;
-    //            transform.position = pointA.position;
-    //            _Agent.Pathfinding(pointB.position);
-    //            yield return new WaitForSeconds(0.2f);
-    //        }
-    //        while (_Agent.Status != AStarAgentStatus.Finished)
-    //        {
-    //            yield return null;
-    //        }
-    //        Transform pom = pointA;
-    //        pointA = pointB;
-    //        pointB = pom;
-    //        yield return null;
-    //    }
-    //}
-
+  
     protected virtual void Awake()
     {
         if (perlin == null) perlin = FindObjectOfType<CinemachineVirtualCamera>().GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
@@ -210,10 +186,7 @@ public class EnemyControllerBase : MonoBehaviour
         currentState = toState;
     }
 
-    //public void Damage(float amt = 1)
-    //{
-    //    curHp -= amt;
-    //}
+   
 
 
     public void ShakeCamera()
@@ -266,12 +239,7 @@ public class EnemyControllerBase : MonoBehaviour
         col.enabled = cl;
     }
 
-    /*
-    [Header(" Damage Blink Settings: ")]
-    public float blinkIntesity;
-    public float blinkDuration;
-    private float blinkTimer;
-    */
+   
 
     public int GetHealth()
     {

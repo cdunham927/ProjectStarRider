@@ -27,7 +27,7 @@ public class PlayerController : MonoBehaviour
     public float yawSpeed;
     public float pitchSpeed;
     private float turnSmoothTime = 0.1f;
-    public Vector3 InputSteering;
+    private Vector3 InputSteering;
     //public float turnSmoothVelocity;
     public float leanAmount_X;
     public float leanAmount_Y;
@@ -106,7 +106,7 @@ public class PlayerController : MonoBehaviour
     public GameObject followTarget;
 
     //Knockback when hitting walls/obstacles
-    public Rigidbody bod;
+    private Rigidbody bod;
     public float pushBack = 10f;
     bool hitWall = false;
     [Range(0, 0.5f)]
@@ -184,6 +184,7 @@ public class PlayerController : MonoBehaviour
 
     //[Header(" Animation controller : ")]
     //public Animator anim;
+   
 
     private void Awake()
     {
@@ -200,7 +201,7 @@ public class PlayerController : MonoBehaviour
         DefaultRegSpd  = regSpd;  //stored default vlaues for player speed
         DefaultHighSpd = highSpd; //stored default vlaues for player speed
 
-    GetSavedSettings();
+        GetSavedSettings();
         joystick = true;
 
         meshRenderer = GetComponentInChildren<MeshRenderer>();
@@ -251,7 +252,7 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        TurnShip();
+       //TurnShip();
         if (!joystick && !gm.gameIsPaused)
         {
             if (!invertControls)
@@ -322,8 +323,19 @@ public class PlayerController : MonoBehaviour
         }
 
         //Movement
-        if (!hitWall) newVelZ = -transform.forward * speed;
-        if (!hitWall) bod.velocity = newVelX + newVelZ;
+        if (!hitWall)
+        { 
+            newVelZ = (-transform.forward * speed);
+            bod.velocity = newVelX + newVelZ;
+
+            //bod.AddRelativeForce(newVelX + newVelZ);
+            //bod.AddForce((newVelX + newVelZ));
+            //Vector3 newTorque = new Vector3(data.steeringInput.x * data.pitchSpeed, -data.steeringInput.z * data.yawSpeed, 0);
+            bod.AddRelativeTorque(bod.transform.right *defRotSpd * rotation.y * -1 , ForceMode.VelocityChange);
+            //bod.AddRelativeTorque(bod.transform.left * defRotSpd * rotation.x * -1, ForceMode.VelocityChange);
+        }
+       
+      
         //if (!hitWall) bod.MovePosition(transform.position + newVelX + newVelZ * Time.fixedDeltaTime);
     }
 
@@ -608,7 +620,7 @@ public class PlayerController : MonoBehaviour
             }
             if (Input.GetKeyDown(KeyCode.C))
             {
-                ResetCam();
+                //ResetCam();
             }
         }
     }
@@ -697,13 +709,7 @@ public class PlayerController : MonoBehaviour
             highSpd = DefaultHighSpd;
        
     }
-
-    void Move(float x, float y, float speed) 
-    {
-        //transform.localPosition += new Vector3(x, y, 0) * speed * Time.deltaTime;
-        //ClampPosition();
-    }
-
+    
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Wall") || collision.gameObject.CompareTag("BossHitPoint") || collision.gameObject.CompareTag("Enemy"))
@@ -736,32 +742,10 @@ public class PlayerController : MonoBehaviour
 
         }
     }
-
-    void ResetCam()
-    {
-        //Debug.Log("Fixing Camera");
-
-        //cinCam.ForceCameraPosition(cinCam.transform.position, Quaternion.Euler(0, 0, 0));
-
-        //cinCam.m_Follow = null;
-        //cinCam.m_LookAt = null;
-        //cinCam.transform.rotation = Quaternion.Euler(0, 0, 0);
-        //cinCam.m_Follow = followTarget.transform;
-        //cinCam.m_LookAt = aimTarget.transform;
-    }
-
+    
     void ResetHitWall()
     {
         hitWall = false;
-    }
-
-    void ClampPosition()
-    {
-        Vector3 screenMousePos = Camera.main.ScreenToViewportPoint(Input.mousePosition);
-        //Vector3 pos = Camera.main.WorldToViewportPoint(transform.position);
-        screenMousePos.x = Mathf.Clamp01(screenMousePos.x);
-        screenMousePos.y = Mathf.Clamp01(screenMousePos.y);
-        transform.position = Camera.main.ViewportToWorldPoint(screenMousePos);
     }
 
     public void AfterImage()
@@ -922,44 +906,9 @@ public class PlayerController : MonoBehaviour
         anim.Play(newState);
     }
 
-    void TurnShip() 
-    {
+    
 
-
-        Vector3 newTorque = new Vector3(InputSteering.x * pitchSpeed, -InputSteering.z * yawSpeed, 0);
-        bod.AddRelativeTorque(newTorque);
-
-        bod.rotation =
-            Quaternion.Slerp(bod.rotation, Quaternion.Euler(new Vector3(transform.localEulerAngles.x, transform.localEulerAngles.y, 0)), .5f);
-
-        VisualTurnShip();
-
-
-    }
-
-    void VisualTurnShip()
-    {
-
-        playerModel.localEulerAngles = new Vector3(InputSteering.x * leanAmount_Y
-            , playerModel.localEulerAngles.y, InputSteering.z * leanAmount_X);
-
-
-
-    }
-
-
-    public void UpdateInput(Vector3 newSteering) 
-    {
-
-
-            InputSteering = newSteering;
-            //thrustInput = newThrust;
-            //shootInput = newShoot;
-        
-
-
-
-    }
+  
 
 
 }

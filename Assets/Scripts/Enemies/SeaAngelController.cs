@@ -5,8 +5,8 @@ using UnityEngine;
 public class SeaAngelController : EnemyControllerBase 
 {
     [Header("Private Variables: ")]
-    private Vector3 startPoint;
-    private const float radius = 1f;
+    //private Vector3 startPoint;
+    //private const float radius = 1f;
     public GameObject seaAngelMesh;
 
     [Header("Audio Clips: ")]
