@@ -331,7 +331,7 @@ public class PlayerController : MonoBehaviour
             //bod.AddRelativeForce(newVelX + newVelZ);
             //bod.AddForce((newVelX + newVelZ));
             //Vector3 newTorque = new Vector3(data.steeringInput.x * data.pitchSpeed, -data.steeringInput.z * data.yawSpeed, 0);
-            bod.AddRelativeTorque(bod.transform.right *defRotSpd * rotation.y * -1 , ForceMode.VelocityChange);
+            //bod.AddRelativeTorque(bod.transform.right *defRotSpd * rotation.y * -1 , ForceMode.VelocityChange);
             //bod.AddRelativeTorque(bod.transform.left * defRotSpd * rotation.x * -1, ForceMode.VelocityChange);
         }
        

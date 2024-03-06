@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-6913319702311612500
+--- !u!114 &-7813397323285808748
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}
@@ -20,23 +20,23 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: WaterFloor
-  m_Shader: {fileID: -6465566751694194690, guid: 946e57bb1c42834418e5512076cde7a3, type: 3}
-  m_ValidKeywords: []
+  m_Name: Music_ForceField
+  m_Shader: {fileID: -6465566751694194690, guid: 2223af23e6f016049b36630d75533c4b, type: 3}
+  m_ValidKeywords:
+  - _SURFACE_TYPE_TRANSPARENT
   m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
+  m_CustomRenderQueue: 3000
+  stringTagMap:
+    RenderType: Transparent
+  disabledShaderPasses:
+  - DepthOnly
+  - SHADOWCASTER
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
-    - RefractionNormal:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
     - _BaseMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -77,8 +77,16 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_2649d514e4ec490ab3d3e279be5c8fc9_Texture_1:
+        m_Texture: {fileID: 2800000, guid: 36d965bd34f83ca46bd7e366b735e47e, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _SpecGlossMap:
         m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Wall_Texture:
+        m_Texture: {fileID: 2800000, guid: 402ca54fcdfe5d84d96ca5484f27fd87, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
@@ -95,41 +103,20 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - Alpha: 300.8
-    - Distance: 0
-    - FoamAmount: 0
-    - FoamCutoff: 0
-    - FoamScale: 0
-    - FoamSpeed: 0
-    - Noise_Amount: 71.18
-    - NormalStrength: 0
-    - NormalStrength_1: 5
-    - RefractionNormal: 0
-    - RefractionScale: 2.2
-    - RefractionStrength: 0
-    - Refraction_Speed: -0.12
-    - Refraction_Strength: 43.92
-    - RippleDensity: 70.03
-    - RippleSPeed: 1
-    - RippleSlimness: 5.08
-    - Scale: 0
-    - Smoothness: 3.08
-    - WaterDepth: 20
     - _AlphaClip: 0
-    - _Blend: 0
+    - _Blend: 2
     - _BumpScale: 1
+    - _CastShadows: 0
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0
-    - _Cull: 2
+    - _Cull: 1
     - _Cutoff: 0.5
-    - _Deoth: 2.23
-    - _DepthFade: 1
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
-    - _Displacment: 0.25
-    - _Distance: 2
-    - _DstBlend: 0
+    - _Distance: 1.3
+    - _DstBlend: 1
     - _EnvironmentReflections: 1
+    - _FresnelPower: -0.06
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
@@ -142,17 +129,14 @@ Material:
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
-    - _SrcBlend: 1
-    - _Surface: 0
+    - _SrcBlend: 5
+    - _Surface: 1
+    - _TilingSpeed: 0.22
     - _WorkflowMode: 1
-    - _ZWrite: 1
-    - speed: 0
+    - _ZTest: 5
+    - _ZWrite: 0
+    - _ZWriteControl: 0
     m_Colors:
-    - Deep_Water: {r: 0.0064524733, g: 0.010980657, b: 0.16078432, a: 1}
-    - Foam_Color: {r: 1, g: 1, b: 1, a: 1}
-    - RippleColor: {r: 0.6132076, g: 0.6132076, b: 0.6132076, a: 1}
-    - Shallow_Water: {r: 0.037254903, g: 0.13725491, b: 0.3745098, a: 1}
-    - UV: {r: 0, g: 0, b: 0, a: 0}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
