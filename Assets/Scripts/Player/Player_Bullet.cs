@@ -25,6 +25,7 @@ public class Player_Bullet : Bullet
         bod = GetComponentInParent<Rigidbody>();
         cont = FindObjectOfType<GameManager>();
         hitVFXPool = cont.bulPool;
+        trail = GetComponentInChildren<TrailRenderer>();
     }
 
     public override void OnEnable()
@@ -36,6 +37,7 @@ public class Player_Bullet : Bullet
         //Get minimap object
         if (minimapObj == null) minimapObj = GetComponentInChildren<MinimapObjController>().gameObject;
         if (minimapObj != null) minimapObj.SetActive(true);
+        if (trail != null) trail.Clear();
     }
 
     public override void Disable()
