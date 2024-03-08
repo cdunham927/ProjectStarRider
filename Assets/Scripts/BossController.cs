@@ -26,6 +26,9 @@ public class BossController : MonoBehaviour
     public GameObject[] bulSpawn;
     public float lerpSpd;
 
+    //Shows radius for enemy attacks
+    public GameObject attackIndicator;
+
     private void OnEnable()
     {
         stats = GetComponent<Enemy_Stats>();

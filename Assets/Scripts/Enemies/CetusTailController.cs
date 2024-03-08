@@ -41,7 +41,8 @@ public class CetusTailController : MonoBehaviour
 
     void ActivateCollider()
     {
-        foreach(Collider col in otherCollider) col.enabled = true;
+        cetus.TailAttack();
+        foreach (Collider col in otherCollider) col.enabled = true;
     }
 
     void DeactivateCollider()
@@ -55,11 +56,27 @@ public class CetusTailController : MonoBehaviour
 
         if (curActivationAmt >= activationAmt)
         {
-            Invoke("ActivateCollider", activateTime);
-            curCools = cooldown;
-            cetus.TailAttack();
-            Invoke("DeactivateCollider", deactivateTime);
-            curActivationAmt = 0;
+            TailAttack();
         }
+    }
+
+    void TailAttack()
+    {
+        Invoke("ActivateIndicator", 0.01f);
+        Invoke("ActivateCollider", activateTime);
+        curCools = cooldown;
+        Invoke("DeactivateIndicator", deactivateTime);
+        Invoke("DeactivateCollider", deactivateTime);
+        curActivationAmt = 0;
+    }
+
+    void ActivateIndicator()
+    {
+        cetus.attackIndicator.SetActive(true);
+    }
+
+    void DeactivateIndicator()
+    {
+        cetus.attackIndicator.SetActive(false);
     }
 }

@@ -30,6 +30,9 @@ public class BossControllerBase : EnemyControllerBase
     public Vector3 retaliatePos;
     public int retaliateShots;
 
+    //Shows radius for enemy attacks
+    public GameObject attackIndicator;
+
     protected override void Awake()
     {
         //Set boss text
