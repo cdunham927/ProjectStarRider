@@ -29,6 +29,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 3.9746141, y: 17.442692, z: 27.99152}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -49,18 +50,17 @@ MonoBehaviour:
   soundSrc: {fileID: 877252893838211536}
   deathClip: {fileID: 8300000, guid: c831c57820c006741a329bebefb6d796, type: 3}
   winClip: {fileID: 8300000, guid: 54b11ef408a8efa41af37a51a91f2f26, type: 3}
-  tutorialSong: {fileID: 8300000, guid: 4ba83bbe1e1cbb94c9c67c327b74e963, type: 3}
-  buttonClick: {fileID: 8300000, guid: 0f77490c4a122ab4c92ee8db9280c2ce, type: 3}
+  tutorialSong: {fileID: 8300000, guid: b0eab22fea1d25041914c92622eb0da8, type: 3}
   UISfx:
   - {fileID: 8300000, guid: 0f77490c4a122ab4c92ee8db9280c2ce, type: 3}
   - {fileID: 8300000, guid: b49698083154ad148a113f9379a744e3, type: 3}
   BGMSfx:
   - {fileID: 8300000, guid: c831c57820c006741a329bebefb6d796, type: 3}
   - {fileID: 8300000, guid: 54b11ef408a8efa41af37a51a91f2f26, type: 3}
-  - {fileID: 8300000, guid: 4ba83bbe1e1cbb94c9c67c327b74e963, type: 3}
+  - {fileID: 8300000, guid: b0eab22fea1d25041914c92622eb0da8, type: 3}
 --- !u!95 &6107412951212038216
 Animator:
-  serializedVersion: 3
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -73,10 +73,12 @@ Animator:
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!82 &877252893838211536
 AudioSource:
   m_ObjectHideFlags: 0
@@ -87,7 +89,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: -6276289049990163111, guid: e94e86a227e4d4d4eb428bc609fd30dc, type: 2}
-  m_audioClip: {fileID: 8300000, guid: 41076444da8821244977d6bef86a2c79, type: 3}
+  m_audioClip: {fileID: 8300000, guid: b0eab22fea1d25041914c92622eb0da8, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.18
   m_Pitch: 1

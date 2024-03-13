@@ -5,7 +5,7 @@ using UnityEngine;
 public class EnemyBullet : Bullet
 {
     public GameObject collisonExplosion;
-    public TrailRenderer trail;
+    //private TrailRenderer trail;
 
     public GameObject spawnPos;
     public ObjectPool hitVFXPool;
@@ -18,6 +18,7 @@ public class EnemyBullet : Bullet
     {
         cont = FindObjectOfType<GameManager>();
         hitVFXPool = cont.enemyHitVFXPool;
+        //trail = GetComponentInChildren<TrailRenderer>();
     }
 
     public override void OnEnable()
@@ -27,6 +28,7 @@ public class EnemyBullet : Bullet
         //Get minimap object
         if (minimapObj == null) minimapObj = GetComponentInChildren<MinimapObjController>().gameObject;
         if (minimapObj != null) minimapObj.SetActive(true);
+        //trail.Clear();
     }
 
     private void Update()
@@ -87,7 +89,7 @@ public class EnemyBullet : Bullet
     public override void Disable()
     {
         if (minimapObj != null) minimapObj.SetActive(false);
-        if (trail != null) trail.Clear();
+        //if (trail != null) trail.Clear();
         base.Disable();
     }
 

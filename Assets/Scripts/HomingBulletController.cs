@@ -17,12 +17,15 @@ public class HomingBulletController : MonoBehaviour
     public GameObject minimapObj;
     public int atk;
 
+    private TrailRenderer trail;
+
     private void Awake()
     {
         cont = FindObjectOfType<GameManager>();
         hitVFXPool = cont.enemyHitVFXPool;
         bod = GetComponent<Rigidbody>();
         player = FindObjectOfType<PlayerController>();
+        trail = GetComponentInChildren<TrailRenderer>();
     }
 
     public virtual void OnEnable()
@@ -30,6 +33,10 @@ public class HomingBulletController : MonoBehaviour
         //Get minimap object
         if (minimapObj == null) minimapObj = GetComponentInChildren<MinimapObjController>().gameObject;
         if (minimapObj != null) minimapObj.SetActive(true);
+        if (trail != null)
+        {
+            trail.Clear();
+        }
 
         //float step =  (speed  + Random.Range(0, randSpdMod)) * Time.deltaTime;
         Invoke("Disable", disableTime);
@@ -45,6 +52,10 @@ public class HomingBulletController : MonoBehaviour
         if (minimapObj != null) minimapObj.SetActive(false);
         bod.velocity = Vector2.zero;
         gameObject.SetActive(false);
+        if (trail != null)
+        {
+            trail.Clear();
+        }
     }
     public void Push()
     {
@@ -54,7 +65,8 @@ public class HomingBulletController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        bod.velocity = transform.forward * spd; //velcoity algorthim for the porjectile
+        
+        bod.velocity += transform.forward  * startSpd * Time.deltaTime; //velcoity algorthim for the porjectile
         if (player != null && player.gameObject.activeInHierarchy)
         {
             //bod.AddForce(transform.forward * spd * Time.deltaTime);
