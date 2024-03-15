@@ -7,6 +7,8 @@ public class MinimapObjController : MonoBehaviour
     public Transform par;
     public float size;
     Vector2 sizeMod;
+    public Vector3 posOffset;
+    public Vector3 rotationOffset;
 
     private void Awake()
     {
@@ -20,8 +22,8 @@ public class MinimapObjController : MonoBehaviour
     {
         if (par.gameObject.activeInHierarchy)
         {
-            transform.position = new Vector3(par.position.x, 0, par.position.z);
-            transform.rotation = Quaternion.Euler(90, par.eulerAngles.y, 0);
+            transform.position = new Vector3(par.position.x + posOffset.x, posOffset.y, par.position.z + posOffset.z);
+            transform.rotation = Quaternion.Euler(90, par.eulerAngles.y, par.eulerAngles.z + rotationOffset.z);
         }
     }
 }
