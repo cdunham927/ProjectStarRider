@@ -66,7 +66,7 @@ public class HomingBulletController : MonoBehaviour
     void Update()
     {
         
-        bod.velocity += transform.forward  * startSpd * Time.deltaTime; //velcoity algorthim for the porjectile
+        bod.velocity = transform.forward   * startSpd; //velcoity algorthim for the porjectile
         if (player != null && player.gameObject.activeInHierarchy)
         {
             //bod.AddForce(transform.forward * spd * Time.deltaTime);

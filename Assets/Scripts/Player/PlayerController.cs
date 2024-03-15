@@ -190,10 +190,11 @@ public class PlayerController : MonoBehaviour
     {
         //Finds Attached Animator to the player
         anim = GetComponentInChildren<Animator>();
-        
-        
-        
-        
+
+        Cursor.visible = false; // makes mouse arrow cursor invisible
+        Cursor.lockState = CursorLockMode.Confined;
+
+
         //camStartPos = mainCam.transform.position;
         gm = FindObjectOfType<GameManager>();
         
@@ -235,11 +236,11 @@ public class PlayerController : MonoBehaviour
         SpeedlinesPS = Instantiate(SpeedLineVfx);
         SpeedlinesPS.SetActive(false);
 
-        UnfreezeRotation();
+        UnfreezeRotation(); // for camera
 
         AS = GetComponent<AudioSource>();
 
-
+        rotation = transform.eulerAngles;
     }
 
     private void OnEnable()
