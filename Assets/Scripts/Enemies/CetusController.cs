@@ -8,6 +8,12 @@ public class CetusController : BossControllerBase
     public GameObject[] bulSpawnsTwo;
     public float lerpSpd;
 
+    //notifications
+    [Header("Player Objective notifactions: ")]
+    public GameObject[] _notifications;
+
+
+
     //Charge attack stuff
     public CapsuleCollider laserCollider;
     public float laserStartSize;
