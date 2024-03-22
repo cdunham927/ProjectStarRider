@@ -12,17 +12,20 @@ public class TextTrigger : MonoBehaviour
     GameObject textParent;
     TMP_Text tmp;
     public string textText;
-    string curText = "";
+    string curText = "   ";
     public AnimationClip enableClip;
     public AnimationClip disableClip;
     public float delay = 0.1f;
     public float moveSpd;
+    public Vector2 startPos;
 
     private void Awake()
     {
         textParent = Instantiate(textParentPrefab);
         tmp = textParent.GetComponentInChildren<TMP_Text>();
         textParent.SetActive(false);
+
+        tmp.rectTransform.anchoredPosition = startPos;
 
         curTime = 0;
         activated = false;
@@ -40,7 +43,7 @@ public class TextTrigger : MonoBehaviour
             //Set animator to animate this too
             textParent.GetComponent<Animator>().SetTrigger("Deactivate");
             Invoke("Disable", disableClip.length + 0.1f);
-            curText = "";
+            curText = "   ";
         }
 
 
