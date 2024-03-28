@@ -23,7 +23,7 @@ public class CetusController : BossControllerBase
     public LineRenderer laserRend;
     public GameObject laserObj;
 
-    bool playedDialogue = false;
+    //bool playedDialogue = false;
 
     public GameObject[] waveOneSpawns;
     public GameObject[] waveTwoSpawns;
@@ -190,6 +190,7 @@ public class CetusController : BossControllerBase
     //Retaliate by shooting in a shotgun-like pattern
     public override void Retaliate()
     {
+        _notifications[1].SetActive(true);
         for (int i = 0; i < retaliateShots; i++)
         {
             GameObject bul = bulletPool.GetPooledObject();
@@ -293,7 +294,7 @@ public class CetusController : BossControllerBase
 
     public void SpawnAngels(int phase)
     {
-        
+        _notifications[0].SetActive(true);
         ChangeAnimationState(Cetus_Roar);
         switch (phase)
         {
@@ -542,11 +543,7 @@ public class CetusController : BossControllerBase
                 break;
         }
 
-        if (curHp < phase3Thres && !playedDialogue)
-        {
-            playedDialogue = true;
-            //FindObjectOfType<CombatDialogueController>().StartDialogue(thirdPhaseDialogue);
-        }
+       
         
         //Debug.Log("Enemy took damage");
 
