@@ -5,8 +5,8 @@ using UnityEngine;
 public class ShipController : MonoBehaviour
 {
     [SerializeField]
-    [Range(7500f, 25000f)]
-    float thrustForce = 7500f;
+    [Range(20000f, 75000f)]
+    float explosiveForce = 50000f;
 
     [SerializeField]
     [Range(75f, 500f)]
@@ -14,17 +14,83 @@ public class ShipController : MonoBehaviour
         rollForce = 500f, 
         yawForce = 500f;
 
+    Animator anim;
     Rigidbody bod;
-    [SerializeField] [Range(-1f, 1f)]
-    float thrust, pitch, roll, yaw = 0f;
+    float pitch, roll, yaw = 0f;
 
     [SerializeField]
     float deadZoneRadius = 0.1f;
     Vector2 screenCenter => new Vector2(Screen.width * 0.5f, Screen.height * 0.5f);
 
+    //Speed values
+    [Header("Speed values")]
+    public float spdLerpAmt;
+    float speed;
+    [Range(0f, 25000f)]
+    public float slowSpd;
+    [Range(0f, 25000f)]
+    public float regSpd;
+    [Range(0f, 25000f)]
+    public float highSpd;
+    [Range(0f, 35000f)]
+    public float superSpd;
+    [HideInInspector]
+    public float DefaultRegSpd;  //stored default vlaues for player speed
+    [HideInInspector]
+    public float DefaultHighSpd; //stored default vlaues for player speed
+    float lerpToSpd;
+    public float dashCooldown;
+    public float dashTime;
+    [HideInInspector]
+    public float curDashTime;
+
+    bool dashing = false;
+    float curDashCools;
+
+    //Input
+    float vert, hor, vert2, hor2;
+
     private void Awake()
     {
+        anim = GetComponent<Animator>();
         bod = GetComponent<Rigidbody>();
+
+        DefaultRegSpd = regSpd;  //stored default vlaues for player speed
+        DefaultHighSpd = highSpd; //stored default vlaues for player speed
+    }
+
+    private void Update()
+    {
+        //Get inputs
+        vert = Input.GetAxis("Vertical");
+        hor = Input.GetAxis("Horizontal");
+
+        vert2 = Input.GetAxis("Vertical2");
+        hor2 = Input.GetAxis("Horizontal2");
+
+        float t = Time.deltaTime * spdLerpAmt;
+        t = t * t * (3f - 2f * t);
+        
+        //Speed phytsics equation lerp
+        //speed = Mathf.Lerp(speed, lerpToSpd, Time.deltaTime * spdLerpAmt); /// orginal equation dont delete
+        speed = Mathf.Lerp(speed, lerpToSpd, t);
+
+        if (Input.GetButtonDown("Fire3") && curDashCools <= 0)
+        {
+            curDashCools = dashCooldown;
+            dashing = true;
+        }
+
+        if (vert > 0)
+        {
+            if (curDashTime > 0) lerpToSpd = superSpd;
+            else lerpToSpd = highSpd;
+        }
+        else if (vert < 0) lerpToSpd = slowSpd;
+        else lerpToSpd = regSpd;
+
+        if (curDashCools > 0) curDashCools -= Time.deltaTime;
+        if (curDashTime > 0) curDashTime -= Time.deltaTime;
     }
 
     private void FixedUpdate()
@@ -34,11 +100,11 @@ public class ShipController : MonoBehaviour
         yaw = (mousePosition.x - screenCenter.x) / screenCenter.x;
         yaw = (Mathf.Abs(yaw) > deadZoneRadius) ? yaw : 0f;
 
-
         pitch = (mousePosition.y - screenCenter.y) / screenCenter.y;
         pitch = (Mathf.Abs(pitch) > deadZoneRadius) ? pitch : 0f;
+        
         //Roll uses q and e to roll the ship, I dont think we want that
-        thrust = Input.GetAxis("Vertical");
+        //thrust = Input.GetAxis("Vertical");
 
 
         //Movement
@@ -57,9 +123,12 @@ public class ShipController : MonoBehaviour
             bod.AddTorque(transform.up * (yawForce * yaw * Time.fixedDeltaTime));
         }
 
-        if (!Mathf.Approximately(0f, thrust))
+        bod.AddForce(transform.forward * (speed * Time.fixedDeltaTime));
+
+        if (dashing)
         {
-            bod.AddForce(transform.forward * (thrustForce * thrust * Time.fixedDeltaTime));
+            bod.AddForce(transform.forward * (explosiveForce * Time.fixedDeltaTime), ForceMode.Impulse);
+            dashing = false;
         }
 
         Vector3 playerRotation = transform.rotation.eulerAngles;

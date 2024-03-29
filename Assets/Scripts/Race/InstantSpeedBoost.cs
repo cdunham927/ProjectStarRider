@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class InstantSpeedBoost : MonoBehaviour
 {
-    PlayerController player;
+    ShipController ship;
     bool canBoost = true;
 
     private void Awake()
     {
-        player = FindObjectOfType<PlayerController>();
+        ship = FindObjectOfType<ShipController>();
         canBoost = true;
     }
 
@@ -17,7 +17,7 @@ public class InstantSpeedBoost : MonoBehaviour
     {
         if (canBoost && other.CompareTag("Player"))
         {
-            player.curDashTime += player.dashTime;
+            ship.curDashTime += ship.dashTime;
             canBoost = false;
         }
     }

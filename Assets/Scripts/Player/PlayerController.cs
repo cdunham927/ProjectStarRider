@@ -9,70 +9,24 @@ using MPUIKIT;
 
 public class PlayerController : MonoBehaviour
 {
-    private Transform playerModel;
+    //private Transform playerModel;
 
     [Header("Settings")]
     public bool joystick = true;
 
-    [Space]
-    
-    [Header("Public References")]
-    public Transform aimTarget;
-    public Transform cameraParent;
-    public Transform cam;
+    //[Header("Particles")]
+    //public ParticleSystem trails;
 
-    [Space]
-
-    [Header("Rotation Settings")]
-    public float yawSpeed;
-    public float pitchSpeed;
-    private float turnSmoothTime = 0.1f;
-    private Vector3 InputSteering;
-    //public float turnSmoothVelocity;
-    public float leanAmount_X;
-    public float leanAmount_Y;
-
-    [Space]
-
-    [Header("Particles")]
-    public ParticleSystem trails;
-
-    [Header(" Movement Speed Settings: ")]
-    public float speed;
-    public float slowSpd;
-    public float regSpd;
-    public float highSpd;
-    public float DefaultRegSpd;  //stored default vlaues for player speed
-    public float DefaultHighSpd; //stored default vlaues for player speed
     //public float superSpd;
-    public float sideSpeed;
+   // public float sideSpeed;
     public float rotSpd;
     public float lookSpd;
     public float defLookSpd;
     public float defRotSpd;
-    public float turnSpd;
-    public float sideRotSpd;
-    public float realignRot;
-    float lerpToSpd;
-    public float spdLerpAmt = 10f;
 
-    public float xViewThresR;
-    public float xViewThresL;
-    public float yViewThresU;
-    public float yViewThresD;
-
-    //For the After-Image mechanic
-    //
-    //
-    // //int curActive;
     [Header("AfterImage Object : ")]
     public GameObject[] afterimages;
     public float maxImagesTime = 40f;
-
-    //Animation
-    [Header("Player Animator : ")]
-    Animator anim;
-    //private string currentState;
 
     //Aniamtion State  make sure string match name of animations
     const string StarRiderIdle = "StarRiderIdle";
@@ -94,8 +48,8 @@ public class PlayerController : MonoBehaviour
     public bool invertControls = false;
     public bool defInvert = false;
 
-    public float speedUpTime = 10f;
-    float speedUpTimer;
+    //public float speedUpTime = 10f;
+    //float speedUpTimer;
 
     //References for camera
     [Header("Camera Refernces : ")]
@@ -121,23 +75,14 @@ public class PlayerController : MonoBehaviour
     private float KnockBackForce  = 2f;
 
     //For aiming with the mouse
-    Vector3 newVelZ;
-    Vector3 newVelX;
-    Vector3 rotation = Vector3.zero;
+    //Vector3 newVelZ;
+    //Vector3 newVelX;
+    //Vector3 rotation = Vector3.zero;
 
     bool usingAxis = false;
     float vert, hor, vert2, hor2;
     float rotAxis;
 
-    //Dashing ability
-    [Header("Dash Settings")]
-    public float forDashSpd;
-    public float sideDashSpd;
-    public float dashCooldown;
-    public float dashTime;
-    float curDashCools;
-    [HideInInspector]
-    public float curDashTime;
     public GameObject decoy;
 
     //Dash blink vfx
@@ -188,9 +133,6 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
-        //Finds Attached Animator to the player
-        anim = GetComponentInChildren<Animator>();
-
         Cursor.visible = false; // makes mouse arrow cursor invisible
         Cursor.lockState = CursorLockMode.Confined;
 
@@ -198,10 +140,6 @@ public class PlayerController : MonoBehaviour
         //camStartPos = mainCam.transform.position;
         gm = FindObjectOfType<GameManager>();
         
-        //sets Defualt speed  value for player
-        DefaultRegSpd  = regSpd;  //stored default vlaues for player speed
-        DefaultHighSpd = highSpd; //stored default vlaues for player speed
-
         GetSavedSettings();
         joystick = true;
 
@@ -211,19 +149,14 @@ public class PlayerController : MonoBehaviour
         Cursor.lockState = CursorLockMode.Confined;
         //Hide cursor
         Cursor.visible = false;
+        //cinCam.m_Follow = followTarget.transform;
+        //cinCam.m_LookAt = cineGroup.transform;
 
-        //Set cinemachine follow and aim targets
-        //cinCam = FindObjectOfType<CinemachineVirtualCamera>();
-        cinCam.m_Follow = followTarget.transform;
-        //cinCam.m_LookAt = aimTarget.transform;
-        cinCam.m_LookAt = cineGroup.transform;
-
-        afterimageUI = FindObjectOfType<GameManager>().afterimages;
-        bod = GetComponent<Rigidbody>();
-        playerModel = transform.GetChild(0);
+        if (FindObjectOfType<GameManager>() != null) afterimageUI = FindObjectOfType<GameManager>().afterimages;
+        
+        //playerModel = transform.GetChild(0);
         //curActiveTime = maxImagesTime;
         curActiveTime = 0;
-        speed = slowSpd;
         
         //4 charges max, so 1 charge is 1/4th of the max image time
         oneCharge = maxImagesTime / 4;
@@ -236,108 +169,40 @@ public class PlayerController : MonoBehaviour
         SpeedlinesPS = Instantiate(SpeedLineVfx);
         SpeedlinesPS.SetActive(false);
 
-        UnfreezeRotation(); // for camera
+        //UnfreezeRotation(); // for camera
 
         AS = GetComponent<AudioSource>();
 
-        rotation = transform.eulerAngles;
+        //rotation = transform.eulerAngles;
     }
 
     private void OnEnable()
     {
-        cinCam.m_Follow = followTarget.transform;
-        //cinCam.m_LookAt = aimTarget.transform;
-        cinCam.m_LookAt = cineGroup.transform;
-        //mainCam.transform.position = camStartPos;
+        //cinCam.m_Follow = followTarget.transform;
+        //cinCam.m_LookAt = cineGroup.transform;
     }
 
     private void FixedUpdate()
     {
-       //TurnShip();
-        if (!joystick && !gm.gameIsPaused)
-        {
-            if (!invertControls)
-            {
-                rotation.y += Input.GetAxis("Mouse X");
-                rotation.x += -Input.GetAxis("Mouse Y");
-            }
-            else
-            {
-                rotation.y += -Input.GetAxis("Mouse X");
-                rotation.x += Input.GetAxis("Mouse Y");
-            }
-
-            //Accel/Decel
-            //vert *= Time.deltaTime;
-            if (vert > 0)
-            {
-                Speedvfx();
-            }
-            if (vert > 0)
-            {
-                
-                   
-                lerpToSpd = highSpd;
-            }
-            else if (vert < 0) lerpToSpd = slowSpd;
-            else lerpToSpd = regSpd;
-        }
-
         //if (joystick && !gm.gameIsPaused)
         //{
-        if (joystick && !gm.gameIsPaused)
-        {
-            if (hor != 0)
-            {
-                //joystick = true;
-                //if (invertControls) transform.Rotate(0, rotSpd * Time.deltaTime * hor2, 0);
-                //else transform.Rotate(0, -rotSpd * Time.deltaTime * hor2, 0);
-                if (!invertControls) rotation.y += rotSpd * Time.deltaTime * hor;
-                else rotation.y -= rotSpd * Time.deltaTime * hor;
-            }
-
-            if (vert != 0)
-            {
-                //joystick = true;
-                //if (invertControls) transform.Rotate(rotSpd * Time.deltaTime * vert2, 0, 0);
-                //else transform.Rotate(-rotSpd * Time.deltaTime * vert2, 0, 0);
-                if (!invertControls) rotation.x -= rotSpd * Time.deltaTime * vert;
-                else rotation.x += rotSpd * Time.deltaTime * vert;
-            }
-
-            //Accel
-            if (Input.GetAxisRaw("Accel") > 0)
-            {
-                Speedvfx();
-                 lerpToSpd = highSpd;
-                ChangeAnimationState(StarRiderShip_Go_Fast);
-            }
-            //Decel
-            else if (Input.GetAxisRaw("Decel") > 0)
-            {
-                lerpToSpd = slowSpd;
-                ChangeAnimationState(StarRiderShip_Go_Fast);
-            }
-            //Regular speed
-            else lerpToSpd = regSpd;
-            ChangeAnimationState(StarRiderShip_Go_Fast);
-        }
-
-        //Movement
-        if (!hitWall)
-        { 
-            newVelZ = (-transform.forward * speed);
-            bod.velocity = newVelX + newVelZ;
-
-            //bod.AddRelativeForce(newVelX + newVelZ);
-            //bod.AddForce((newVelX + newVelZ));
-            //Vector3 newTorque = new Vector3(data.steeringInput.x * data.pitchSpeed, -data.steeringInput.z * data.yawSpeed, 0);
-            //bod.AddRelativeTorque(bod.transform.right *defRotSpd * rotation.y * -1 , ForceMode.VelocityChange);
-            //bod.AddRelativeTorque(bod.transform.left * defRotSpd * rotation.x * -1, ForceMode.VelocityChange);
-        }
-       
-      
-        //if (!hitWall) bod.MovePosition(transform.position + newVelX + newVelZ * Time.fixedDeltaTime);
+        //    //Accel
+        //    if (Input.GetAxisRaw("Accel") > 0)
+        //    {
+        //        Speedvfx();
+        //         //lerpToSpd = highSpd;
+        //        //ChangeAnimationState(StarRiderShip_Go_Fast);
+        //    }
+        //    //Decel
+        //    else if (Input.GetAxisRaw("Decel") > 0)
+        //    {
+        //        //lerpToSpd = slowSpd;
+        //        //ChangeAnimationState(StarRiderShip_Go_Fast);
+        //    }
+        //    //Regular speed
+        //    //else lerpToSpd = regSpd;
+        //    //ChangeAnimationState(StarRiderShip_Go_Fast);
+        //}
     }
 
     Vector3 dashDir;
@@ -383,95 +248,8 @@ public class PlayerController : MonoBehaviour
             //PlayerPrefs.SetInt("Joystick", 1);
         }
 
-        vert = Input.GetAxis("Vertical");
-        hor = Input.GetAxis("Horizontal");
-
-        vert2 = Input.GetAxis("Vertical2");
-        hor2 = Input.GetAxis("Horizontal2");
-
-        if (!stats.PlayerDead && !gm.gameIsOver)
+        if (stats != null && gm != null && !stats.PlayerDead && !gm.gameIsOver)
         {
-
-            if (speedUpTimer <= 0) 
-            {
-
-                regSpd = DefaultRegSpd;
-                highSpd = DefaultHighSpd;
-
-            }
-            
-            
-            if (Input.GetMouseButtonDown(0) && !gm.gameIsPaused && !gm.gameIsOver)
-            {
-                //joystick = false;
-                ////Lock cursor in screen;
-                //Cursor.lockState = CursorLockMode.Confined;
-                ////Hide cursor
-                //Cursor.visible = false;
-            }
-            //Show the cursor if we click into the game and its paused
-            if (Input.GetMouseButtonDown(0) && (gm.gameIsPaused || gm.gameIsOver))
-            {
-                //joystick = false;
-                ////Hide cursor
-                //Cursor.visible = true;
-            }
-
-            //float h = joystick ? Input.GetAxis("Horizontal") : Input.GetAxis("Mouse X");
-            //float v = joystick ? Input.GetAxis("Vertical") : Input.GetAxis("Mouse Y");
-
-            // equation to smooth the increase and decrease of speed and the begginng and end of movement
-            float t = Time.deltaTime * spdLerpAmt;
-            t = t * t * (3f - 2f * t);
-
-            //Speed phytsics equation lerp
-            //speed = Mathf.Lerp(speed, lerpToSpd, Time.deltaTime * spdLerpAmt); /// orginal equation dont delete
-            speed = Mathf.Lerp(speed, lerpToSpd, t);
-
-            //button press for dash
-            if (Input.GetButtonDown("Fire3") && curDashCools <= 0)
-            {
-                //float vDir = (vert > 0) ? 1 : -1;
-                //float hDir = (hor > 0) ? 1 : -1;
-                //if (joystick) dashDir = (transform.forward * vDir * forDashSpd) + (transform.right * hDir * sideDashSpd);
-                //if (!joystick) dashDir = (transform.forward * vert * forDashSpd) + (transform.right * hor * sideDashSpd);
-                dashDir = (transform.forward * vert * forDashSpd) + (transform.right * hor * sideDashSpd);
-                curDashTime = dashTime;
-                curDashCools = dashCooldown;
-                Speedvfx();
-                Dashvfx();
-                //Decoy();
-                //if (curActiveTime > oneCharge) Decoy();
-                ChangeAnimationState(StarRiderShip_BarrelRoll);
-            }
-
-            //controller button press for dash
-            if ((vert2 != 0 || hor2 != 0) && curDashCools <= 0)
-            {
-                dashDir = (transform.forward * -vert2 * forDashSpd) + (transform.right * hor2 * sideDashSpd);
-                curDashTime = dashTime;
-                curDashCools = dashCooldown;
-                Speedvfx();
-                Dashvfx();
-                //if (curActiveTime > oneCharge) Decoy();
-            }
-
-            if (curDashTime > 0) curDashTime -= Time.deltaTime;
-
-            //Actual dash code
-            if (curDashTime > 0 && !hitWall)
-            {
-                bod.AddForce(dashDir * Time.deltaTime, ForceMode.Impulse);
-                ChangeAnimationState(StarRiderShip_BarrelRoll);
-                //Dashvfx();
-            }
-
-            //Move(hor,vert,speed);
-            //Movement
-            //transform.position -= transform.forward * speed * Time.deltaTime;
-            //bod.AddForce(-transform.forward * speed * Time.deltaTime);
-
-
             //Player special - afterimages
             //If we hit fire button and we have one charge(the max clones is 4, so a fourth of the max images time is one charge
             if (Input.GetButtonDown("Fire2") && (curActiveTime > (oneCharge)))
@@ -503,8 +281,6 @@ public class PlayerController : MonoBehaviour
             //{
             //    usingAxis = false;
             //}
-
-            if (speedUpTimer > 0) speedUpTimer -= Time.deltaTime;
 
             if (curActiveTime < maxImagesTime) curActiveTime += Time.deltaTime * rechargeSpd;
 
@@ -559,8 +335,6 @@ public class PlayerController : MonoBehaviour
                 }
             }
 
-            if (curDashCools > 0) curDashCools -= Time.deltaTime;
-
             //Lock on to closest enemy in front of the player
             if (Input.GetButtonDown("Lockon"))
             {
@@ -598,30 +372,6 @@ public class PlayerController : MonoBehaviour
                 //    lockedon = true;
                 //    if (closestTarget != null) cineGroup.m_Targets[2].target = closestTarget.transform;
                 //}
-            }
-
-            //Rotate towards the new inputs
-            transform.eulerAngles = new Vector3(rotation.x, rotation.y, rotation.z) * lookSpd;
-        }
-
-        if (cinCam != null && cinCam.transform.rotation.z != 0)
-        {
-            //cinCam.m_Follow = null;
-            //cinCam.m_LookAt = null;
-            //cinCam.transform.rotation = Quaternion.Euler(0, 0, 0);
-            //cinCam.m_Follow = followTarget.transform;
-            //cinCam.m_LookAt = aimTarget.transform;
-        }
-
-        if (Application.isEditor)
-        {
-            if (Input.GetKeyDown(KeyCode.Alpha8))
-            {
-                speedUp(-50);
-            }
-            if (Input.GetKeyDown(KeyCode.C))
-            {
-                //ResetCam();
             }
         }
     }
@@ -682,32 +432,33 @@ public class PlayerController : MonoBehaviour
 
     public void speedUp(float amt)
     {
-        speedUpTimer = speedUpTime - Time.deltaTime;
-        Speedvfx();
-        if (speedUpTimer > 0)
-        {
-            regSpd = regSpd - amt;
-            highSpd = highSpd - amt;
-            ChangeAnimationState(StarRiderShip_Go_Fast);
-        }
-        else 
-        {
-            regSpd = DefaultRegSpd;
-            highSpd = DefaultHighSpd;
-        }
+        //speedUpTimer = speedUpTime - Time.deltaTime;
+        //Speedvfx();
+        //if (speedUpTimer > 0)
+        //{
+        //    regSpd = regSpd - amt;
+        //    highSpd = highSpd - amt;
+        //    ChangeAnimationState(StarRiderShip_Go_Fast);
+        //}
+        //else 
+        //{
+        //    regSpd = DefaultRegSpd;
+        //    highSpd = DefaultHighSpd;
+        //}
     }
 
+    //Need this for the speed boost powerup
     public void slowDown(float amt)
     {
-        speedUpTimer = speedUpTime;
-        Speedvfx();
-        if (speedUpTime > 0)
-        {
-            highSpd = highSpd + amt;
-            ChangeAnimationState(StarRiderShip_Go_Slow);
-        }
-        else
-            highSpd = DefaultHighSpd;
+        //speedUpTimer = speedUpTime;
+        //Speedvfx();
+        //if (speedUpTime > 0)
+        //{
+        //    highSpd = highSpd + amt;
+        //    ChangeAnimationState(StarRiderShip_Go_Slow);
+        //}
+        //else
+        //    highSpd = DefaultHighSpd;
        
     }
     
@@ -790,13 +541,11 @@ public class PlayerController : MonoBehaviour
             if (!DashVfx.activeInHierarchy)
             {
                 DashVfx.SetActive(true);
-                ChangeAnimationState(StarRiderShip_BarrelRoll);
+                //ChangeAnimationState(StarRiderShip_BarrelRoll);
             }
         }
         //dash sfx
         AS.PlayOneShot(PlayerSfx[1]);
-       
-        
     }
 
     public void Speedvfx()
@@ -804,7 +553,7 @@ public class PlayerController : MonoBehaviour
         if (!gm.gameIsPaused && !gm.gameIsOver)
         {
             sys.Emit(sysEmit);
-            ChangeAnimationState(StarRiderShip_Go_Fast);
+            //ChangeAnimationState(StarRiderShip_Go_Fast);
         }
     }
 
@@ -845,8 +594,8 @@ public class PlayerController : MonoBehaviour
 
     private void OnDrawGizmosSelected()
     {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(lockonCastPos.transform.position, lockonRadius);
+        //Gizmos.color = Color.yellow;
+        //Gizmos.DrawWireSphere(lockonCastPos.transform.position, lockonRadius);
     }
 
     public IEnumerator ActivateTrail (float timeActive) 
@@ -893,23 +642,7 @@ public class PlayerController : MonoBehaviour
         Vector3 playerPosition = new Vector3(transform.position.x, 0, transform.position.z);
         Vector3 knockbackDirection = (playerPosition - transform.forward).normalized;
         rb.AddForce(knockbackDirection * KnockBackForce, ForceMode.Impulse);
-        ChangeAnimationState(StarRiderShip_Spin);
+        //ChangeAnimationState(StarRiderShip_Spin);
     }
     public virtual void Special() { }
-
-    void ChangeAnimationState( string newState) 
-    {
-
-        // stop the same animation from interrutping itself
-        //if (currentState == newState) return;
-        
-        //plays the animation
-        anim.Play(newState);
-    }
-
-    
-
-  
-
-
 }
