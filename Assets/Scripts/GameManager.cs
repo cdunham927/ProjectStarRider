@@ -498,7 +498,7 @@ public class GameManager : MonoBehaviour
         uiParent.SetActive(true);
         //If player is using keyboard, show the mouse
         //Show cursor
-        Cursor.visible = false;
+        //Cursor.visible = false;
         EventSystem.current.SetSelectedGameObject(null);
         pauseMenuUI.SetActive(false);
         Time.timeScale = 1f;

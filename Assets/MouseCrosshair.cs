@@ -27,7 +27,7 @@ namespace UI.HUD
         public void Awake()
         {
 ;
-            Cursor.visible = false; // makes mouse arrow cursor invisible
+            //Cursor.visible = false; // makes mouse arrow cursor invisible
             Cursor.lockState = CursorLockMode.Confined;
         }
         

@@ -103,6 +103,7 @@ public class Player_Stats : MonoBehaviour
         pCont = FindObjectOfType<PlayerController>();
 
         meshRenderer = GetComponentInChildren<MeshRenderer>();
+        reactionAnim = GetComponentInChildren<Animator>();
 
 
 
@@ -181,7 +182,7 @@ public class Player_Stats : MonoBehaviour
             }
         }
 
-        if (Curr_hp > 0)
+        if (Curr_hp > 0 && healthImage != null)
         {
             healthImage.fillAmount = Mathf.Lerp(healthImage.fillAmount, (float)Curr_hp / (float)Max_hp, lerpSpd * Time.deltaTime);
             healthImageGreen.fillAmount = Mathf.Lerp(healthImageGreen.fillAmount, (float)Curr_hp / (float)Max_hp, fastLerpSpd * Time.deltaTime);
@@ -189,9 +190,12 @@ public class Player_Stats : MonoBehaviour
         }
         else
         {
-            healthImage.fillAmount = 0;
-            healthImageGreen.fillAmount = 0;
-            healthImageRed.fillAmount = 0;
+            if (healthImage != null)
+            {
+                healthImage.fillAmount = 0;
+                healthImageGreen.fillAmount = 0;
+                healthImageRed.fillAmount = 0;
+            }
         }
         //scoreText.text = "Score: " + Mathf.Round(score).ToString();
        // multiplierText.text = "Multiplier: " + scoreMultiplier + "x";

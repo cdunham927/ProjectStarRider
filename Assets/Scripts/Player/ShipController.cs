@@ -9,7 +9,7 @@ public class ShipController : MonoBehaviour
     float explosiveForce = 50000f;
 
     [SerializeField]
-    [Range(75f, 500f)]
+    [Range(75f, 1000f)]
     float pitchForce = 500f, 
         rollForce = 500f, 
         yawForce = 500f;
@@ -102,10 +102,11 @@ public class ShipController : MonoBehaviour
 
         pitch = (mousePosition.y - screenCenter.y) / screenCenter.y;
         pitch = (Mathf.Abs(pitch) > deadZoneRadius) ? pitch : 0f;
-        
+
         //Roll uses q and e to roll the ship, I dont think we want that
         //thrust = Input.GetAxis("Vertical");
 
+        //yaw = Mathf.Clamp(yaw, -1f, 1f);
 
         //Movement
         if (!Mathf.Approximately(0f, pitch))

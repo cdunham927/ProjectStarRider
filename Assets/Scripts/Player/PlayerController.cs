@@ -133,7 +133,7 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
-        Cursor.visible = false; // makes mouse arrow cursor invisible
+        //Cursor.visible = false; // makes mouse arrow cursor invisible
         Cursor.lockState = CursorLockMode.Confined;
 
 
@@ -148,7 +148,7 @@ public class PlayerController : MonoBehaviour
         //Lock cursor in screen;
         Cursor.lockState = CursorLockMode.Confined;
         //Hide cursor
-        Cursor.visible = false;
+        //Cursor.visible = false;
         //cinCam.m_Follow = followTarget.transform;
         //cinCam.m_LookAt = cineGroup.transform;
 
