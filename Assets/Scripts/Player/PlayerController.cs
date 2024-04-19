@@ -136,6 +136,8 @@ public class PlayerController : MonoBehaviour
         //Cursor.visible = false; // makes mouse arrow cursor invisible
         Cursor.lockState = CursorLockMode.Confined;
 
+        bod = GetComponent<Rigidbody>();
+
 
         //camStartPos = mainCam.transform.position;
         gm = FindObjectOfType<GameManager>();

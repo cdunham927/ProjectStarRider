@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerShooting : MonoBehaviour
 {
@@ -28,6 +29,7 @@ public class PlayerShooting : MonoBehaviour
     public int dmg;
 
     GameManager gm;
+    GameObject cursor;
 
     private void Awake()
     {
@@ -40,8 +42,7 @@ public class PlayerShooting : MonoBehaviour
         mVfx = Instantiate(muzzle);
         mVfx.SetActive(false);
 
-        
-
+        cursor = GameObject.FindGameObjectWithTag("Cursor");
     }
 
     private void OnEnable()
@@ -69,7 +70,12 @@ public class PlayerShooting : MonoBehaviour
         if (bulPool == null) bulPool = cont.bulPool;
         GameObject bul = bulPool.GetPooledObject();
         bul.transform.position = bulSpawn.position;
-        bul.transform.rotation = bulSpawn.rotation;
+        //bul.transform.rotation = bulSpawn.rotation;
+        //var look = Quaternion.LookRotation(bul.transform.position - Camera.main.ScreenToWorldPoint(cursor.transform.position)).normalized;
+        var look = (bul.transform.position - Camera.main.ScreenToWorldPoint(cursor.transform.position)).normalized;
+        //var look = (cursor.transform.position - Camera.main.WorldToScreenPoint(transform.position)).normalized;
+        //var look = Quaternion.LookRotation(Camera.main.WorldToViewportPoint(muzzle.transform.position) - Camera.main.ScreenToViewportPoint(cursor.transform.position)).normalized;
+        bul.transform.rotation = Quaternion.LookRotation(look, Vector3.up);
         bul.SetActive(true);
        
         //Set bullet damage
