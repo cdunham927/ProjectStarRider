@@ -24,11 +24,11 @@ public class Player_Stats : MonoBehaviour
 
     [Header("UI Assets: ")]
     //public Image healthImage;
-    public MPImage healthImage;
-    public MPImage healthImageRed;
-    public MPImage healthImageGreen;
-    public GameObject healthImageFlash;
-    public Animator reactionAnim;
+    MPImage healthImage;
+    MPImage healthImageRed;
+    MPImage healthImageGreen;
+    GameObject healthImageFlash;
+    Animator reactionAnim;
     [Range(1, 10)]
     public int flashThreshold;
 
@@ -83,7 +83,7 @@ public class Player_Stats : MonoBehaviour
     GameManager gm;
 
     public Color regColor;
-    public MPImage reactionImage;
+    MPImage reactionImage;
     public Color hitColor;
     public Color healColor;
     public float flashTime = 0.1f;
@@ -99,13 +99,19 @@ public class Player_Stats : MonoBehaviour
     private void Awake()
     {
         gm = FindObjectOfType<GameManager>();
-        //src = FindObjectOfType<gm>().GetComponent<AudioSource>();
+
+        //Get variables for ui
+        healthImage = gm.healthImage;
+        healthImageRed = gm.healthImageRed;
+        healthImageGreen = gm.healthImageGreen;
+        healthImageFlash = gm.healthImageFlash;
+        reactionAnim = gm.reactionAnim;
+        reactionImage = gm.reactionImage;
+
+    //src = FindObjectOfType<gm>().GetComponent<AudioSource>();
         pCont = FindObjectOfType<PlayerController>();
 
         meshRenderer = GetComponentInChildren<MeshRenderer>();
-        reactionAnim = GetComponentInChildren<Animator>();
-
-
 
         //Camera shake things
         if (cine == null) cine = FindObjectOfType<CinemachineVirtualCamera>();
@@ -122,7 +128,14 @@ public class Player_Stats : MonoBehaviour
         //OverUI = FindObjectOfType<gm>().GameOver();
         //healthImage = GameObject.FindGameObjectWithTag("Health").GetComponent<Image>();
         //innerRect = GameObject.FindGameObjectWithTag("Health").GetComponent<Shapes.Rectangle>();
-        reactionAnim.SetInteger("Hp", Curr_hp);
+
+
+        //Reaction UI animations
+        if (reactionAnim != null)
+        {
+            reactionAnim.SetTrigger("Hurt");
+            reactionAnim.SetInteger("Hp", Curr_hp);
+        }
     }
 
     private void Start()

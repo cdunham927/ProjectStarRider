@@ -114,7 +114,6 @@ public class GameManager : MonoBehaviour
     public float slowTimeWait = 0.5f;
     float wantedTime = 1f;
 
-
     //UI elements to disable/enable when paused or in victory/loss menus
     public List<GameObject> nonMenuObjects = new List<GameObject>();
 
@@ -123,6 +122,15 @@ public class GameManager : MonoBehaviour
 
     WaveSpawner wave;
     Timer timelimit;
+
+    //Player stat variables
+    public MPImage healthImage;
+    public MPImage healthImageRed;
+    public MPImage healthImageGreen;
+    public GameObject healthImageFlash;
+    public Animator reactionAnim;
+    public MPImage reactionImage;
+
 
     void Awake()
     {

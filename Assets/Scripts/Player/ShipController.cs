@@ -14,7 +14,7 @@ public class ShipController : MonoBehaviour
         rollForce = 500f, 
         yawForce = 500f;
 
-    Animator anim;
+    public Animator anim;
     Rigidbody bod;
     float pitch, roll, yaw = 0f;
 
@@ -50,10 +50,13 @@ public class ShipController : MonoBehaviour
     //Input
     float vert, hor, vert2, hor2;
 
+    //PlayerController player;
+
     private void Awake()
     {
-        anim = GetComponent<Animator>();
+        //anim = GetComponentInChildren<Animator>();
         bod = GetComponent<Rigidbody>();
+        //player = GetComponent<PlayerController>()
 
         DefaultRegSpd = regSpd;  //stored default vlaues for player speed
         DefaultHighSpd = highSpd; //stored default vlaues for player speed
@@ -77,6 +80,7 @@ public class ShipController : MonoBehaviour
 
         if (Input.GetButtonDown("Fire3") && curDashCools <= 0)
         {
+            anim.SetTrigger("Dash");
             curDashCools = dashCooldown;
             dashing = true;
         }
