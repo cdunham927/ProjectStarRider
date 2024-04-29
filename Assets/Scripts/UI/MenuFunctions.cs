@@ -91,6 +91,14 @@ public class MenuFunctions : MonoBehaviour
         Debug.Log("Is this working?");
     }
 
+    public void ItchUrl()
+    {
+        Application.OpenURL("https://teamstarrider.itch.io/star-rider");
+        Debug.Log("Is this working?");
+    }
+
+
+
     public void testclick()
     {
 
