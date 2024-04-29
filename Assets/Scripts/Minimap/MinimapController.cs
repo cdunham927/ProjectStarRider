@@ -13,7 +13,7 @@ public class MinimapController : MonoBehaviour
         targ = FindObjectOfType<PlayerController>().transform;
     }
 
-    private void Update()
+    private void LateUpdate()
     {
         if (targ != null && targ.gameObject.activeInHierarchy)
         {

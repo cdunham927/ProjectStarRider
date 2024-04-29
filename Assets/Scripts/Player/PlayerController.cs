@@ -127,8 +127,8 @@ public class PlayerController : MonoBehaviour
     public GameObject lockonCastPos;
     public float lockonRadius;
 
-    //[Header(" Animation controller : ")]
-    //public Animator anim;
+    [Header(" Animation controller : ")]
+    public Animator anim;
    
 
     private void Awake()

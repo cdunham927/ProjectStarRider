@@ -25,5 +25,9 @@ public class MinimapObjController : MonoBehaviour
             transform.position = new Vector3(par.position.x + posOffset.x, posOffset.y, par.position.z + posOffset.z);
             transform.rotation = Quaternion.Euler(90, par.eulerAngles.y, par.eulerAngles.z + rotationOffset.z);
         }
+        else
+        {
+            gameObject.SetActive(false);
+        }
     }
 }
