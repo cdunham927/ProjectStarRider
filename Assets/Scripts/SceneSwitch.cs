@@ -27,6 +27,8 @@ public class SceneSwitch : MonoBehaviour
     
     public GameObject optionsPrefab;
     public GameObject optionsMenu;
+    public GameObject selectMenu;
+    public GameObject mainMenu;
     [HideInInspector]
     public GameObject optionsButton;
     [HideInInspector]
@@ -175,6 +177,30 @@ public class SceneSwitch : MonoBehaviour
         EventSystem.current.SetSelectedGameObject(optionsFirstSelected);
     }
 
+    public void SelectMenu()
+    {
+        //MusicController.instance.PlaySound();
+        lastSelected = EventSystem.current.currentSelectedGameObject;
+        if (pauseMenu == null && cont != null)
+        {
+            pauseMenu = cont.pauseMenuUI;
+        }
+        //If we're in the main game, deactivate pause menu
+        if (pauseMenu != null) pauseMenu.SetActive(false);
+        //Else we're in the main menu so we activate the main menu stuff again
+        else
+        {
+            if (startGameButton != null) startGameButton.SetActive(false);
+        }
+        if (selectMenu != null)
+        {
+            selectMenu.SetActive(true);
+            mainMenu.SetActive(false);
+        }
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(optionsFirstSelected);
+    }
+
     public void Back()
     {
         //MusicController.instance.PlaySound();
@@ -190,7 +216,12 @@ public class SceneSwitch : MonoBehaviour
         {
             if (startGameButton != null) startGameButton.SetActive(true);
         }
-        if (optionsMenu != null) optionsMenu.SetActive(false); 
+        if (optionsMenu != null)
+        {
+            optionsMenu.SetActive(false);
+            selectMenu.SetActive(false);
+            mainMenu.SetActive(true);
+        }
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(lastSelected);
     }

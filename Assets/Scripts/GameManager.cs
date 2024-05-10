@@ -41,7 +41,8 @@ public class GameManager : MonoBehaviour
 
     public bool gameIsPaused = false;
     public bool gameIsOver = false;
-    
+    //for scene transtions
+    public string n;
     [HideInInspector]
     public GameObject pauseMenuUI;
     [HideInInspector]
@@ -399,7 +400,9 @@ public class GameManager : MonoBehaviour
             }
             if (controlsText != null) controlsText.SetActive(false);
             //EventSystem.current.SetSelectedGameObject(victoryButton);
-            VictoryUI.SetActive(true);
+            //VictoryUI.SetActive(true);
+             Time.timeScale = 1f;
+        StartCoroutine(LoadScene(n));
             EventSystem.current.SetSelectedGameObject(null);
             EventSystem.current.SetSelectedGameObject(victoryButton);
             Time.timeScale = 1f;
@@ -412,6 +415,14 @@ public class GameManager : MonoBehaviour
             }
         }
     }
+
+    IEnumerator LoadScene(string n)
+    {
+        
+        yield return new WaitForSeconds(waitTime);
+        SceneManager.LoadScene(n);
+    }
+
 
     public void SlowTime()
     {
