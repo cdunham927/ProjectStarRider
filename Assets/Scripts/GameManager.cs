@@ -58,6 +58,8 @@ public class GameManager : MonoBehaviour
     [HideInInspector]
     public GameObject mainMenuButton;
     [HideInInspector]
+    public GameObject resumeButton;
+    [HideInInspector]
     public GameObject victoryButton;
     //[HideInInspector]
     public GameObject gameoverButton;
@@ -169,6 +171,7 @@ public class GameManager : MonoBehaviour
         ControllsUI = Instantiate(ControllsUIPrefab);
         //Get references for buttons
         mainMenuButton = GameObject.FindGameObjectWithTag("MainMenu");
+        resumeButton = GameObject.FindGameObjectWithTag("ResumeButton");
         victoryButton = GameObject.FindGameObjectWithTag("VictoryRetry");
         gameoverButton = GameObject.FindGameObjectWithTag("GameOverRetry");
         //Disable the ui, we don't need them on level start
@@ -461,7 +464,7 @@ public class GameManager : MonoBehaviour
         if (controlsText != null) controlsText.SetActive(false);
         pauseMenuUI.SetActive(true);
         EventSystem.current.SetSelectedGameObject(null);
-        EventSystem.current.SetSelectedGameObject(mainMenuButton);
+        EventSystem.current.SetSelectedGameObject(resumeButton);
         Time.timeScale = 0f;
         gameIsPaused = true;
 

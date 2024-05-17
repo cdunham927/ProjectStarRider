@@ -195,8 +195,8 @@ public class SceneSwitch : MonoBehaviour
         if (selectMenu != null)
         {
             selectMenu.SetActive(true);
-            mainMenu.SetActive(false);
         }
+        if (mainMenu != null) mainMenu.SetActive(false);
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(optionsFirstSelected);
     }
@@ -219,9 +219,9 @@ public class SceneSwitch : MonoBehaviour
         if (optionsMenu != null)
         {
             optionsMenu.SetActive(false);
-            selectMenu.SetActive(false);
-            mainMenu.SetActive(true);
         }
+        if (selectMenu != null) selectMenu.SetActive(false);
+        if (mainMenu != null) mainMenu.SetActive(true);
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(lastSelected);
     }
