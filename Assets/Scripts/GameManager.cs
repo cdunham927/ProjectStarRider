@@ -348,7 +348,7 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(waitTime);
         if (gameIsOver == false)
         {
-            MusicController.instance.ChangeSong(MusicController.instance.deathClip);
+            if (MusicController.instance != null) MusicController.instance.ChangeSong(MusicController.instance.deathClip);
             //Deactivate enemycounttext
             if (enemyCountText != null && enemyCountText.gameObject.activeInHierarchy)
             {
@@ -367,7 +367,7 @@ public class GameManager : MonoBehaviour
             //EventSystem.current.SetSelectedGameObject(gameoverButton);
             GameOverUI.SetActive(true);
             EventSystem.current.SetSelectedGameObject(null);
-            EventSystem.current.SetSelectedGameObject(gameoverButton);
+            EventSystem.current.SetSelectedGameObject(gameoverButton.gameObject);
             Time.timeScale = 1f;
             gameIsOver = true;
 

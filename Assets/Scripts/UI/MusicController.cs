@@ -36,6 +36,7 @@ public class MusicController : MonoBehaviour
 
     public void ChangeSong(AudioClip ns)
     {
+        src.Stop();
         src.clip = ns;
         src.Play();
     }
