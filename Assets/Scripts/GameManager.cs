@@ -102,7 +102,7 @@ public class GameManager : MonoBehaviour
 
     GameObject optionsMenu;
     SceneSwitch scene;
-
+    public string sceneName;
     Canvas can;
     public float waitTime = 1f;
 
@@ -344,6 +344,7 @@ public class GameManager : MonoBehaviour
     public void GameOver() 
     {
         StartCoroutine(ShowGameOver());
+        StartCoroutine(ToLinkMenuScene());
     }
 
     IEnumerator ShowGameOver()
@@ -368,7 +369,11 @@ public class GameManager : MonoBehaviour
             }
             if (controlsText != null) controlsText.SetActive(false);
             //EventSystem.current.SetSelectedGameObject(gameoverButton);
-            GameOverUI.SetActive(true);
+            //GameOverUI.SetActive(true);
+            yield return new WaitForSeconds(waitTime);
+            
+            //SceneManager.LoadScene(sceneName);
+
             EventSystem.current.SetSelectedGameObject(null);
             EventSystem.current.SetSelectedGameObject(gameoverButton.gameObject);
             Time.timeScale = 1f;
@@ -425,7 +430,30 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(waitTime);
         SceneManager.LoadScene(n);
     }
-
+    IEnumerator ToLinkMenuScene()
+    {
+        //music = FindObjectOfType<MusicController>();
+        //if (music != null)
+        //{
+        //musicAnim = music.GetComponent<Animator>();
+        //musicAnim.SetTrigger("fadeOut");
+        //}
+        yield return new WaitForSeconds(waitTime);
+        //if (music != null) music.ChangeSong(menuSong);
+        SceneManager.LoadScene(3);
+    }
+    IEnumerator ToMenuScene()
+    {
+        //music = FindObjectOfType<MusicController>();
+        //if (music != null)
+        //{
+            //musicAnim = music.GetComponent<Animator>();
+            //musicAnim.SetTrigger("fadeOut");
+        //}
+        yield return new WaitForSeconds(waitTime);
+        //if (music != null) music.ChangeSong(menuSong);
+        SceneManager.LoadScene(0);
+    }
 
     public void SlowTime()
     {
@@ -531,5 +559,18 @@ public class GameManager : MonoBehaviour
         {
             o.SetActive(true);
         }
+    }
+
+    public void GoToLinkMenu()
+    {
+        //MusicController.instance.PlaySound();
+        Time.timeScale = 1f;
+        StartCoroutine(ToLinkMenuScene());
+    }
+    public void GoToMainMenu()
+    {
+        //MusicController.instance.PlaySound();
+        Time.timeScale = 1f;
+        StartCoroutine(ToMenuScene());
     }
 }

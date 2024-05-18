@@ -2,6 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Unity.Burst;
+using Unity.Collections;
+using Cinemachine;
+
 
 public class PlayerShooting : MonoBehaviour
 {
@@ -11,6 +15,7 @@ public class PlayerShooting : MonoBehaviour
     public GameObject muzzle;
     bool PlayerIsShooting;
     GameObject mVfx;
+    [SerializeField] private LayerMask aimColliderlayerMask = new LayerMask();
 
     [Header("shooting settings: ")]
     //public float bulletSpd;
@@ -30,6 +35,8 @@ public class PlayerShooting : MonoBehaviour
 
     GameManager gm;
     GameObject cursor;
+    private ShipController shipController;
+    private Transform debugTransform;
 
     private void Awake()
     {
@@ -38,7 +45,7 @@ public class PlayerShooting : MonoBehaviour
         cont = FindObjectOfType<GameManager>();
         bulPool = cont.bulPool;
         AS = GetComponent<AudioSource>();
-
+        shipController = GetComponent<ShipController>();
         mVfx = Instantiate(muzzle);
         mVfx.SetActive(false);
 
@@ -55,6 +62,16 @@ public class PlayerShooting : MonoBehaviour
 
     private void Update()
     {
+        Vector3 mouseWorldPosition = Vector3.zero;
+        
+        Vector2 screenCenterPoint = new Vector2(Screen.width / 2f, Screen.height / 2f);
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(ray, out RaycastHit raycastHit, 999f, aimColliderlayerMask)) 
+        {
+            debugTransform.position = raycastHit.point;
+            mouseWorldPosition = raycastHit.point;
+        }
+        
         if ((Input.GetButton("Fire1") || Input.GetAxis("Altfire1") > 0) && curShootCools <= 0f && !gm.gameIsPaused)
         {
             Shoot(true);
@@ -70,12 +87,12 @@ public class PlayerShooting : MonoBehaviour
         if (bulPool == null) bulPool = cont.bulPool;
         GameObject bul = bulPool.GetPooledObject();
         bul.transform.position = bulSpawn.position;
-        //bul.transform.rotation = bulSpawn.rotation;
+        bul.transform.rotation = bulSpawn.rotation;
         //var look = Quaternion.LookRotation(bul.transform.position - Camera.main.ScreenToWorldPoint(cursor.transform.position)).normalized;
-        var look = (bul.transform.position - Camera.main.ScreenToWorldPoint(cursor.transform.position)).normalized;
+        //var look = (bul.transform.position - Camera.main.ScreenToWorldPoint(cursor.transform.position)).normalized;
         //var look = (cursor.transform.position - Camera.main.WorldToScreenPoint(transform.position)).normalized;
         //var look = Quaternion.LookRotation(Camera.main.WorldToViewportPoint(muzzle.transform.position) - Camera.main.ScreenToViewportPoint(cursor.transform.position)).normalized;
-        bul.transform.rotation = Quaternion.LookRotation(look, Vector3.up);
+        //bul.transform.rotation = Quaternion.LookRotation(look, Vector3.up);
         bul.SetActive(true);
        
         //Set bullet damage

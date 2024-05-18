@@ -21,7 +21,7 @@ public class ShipController : MonoBehaviour
     [SerializeField]
     float deadZoneRadius = 0.1f;
     Vector2 screenCenter => new Vector2(Screen.width * 0.5f, Screen.height * 0.5f);
-
+    private Vector2 mouseDistance;
     //Speed values
     [Header("Speed values")]
     public float spdLerpAmt;
@@ -107,6 +107,7 @@ public class ShipController : MonoBehaviour
         pitch = (mousePosition.y - screenCenter.y) / screenCenter.y;
         pitch = (Mathf.Abs(pitch) > deadZoneRadius) ? pitch : 0f;
 
+        mouseDistance = Vector2.ClampMagnitude(mouseDistance, 1f);
         //Roll uses q and e to roll the ship, I dont think we want that
         //thrust = Input.GetAxis("Vertical");
 

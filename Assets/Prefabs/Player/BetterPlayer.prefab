@@ -15414,6 +15414,7 @@ GameObject:
   - component: {fileID: 1236896654648400342}
   - component: {fileID: 8701767644159492045}
   - component: {fileID: 5272638553245071613}
+  - component: {fileID: 6638885308462339546}
   - component: {fileID: 2009239985978953898}
   - component: {fileID: 4336756984537600398}
   - component: {fileID: 701194358528213671}
@@ -15470,11 +15471,6 @@ MonoBehaviour:
   deathVFX: {fileID: 4593951957772366835, guid: 1ea62ba607eceb94da4a428626a98023, type: 3}
   healVFX: {fileID: 2104465169970890738, guid: c4a0664deedfa6e4e927d9efde2fd88f, type: 3}
   positionToSpawn: {fileID: 8701767644159492043}
-  healthImage: {fileID: 0}
-  healthImageRed: {fileID: 0}
-  healthImageGreen: {fileID: 0}
-  healthImageFlash: {fileID: 0}
-  reactionAnim: {fileID: 0}
   flashThreshold: 9
   size: 5
   lerpSpd: 50
@@ -15497,7 +15493,6 @@ MonoBehaviour:
   hurtDecAmt: -9999
   invunerableTime: 3
   regColor: {r: 1, g: 1, b: 1, a: 1}
-  reactionImage: {fileID: 0}
   hitColor: {r: 1, g: 0, b: 0, a: 1}
   healColor: {r: 0.4392157, g: 1, b: 0.38431373, a: 1}
   flashTime: 0.5
@@ -15515,33 +15510,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   joystick: 1
-  aimTarget: {fileID: 8701767644839538910}
-  cameraParent: {fileID: 0}
-  cam: {fileID: 0}
-  yawSpeed: 30
-  pitchSpeed: 15
-  leanAmount_X: 90
-  leanAmount_Y: 30
-  trails: {fileID: 0}
-  speed: 10
-  slowSpd: 0
-  regSpd: -75
-  highSpd: -275
-  DefaultRegSpd: 0
-  DefaultHighSpd: 0
-  sideSpeed: -60
   rotSpd: 80
   lookSpd: 1.5
   defLookSpd: 1.5
   defRotSpd: 80
-  turnSpd: 90
-  sideRotSpd: 150
-  realignRot: 0.5
-  spdLerpAmt: 5
-  xViewThresR: 0.9
-  xViewThresL: 0.1
-  yViewThresU: 0.9
-  yViewThresD: 0.1
   afterimages:
   - {fileID: 5060423196388112156}
   - {fileID: 8872812656641772400}
@@ -15555,7 +15527,6 @@ MonoBehaviour:
   rechargeSpd: 1
   invertControls: 0
   defInvert: 0
-  speedUpTime: 10
   cinCam: {fileID: 0}
   mainCam: {fileID: 0}
   aimAtTarget: {fileID: 8701767644839538911}
@@ -15565,11 +15536,6 @@ MonoBehaviour:
   collisionDamage: 1
   spikeDamage: 3
   KnockBackForce: 2
-  forDashSpd: 9999
-  sideDashSpd: 8000
-  dashCooldown: 0.5
-  dashTime: 0.3
-  curDashTime: 0
   decoy: {fileID: 672394538714028356, guid: 6bf31ec77d43dd7489eeac3613f0cda5, type: 3}
   TrailTime: 2
   meshRefreshRate: 0.1
@@ -15582,9 +15548,9 @@ MonoBehaviour:
   sysEmit: 1
   Barrier: {fileID: 0}
   PlayerSfx:
-  - {fileID: 8300000, guid: 9aac37e9dcecef049a8ce4e1d1549d6c, type: 3}
-  - {fileID: 8300000, guid: 9aac37e9dcecef049a8ce4e1d1549d6c, type: 3}
-  - {fileID: 8300000, guid: 133a4e0be6e755f488ae708b2509ca5a, type: 3}
+  - {fileID: 8300000, guid: d1ad9616bbfc2454bb1720bfaf872246, type: 3}
+  - {fileID: 8300000, guid: d1ad9616bbfc2454bb1720bfaf872246, type: 3}
+  - {fileID: 8300000, guid: d1ad9616bbfc2454bb1720bfaf872246, type: 3}
   cineGroup: {fileID: 0}
   closestTarget: {fileID: 0}
   enemyMask:
@@ -15592,6 +15558,7 @@ MonoBehaviour:
     m_Bits: 64
   lockonCastPos: {fileID: 515050528640081020}
   lockonRadius: 150
+  anim: {fileID: 0}
 --- !u!114 &5272638553245071613
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15612,6 +15579,34 @@ MonoBehaviour:
   recoilForce: 500
   parentShoot: {fileID: 0}
   dmg: 1
+--- !u!114 &6638885308462339546
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8701767644159492086}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf571bbf28758f64685adaa9a37274d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  explosiveForce: 37500
+  pitchForce: 850
+  rollForce: 850
+  yawForce: 850
+  anim: {fileID: 5708692075346011531}
+  deadZoneRadius: 0.01
+  spdLerpAmt: 15
+  slowSpd: 0
+  regSpd: 10973
+  highSpd: 25000
+  superSpd: 0
+  DefaultRegSpd: 0
+  DefaultHighSpd: 0
+  dashCooldown: 0.5
+  dashTime: 0
+  curDashTime: 0
 --- !u!54 &2009239985978953898
 Rigidbody:
   m_ObjectHideFlags: 0
