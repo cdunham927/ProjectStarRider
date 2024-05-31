@@ -34,9 +34,17 @@ public class PlayerShooting : MonoBehaviour
     public int dmg;
 
     GameManager gm;
-    GameObject cursor;
+    
+    public GameObject cursor;
     private ShipController shipController;
     private Transform debugTransform;
+
+    public Vector2 constraint;
+    Image i;
+    RectTransform r;
+    public float cursorOffsetZ = 10;
+    public float rayLength = 99;
+    public LayerMask layerMask;
 
     private void Awake()
     {
@@ -49,7 +57,15 @@ public class PlayerShooting : MonoBehaviour
         mVfx = Instantiate(muzzle);
         mVfx.SetActive(false);
 
-        cursor = GameObject.FindGameObjectWithTag("Cursor");
+        //cursor = GameObject.FindGameObjectWithTag("Cursor");
+
+        i = cursor.GetComponent<Image>();
+        r = cursor.GetComponent<RectTransform>();
+
+        //r.SetParent(null);
+        //cursor.transform.SetParent(null);
+
+        Cursor.visible = false;
     }
 
     private void OnEnable()
@@ -60,8 +76,18 @@ public class PlayerShooting : MonoBehaviour
         }
     }
 
+    Ray aimRay;
+
     private void Update()
     {
+        var screenPoint = Input.mousePosition;
+        screenPoint.z = 10.0f; //distance of the plane from the camera
+        var pos = screenPoint;
+        pos.x = Mathf.Clamp(pos.x, Screen.width / 2 - constraint.x, Screen.width / 2 + constraint.x);
+        pos.y = Mathf.Clamp(pos.y, Screen.height / 2 - constraint.y, Screen.height / 2 + constraint.y);
+        pos.z = 10.0f;
+        r.position = pos;
+
         Vector3 mouseWorldPosition = Vector3.zero;
         
         Vector2 screenCenterPoint = new Vector2(Screen.width / 2f, Screen.height / 2f);
@@ -80,6 +106,27 @@ public class PlayerShooting : MonoBehaviour
 
         if (curShootCools > 0f) 
             curShootCools -= Time.deltaTime;
+
+        aimRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+        //Ray aimRay = new Ray(transform.position, transform.forward * rayLength);
+        if (Physics.Raycast(aimRay, out RaycastHit hit, layerMask))
+        {
+            //cursor.transform.position = hit.point;
+            //Debug.DrawRay(transform.position, hit.point, Color.green);
+        }
+        else
+        {
+            //cursor.transform.position = aimRay.GetPoint(cursorOffsetZ);
+            //Debug.DrawRay(aimRay.origin, ray.direction * rayLength, Color.blue);
+        }
+        
+        //cursor.transform.rotation = transform.rotation;
+
+        //Debug.DrawRay(transform.position, ray.direction * rayLength, Color.blue);
+
+        //var cursorPosWorld = Camera.main.ScreenToViewportPoint(cursor.transform.position);
+        //Vector3 inFrontPos = new Vector3(cursorPosWorld.x, cursorPosWorld.y, cursorPosWorld.z) + transform.forward * cursorOffsetZ;
+        //Debug.DrawRay(transform.position, inFrontPos, Color.blue);
     }
 
     public void Shoot( bool newShooting)
@@ -87,7 +134,18 @@ public class PlayerShooting : MonoBehaviour
         if (bulPool == null) bulPool = cont.bulPool;
         GameObject bul = bulPool.GetPooledObject();
         bul.transform.position = bulSpawn.position;
-        bul.transform.rotation = bulSpawn.rotation;
+        var newAim = Camera.main.transform.position - aimRay.GetPoint(rayLength);
+        //bul.transform.LookAt(aimRay.direction);
+        bul.transform.rotation = Quaternion.LookRotation(aimRay.direction, Vector3.up);
+
+        //bul.transform.rotation = bulSpawn.rotation;
+
+        //Tested viewport cursor
+        //var cursorPosWorld = Camera.main.ScreenToViewportPoint(cursor.transform.position);
+        //Vector3 inFrontPos = new Vector3(cursorPosWorld.x, cursorPosWorld.y, cursorPosWorld.z) + transform.forward * cursorOffsetZ;
+        //Vector3 look = (inFrontPos - transform.position);
+        //bul.transform.rotation = Quaternion.LookRotation(look, Vector3.up);
+
         //var look = Quaternion.LookRotation(bul.transform.position - Camera.main.ScreenToWorldPoint(cursor.transform.position)).normalized;
         //var look = (bul.transform.position - Camera.main.ScreenToWorldPoint(cursor.transform.position)).normalized;
         //var look = (cursor.transform.position - Camera.main.WorldToScreenPoint(transform.position)).normalized;
