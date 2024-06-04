@@ -24,7 +24,7 @@ public class HealthPickup : Pickup
     {
         if (!healed)
         {
-            MusicController.instance.audioSourceArray[5].PlayOneShot(clip);
+            MusicController.instance.audioSourceArray[0].PlayOneShot(clip);
             healed = true;
             stats.Heal(amountToGive);
             Invoke("Disable", 0.001f);

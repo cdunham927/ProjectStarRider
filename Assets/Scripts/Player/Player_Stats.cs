@@ -20,7 +20,7 @@ public class Player_Stats : MonoBehaviour
     [Header("Visual Effects: ")]
     public GameObject deathVFX;
     public GameObject healVFX;
-    public Transform positionToSpawn;
+    public Transform VfxPositionToSpawn;
 
     [Header("UI Assets: ")]
     //public Image healthImage;
@@ -223,7 +223,7 @@ public class Player_Stats : MonoBehaviour
             HealBlink();
             reactionImage.color = healColor;
             Invoke("ResetGradient", flashTime);
-            Instantiate(healVFX, positionToSpawn.transform.position, transform.rotation);
+            Instantiate(healVFX, VfxPositionToSpawn.transform.position, transform.rotation);
             if (!gm.gameIsPaused && !gm.gameIsOver)
             {
                 //spawn Health vfx

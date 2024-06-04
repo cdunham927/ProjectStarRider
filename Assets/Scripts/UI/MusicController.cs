@@ -10,7 +10,7 @@ public class MusicController : MonoBehaviour
     
     // Use two audio sorces in an Array
     public AudioSource[] audioSourceArray;
-    //public AudioClip[] audioClipArray;
+    public AudioClip[] audioClipArray;
     int toggle;
     int nextClip;
 
