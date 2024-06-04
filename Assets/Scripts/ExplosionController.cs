@@ -43,7 +43,7 @@ public class ExplosionController : MonoBehaviour
 
     void Disable()
     {
-        if (MusicController.instance != null) MusicController.instance.soundSrc.PlayOneShot(explodeSound, vol);
+        if (MusicController.instance != null) MusicController.instance.audioSourceArray[6].PlayOneShot(explodeSound, vol);
         gameObject.SetActive(false);
     }
 }

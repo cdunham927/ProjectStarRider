@@ -11,7 +11,7 @@ public class BarrierPickup : Pickup
     { 
         Pcontroller.ActivateBarrier();
         base.GetPickup();
-        MusicController.instance.soundSrc.PlayOneShot(clip);
+        MusicController.instance.audioSourceArray[5].PlayOneShot(clip);
         Invoke("Disable", 0.001f);
        
 

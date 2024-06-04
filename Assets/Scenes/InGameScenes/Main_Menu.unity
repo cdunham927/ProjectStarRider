@@ -882,6 +882,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -373.5
       objectReference: {fileID: 0}
+    - target: {fileID: 9186472907170352505, guid: 6bab25dffb9b4944297c9682a392517f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1320516634}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6bab25dffb9b4944297c9682a392517f, type: 3}
 --- !u!1 &293866237 stripped
@@ -5815,7 +5819,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 25
+  m_fontSize: 18
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -11103,9 +11107,9 @@ PrefabInstance:
     - target: {fileID: 877252893838211536, guid: 6d3271e5ae24096479bd8dc3b11d13f7, type: 3}
       propertyPath: m_audioClip
       value: 
-      objectReference: {fileID: 8300000, guid: 7b02719c752a43d468210acc2f58647f, type: 3}
+      objectReference: {fileID: 8300000, guid: b68429f8f8e04d440819938ee012a969, type: 3}
     - target: {fileID: 877252893838211536, guid: 6d3271e5ae24096479bd8dc3b11d13f7, type: 3}
-      propertyPath: BypassEffects
+      propertyPath: m_PlayOnAwake
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 877252893838211537, guid: 6d3271e5ae24096479bd8dc3b11d13f7, type: 3}
@@ -11156,14 +11160,30 @@ PrefabInstance:
       propertyPath: m_Name
       value: BG_Music
       objectReference: {fileID: 0}
+    - target: {fileID: 4644707668880889535, guid: 6d3271e5ae24096479bd8dc3b11d13f7, type: 3}
+      propertyPath: Priority
+      value: 87
+      objectReference: {fileID: 0}
     - target: {fileID: 6107412951212038216, guid: 6d3271e5ae24096479bd8dc3b11d13f7, type: 3}
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6720885632238254949, guid: 6d3271e5ae24096479bd8dc3b11d13f7, type: 3}
+      propertyPath: UISfx.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6720885632238254949, guid: 6d3271e5ae24096479bd8dc3b11d13f7, type: 3}
       propertyPath: BGMSfx.Array.size
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 6720885632238254949, guid: 6d3271e5ae24096479bd8dc3b11d13f7, type: 3}
+      propertyPath: UISfx.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: ebf17baf27243b842a7cfca600744a36, type: 3}
+    - target: {fileID: 6720885632238254949, guid: 6d3271e5ae24096479bd8dc3b11d13f7, type: 3}
+      propertyPath: UISfx.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: ebf17baf27243b842a7cfca600744a36, type: 3}
     - target: {fileID: 6720885632238254949, guid: 6d3271e5ae24096479bd8dc3b11d13f7, type: 3}
       propertyPath: BGMSfx.Array.data[3]
       value: 
@@ -11176,8 +11196,25 @@ PrefabInstance:
       propertyPath: BGMSfx.Array.data[5]
       value: 
       objectReference: {fileID: 8300000, guid: 69f91335d2d54064792ad6a94df347fc, type: 3}
+    - target: {fileID: 6720885632238254949, guid: 6d3271e5ae24096479bd8dc3b11d13f7, type: 3}
+      propertyPath: audioSourceArray.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6720885632238254949, guid: 6d3271e5ae24096479bd8dc3b11d13f7, type: 3}
+      propertyPath: audioSourceArray.Array.data[0]
+      value: 
+      objectReference: {fileID: 1320516634}
+    - target: {fileID: 6720885632238254949, guid: 6d3271e5ae24096479bd8dc3b11d13f7, type: 3}
+      propertyPath: audioSourceArray.Array.data[1]
+      value: 
+      objectReference: {fileID: 1415622158}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6d3271e5ae24096479bd8dc3b11d13f7, type: 3}
+--- !u!82 &1415622158 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 4644707668880889535, guid: 6d3271e5ae24096479bd8dc3b11d13f7, type: 3}
+  m_PrefabInstance: {fileID: 1415622156}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1695606852
 GameObject:
   m_ObjectHideFlags: 0
@@ -11205,16 +11242,16 @@ RectTransform:
   m_GameObject: {fileID: 1695606852}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -0.000027623804}
-  m_LocalScale: {x: 1.4, y: 1.3, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1.19, y: 1.105, z: 0.8500001}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 6195988804866050618}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 1}
-  m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -20}
-  m_SizeDelta: {x: 1128, y: 268.212}
+  m_AnchorMin: {x: 0, y: 0.3964982}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: -5}
+  m_SizeDelta: {x: 0, y: -20}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1695606854
 MonoBehaviour:
@@ -11289,10 +11326,10 @@ RectTransform:
   m_Father: {fileID: 6195988804866050618}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0.4562367, y: 0.40541202}
+  m_AnchorMax: {x: 0.5437633, y: 0.4981055}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &2066945956
 GameObject:
@@ -11379,7 +11416,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 25
+  m_fontSize: 18
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -11584,7 +11621,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -2.8999634, y: 0}
+  m_AnchoredPosition: {x: -2.8999023, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &921739629043885263
@@ -11693,7 +11730,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 25
+  m_fontSize: 18
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -12352,7 +12389,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -2.7999878, y: 0}
+  m_AnchoredPosition: {x: -2.8000488, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &4701765420348039929
@@ -12521,7 +12558,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 25
+  m_fontSize: 18
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -12997,10 +13034,10 @@ RectTransform:
   m_Father: {fileID: 1748776595}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -17, y: -136.9}
-  m_SizeDelta: {x: 424.80005, y: 30}
+  m_AnchorMin: {x: -2.2940001, y: -1.369}
+  m_AnchorMax: {x: 2.9540005, y: -1.0689999}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!1 &6195988805058548471
 GameObject:
@@ -13272,10 +13309,10 @@ RectTransform:
   m_Father: {fileID: 1748776595}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -17.699997, y: -195.69907}
-  m_SizeDelta: {x: 424.80005, y: 30}
+  m_AnchorMin: {x: -2.3010004, y: -1.9569907}
+  m_AnchorMax: {x: 2.9470005, y: -1.6569906}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &6195988806687806508
 MonoBehaviour:
@@ -13362,10 +13399,10 @@ RectTransform:
   m_Father: {fileID: 1748776595}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -17, y: -80.59906}
-  m_SizeDelta: {x: 424.80005, y: 30}
+  m_AnchorMin: {x: -2.2940001, y: -0.8059906}
+  m_AnchorMax: {x: 2.9540005, y: -0.5059906}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!222 &6195988806687806510
 CanvasRenderer:
@@ -13578,7 +13615,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 25
+  m_fontSize: 18
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -13930,7 +13967,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 25
+  m_fontSize: 18
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1

@@ -12,7 +12,7 @@ public class SpeedPickup : Pickup
         { 
             base.GetPickup();
             //FindObjectOfType<PlayerController>().speedUp(amt);
-            MusicController.instance.soundSrc.PlayOneShot(clip);
+            MusicController.instance.audioSourceArray[5].PlayOneShot(clip);
             speedUp = true;
             Pcontroller.speedUp(amountToGive);
             Invoke("Disable", 0.001f);
