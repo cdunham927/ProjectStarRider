@@ -14,11 +14,13 @@ public class CursorConstraint : MonoBehaviour
         i = GetComponent<Image>();
         r = GetComponent<RectTransform>();
 
-        Cursor.visible = false;
+        
     }
 
     private void Update()
     {
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Confined;
         if (r != null)
         {
             var screenPoint = (Vector3)Input.mousePosition;
