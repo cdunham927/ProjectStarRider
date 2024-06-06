@@ -8,7 +8,8 @@ public class LevelLoader : MonoBehaviour
     GameManager Manager;
     public GameObject levelLoaderUIPrefab;
     GameObject levelLoaderUIInstance;
-    public GameObject loadingScreen;
+    private GameObject loadingScreen;
+    private GameObject mainMenu;
     public Slider sl;
     public Text progressText;
 

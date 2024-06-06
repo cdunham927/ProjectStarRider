@@ -22,18 +22,16 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: WaterFloor
   m_Shader: {fileID: -6465566751694194690, guid: 946e57bb1c42834418e5512076cde7a3, type: 3}
-  m_ValidKeywords:
+  m_ValidKeywords: []
+  m_InvalidKeywords:
   - _ALPHAPREMULTIPLY_ON
   - _SURFACE_TYPE_TRANSPARENT
-  m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: 3000
-  stringTagMap:
-    RenderType: Transparent
-  disabledShaderPasses:
-  - DepthOnly
+  stringTagMap: {}
+  disabledShaderPasses: []
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
@@ -105,20 +103,20 @@ Material:
     - FoamCutoff: 0
     - FoamScale: 0
     - FoamSpeed: 0
-    - Noise_Amount: 71.18
+    - Noise_Amount: 0
     - NormalStrength: 0
     - NormalStrength_1: 5
     - RefractionNormal: 0
-    - RefractionScale: 2.2
+    - RefractionScale: 23.68
     - RefractionStrength: 0
-    - Refraction_Speed: -0.12
-    - Refraction_Strength: 43.92
-    - RippleDensity: 70.03
-    - RippleSPeed: 1
-    - RippleSlimness: 5.08
+    - Refraction_Speed: 0
+    - Refraction_Strength: 34.87
+    - RippleDensity: 315.1
+    - RippleSPeed: 2
+    - RippleSlimness: 13.5
     - Scale: 0
-    - Smoothness: 3.08
-    - WaterDepth: 20
+    - Smoothness: 0
+    - WaterDepth: 0
     - _AlphaClip: 0
     - _BUILTIN_QueueControl: -1
     - _BUILTIN_QueueOffset: 0
@@ -131,21 +129,26 @@ Material:
     - _Cutoff: 0.5
     - _Deoth: 2.23
     - _DepthFade: 1
+    - _DepthFadeDistance: 1
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
-    - _Displacment: 0.25
+    - _Displacment: 148.2
     - _Distance: 2
     - _DstBlend: 10
     - _EnvironmentReflections: 1
+    - _Foam_Direction: 0
+    - _Foam_Speed: 0
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
+    - _Horizion_Distance: 3.64
     - _Metallic: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.005
-    - _QueueControl: 0
+    - _QueueControl: 1
     - _QueueOffset: 0
     - _ReceiveShadows: 1
+    - _RefractionGradientNoiseScale: 8.57
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
@@ -157,15 +160,19 @@ Material:
     - _ZWriteControl: 0
     - speed: 0
     m_Colors:
-    - Deep_Water: {r: 0.0064524733, g: 0.010980657, b: 0.16078432, a: 1}
+    - Deep_Water: {r: 0, g: 0.03573942, b: 1, a: 1}
     - Foam_Color: {r: 1, g: 1, b: 1, a: 1}
-    - RippleColor: {r: 0.6132076, g: 0.6132076, b: 0.6132076, a: 1}
-    - Shallow_Water: {r: 0.070977226, g: 0.20386788, b: 0.5188679, a: 1}
+    - RippleColor: {r: 1, g: 1, b: 1, a: 1}
+    - Shallow_Water: {r: 0.0038714774, g: 0.11824431, b: 0.2735849, a: 1}
     - UV: {r: 0, g: 0, b: 0, a: 0}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _FoamTiling: {r: 0, g: 0, b: 0, a: 0}
+    - _Foam_Offset: {r: 0, g: 0, b: 0, a: 0}
+    - _Horizion_color: {r: 1, g: 1, b: 1, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
+    - _UV: {r: -0.9, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
 --- !u!114 &9092954332451547574
 MonoBehaviour:

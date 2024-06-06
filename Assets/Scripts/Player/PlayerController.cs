@@ -133,8 +133,7 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
-        //Cursor.visible = false; // makes mouse arrow cursor invisible
-        Cursor.lockState = CursorLockMode.Confined;
+        
 
         bod = GetComponent<Rigidbody>();
 
@@ -148,7 +147,7 @@ public class PlayerController : MonoBehaviour
         meshRenderer = GetComponentInChildren<MeshRenderer>();
         stats = FindObjectOfType<Player_Stats>();
         //Lock cursor in screen;
-        Cursor.lockState = CursorLockMode.Confined;
+        //Cursor.lockState = CursorLockMode.Confined;
         //Hide cursor
         //Cursor.visible = false;
         //cinCam.m_Follow = followTarget.transform;

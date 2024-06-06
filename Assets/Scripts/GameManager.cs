@@ -274,6 +274,9 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Cursor.visible = false; // makes mouse arrow cursor invisible
+        Cursor.lockState = CursorLockMode.Confined;
+
         if (Input.GetButtonDown("Pause") && !gameIsOver)
         {
             if (optionsMenu == null) optionsMenu = scene.optionsMenu;
