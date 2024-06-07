@@ -19,6 +19,7 @@ public class LevelLoader : MonoBehaviour
     public float waitTime;
     public AudioClip[] songs;
 
+    [HideInInspector]
     public GameObject optionsPrefab;
     public GameObject optionsMenu;
 
@@ -76,7 +77,7 @@ public class LevelLoader : MonoBehaviour
         }
         
         yield return new WaitForSeconds(waitTime);
-        if (music != null) music.ChangeSong(songs[sceneIndex]);
+        //if (music != null) music.ChangeSong(songs[sceneIndex]);
 
 
         AsyncOperation operation = SceneManager.LoadSceneAsync(sceneIndex);

@@ -13,6 +13,7 @@ public class SceneSwitch : MonoBehaviour
     public AudioClip tutorialSong;
     public AudioClip cetusSong;
     public AudioClip menuSong;
+    public AudioClip MainMenuSong;
 
     [Header("Level Names : Match in Build Settings ")]
     public string tutorialName;
@@ -127,7 +128,10 @@ public class SceneSwitch : MonoBehaviour
             musicAnim.SetTrigger("fadeOut");
         }
         yield return new WaitForSeconds(waitTime);
-        if (music != null) music.ChangeSong(menuSong);
+        if (music != null) 
+        { 
+            music.ChangeSong(MainMenuSong); 
+        }
         SceneManager.LoadScene(0);
     }
 
