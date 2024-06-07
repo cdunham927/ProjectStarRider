@@ -45,9 +45,13 @@ public class PlayerShooting : MonoBehaviour
     public float cursorOffsetZ = 10;
     public float rayLength = 99;
     public LayerMask layerMask;
+    PlayerController player;
+    ShipController ship;
 
     private void Awake()
     {
+        player = GetComponent<PlayerController>();
+        ship = GetComponent<ShipController>();
         gm = FindObjectOfType<GameManager>();
         bod = GetComponentInParent<Rigidbody>();
         cont = FindObjectOfType<GameManager>();
@@ -57,7 +61,7 @@ public class PlayerShooting : MonoBehaviour
         mVfx = Instantiate(muzzle);
         mVfx.SetActive(false);
 
-        //cursor = GameObject.FindGameObjectWithTag("Cursor");
+        cursor = GameObject.FindGameObjectWithTag("Cursor");
 
         i = cursor.GetComponent<Image>();
         r = cursor.GetComponent<RectTransform>();
@@ -107,26 +111,13 @@ public class PlayerShooting : MonoBehaviour
         if (curShootCools > 0f) 
             curShootCools -= Time.deltaTime;
 
-        aimRay = Camera.main.ScreenPointToRay(Input.mousePosition);
-        //Ray aimRay = new Ray(transform.position, transform.forward * rayLength);
-        if (Physics.Raycast(aimRay, out RaycastHit hit, layerMask))
-        {
-            //cursor.transform.position = hit.point;
-            //Debug.DrawRay(transform.position, hit.point, Color.green);
-        }
-        else
-        {
-            //cursor.transform.position = aimRay.GetPoint(cursorOffsetZ);
-            //Debug.DrawRay(aimRay.origin, ray.direction * rayLength, Color.blue);
-        }
+        aimRay = Camera.main.ScreenPointToRay(ship.aimPos);
         
-        //cursor.transform.rotation = transform.rotation;
-
-        //Debug.DrawRay(transform.position, ray.direction * rayLength, Color.blue);
-
-        //var cursorPosWorld = Camera.main.ScreenToViewportPoint(cursor.transform.position);
-        //Vector3 inFrontPos = new Vector3(cursorPosWorld.x, cursorPosWorld.y, cursorPosWorld.z) + transform.forward * cursorOffsetZ;
-        //Debug.DrawRay(transform.position, inFrontPos, Color.blue);
+        //if (player.joystick)
+        //{
+        //    aimRay = Camera.main.ScreenPointToRay(ship.aimPos);
+        //}
+        //else aimRay = Camera.main.ScreenPointToRay(Input.mousePosition);
     }
 
     public void Shoot( bool newShooting)
@@ -138,19 +129,6 @@ public class PlayerShooting : MonoBehaviour
         //bul.transform.LookAt(aimRay.direction);
         bul.transform.rotation = Quaternion.LookRotation(aimRay.direction, Vector3.up);
 
-        //bul.transform.rotation = bulSpawn.rotation;
-
-        //Tested viewport cursor
-        //var cursorPosWorld = Camera.main.ScreenToViewportPoint(cursor.transform.position);
-        //Vector3 inFrontPos = new Vector3(cursorPosWorld.x, cursorPosWorld.y, cursorPosWorld.z) + transform.forward * cursorOffsetZ;
-        //Vector3 look = (inFrontPos - transform.position);
-        //bul.transform.rotation = Quaternion.LookRotation(look, Vector3.up);
-
-        //var look = Quaternion.LookRotation(bul.transform.position - Camera.main.ScreenToWorldPoint(cursor.transform.position)).normalized;
-        //var look = (bul.transform.position - Camera.main.ScreenToWorldPoint(cursor.transform.position)).normalized;
-        //var look = (cursor.transform.position - Camera.main.WorldToScreenPoint(transform.position)).normalized;
-        //var look = Quaternion.LookRotation(Camera.main.WorldToViewportPoint(muzzle.transform.position) - Camera.main.ScreenToViewportPoint(cursor.transform.position)).normalized;
-        //bul.transform.rotation = Quaternion.LookRotation(look, Vector3.up);
         bul.SetActive(true);
        
         //Set bullet damage

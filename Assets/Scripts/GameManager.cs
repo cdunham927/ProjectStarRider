@@ -134,6 +134,9 @@ public class GameManager : MonoBehaviour
     public Animator reactionAnim;
     public MPImage reactionImage;
 
+    CursorConstraint cursor;
+    Image cursorImage;
+
 
     void Awake()
     {
@@ -145,6 +148,8 @@ public class GameManager : MonoBehaviour
 
         //can = GetComponent<Canvas>();
         //can.worldCamera = Instantiate(uiCamera).GetComponent<Camera>();
+        cursor = FindObjectOfType<CursorConstraint>();
+        cursorImage = cursor.GetComponent<Image>();
         scene = FindObjectOfType<SceneSwitch>();
         if (levelType == levelTypes.battle)
         {
@@ -283,11 +288,13 @@ public class GameManager : MonoBehaviour
 
             if (gameIsPaused && !optionsMenu.activeInHierarchy)
             {
+                if (cursor != null) cursorImage.enabled = true;
                 player.UnfreezeRotation();
                 Resume();
             }
             else if (!gameIsPaused && !optionsMenu.activeInHierarchy) {
                 //EventSystem.current.firstSelectedGameObject = mainMenuButton;
+                if (cursor != null) cursorImage.enabled = false;
                 player.FreezeRotation();
                 Pause();
             }
@@ -535,6 +542,7 @@ public class GameManager : MonoBehaviour
 
     public void Resume()
     {
+        if (cursor != null) cursorImage.enabled = true;
         //Activate enemycounttext
         if (enemyCountText != null)
         {

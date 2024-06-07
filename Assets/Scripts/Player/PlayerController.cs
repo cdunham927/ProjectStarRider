@@ -133,10 +133,7 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
-        
-
         bod = GetComponent<Rigidbody>();
-
 
         //camStartPos = mainCam.transform.position;
         gm = FindObjectOfType<GameManager>();

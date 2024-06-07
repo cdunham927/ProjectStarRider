@@ -50,13 +50,17 @@ public class ShipController : MonoBehaviour
     //Input
     float vert, hor, vert2, hor2;
 
-    //PlayerController player;
+    PlayerController player;
+    public float controllerSensitivity;
+
+    GameManager cont;
 
     private void Awake()
     {
+        cont = FindObjectOfType<GameManager>();
         //anim = GetComponentInChildren<Animator>();
         bod = GetComponent<Rigidbody>();
-        //player = GetComponent<PlayerController>()
+        player = GetComponent<PlayerController>();
 
         DefaultRegSpd = regSpd;  //stored default vlaues for player speed
         DefaultHighSpd = highSpd; //stored default vlaues for player speed
@@ -64,81 +68,94 @@ public class ShipController : MonoBehaviour
 
     private void Update()
     {
-        //Get inputs
-        vert = Input.GetAxis("Vertical");
-        hor = Input.GetAxis("Horizontal");
-
-        vert2 = Input.GetAxis("Vertical2");
-        hor2 = Input.GetAxis("Horizontal2");
-
-        float t = Time.deltaTime * spdLerpAmt;
-        t = t * t * (3f - 2f * t);
-        
-        //Speed phytsics equation lerp
-        //speed = Mathf.Lerp(speed, lerpToSpd, Time.deltaTime * spdLerpAmt); /// orginal equation dont delete
-        speed = Mathf.Lerp(speed, lerpToSpd, t);
-
-        if (Input.GetButtonDown("Fire3") && curDashCools <= 0)
+        if (!cont.gameIsPaused)
         {
-            anim.SetTrigger("Dash");
-            curDashCools = dashCooldown;
-            dashing = true;
-        }
+            //Get inputs
+            vert = Input.GetAxis("Vertical");
+            hor = Input.GetAxis("Horizontal");
 
-        if (vert > 0)
-        {
-            if (curDashTime > 0) lerpToSpd = superSpd;
-            else lerpToSpd = highSpd;
-        }
-        else if (vert < 0) lerpToSpd = slowSpd;
-        else lerpToSpd = regSpd;
+            vert2 = Input.GetAxis("Vertical2");
+            hor2 = Input.GetAxis("Horizontal2");
 
-        if (curDashCools > 0) curDashCools -= Time.deltaTime;
-        if (curDashTime > 0) curDashTime -= Time.deltaTime;
+            float t = Time.deltaTime * spdLerpAmt;
+            t = t * t * (3f - 2f * t);
+
+            //Speed phytsics equation lerp
+            //speed = Mathf.Lerp(speed, lerpToSpd, Time.deltaTime * spdLerpAmt); /// orginal equation dont delete
+            speed = Mathf.Lerp(speed, lerpToSpd, t);
+
+            if (Input.GetButtonDown("Fire3") && curDashCools <= 0)
+            {
+                anim.SetTrigger("Dash");
+                curDashCools = dashCooldown;
+                dashing = true;
+            }
+
+            if (vert > 0)
+            {
+                if (curDashTime > 0) lerpToSpd = superSpd;
+                else lerpToSpd = highSpd;
+            }
+            else if (vert < 0) lerpToSpd = slowSpd;
+            else lerpToSpd = regSpd;
+
+            if (curDashCools > 0) curDashCools -= Time.deltaTime;
+            if (curDashTime > 0) curDashTime -= Time.deltaTime;
+        }
     }
+
+    [HideInInspector]
+    public Vector2 aimPos;
 
     private void FixedUpdate()
     {
-        Vector3 mousePosition = Input.mousePosition;
-
-        yaw = (mousePosition.x - screenCenter.x) / screenCenter.x;
-        yaw = (Mathf.Abs(yaw) > deadZoneRadius) ? yaw : 0f;
-
-        pitch = (mousePosition.y - screenCenter.y) / screenCenter.y;
-        pitch = (Mathf.Abs(pitch) > deadZoneRadius) ? pitch : 0f;
-
-        mouseDistance = Vector2.ClampMagnitude(mouseDistance, 1f);
-        //Roll uses q and e to roll the ship, I dont think we want that
-        //thrust = Input.GetAxis("Vertical");
-
-        //yaw = Mathf.Clamp(yaw, -1f, 1f);
-
-        //Movement
-        if (!Mathf.Approximately(0f, pitch))
+        if (!cont.gameIsPaused)
         {
-            bod.AddTorque(-transform.right * (pitchForce * pitch * Time.fixedDeltaTime));
+            if (player.joystick)
+            {
+                aimPos = new Vector2(Screen.width / 2 + (Input.GetAxis("JoystickAxis4") * controllerSensitivity), Screen.height / 2 - (Input.GetAxis("JoystickAxis5") * controllerSensitivity));
+            }
+            else aimPos = Input.mousePosition;
+
+            yaw = (aimPos.x - screenCenter.x) / screenCenter.x;
+            yaw = (Mathf.Abs(yaw) > deadZoneRadius) ? yaw : 0f;
+
+            pitch = (aimPos.y - screenCenter.y) / screenCenter.y;
+            pitch = (Mathf.Abs(pitch) > deadZoneRadius) ? pitch : 0f;
+
+            mouseDistance = Vector2.ClampMagnitude(mouseDistance, 1f);
+            //Roll uses q and e to roll the ship, I dont think we want that
+            //thrust = Input.GetAxis("Vertical");
+
+            //yaw = Mathf.Clamp(yaw, -1f, 1f);
+
+            //Movement
+            if (!Mathf.Approximately(0f, pitch))
+            {
+                bod.AddTorque(-transform.right * (pitchForce * pitch * Time.fixedDeltaTime));
+            }
+
+            //if (!Mathf.Approximately(0f, roll))
+            //{
+            //    bod.AddTorque(transform.forward * (rollForce * roll * Time.fixedDeltaTime));
+            //}
+
+            if (!Mathf.Approximately(0f, yaw))
+            {
+                bod.AddTorque(transform.up * (yawForce * yaw * Time.fixedDeltaTime));
+            }
+
+            bod.AddForce(transform.forward * (speed * Time.fixedDeltaTime));
+
+            if (dashing)
+            {
+                bod.AddForce(transform.forward * (explosiveForce * Time.fixedDeltaTime), ForceMode.Impulse);
+                dashing = false;
+            }
+
+            Vector3 playerRotation = transform.rotation.eulerAngles;
+            playerRotation.z = 0;
+            transform.rotation = Quaternion.Euler(playerRotation);
         }
-
-        //if (!Mathf.Approximately(0f, roll))
-        //{
-        //    bod.AddTorque(transform.forward * (rollForce * roll * Time.fixedDeltaTime));
-        //}
-
-        if (!Mathf.Approximately(0f, yaw))
-        {
-            bod.AddTorque(transform.up * (yawForce * yaw * Time.fixedDeltaTime));
-        }
-
-        bod.AddForce(transform.forward * (speed * Time.fixedDeltaTime));
-
-        if (dashing)
-        {
-            bod.AddForce(transform.forward * (explosiveForce * Time.fixedDeltaTime), ForceMode.Impulse);
-            dashing = false;
-        }
-
-        Vector3 playerRotation = transform.rotation.eulerAngles;
-        playerRotation.z = 0;
-        transform.rotation = Quaternion.Euler(playerRotation);
     }
 }
