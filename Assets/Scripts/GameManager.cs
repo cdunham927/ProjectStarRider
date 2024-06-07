@@ -294,6 +294,8 @@ public class GameManager : MonoBehaviour
             }
             else if (!gameIsPaused && !optionsMenu.activeInHierarchy) {
                 //EventSystem.current.firstSelectedGameObject = mainMenuButton;
+                EventSystem.current.SetSelectedGameObject(null);
+                EventSystem.current.SetSelectedGameObject(scene.optionsFirstSelected);
                 if (cursor != null) cursorImage.enabled = false;
                 player.FreezeRotation();
                 Pause();

@@ -68,6 +68,7 @@ public class SceneSwitch : MonoBehaviour
             //resumeButton = GameObject.FindGameObjectWithTag("ResumeButton");
             optionsMenu.SetActive(false);
         }
+        optionsFirstSelected = GameObject.FindGameObjectWithTag("FirstSelected");
 
         if (cont != null) pauseMenu = cont.pauseMenuUI;
         if (overworld != null) pauseMenu = overworld.pauseMenu;
@@ -173,6 +174,10 @@ public class SceneSwitch : MonoBehaviour
             if (startGameButton != null)　startGameButton.SetActive(false);
         }
         if (optionsMenu != null) optionsMenu.SetActive(true);
+        if (optionsFirstSelected == null)
+        {
+            optionsFirstSelected = GameObject.FindGameObjectWithTag("FirstSelected");
+        }
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(optionsFirstSelected);
     }
