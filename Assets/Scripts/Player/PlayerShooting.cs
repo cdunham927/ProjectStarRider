@@ -47,11 +47,12 @@ public class PlayerShooting : MonoBehaviour
     public LayerMask layerMask;
     PlayerController player;
     ShipController ship;
+    public bool affectsCursor;
 
     private void Awake()
     {
-        player = GetComponent<PlayerController>();
-        ship = GetComponent<ShipController>();
+        player = FindObjectOfType<PlayerController>();
+        ship = FindObjectOfType<ShipController>();
         gm = FindObjectOfType<GameManager>();
         bod = GetComponentInParent<Rigidbody>();
         cont = FindObjectOfType<GameManager>();
@@ -80,17 +81,21 @@ public class PlayerShooting : MonoBehaviour
         }
     }
 
-    Ray aimRay;
+    [HideInInspector]
+    public Ray aimRay;
 
     private void Update()
     {
-        var screenPoint = Input.mousePosition;
-        screenPoint.z = 10.0f; //distance of the plane from the camera
-        var pos = screenPoint;
-        pos.x = Mathf.Clamp(pos.x, Screen.width / 2 - constraint.x, Screen.width / 2 + constraint.x);
-        pos.y = Mathf.Clamp(pos.y, Screen.height / 2 - constraint.y, Screen.height / 2 + constraint.y);
-        pos.z = 10.0f;
-        r.position = pos;
+        if (affectsCursor)
+        {
+            var screenPoint = Input.mousePosition;
+            screenPoint.z = 10.0f; //distance of the plane from the camera
+            var pos = screenPoint;
+            pos.x = Mathf.Clamp(pos.x, Screen.width / 2 - constraint.x, Screen.width / 2 + constraint.x);
+            pos.y = Mathf.Clamp(pos.y, Screen.height / 2 - constraint.y, Screen.height / 2 + constraint.y);
+            pos.z = 10.0f;
+            r.position = pos;
+        }
 
         Vector3 mouseWorldPosition = Vector3.zero;
         
@@ -111,7 +116,8 @@ public class PlayerShooting : MonoBehaviour
         if (curShootCools > 0f) 
             curShootCools -= Time.deltaTime;
 
-        aimRay = Camera.main.ScreenPointToRay(ship.aimPos);
+        if (ship == null) ship = FindObjectOfType<ShipController>();
+        if (ship != null) aimRay = Camera.main.ScreenPointToRay(ship.aimPos);
         
         //if (player.joystick)
         //{

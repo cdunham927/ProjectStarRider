@@ -109,53 +109,50 @@ public class ShipController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!cont.gameIsPaused)
+        if (player.joystick)
         {
-            if (player.joystick)
-            {
-                aimPos = new Vector2(Screen.width / 2 + (Input.GetAxis("JoystickAxis4") * controllerSensitivity), Screen.height / 2 - (Input.GetAxis("JoystickAxis5") * controllerSensitivity));
-            }
-            else aimPos = Input.mousePosition;
-
-            yaw = (aimPos.x - screenCenter.x) / screenCenter.x;
-            yaw = (Mathf.Abs(yaw) > deadZoneRadius) ? yaw : 0f;
-
-            pitch = (aimPos.y - screenCenter.y) / screenCenter.y;
-            pitch = (Mathf.Abs(pitch) > deadZoneRadius) ? pitch : 0f;
-
-            mouseDistance = Vector2.ClampMagnitude(mouseDistance, 1f);
-            //Roll uses q and e to roll the ship, I dont think we want that
-            //thrust = Input.GetAxis("Vertical");
-
-            //yaw = Mathf.Clamp(yaw, -1f, 1f);
-
-            //Movement
-            if (!Mathf.Approximately(0f, pitch))
-            {
-                bod.AddTorque(-transform.right * (pitchForce * pitch * Time.fixedDeltaTime));
-            }
-
-            //if (!Mathf.Approximately(0f, roll))
-            //{
-            //    bod.AddTorque(transform.forward * (rollForce * roll * Time.fixedDeltaTime));
-            //}
-
-            if (!Mathf.Approximately(0f, yaw))
-            {
-                bod.AddTorque(transform.up * (yawForce * yaw * Time.fixedDeltaTime));
-            }
-
-            bod.AddForce(transform.forward * (speed * Time.fixedDeltaTime));
-
-            if (dashing)
-            {
-                bod.AddForce(transform.forward * (explosiveForce * Time.fixedDeltaTime), ForceMode.Impulse);
-                dashing = false;
-            }
-
-            Vector3 playerRotation = transform.rotation.eulerAngles;
-            playerRotation.z = 0;
-            transform.rotation = Quaternion.Euler(playerRotation);
+            aimPos = new Vector2(Screen.width / 2 + (Input.GetAxis("JoystickAxis4") * controllerSensitivity), Screen.height / 2 - (Input.GetAxis("JoystickAxis5") * controllerSensitivity));
         }
+        else aimPos = Input.mousePosition;
+
+        yaw = (aimPos.x - screenCenter.x) / screenCenter.x;
+        yaw = (Mathf.Abs(yaw) > deadZoneRadius) ? yaw : 0f;
+
+        pitch = (aimPos.y - screenCenter.y) / screenCenter.y;
+        pitch = (Mathf.Abs(pitch) > deadZoneRadius) ? pitch : 0f;
+
+        mouseDistance = Vector2.ClampMagnitude(mouseDistance, 1f);
+        //Roll uses q and e to roll the ship, I dont think we want that
+        //thrust = Input.GetAxis("Vertical");
+
+        //yaw = Mathf.Clamp(yaw, -1f, 1f);
+
+        //Movement
+        if (!Mathf.Approximately(0f, pitch))
+        {
+            bod.AddTorque(-transform.right * (pitchForce * pitch * Time.fixedDeltaTime));
+        }
+
+        //if (!Mathf.Approximately(0f, roll))
+        //{
+        //    bod.AddTorque(transform.forward * (rollForce * roll * Time.fixedDeltaTime));
+        //}
+
+        if (!Mathf.Approximately(0f, yaw))
+        {
+            bod.AddTorque(transform.up * (yawForce * yaw * Time.fixedDeltaTime));
+        }
+
+        bod.AddForce(transform.forward * (speed * Time.fixedDeltaTime));
+
+        if (dashing)
+        {
+            bod.AddForce(transform.forward * (explosiveForce * Time.fixedDeltaTime), ForceMode.Impulse);
+            dashing = false;
+        }
+
+        Vector3 playerRotation = transform.rotation.eulerAngles;
+        playerRotation.z = 0;
+        transform.rotation = Quaternion.Euler(playerRotation);
     }
 }

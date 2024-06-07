@@ -566,6 +566,7 @@ public class GameManager : MonoBehaviour
         pauseMenuUI.SetActive(false);
         Time.timeScale = 1f;
         gameIsPaused = false;
+        player.UnfreezeRotation();
 
         //Disable non-gameover ui
         foreach (GameObject o in nonMenuObjects)
