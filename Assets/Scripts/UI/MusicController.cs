@@ -1,9 +1,30 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
+
+
+
+/*
+public enum Soundtype 
+{ 
+        SHOOTING,
+        SWORD,
+        EXPLOSION,
+        WATER,
+        BARK,
+        PICKUPS,
+}*/
+
+[RequireComponent(typeof(AudioSource))]
 public class MusicController : MonoBehaviour
 {
+    
+    
+    
+    
     //push musiccontroller pls
 
     public static MusicController instance;
@@ -23,7 +44,7 @@ public class MusicController : MonoBehaviour
     // Game State  clips
     public AudioClip deathClip;
     public AudioClip winClip;
-    public AudioClip tutorialSong;
+    //public AudioClip tutorialSong;
 
     //public AudioClip buttonClick;
 
@@ -34,7 +55,10 @@ public class MusicController : MonoBehaviour
     [Header("BGM Audio Clips: ")]
     public AudioClip[] BGMSfx;
     private double dspTime;
-  
+
+    //Var for checking scenes
+    private string currentScene;
+
 
     //Gotta save audio settings to playerprefs, then load those prefs on awake
     // Queue the next Clip to play when the current one ends
@@ -43,10 +67,14 @@ public class MusicController : MonoBehaviour
     // Play an intro Clip followed by a loop
     //AudioSource introAudioSource;
     //AudioSource loopAudioSource;
+
+    
+    
     
     void Start()
     { 
     
+
         double introDuration = (double)audioSourceArray[0].clip.samples / audioSourceArray[0].clip.frequency;
         double startTime = AudioSettings.dspTime + 0.2;
         audioSourceArray[0].PlayScheduled(startTime);
@@ -80,7 +108,7 @@ public class MusicController : MonoBehaviour
 
 
 
-    private void Awake()
+    void Awake()
     {
         
         //Whenever a clip is scheduled;
@@ -92,17 +120,30 @@ public class MusicController : MonoBehaviour
             instance = this;
         }
         else Destroy(gameObject);
+        // Hooks up the 'OnSceneLoaded' method to the sceneLoaded event
+        SceneManager.sceneLoaded += OnSceneLoaded;
+
+        
+
     }
-    
-    
-   
-    
-    
+
+
+
+
+
     public void ChangeSong(AudioClip ns)
     {
         audioSourceArray[0].Stop();
         audioSourceArray[0].clip = ns;
         audioSourceArray[0].Play();
+        
+        if (audioSourceArray[0] != null)
+        {
+           //stop both audio sources
+            audioSourceArray[0].Stop();
+            audioSourceArray[1].Stop();
+
+        }
     }
 
     public void PlaySound()
@@ -115,4 +156,45 @@ public class MusicController : MonoBehaviour
             //soundSrc.PlayOneShot(clip);
         }
     }
+
+
+   
+    
+
+    // Called whenever a scene is loaded
+    void OnSceneLoaded(Scene scene, LoadSceneMode sceneMode) 
+    {
+       // checks current scene name
+        currentScene = SceneManager.GetActiveScene().name;
+
+       //plays music based off scene name
+       switch (scene.name) 
+       {
+            case "Main_Menu":
+                audioSourceArray[0].clip = audioClipArray[0];
+                audioSourceArray[1].clip = audioClipArray[0];
+                break;
+
+            case "CetusBoss":
+                audioSourceArray[0].clip = audioClipArray[1];
+                audioSourceArray[1].clip = audioClipArray[1];
+                break;
+           
+            case "AntaresBoss":
+                audioSourceArray[0].clip = audioClipArray[0];
+                audioSourceArray[1].clip = audioClipArray[0];
+                break;
+            
+            case "AltairBoss":
+                audioSourceArray[0].clip = audioClipArray[0];
+                audioSourceArray[1].clip = audioClipArray[0];
+                break;
+
+
+
+        }
+
+       
+    }
+
 }

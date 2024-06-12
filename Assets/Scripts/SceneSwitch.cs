@@ -10,10 +10,10 @@ using UnityEngine.EventSystems;
 public class SceneSwitch : MonoBehaviour
 {
     GameManager cont;
-    public AudioClip tutorialSong;
-    public AudioClip cetusSong;
-    public AudioClip menuSong;
-    public AudioClip MainMenuSong;
+    //public AudioClip tutorialSong;
+    //public AudioClip cetusSong;
+    //public AudioClip menuSong;
+    //public AudioClip MainMenuSong;
 
     [Header("Level Names : Match in Build Settings ")]
     public string tutorialName;
@@ -102,7 +102,7 @@ public class SceneSwitch : MonoBehaviour
             musicAnim.SetTrigger("fadeOut");
         }
         yield return new WaitForSeconds(waitTime);
-        if (music != null) music.ChangeSong(tutorialSong);
+        //if (music != null) music.ChangeSong(tutorialSong);
         SceneManager.LoadScene(tutorialName);
     }
 
@@ -115,7 +115,7 @@ public class SceneSwitch : MonoBehaviour
             musicAnim.SetTrigger("fadeOut");
         }
         yield return new WaitForSeconds(waitTime);
-        if (music != null) music.ChangeSong(cetusSong);
+        //if (music != null) music.ChangeSong(cetusSong);
         SceneManager.LoadScene(cetusName);
     }
 
@@ -130,7 +130,7 @@ public class SceneSwitch : MonoBehaviour
         yield return new WaitForSeconds(waitTime);
         if (music != null) 
         { 
-            music.ChangeSong(MainMenuSong); 
+            //music.ChangeSong(MainMenuSong); 
         }
         SceneManager.LoadScene(0);
     }
@@ -144,14 +144,14 @@ public class SceneSwitch : MonoBehaviour
             musicAnim.SetTrigger("fadeOut");
         }
         yield return new WaitForSeconds(waitTime);
-        if (music != null) music.ChangeSong(menuSong);
+        //if (music != null) music.ChangeSong(menuSong);
         SceneManager.LoadScene(HubName);
     }
 
     public void QuitGame()
     {
         Time.timeScale = 1f;
-        //MusicController.instance.PlaySound();
+        MusicController.instance.PlaySound();
         Invoke("Quit", 0.5f);
     }
 
@@ -240,7 +240,7 @@ public class SceneSwitch : MonoBehaviour
         //MusicController.instance.PlaySound();
         if (cont.levelType == GameManager.levelTypes.battle)
         {
-            if (MusicController.instance != null) MusicController.instance.ChangeSong(MusicController.instance.tutorialSong);
+            //if (MusicController.instance != null) MusicController.instance.ChangeSong(MusicController.instance.tutorialSong);
         }
         if (cont == null)
         {
@@ -258,7 +258,7 @@ public class SceneSwitch : MonoBehaviour
 
     public void GoToMainMenu()
     {
-        //MusicController.instance.PlaySound();
+        MusicController.instance.PlaySound();
         Time.timeScale = 1f;
         StartCoroutine(ToMenuScene());
     }
