@@ -191,6 +191,11 @@ public class MusicController : MonoBehaviour
                 break;
 
 
+            default:
+                audioSourceArray[0].clip = audioClipArray[2];
+                audioSourceArray[1].clip = audioClipArray[2];
+                break;
+
 
         }
 
