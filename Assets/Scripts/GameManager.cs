@@ -57,8 +57,7 @@ public class GameManager : MonoBehaviour
     //Get buttons via tags probably
     [HideInInspector]
     public GameObject mainMenuButton;
-    [HideInInspector]
-    public GameObject resumeButton;
+    GameObject resumeButton;
     [HideInInspector]
     public GameObject victoryButton;
     //[HideInInspector]
@@ -503,6 +502,7 @@ public class GameManager : MonoBehaviour
         }
         if (controlsText != null) controlsText.SetActive(false);
         pauseMenuUI.SetActive(true);
+        if (resumeButton == null) resumeButton = GameObject.FindGameObjectWithTag("ResumeButton");
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(resumeButton);
         Time.timeScale = 0f;
