@@ -32,9 +32,9 @@ public class LevelLoader : MonoBehaviour
         Manager = FindObjectOfType<GameManager>();
 
         //Spawn UI, get references
-        if (Manager != null) optionsMenu = Manager.pauseMenuUI;
-        else
-            optionsMenu = Instantiate(optionsPrefab);
+        //if (Manager != null) optionsMenu = Manager.pauseMenuUI;
+        //else
+        //    optionsMenu = Instantiate(optionsPrefab);
         levelLoaderUIInstance = Instantiate(levelLoaderUIPrefab);
 
         loadingScreen = levelLoaderUIInstance.transform.GetChild(0).gameObject;

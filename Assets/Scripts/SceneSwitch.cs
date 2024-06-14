@@ -36,6 +36,7 @@ public class SceneSwitch : MonoBehaviour
     public GameObject musicVolume;
     [HideInInspector]
     public GameObject optionsFirstSelected;
+    public GameObject levelSelectFirst;
     [HideInInspector]
     public GameObject mainMenuButton;
     public GameObject pauseMenu;
@@ -55,6 +56,7 @@ public class SceneSwitch : MonoBehaviour
         if (optionsMenu == null && FindObjectOfType<LevelLoader>() != null) optionsMenu = FindObjectOfType<LevelLoader>().optionsMenu;
         if (optionsMenu == null && FindObjectOfType<LevelLoader>() == null) optionsMenu = Instantiate(optionsPrefab);
         startGameButton = GameObject.FindGameObjectWithTag("StartGameButton");
+        //levelSelectFirst = GameObject.FindGameObjectWithTag("");
 
         //Spawn options menu
         //Get references, then deactivate menu
@@ -207,7 +209,7 @@ public class SceneSwitch : MonoBehaviour
         }
         if (mainMenu != null) mainMenu.SetActive(false);
         EventSystem.current.SetSelectedGameObject(null);
-        EventSystem.current.SetSelectedGameObject(optionsFirstSelected);
+        EventSystem.current.SetSelectedGameObject(levelSelectFirst);
     }
 
     public void Back()
@@ -223,7 +225,16 @@ public class SceneSwitch : MonoBehaviour
         }
         else
         {
-            if (startGameButton != null) startGameButton.SetActive(true);
+            if (startGameButton != null)
+            {
+                startGameButton.SetActive(true);
+                GameObject.Find("OptionsMenu").SetActive(false);
+
+            }
+            //if (mainMenu != null) mainMenu.SetActive(true);
+            EventSystem.current.SetSelectedGameObject(null);
+            EventSystem.current.SetSelectedGameObject(GameObject.Find("StartGameButton"));
+            return;
         }
         if (optionsMenu != null)
         {
