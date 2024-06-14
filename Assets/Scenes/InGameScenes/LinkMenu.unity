@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.12731715, g: 0.13414735, b: 0.121078536, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -173,7 +173,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_FirstSelected: {fileID: 0}
+  m_FirstSelected: {fileID: 823640559}
   m_sendNavigationEvents: 1
   m_DragThreshold: 10
 --- !u!4 &181743072
@@ -5070,7 +5070,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -17, y: -193.59909}
+  m_AnchoredPosition: {x: -17, y: -133}
   m_SizeDelta: {x: 424.80005, y: 30}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &823640561
@@ -5107,12 +5107,12 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 8300000, guid: ebf17baf27243b842a7cfca600744a36, type: 3}
-          m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
-          m_MethodName: 
-          m_Mode: 2
+          m_TargetAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_MethodName: set_name
+          m_Mode: 5
           m_Arguments:
-            m_ObjectArgument: {fileID: 8300000, guid: 0f77490c4a122ab4c92ee8db9280c2ce, type: 3}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
             m_IntArgument: 0
             m_FloatArgument: 0
             m_StringArgument: 
@@ -11124,7 +11124,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1300821231
 RectTransform:
   m_ObjectHideFlags: 0
@@ -11467,6 +11467,14 @@ PrefabInstance:
       propertyPath: BGMSfx.Array.data[5]
       value: 
       objectReference: {fileID: 8300000, guid: 69f91335d2d54064792ad6a94df347fc, type: 3}
+    - target: {fileID: 6720885632238254949, guid: 6d3271e5ae24096479bd8dc3b11d13f7, type: 3}
+      propertyPath: audioClipArray.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6720885632238254949, guid: 6d3271e5ae24096479bd8dc3b11d13f7, type: 3}
+      propertyPath: audioClipArray.Array.data[2]
+      value: 
+      objectReference: {fileID: 8300000, guid: 7b02719c752a43d468210acc2f58647f, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6d3271e5ae24096479bd8dc3b11d13f7, type: 3}
 --- !u!1 &1571620250
@@ -11657,7 +11665,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -8, y: 190}
+  m_AnchoredPosition: {x: -8, y: 204}
   m_SizeDelta: {x: -603.45105, y: -681.0622}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!111 &1608901472
@@ -11696,8 +11704,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "!! THANK YOU FOR PLAYING  !!\nWanna keep upto date for \nFuture updates
-    click on the links below !"
+  m_text: "!! THANK YOU FOR PLAYING  !!\nKeep upto date for \nFuture updates Whishlist
+    us on\nSteam and follow on twitter"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: ec5373d6563d71a468a895760f14a8b5, type: 2}
   m_sharedMaterial: {fileID: -3719515910875538478, guid: ec5373d6563d71a468a895760f14a8b5, type: 2}
@@ -12218,7 +12226,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1913481430
 RectTransform:
   m_ObjectHideFlags: 0
@@ -12795,9 +12803,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eabba52958b1dd4459093a9d12415a08, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tutorialSong: {fileID: 8300000, guid: 4ba83bbe1e1cbb94c9c67c327b74e963, type: 3}
-  cetusSong: {fileID: 8300000, guid: 4ba83bbe1e1cbb94c9c67c327b74e963, type: 3}
-  menuSong: {fileID: 8300000, guid: 41076444da8821244977d6bef86a2c79, type: 3}
   tutorialName: CetusBoss
   cetusName: CetusBoss
   HubName: 
@@ -12807,13 +12812,14 @@ MonoBehaviour:
   optionsPrefab: {fileID: 0}
   optionsMenu: {fileID: 0}
   selectMenu: {fileID: 0}
-  mainMenu: {fileID: 0}
+  mainMenu: {fileID: 6195988804866050622}
   optionsButton: {fileID: 0}
   musicVolume: {fileID: 0}
   optionsFirstSelected: {fileID: 0}
+  levelSelectFirst: {fileID: 0}
   mainMenuButton: {fileID: 0}
   pauseMenu: {fileID: 0}
-  startGameButton: {fileID: 0}
+  startGameButton: {fileID: 823640559}
 --- !u!222 &6195988804866050612
 CanvasRenderer:
   m_ObjectHideFlags: 0

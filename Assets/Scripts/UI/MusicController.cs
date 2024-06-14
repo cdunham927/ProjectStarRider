@@ -110,16 +110,12 @@ public class MusicController : MonoBehaviour
 
     void Awake()
     {
-        
+
         //Whenever a clip is scheduled;
         //toggle =  1 - toggle;
         //audioSourceArray[toggle].PlayScheduled(dspTime);
-        if (instance == null)
-        {
-            DontDestroyOnLoad(gameObject);
-            instance = this;
-        }
-        else Destroy(gameObject);
+        DontDestroyMusic();
+
         // Hooks up the 'OnSceneLoaded' method to the sceneLoaded event
         SceneManager.sceneLoaded += OnSceneLoaded;
 
@@ -133,30 +129,47 @@ public class MusicController : MonoBehaviour
 
     public void ChangeSong(AudioClip ns)
     {
-        audioSourceArray[0].Stop();
-        audioSourceArray[0].clip = ns;
-        audioSourceArray[0].Play();
-        
+        //audioSourceArray[0].Stop();
+        //audioSourceArray[0].clip = ns;
+        //audioSourceArray[0].Play();
+
+        //audioSourceArray[1].clip = ns;
+        //audioSourceArray[1].Play();
+
+
+        /*
         if (audioSourceArray[0] != null)
         {
            //stop both audio sources
             audioSourceArray[0].Stop();
             audioSourceArray[1].Stop();
 
-        }
+        }*/
     }
 
     public void PlaySound()
     {
-        if (audioSourceArray[0] != null)
+        //if (audioSourceArray[0] != null)
         {
             //soundSrc.volume = volume;
             //soundSrc.clip = buttonClick;
-            audioSourceArray[0].Play();
+            //audioSourceArray[0].Play();
+            //audioSourceArray[1].Play();
             //soundSrc.PlayOneShot(clip);
         }
     }
 
+    void DontDestroyMusic()
+    {
+
+        if (instance == null)
+        {
+            DontDestroyOnLoad(gameObject);
+            instance = this;
+        }
+        else Destroy(gameObject);
+
+    }
 
    
     
@@ -171,35 +184,45 @@ public class MusicController : MonoBehaviour
        switch (scene.name) 
        {
             case "Main_Menu":
+ 
                 audioSourceArray[0].clip = audioClipArray[0];
                 audioSourceArray[1].clip = audioClipArray[0];
                 break;
 
             case "CetusBoss":
+                
                 audioSourceArray[0].clip = audioClipArray[1];
                 audioSourceArray[1].clip = audioClipArray[1];
                 break;
            
             case "AntaresBoss":
+               
                 audioSourceArray[0].clip = audioClipArray[0];
                 audioSourceArray[1].clip = audioClipArray[0];
                 break;
             
             case "AltairBoss":
+              
                 audioSourceArray[0].clip = audioClipArray[0];
                 audioSourceArray[1].clip = audioClipArray[0];
                 break;
 
 
             default:
+               
                 audioSourceArray[0].clip = audioClipArray[2];
                 audioSourceArray[1].clip = audioClipArray[2];
                 break;
 
 
         }
+        
+        double introDuration = (double)audioSourceArray[0].clip.samples / audioSourceArray[0].clip.frequency;
+        double startTime = AudioSettings.dspTime + 0.2;
+        audioSourceArray[0].PlayScheduled(startTime);
+        audioSourceArray[1].PlayScheduled(startTime + introDuration);
 
-       
+
     }
 
 }
