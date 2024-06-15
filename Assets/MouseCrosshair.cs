@@ -28,7 +28,7 @@ namespace UI.HUD
         {
 ;
             //Cursor.visible = false; // makes mouse arrow cursor invisible
-            Cursor.lockState = CursorLockMode.Confined;
+            //Cursor.lockState = CursorLockMode.Confined;
         }
         
         // Update is called once per frame

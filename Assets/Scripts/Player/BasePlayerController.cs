@@ -208,8 +208,8 @@ public class BasePlayerController : MonoBehaviour
         //Finds Attached Animator to the player
         anim = GetComponentInChildren<Animator>();
 
-        Cursor.visible = false; // makes mouse arrow cursor invisible
-        Cursor.lockState = CursorLockMode.Confined;
+        //Cursor.visible = false; // makes mouse arrow cursor invisible
+        //Cursor.lockState = CursorLockMode.Confined;
 
 
         //camStartPos = mainCam.transform.position;
@@ -225,9 +225,9 @@ public class BasePlayerController : MonoBehaviour
         meshRenderer = GetComponentInChildren<MeshRenderer>();
         stats = FindObjectOfType<Player_Stats>();
         //Lock cursor in screen;
-        Cursor.lockState = CursorLockMode.Confined;
+        //Cursor.lockState = CursorLockMode.Confined;
         //Hide cursor
-        Cursor.visible = false;
+        //Cursor.visible = false;
 
         //Set cinemachine follow and aim targets
         //cinCam = FindObjectOfType<CinemachineVirtualCamera>();

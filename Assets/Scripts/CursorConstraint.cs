@@ -25,8 +25,8 @@ public class CursorConstraint : MonoBehaviour
 
     private void Update()
     {
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Confined;
+        //Cursor.visible = false;
+        //Cursor.lockState = CursorLockMode.Confined;
 
         if (!player.joystick)
         {

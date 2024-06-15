@@ -70,7 +70,7 @@ public class PlayerShooting : MonoBehaviour
         //r.SetParent(null);
         //cursor.transform.SetParent(null);
 
-        Cursor.visible = false;
+        //Cursor.visible = false;
     }
 
     private void OnEnable()
