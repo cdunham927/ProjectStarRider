@@ -101,6 +101,9 @@ public class ShipController : MonoBehaviour
 
             if (curDashCools > 0) curDashCools -= Time.deltaTime;
             if (curDashTime > 0) curDashTime -= Time.deltaTime;
+
+            Cursor.visible = true;
+            player.joystick = true;
         }
     }
 

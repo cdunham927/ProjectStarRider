@@ -64,8 +64,11 @@ public class PlayerShooting : MonoBehaviour
 
         cursor = GameObject.FindGameObjectWithTag("Cursor");
 
-        i = cursor.GetComponent<Image>();
-        r = cursor.GetComponent<RectTransform>();
+        if (cursor != null)
+        {
+            i = cursor.GetComponent<Image>();
+            r = cursor.GetComponent<RectTransform>();
+        }
 
         //r.SetParent(null);
         //cursor.transform.SetParent(null);
@@ -86,7 +89,7 @@ public class PlayerShooting : MonoBehaviour
 
     private void Update()
     {
-        if (affectsCursor)
+        if (cursor != null && affectsCursor)
         {
             var screenPoint = Input.mousePosition;
             screenPoint.z = 10.0f; //distance of the plane from the camera

@@ -148,7 +148,7 @@ public class GameManager : MonoBehaviour
         //can = GetComponent<Canvas>();
         //can.worldCamera = Instantiate(uiCamera).GetComponent<Camera>();
         cursor = FindObjectOfType<CursorConstraint>();
-        cursorImage = cursor.GetComponent<Image>();
+        if (cursor != null) cursorImage = cursor.GetComponent<Image>();
         scene = FindObjectOfType<SceneSwitch>();
         if (levelType == levelTypes.battle)
         {
