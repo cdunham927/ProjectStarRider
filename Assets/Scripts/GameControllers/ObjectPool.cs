@@ -1,7 +1,6 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Pool;
+
 
 public class ObjectPool : MonoBehaviour
 {
@@ -19,11 +18,39 @@ public class ObjectPool : MonoBehaviour
 
     //private ObjectPool<objectToPool>();
 
+    [System.NonSerialized] ObjectPool next;
+
+    public static T Create<T>(T prefab, Vector3 pos, Quaternion rot) where T : ObjectPool
+    {
+        T result = null;
+        if (prefab.next != null)
+        {
+            /*
+			We have a free instance ready to recycle.
+			*/
+            result = (T)prefab.next;
+            prefab.next = result.next;
+            result.transform.SetPositionAndRotation(pos, rot);
+        }
+        else
+        {
+            /*
+			There are no free instances, lets allocate a new one.
+			*/
+            result = Instantiate<T>(prefab, pos, rot);
+            result.gameObject.hideFlags = HideFlags.HideInHierarchy;
+        }
+        result.next = prefab;
+        result.gameObject.SetActive(true);
+        return result;
+
+    }
+
     //Start by populating the pool
     private void Awake()
     {
         //SharedInstance = this;
-        
+
         //Spawn x amount of items and add them to the pool
         for (int i = 0; i < amountToPool; i++)
         {
@@ -40,43 +67,6 @@ public class ObjectPool : MonoBehaviour
     //Spawn the object and add it to the pool
     //Then deactivate the object until we want to use it
 
-    private void Update() 
-    {
-
-        /*
-       //If we're in the editor
-       if (Application.isEditor && test)
-        //If we push Y
-           if (Input.GetKeyDown(KeyCode.Y) && !spawned)
-           {
-               //Place 5 pooled objects in a line
-               for (int i = 0; i < 5; i++)
-               {
-                   //This is also an example of how to spawn a pooled object at a position
-                   ActivateAtPosition(new Vector3(-2.5f + (i * 2.5f), 0, 0), Quaternion.identity);
-               }
-               //Set the spawned flag, so we can only do it once
-               spawned = true;
-           }
-
-           //If we push U
-           if (Input.GetKeyDown(KeyCode.U))
-           {
-               //Place a pooled object at a random position
-               float ranX = Random.Range(-5f, 5f);
-               float ranY = Random.Range(-0.5f, 3f);
-               float ranZ = Random.Range(-5f, 5f);
-               ActivateAtPosition(new Vector3(ranX, ranY, ranZ), Quaternion.identity);
-           }
-       }*/
-
-
-    }
-
-
-
-    //Spawn the object and add it to the pool
-    //Then deactivate the object until we want to use it
     void PoolObject()
     {
         //Spawn an object
@@ -87,7 +77,28 @@ public class ObjectPool : MonoBehaviour
         obj.SetActive(false);
     }
 
-   
+    public void Release()
+    {
+        if (next == null)
+        {
+            /*
+			This instance wasn't made with Create(), so let's just destroy it.
+			*/
+            Destroy(gameObject);
+        }
+        else
+        {
+            /*
+			Retrieve the prefab we were cloned from and add ourselves to its
+			free list.
+			*/
+            var prefab = next;
+            gameObject.SetActive(false);
+            next = prefab.next;
+            prefab.next = this;
+        }
+    }
+
     public GameObject GetPooledObject()
     {
         //If our pool isnt empty
@@ -140,4 +151,7 @@ public class ObjectPool : MonoBehaviour
             o.SetActive(true);
         }
     }
+
+
+
 }

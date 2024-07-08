@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Cinemachine.CinemachineTargetGroup;
 
 public class ShipController : MonoBehaviour
 {
@@ -55,6 +56,13 @@ public class ShipController : MonoBehaviour
 
     GameManager cont;
 
+    public void Start()
+    {
+       
+        
+    }
+
+
     private void Awake()
     {
         cont = FindObjectOfType<GameManager>();
@@ -68,6 +76,9 @@ public class ShipController : MonoBehaviour
 
     private void Update()
     {
+        //new stuff testing
+      
+
         if (!cont.gameIsPaused)
         {
             //Get inputs

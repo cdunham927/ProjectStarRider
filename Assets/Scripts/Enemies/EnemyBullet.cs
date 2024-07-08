@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class EnemyBullet : Bullet
 {
+
+   
+
+
     public GameObject collisonExplosion;
     //private TrailRenderer trail;
 
