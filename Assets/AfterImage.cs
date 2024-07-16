@@ -2,17 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AfterImage : MonoBehaviour
+public class AfterImage : PlayerAbility
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [Header("AfterImage Object : ")]
+    public GameObject[] afterimages;
+    public float maxImagesTime = 40f;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+
 }

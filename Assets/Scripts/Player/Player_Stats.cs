@@ -193,6 +193,7 @@ public class Player_Stats : MonoBehaviour
             {
                 Heal(2);
             }
+
         }
 
         if (Curr_hp > 0 && healthImage != null)
