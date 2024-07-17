@@ -19,11 +19,18 @@ public class LevelLoader : MonoBehaviour
     public float waitTime;
     public AudioClip[] songs;
 
+
+    [SerializeField] private SceneField _SceneToLoad; //drag scene to
+    
     [HideInInspector]
     public GameObject optionsPrefab;
     public GameObject optionsMenu;
 
+
+
     //public int levelindexNumber;
+
+    //[SerializeField] private SceneField _SceneToLoad;
 
     private void Awake()
     {
@@ -64,6 +71,7 @@ public class LevelLoader : MonoBehaviour
         //loads the scene in the background
         //AsyncOperation operation = SceneManager.LoadSceneAsync(name);
         SceneManager.LoadScene(sceneName);
+        
     }
 
     IEnumerator LoadAsynchronously (int sceneIndex)
@@ -94,6 +102,31 @@ public class LevelLoader : MonoBehaviour
         }
     }
 
+
+    public void GoToScene()
+    {
+        MusicController.instance.PlaySound();
+        Time.timeScale = 1f;
+        StartCoroutine(ToScene());
+    }
+
+
+
+    IEnumerator ToScene()
+    {
+        music = FindObjectOfType<MusicController>();
+        if (music != null)
+        {
+            musicAnim = music.GetComponent<Animator>();
+            musicAnim.SetTrigger("fadeOut");
+        }
+        yield return new WaitForSeconds(waitTime);
+        if (music != null)
+        {
+            //music.ChangeSong(MainMenuSong); 
+        }
+        SceneManager.LoadScene(_SceneToLoad);
+    }
 
     public void PlaySound()
     {

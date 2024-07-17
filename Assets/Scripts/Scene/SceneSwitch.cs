@@ -21,6 +21,8 @@ public class SceneSwitch : MonoBehaviour
     public string HubName;
     public string menuName;
     public string n;
+
+   
     
     MusicController music;
     Animator musicAnim;
@@ -87,6 +89,7 @@ public class SceneSwitch : MonoBehaviour
         }
         yield return new WaitForSeconds(waitTime);
         SceneManager.LoadScene(n);
+        
     }
 
     public void NextScene()
