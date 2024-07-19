@@ -20,7 +20,7 @@ public class SeaAngelBulletController : Bullet
         {
             Player_Stats pS = collision.gameObject.GetComponent<Player_Stats>();
             PlayerController player = collision.gameObject.GetComponent<PlayerController>();
-            player.TakeAfterimage(redAmt);
+            player.TakeCharge(redAmt);
             pS.Damage(1);
             Invoke("Disable", 0.001f);
         }
