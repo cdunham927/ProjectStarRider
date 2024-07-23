@@ -5994,7 +5994,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 469570538297937105}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c50edddc6389bf34bb48a51b1ce27b91, type: 3}
   m_Name: 
@@ -11511,6 +11511,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2370114095568209442}
     - target: {fileID: 469570537925800026, guid: 80f1592a667db6c4bb7966f52b62662c, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 469570537925800026, guid: 80f1592a667db6c4bb7966f52b62662c, type: 3}
       propertyPath: progressText
       value: 
       objectReference: {fileID: 4362058655549766127}
@@ -11582,8 +11586,39 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2119259773251690149, guid: 80f1592a667db6c4bb7966f52b62662c, type: 3}
+      propertyPath: mainMenu
+      value: 
+      objectReference: {fileID: 6195988804866050622}
+    - target: {fileID: 2119259773251690149, guid: 80f1592a667db6c4bb7966f52b62662c, type: 3}
+      propertyPath: selectMenu
+      value: 
+      objectReference: {fileID: 1163960258}
+    - target: {fileID: 2119259773251690149, guid: 80f1592a667db6c4bb7966f52b62662c, type: 3}
+      propertyPath: optionsMenu
+      value: 
+      objectReference: {fileID: 293866237}
+    - target: {fileID: 2119259773251690149, guid: 80f1592a667db6c4bb7966f52b62662c, type: 3}
+      propertyPath: startGameButton
+      value: 
+      objectReference: {fileID: 6195988806687806546}
+    - target: {fileID: 2119259773251690149, guid: 80f1592a667db6c4bb7966f52b62662c, type: 3}
+      propertyPath: levelSelectFirst
+      value: 
+      objectReference: {fileID: 7239141908936996065}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 80f1592a667db6c4bb7966f52b62662c, type: 3}
+--- !u!114 &469570538297937107 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2119259773251690149, guid: 80f1592a667db6c4bb7966f52b62662c, type: 3}
+  m_PrefabInstance: {fileID: 469570538297937105}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 948eb5c87210e994d9f91c2c25b9a8b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!222 &921739629043885263
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -12769,7 +12804,7 @@ MonoBehaviour:
         m_MethodName: PlayOneShot
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 8300000, guid: ebf17baf27243b842a7cfca600744a36, type: 3}
+          m_ObjectArgument: {fileID: 8300000, guid: 7b890718f9f4c504f8442fe766fc1b1c, type: 3}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
@@ -12993,7 +13028,7 @@ MonoBehaviour:
         m_MethodName: PlayOneShot
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 8300000, guid: ebf17baf27243b842a7cfca600744a36, type: 3}
+          m_ObjectArgument: {fileID: 8300000, guid: 7b890718f9f4c504f8442fe766fc1b1c, type: 3}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
@@ -13076,7 +13111,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: -2.3010004, y: -1.9569907}
   m_AnchorMax: {x: 2.9470005, y: -1.6569906}
-  m_AnchoredPosition: {x: -1.0307007, y: -50.350998}
+  m_AnchoredPosition: {x: -1.0307007, y: -50.351006}
   m_SizeDelta: {x: 2.0613, y: 16.751}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &6195988806687806508
@@ -13140,7 +13175,7 @@ MonoBehaviour:
         m_MethodName: PlayOneShot
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 8300000, guid: ebf17baf27243b842a7cfca600744a36, type: 3}
+          m_ObjectArgument: {fileID: 8300000, guid: 7b890718f9f4c504f8442fe766fc1b1c, type: 3}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
@@ -13383,7 +13418,7 @@ PrefabInstance:
     - target: {fileID: 7239141909870330447, guid: 044572c5940d43143922264d9bfea06f, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
-      objectReference: {fileID: 976403595}
+      objectReference: {fileID: 469570538297937107}
     - target: {fileID: 7239141909870330447, guid: 044572c5940d43143922264d9bfea06f, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
       value: 
@@ -13398,7 +13433,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7239141909870330447, guid: 044572c5940d43143922264d9bfea06f, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
-      value: GoToScene
+      value: GoToCetus
       objectReference: {fileID: 0}
     - target: {fileID: 7239141909870330447, guid: 044572c5940d43143922264d9bfea06f, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
@@ -13410,7 +13445,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7239141909870330447, guid: 044572c5940d43143922264d9bfea06f, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
-      value: LevelLoader, Assembly-CSharp
+      value: SceneMenuFunctions, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 7239141909870330447, guid: 044572c5940d43143922264d9bfea06f, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_TargetAssemblyTypeName

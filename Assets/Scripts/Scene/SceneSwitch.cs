@@ -9,6 +9,12 @@ using UnityEngine.EventSystems;
 
 public class SceneSwitch : MonoBehaviour
 {
+    /// <summary>
+    /// ATTENTION :  THIS CODE IS OLD AN OUTDATED PLEASE ARCHIVE
+    ///
+    /// </summary>
+    
+    
     GameManager cont;
     //public AudioClip tutorialSong;
     //public AudioClip cetusSong;

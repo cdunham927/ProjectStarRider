@@ -7,7 +7,15 @@ using UnityEngine.SceneManagement;
 public class SceneSwitcherManager : MonoBehaviour
 {
     //ATTENTION : Protoype for new scene manger  using GUI instead of strings keep seperate until complete
-
+    /// <summary>
+    /// Array notes
+    /// scene field 0 - test scene
+    /// scene field 1 - main menu
+    /// Scene field 2 - level select
+    /// scene field 3 - cetus boss battle
+    /// scene field 4 - anaters boss battle
+    /// scene field 5 - altair boss battle
+    /// </summary>
     
     public static SceneSwitcherManager instance;
     [SerializeField] private SceneField[] _SceneToLoad; //Array of Scenes to drag into , use GUI
@@ -39,7 +47,7 @@ public class SceneSwitcherManager : MonoBehaviour
     public GameObject pauseMenu;
     public GameObject startGameButton;
 
-    private void Awake()
+    void Awake()
     {
         cont = FindObjectOfType<GameManager>();
 
@@ -65,31 +73,11 @@ public class SceneSwitcherManager : MonoBehaviour
         
     }
     
-    public void SelectMenu()
-    {
-        //MusicController.instance.PlaySound();
-        lastSelected = EventSystem.current.currentSelectedGameObject;
-        if (pauseMenu == null && cont != null)
-        {
-            pauseMenu = cont.pauseMenuUI;
-        }
-        //If we're in the main game, deactivate pause menu
-        if (pauseMenu != null) pauseMenu.SetActive(false);
-        //Else we're in the main menu so we activate the main menu stuff again
-        else
-        {
-            if (startGameButton != null) startGameButton.SetActive(false);
-        }
-        if (selectMenu != null)
-        {
-            selectMenu.SetActive(true);
-        }
-        if (mainMenu != null) mainMenu.SetActive(false);
-        EventSystem.current.SetSelectedGameObject(null);
-        EventSystem.current.SetSelectedGameObject(levelSelectFirst);
-    }
    
-   public IEnumerator ToScene(SceneField _SceneToLoad)
+
+    
+
+    public IEnumerator ToMainMenuScene()
    {
         music = FindObjectOfType<MusicController>();
         if (music != null)
@@ -98,15 +86,39 @@ public class SceneSwitcherManager : MonoBehaviour
             musicAnim.SetTrigger("fadeOut");
         }
         yield return new WaitForSeconds(waitTime);
-        SceneManager.LoadScene(_SceneToLoad);
+        SceneManager.LoadScene(_SceneToLoad[1]);
 
 
    }
 
+    public IEnumerator ToCetusBossScene()
+    {
+        music = FindObjectOfType<MusicController>();
+        if (music != null)
+        {
+            musicAnim = music.GetComponent<Animator>();
+            musicAnim.SetTrigger("fadeOut");
+        }
+        yield return new WaitForSeconds(waitTime);
+        SceneManager.LoadScene(_SceneToLoad[2]);
 
 
+    }
 
-   
+    // testing base for any scene base don assignment
+    public IEnumerator ToScene()
+    {
+        music = FindObjectOfType<MusicController>();
+        if (music != null)
+        {
+            musicAnim = music.GetComponent<Animator>();
+            musicAnim.SetTrigger("fadeOut");
+        }
+        yield return new WaitForSeconds(waitTime);
+        SceneManager.LoadScene(_SceneToLoad[0]);
+
+
+    }
 
     private IEnumerator FadeOutThenSchangeScene(SceneField myscene) 
     {

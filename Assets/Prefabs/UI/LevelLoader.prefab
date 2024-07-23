@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 469570537925800029}
   - component: {fileID: 469570537925800026}
+  - component: {fileID: 2119259773251690149}
   m_Layer: 0
   m_Name: LevelLoader
   m_TagString: Untagged
@@ -45,7 +46,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levelLoaderUIPrefab: {fileID: 6422157499211820983, guid: e1d50371ec23cb7438ccf0dc76f07e20, type: 3}
-  loadingScreen: {fileID: 0}
   sl: {fileID: 0}
   progressText: {fileID: 0}
   waitTime: 2
@@ -54,5 +54,39 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 7e93acf6a7705104bb4c7b748d4e44b4, type: 3}
   - {fileID: 8300000, guid: 4ba83bbe1e1cbb94c9c67c327b74e963, type: 3}
   - {fileID: 8300000, guid: 4ba83bbe1e1cbb94c9c67c327b74e963, type: 3}
+  _SceneToLoad:
+    _SceneAsset: {fileID: 0}
+    _SceneName: 
   optionsPrefab: {fileID: 5486015543283699352, guid: 6bab25dffb9b4944297c9682a392517f, type: 3}
   optionsMenu: {fileID: 0}
+--- !u!114 &2119259773251690149
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 469570537925800027}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 948eb5c87210e994d9f91c2c25b9a8b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _SceneToLoad:
+  - _SceneAsset: {fileID: 0}
+    _SceneName: 
+  - _SceneAsset: {fileID: 102900000, guid: 522618c5c83123144ade017f4223ec1e, type: 3}
+    _SceneName: Main_Menu
+  - _SceneAsset: {fileID: 102900000, guid: eaa8743234cfd5044ad9dbe000d6b5a4, type: 3}
+    _SceneName: CetusBoss
+  waitTime: 0
+  optionsPrefab: {fileID: 0}
+  optionsMenu: {fileID: 0}
+  selectMenu: {fileID: 0}
+  mainMenu: {fileID: 0}
+  optionsButton: {fileID: 0}
+  musicVolume: {fileID: 0}
+  optionsFirstSelected: {fileID: 0}
+  levelSelectFirst: {fileID: 0}
+  mainMenuButton: {fileID: 0}
+  pauseMenu: {fileID: 2489705490535290615, guid: af5da650d249f2343a2cbed93de16899, type: 3}
+  startGameButton: {fileID: 0}
