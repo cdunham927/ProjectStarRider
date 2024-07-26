@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
+using System;
 
 public class SceneMenuFunctions : SceneSwitcherManager
 {
@@ -74,7 +75,9 @@ public class SceneMenuFunctions : SceneSwitcherManager
     {
         //MusicController.instance.PlaySound();
         Time.timeScale = 1f;
-        StartCoroutine(ToScene());
+        //StartCoroutine(ToScene());
+        StartCoroutine(FadeOutThenSchangeScene());
+
     }
 
 
