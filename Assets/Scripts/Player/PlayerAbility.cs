@@ -8,11 +8,12 @@ public class PlayerAbility : MonoBehaviour
     protected AudioSource AS;
     protected GameManager gm;
 
-    protected float curActiveTime;
-    protected float oneCharge;
+    [HideInInspector]
+    public float curActiveTime;
+    [HideInInspector]
+    public float oneCharge;
     public float maxCharges = 4;
     public float maxImagesTime = 40f;
-    public float uiLerp = 10f;
     public float rechargeSpd = 2.5f;
 
     public GameObject decoy;

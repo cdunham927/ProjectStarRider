@@ -116,10 +116,13 @@ public class PlayerController : MonoBehaviour
     [Header(" Animation controller : ")]
     public Animator anim;
 
+    PlayerAbility abil;
+
     private void Awake()
     {
         bod = GetComponent<Rigidbody>();
         AS = GetComponent<AudioSource>();
+        abil = GetComponent<PlayerAbility>();
 
         //camStartPos = mainCam.transform.position;
         gm = FindObjectOfType<GameManager>();
@@ -369,33 +372,6 @@ public class PlayerController : MonoBehaviour
         hitWall = false;
     }
 
-    //public void AfterImage()
-    //{
-    //    //afterimage spawn sfx
-    //    AS.PlayOneShot(PlayerSfx[2]);
-    //    if (!gm.gameIsPaused && !gm.gameIsOver)
-    //    {
-    //        if (!afterimages[0].activeInHierarchy)
-    //        {
-    //            afterimages[0].SetActive(true);
-    //        }
-    //        else if (!afterimages[1].activeInHierarchy)
-    //        {
-    //            afterimages[1].SetActive(true);
-    //        }
-    //        else if (!afterimages[2].activeInHierarchy)
-    //        {
-    //            afterimages[2].SetActive(true);
-    //        }
-    //        else
-    //        {
-    //            afterimages[3].SetActive(true);
-    //        }
-    //
-    //        curActiveTime -= oneCharge;
-    //    }
-    //}
-
     public void Dashvfx() 
     {
         //Debug.Log("Player Healed");
@@ -438,13 +414,13 @@ public class PlayerController : MonoBehaviour
 
     public void TakeCharge(float amt)
     {
-        GetComponent<PlayerAbility>().TakeCharge(amt);
+        if (abil != null) abil.TakeCharge(amt);
     }
 
     //Restore special gauge
     public void RestoreCharge(float amt = 1)
     {
-        GetComponent<PlayerAbility>().RestoreCharge(amt);
+        if (abil != null) abil.GetComponent<PlayerAbility>().RestoreCharge(amt);
     }
 
     void ResetMaterial()

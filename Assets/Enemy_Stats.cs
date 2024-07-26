@@ -4,39 +4,16 @@ using UnityEngine;
 
 public class Enemy_Stats : MonoBehaviour
 {
-    //Dont use this enemy stats, its out of date
-    //use the scripts from the enemy folder instead
+    //Dont delete this, its used in all the enemy and boss scripts
     //
     //
     //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
+
+
+
     public int MaxHP;
     public int CurrHP;
-    
+
     public Healthbar healthScript;
     public Animator anim;
 
@@ -47,7 +24,7 @@ public class Enemy_Stats : MonoBehaviour
     public float blinkDuration;
     private float blinkTimer;
     */
-    
+
     //public AnimationClip deathClip;
     [Header(" Attached Particle Systems: ")]
     public GameObject deathVFX;
@@ -74,7 +51,7 @@ public class Enemy_Stats : MonoBehaviour
     float blinkTimer;
     SkinnedMeshRenderer skinnedMeshRenderer;
     Player_Stats pStats;
-   
+
     private void Awake()
     {
         pStats = FindObjectOfType<Player_Stats>();
@@ -88,14 +65,14 @@ public class Enemy_Stats : MonoBehaviour
         return CurrHP;
     }
 
-    void OnEnable() 
+    void OnEnable()
     {
         skinnedMeshRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
         spawned = false;
         if (minimapObj != null) minimapObj.SetActive(true);
         CurrHP = MaxHP;
     }
-    
+
     public void Damage(int damageAmount)
     {
         if (anim != null) anim.SetTrigger("Hit");

@@ -5130,6 +5130,7 @@ GameObject:
   - component: {fileID: 4638639762591759978}
   - component: {fileID: 4638639762591759989}
   - component: {fileID: 575024446864579742}
+  - component: {fileID: 5346059250284381248}
   m_Layer: 0
   m_Name: Ship
   m_TagString: Player
@@ -5230,9 +5231,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   explosiveForce: 37500
-  pitchForce: 850
-  rollForce: 850
-  yawForce: 850
+  pitchForce: 790
+  rollForce: 785
+  yawForce: 785
   anim: {fileID: 4638639763867632516}
   deadZoneRadius: 0.01
   spdLerpAmt: 15
@@ -5461,8 +5462,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00d856e96d658974b91fe8c591040379, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  curActiveTime: 0
+  oneCharge: 0
   maxCharges: 4
   maxImagesTime: 40
+  rechargeSpd: 2.5
   decoy: {fileID: 672394538714028356, guid: 6bf31ec77d43dd7489eeac3613f0cda5, type: 3}
   positionToSpawn: {fileID: 4638639762591759983}
   afterimages:
@@ -5470,11 +5474,22 @@ MonoBehaviour:
   - {fileID: 5263319336951590675}
   - {fileID: 5263319335857508279}
   - {fileID: 5263319335199408932}
+--- !u!114 &5346059250284381248
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4638639762591759981}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 621aacfdee0f6014d9f9c96bfeedf074, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   afterimageUI: []
   emptyImage: {fileID: 21300000, guid: 3269d2c507e3be449887c7e3ed25f248, type: 3}
   filledImage: {fileID: 21300000, guid: 3269d2c507e3be449887c7e3ed25f248, type: 3}
   uiLerp: 10
-  rechargeSpd: 2.5
 --- !u!1 &4638639762627291902
 GameObject:
   m_ObjectHideFlags: 0
@@ -16100,15 +16115,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7262275620497145618, guid: 5af8fa4ddd7d50f4eb3349835e040d18, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2390.0938
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7262275620497145618, guid: 5af8fa4ddd7d50f4eb3349835e040d18, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 194.09848
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7262275620497145618, guid: 5af8fa4ddd7d50f4eb3349835e040d18, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 2837.03
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7262275620497145618, guid: 5af8fa4ddd7d50f4eb3349835e040d18, type: 3}
       propertyPath: m_LocalRotation.w
