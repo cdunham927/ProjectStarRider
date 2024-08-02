@@ -376,7 +376,7 @@ public class GameManager : MonoBehaviour
             if (!player.joystick)
             {
                 //Show cursor
-                //Cursor.visible = true;
+                Cursor.visible = true;
             }
             if (controlsText != null) controlsText.SetActive(false);
             //EventSystem.current.SetSelectedGameObject(gameoverButton);
@@ -415,7 +415,7 @@ public class GameManager : MonoBehaviour
             if (!player.joystick)
             {
                 //Show cursor
-                //Cursor.visible = true;
+                Cursor.visible = true;
             }
             if (controlsText != null) controlsText.SetActive(false);
             //EventSystem.current.SetSelectedGameObject(victoryButton);
@@ -498,7 +498,7 @@ public class GameManager : MonoBehaviour
         if (!player.joystick)
         {
             //Show cursor
-            //Cursor.visible = true;
+            Cursor.visible = true;
         }
         if (controlsText != null) controlsText.SetActive(false);
         pauseMenuUI.SetActive(true);
@@ -531,7 +531,7 @@ public class GameManager : MonoBehaviour
         if (!player.joystick)
         {
             //Show cursor
-            //Cursor.visible = true;
+            Cursor.visible = true;
         }
         if (controlsText != null) controlsText.SetActive(false);
         ControllsUI.SetActive(true);

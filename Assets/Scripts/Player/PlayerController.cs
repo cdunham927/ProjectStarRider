@@ -117,12 +117,14 @@ public class PlayerController : MonoBehaviour
     public Animator anim;
 
     PlayerAbility abil;
+    ShipController ship;
 
     private void Awake()
     {
         bod = GetComponent<Rigidbody>();
         AS = GetComponent<AudioSource>();
         abil = GetComponent<PlayerAbility>();
+        ship = GetComponent<ShipController>();
 
         //camStartPos = mainCam.transform.position;
         gm = FindObjectOfType<GameManager>();
@@ -282,24 +284,24 @@ public class PlayerController : MonoBehaviour
 
     public void GetSavedSettings()
     {
-        if (PlayerPrefs.HasKey("ControllerSensitivity")) rotSpd = PlayerPrefs.GetFloat("ControllerSensitivity", rotSpd);
-        if (PlayerPrefs.HasKey("MouseSensitivity")) lookSpd = PlayerPrefs.GetFloat("MouseSensitivity", lookSpd);
-        if (PlayerPrefs.HasKey("Invert")) invertControls = (PlayerPrefs.GetInt("Invert") == 1) ? true : false;
+        if (PlayerPrefs.HasKey("ControllerSensitivity")) ship.controllerLerp = PlayerPrefs.GetFloat("ControllerSensitivity", rotSpd);
+        if (PlayerPrefs.HasKey("MouseSensitivity")) ship.mouseLerp = PlayerPrefs.GetFloat("MouseSensitivity", lookSpd);
+        if (PlayerPrefs.HasKey("Invert")) ship.invertControls = (PlayerPrefs.GetInt("Invert") == 1) ? true : false;
     }
 
     public void GetInvert()
     {
-        if (PlayerPrefs.HasKey("Invert")) invertControls = (PlayerPrefs.GetInt("Invert") == 1) ? true : false;
+        if (PlayerPrefs.HasKey("Invert")) ship.invertControls = (PlayerPrefs.GetInt("Invert") == 1) ? true : false;
     }
 
     public void GetMouseSensitivity()
     {
-        if (PlayerPrefs.HasKey("MouseSensitivity")) lookSpd = PlayerPrefs.GetFloat("MouseSensitivity", lookSpd);
+        if (PlayerPrefs.HasKey("MouseSensitivity")) ship.mouseLerp = PlayerPrefs.GetFloat("MouseSensitivity", lookSpd);
     }
 
     public void GetControllerSensitivity()
     {
-        if (PlayerPrefs.HasKey("ControllerSensitivity")) rotSpd = PlayerPrefs.GetFloat("ControllerSensitivity", rotSpd);
+        if (PlayerPrefs.HasKey("ControllerSensitivity")) ship.controllerLerp = PlayerPrefs.GetFloat("ControllerSensitivity", rotSpd);
     }
 
     public void speedUp(float amt)

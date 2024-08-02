@@ -34,6 +34,8 @@ public class OptionsController : MonoBehaviour
     public Toggle invertToggle;
 
     PlayerController player;
+    ShipController ship;
+
 
     [Space]
     [Header("For graphics settings")]
@@ -66,12 +68,12 @@ public class OptionsController : MonoBehaviour
         soundSlider.value = GetSoundVolume();
 
         //Temps
-        tempMasterSlider.value = GetMasterVolume();
-        tempMusicSlider.value = GetMusicVolume();
-        tempSoundSlider.value = GetSoundVolume();
-        if (PlayerPrefs.HasKey("ControllerSensitivity")) tempControllerSensitivitySlider.value = PlayerPrefs.GetFloat("ControllerSensitivity");
-        if (PlayerPrefs.HasKey("MouseSensitivity")) tempMouseSensitivitySlider.value = PlayerPrefs.GetFloat("MouseSensitivity");
-        if (PlayerPrefs.HasKey("Invert")) tempInvertToggle.isOn = (PlayerPrefs.GetInt("Invert") == 1) ? true : false;
+        //tempMasterSlider.value = GetMasterVolume();
+        //tempMusicSlider.value = GetMusicVolume();
+        //tempSoundSlider.value = GetSoundVolume();
+        //if (PlayerPrefs.HasKey("ControllerSensitivity")) tempControllerSensitivitySlider.value = PlayerPrefs.GetFloat("ControllerSensitivity");
+        //if (PlayerPrefs.HasKey("MouseSensitivity")) tempMouseSensitivitySlider.value = PlayerPrefs.GetFloat("MouseSensitivity");
+        //if (PlayerPrefs.HasKey("Invert")) tempInvertToggle.isOn = (PlayerPrefs.GetInt("Invert") == 1) ? true : false;
 
         if (PlayerPrefs.HasKey("ControllerSensitivity")) controllerSensitivitySlider.value = PlayerPrefs.GetFloat("ControllerSensitivity");
         if (PlayerPrefs.HasKey("MouseSensitivity")) mouseSensitivitySlider.value = PlayerPrefs.GetFloat("MouseSensitivity");

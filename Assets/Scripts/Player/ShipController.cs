@@ -19,8 +19,7 @@ public class ShipController : MonoBehaviour
     Rigidbody bod;
     float pitch, roll, yaw = 0f;
 
-    [SerializeField]
-    float deadZoneRadius = 0.1f;
+    public float deadZoneRadius = 0.1f;
     Vector2 screenCenter => new Vector2(Screen.width * 0.5f, Screen.height * 0.5f);
     private Vector2 mouseDistance;
     //Speed values
@@ -53,6 +52,10 @@ public class ShipController : MonoBehaviour
 
     PlayerController player;
     public float controllerSensitivity;
+    public bool invertControls = false;
+
+    public float controllerLerp;
+    public float mouseLerp;
 
     GameManager cont;
 
@@ -113,7 +116,7 @@ public class ShipController : MonoBehaviour
             if (curDashCools > 0) curDashCools -= Time.deltaTime;
             if (curDashTime > 0) curDashTime -= Time.deltaTime;
 
-            Cursor.visible = true;
+            //Cursor.visible = player.joystick;
             //player.joystick = true;
         }
     }
@@ -123,11 +126,15 @@ public class ShipController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        //Need to lerp to our rotations by the sensitivities in the settings
+        //
+        //
+
         if (player.joystick)
         {
-            aimPos = new Vector2(Screen.width / 2 + (Input.GetAxis("JoystickAxis4") * controllerSensitivity), Screen.height / 2 - (Input.GetAxis("JoystickAxis5") * controllerSensitivity));
+            aimPos = Vector2.Lerp(aimPos, new Vector2(Screen.width / 2 + (Input.GetAxis("JoystickAxis4") * controllerSensitivity), Screen.height / 2 - (Input.GetAxis("JoystickAxis5") * controllerSensitivity)), controllerLerp * Time.fixedDeltaTime);
         }
-        else aimPos = Input.mousePosition;
+        else aimPos = Vector2.Lerp(aimPos, Input.mousePosition, mouseLerp * Time.fixedDeltaTime);
 
         yaw = (aimPos.x - screenCenter.x) / screenCenter.x;
         yaw = (Mathf.Abs(yaw) > deadZoneRadius) ? yaw : 0f;
