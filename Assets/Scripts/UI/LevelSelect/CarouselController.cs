@@ -17,6 +17,13 @@ public class CarouselController : MonoBehaviour
 
     bool switched = false;
 
+    //Menu functions:
+    //Story mode
+        //Select mission
+            //Select pilot
+    //Options
+    //Quit
+
     //Set our first target
     private void Awake()
     {
