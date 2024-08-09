@@ -21,7 +21,6 @@ public class SceneSwitcherManager : MonoBehaviour
     private Canvas canvas;
     public Animator SceneTransitionAnimator;
     public AnimationClip TranstionClip;
-    
 
     public static SceneSwitcherManager instance;
     [SerializeField] private SceneField[] _SceneToLoad; //Array of Scenes to drag into , use GUI
