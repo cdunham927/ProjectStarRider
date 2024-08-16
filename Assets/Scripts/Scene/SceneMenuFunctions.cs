@@ -64,8 +64,11 @@ public class SceneMenuFunctions : SceneSwitcherManager
         //StartCoroutine(ToTutorialScene());
     }
 
-    public void GoToCetus()
+    public void GoToCetus(int character = 0)
     {
+        //Save character selected
+        PlayerPrefs.SetInt("CharacterSelect", character);
+
         //MusicController.instance.PlaySound();
         Time.timeScale = 1f;
         StartCoroutine(ToCetusBossScene());

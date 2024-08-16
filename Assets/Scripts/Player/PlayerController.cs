@@ -45,16 +45,15 @@ public class PlayerController : MonoBehaviour
     public GameObject followTarget;
 
     //Knockback when hitting walls/obstacles
-    private Rigidbody bod;
+    protected Rigidbody bod;
     public float pushBack = 10f;
-    bool hitWall = false;
+    protected bool hitWall = false;
     [Range(0, 0.5f)]
     public float timeToMove = 0.225f;
 
-    Player_Stats stats;
+    protected Player_Stats stats;
     public int collisionDamage = 0;
     public int spikeDamage = 0;
-    GameManager cont;
     
     [SerializeField]
     private float KnockBackForce  = 2f;
@@ -64,9 +63,9 @@ public class PlayerController : MonoBehaviour
     //Vector3 newVelX;
     //Vector3 rotation = Vector3.zero;
 
-    bool usingAxis = false;
-    float vert, hor, vert2, hor2;
-    float rotAxis;
+    protected bool usingAxis = false;
+    protected float vert, hor, vert2, hor2;
+    protected float rotAxis;
 
     //Dash blink vfx
     [Header("Blink vfx Settings")]
@@ -81,14 +80,14 @@ public class PlayerController : MonoBehaviour
     public float meshDestoryDelay = 0.5f;
     public Transform positionToSpawn;
 
-    private SkinnedMeshRenderer[] skinnedMeshRenderers;
+    protected SkinnedMeshRenderer[] skinnedMeshRenderers;
     public Material mat;
-    
-    GameObject dashPS;
+
+    protected GameObject dashPS;
     [Header(" Player Vfx Settings")]
     public GameObject DashVfx;
-    
-    GameObject SpeedlinesPS;
+
+    protected GameObject SpeedlinesPS;
     public GameObject SpeedLineVfx;
 
     [HideInInspector]
@@ -99,7 +98,7 @@ public class PlayerController : MonoBehaviour
 
     public GameObject Barrier;
 
-    GameManager gm;
+    protected GameManager gm;
 
     [Header("Audio Clips: ")]
     public AudioClip [] PlayerSfx;
@@ -107,7 +106,7 @@ public class PlayerController : MonoBehaviour
     public AudioSource AS;
 
     public CinemachineTargetGroup cineGroup;
-    bool lockedon;
+    protected bool lockedon;
     public GameObject closestTarget;
     public LayerMask enemyMask;
     public GameObject lockonCastPos;
@@ -116,8 +115,10 @@ public class PlayerController : MonoBehaviour
     [Header(" Animation controller : ")]
     public Animator anim;
 
-    PlayerAbility abil;
-    ShipController ship;
+    protected PlayerAbility abil;
+    protected ShipController ship;
+
+    public Transform camFollow;
 
     private void Awake()
     {
@@ -155,16 +156,16 @@ public class PlayerController : MonoBehaviour
         SpeedlinesPS.SetActive(false);
     }
 
-    Vector3 dashDir;
-    float ltaxis;
-    float rtaxis;
-    float dhaxis;
-    float dvaxis;
-    float hAxis;
-    float vAxis;
-    float aAxis;
-    float htAxis;
-    float vtAxis;
+    protected Vector3 dashDir;
+    protected float ltaxis;
+    protected float rtaxis;
+    protected float dhaxis;
+    protected float dvaxis;
+    protected float hAxis;
+    protected float vAxis;
+    protected float aAxis;
+    protected float htAxis;
+    protected float vtAxis;
 
     void Update()
     {
@@ -482,5 +483,6 @@ public class PlayerController : MonoBehaviour
         rb.AddForce(knockbackDirection * KnockBackForce, ForceMode.Impulse);
         //ChangeAnimationState(StarRiderShip_Spin);
     }
+
     public virtual void Special() { }
 }

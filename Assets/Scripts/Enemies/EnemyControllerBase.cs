@@ -121,6 +121,7 @@ public class EnemyControllerBase : MonoBehaviour
     //[SerializeField] Transform pointA;
     //[SerializeField] Transform pointB;
     //public bool pathfindsToPlayer = false;
+    CinemachineVirtualCamera cam;
 
     private void Start()
     {
@@ -130,7 +131,8 @@ public class EnemyControllerBase : MonoBehaviour
   
     protected virtual void Awake()
     {
-        if (perlin == null) perlin = FindObjectOfType<CinemachineVirtualCamera>().GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
+        cam = FindObjectOfType<CinemachineVirtualCamera>();
+        if (perlin == null && cam != null) perlin = cam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
         anim = GetComponentInChildren<Animator>();
         //Get original color of material for damage flashes
         if (skinnedMeshRenderer == null) skinnedMeshRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
@@ -332,8 +334,8 @@ public class EnemyControllerBase : MonoBehaviour
     private void OnDisable()
     {
         Debug.Log("Enemy dead in enemycontrollerbase");
-        cont.DeadEnemy();
-        player.RestoreCharge();
+        if (cont != null) cont.DeadEnemy();
+        if (player != null) player.RestoreCharge();
         CancelInvoke();
     }
 
