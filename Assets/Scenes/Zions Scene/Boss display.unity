@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 0.4615489, g: 0.24247932, b: 0.8503279, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -63191,6 +63191,9 @@ MonoBehaviour:
   dashTime: 0
   curDashTime: 0
   controllerSensitivity: 0
+  invertControls: 0
+  controllerLerp: 0
+  mouseLerp: 0
   aimPos: {x: 0, y: 0}
 --- !u!23 &6645497316951301551
 MeshRenderer:
@@ -64418,7 +64421,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 12}
+  m_AnchoredPosition: {x: 0, y: -0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!23 &7048743582002061347
@@ -65491,17 +65494,6 @@ MonoBehaviour:
   lookSpd: 1.5
   defLookSpd: 1.5
   defRotSpd: 80
-  afterimages:
-  - {fileID: 5723775307260815873}
-  - {fileID: 8247853833465353621}
-  - {fileID: 5309146738973611686}
-  - {fileID: 1875148213389154020}
-  maxImagesTime: 90
-  afterimageUI: []
-  emptyImage: {fileID: 21300000, guid: 3269d2c507e3be449887c7e3ed25f248, type: 3}
-  filledImage: {fileID: 21300000, guid: 3269d2c507e3be449887c7e3ed25f248, type: 3}
-  uiLerp: 10
-  rechargeSpd: 1
   invertControls: 0
   defInvert: 0
   cinCam: {fileID: 7262275620875753330}
@@ -65513,7 +65505,8 @@ MonoBehaviour:
   collisionDamage: 1
   spikeDamage: 3
   KnockBackForce: 2
-  decoy: {fileID: 672394538714028356, guid: 6bf31ec77d43dd7489eeac3613f0cda5, type: 3}
+  blinkDuration: 0.3
+  blinkIntensity: 2
   TrailTime: 2
   meshRefreshRate: 0.1
   meshDestoryDelay: 0.5
@@ -65521,6 +65514,7 @@ MonoBehaviour:
   mat: {fileID: 2100000, guid: f18fe1169c46b2a46ae69874ab81131f, type: 2}
   DashVfx: {fileID: 1902385197283738218}
   SpeedLineVfx: {fileID: 731245311065799756}
+  meshRenderer: {fileID: 0}
   sys: {fileID: 731245311065799755}
   sysEmit: 1
   Barrier: {fileID: 0}
@@ -65528,6 +65522,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: d1ad9616bbfc2454bb1720bfaf872246, type: 3}
   - {fileID: 8300000, guid: d1ad9616bbfc2454bb1720bfaf872246, type: 3}
   - {fileID: 8300000, guid: d1ad9616bbfc2454bb1720bfaf872246, type: 3}
+  AS: {fileID: 0}
   cineGroup: {fileID: 1664592963}
   closestTarget: {fileID: 0}
   enemyMask:
