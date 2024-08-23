@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using PixelCrushers.DialogueSystem;
 
 public class TextTrigger : MonoBehaviour
 {
@@ -74,8 +73,6 @@ public class TextTrigger : MonoBehaviour
 
     IEnumerator ShowText()
     {
-        //DialogueManager.ShowAlert("Gained 50 XP");
-
         yield return new WaitForSeconds(enableClip.length);
 
         for (int i = 0; i < textText.Length; i++)
