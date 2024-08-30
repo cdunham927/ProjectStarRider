@@ -138,6 +138,8 @@ public class PlayerShooting : MonoBehaviour
         //bul.transform.LookAt(aimRay.direction);
         bul.transform.rotation = Quaternion.LookRotation(aimRay.direction, Vector3.up);
 
+        //bul.transform.rotation = player.transform.rotation;
+
         bul.SetActive(true);
        
         //Set bullet damage
