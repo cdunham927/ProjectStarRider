@@ -45,6 +45,7 @@ public class ShipController : MonoBehaviour
     public float curDashTime;
 
     bool dashing = false;
+    bool sideDashing = false;
     float curDashCools;
 
     //Input
@@ -98,20 +99,39 @@ public class ShipController : MonoBehaviour
             //speed = Mathf.Lerp(speed, lerpToSpd, Time.deltaTime * spdLerpAmt); /// orginal equation dont delete
             speed = Mathf.Lerp(speed, lerpToSpd, t);
 
-            if (Input.GetButtonDown("Fire3") && curDashCools <= 0)
+            if (Input.GetButtonDown("Fire3") && curDashCools <= 0 && !sideDashing)
             {
                 anim.SetTrigger("Dash");
                 curDashCools = dashCooldown;
                 dashing = true;
             }
 
-            if (vert > 0)
+            if (Input.GetButtonDown("SideDash") && curDashCools <= 0 && !dashing)
             {
-                if (curDashTime > 0) lerpToSpd = superSpd;
-                else lerpToSpd = highSpd;
+                //Replace with side dash animation
+                anim.SetTrigger("Dash");
+                curDashCools = dashCooldown;
+                sideDashing = true;
             }
-            else if (vert < 0) lerpToSpd = slowSpd;
-            else lerpToSpd = regSpd;
+
+
+            if (Input.GetButton("Boost"))
+            {
+                lerpToSpd = superSpd;
+            }
+            else
+            {
+                //lerpToSpd = regSpd;
+
+                if (vert > 0)
+                {
+                    if (curDashTime > 0) lerpToSpd = superSpd;
+                    else lerpToSpd = highSpd;
+                }
+                else if (vert < 0) lerpToSpd = slowSpd;
+                else lerpToSpd = regSpd;
+
+            }
 
             if (curDashCools > 0) curDashCools -= Time.deltaTime;
             if (curDashTime > 0) curDashTime -= Time.deltaTime;
@@ -166,10 +186,16 @@ public class ShipController : MonoBehaviour
 
         bod.AddForce(transform.forward * (speed * Time.fixedDeltaTime));
 
-        if (dashing)
+        if (dashing && !sideDashing)
         {
             bod.AddForce(transform.forward * (explosiveForce * Time.fixedDeltaTime), ForceMode.Impulse);
             dashing = false;
+        }
+
+        if (sideDashing && !dashing)
+        {
+            bod.AddForce(transform.right * (explosiveForce * Time.fixedDeltaTime), ForceMode.Impulse);
+            sideDashing = false;
         }
 
         Vector3 playerRotation = transform.rotation.eulerAngles;
