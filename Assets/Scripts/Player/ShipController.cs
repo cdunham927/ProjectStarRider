@@ -47,6 +47,7 @@ public class ShipController : MonoBehaviour
     bool dashing = false;
     bool sideDashing = false;
     float curDashCools;
+    public int dashDir = 1;
 
     //Input
     float vert, hor, vert2, hor2;
@@ -106,9 +107,19 @@ public class ShipController : MonoBehaviour
                 dashing = true;
             }
 
-            if (Input.GetButtonDown("SideDash") && curDashCools <= 0 && !dashing)
+            if (Input.GetButtonDown("SideDashLeft") && curDashCools <= 0 && !dashing)
             {
                 //Replace with side dash animation
+                dashDir = -1;
+                anim.SetTrigger("Dash");
+                curDashCools = dashCooldown;
+                sideDashing = true;
+            }
+
+            if (Input.GetButtonDown("SideDashRight") && curDashCools <= 0 && !dashing)
+            {
+                //Replace with side dash animation
+                dashDir = 1;
                 anim.SetTrigger("Dash");
                 curDashCools = dashCooldown;
                 sideDashing = true;
@@ -194,7 +205,7 @@ public class ShipController : MonoBehaviour
 
         if (sideDashing && !dashing)
         {
-            bod.AddForce(transform.right * (explosiveForce * Time.fixedDeltaTime), ForceMode.Impulse);
+            bod.AddForce(transform.right * dashDir * (explosiveForce * Time.fixedDeltaTime), ForceMode.Impulse);
             sideDashing = false;
         }
 
