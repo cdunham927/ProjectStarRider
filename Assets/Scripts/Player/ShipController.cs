@@ -60,13 +60,13 @@ public class ShipController : MonoBehaviour
     public float mouseLerp;
 
     GameManager cont;
+    PlayerAbility ability;
 
-    public void Start()
-    {
-       
-        
-    }
-
+    //Variables for half turn
+    public float halfTurnDegrees = 180f;
+    float curDegrees;
+    public float halfTurnRotSpd = 45f;
+    bool turning = false;
 
     private void Awake()
     {
@@ -74,6 +74,7 @@ public class ShipController : MonoBehaviour
         //anim = GetComponentInChildren<Animator>();
         bod = GetComponent<Rigidbody>();
         player = GetComponent<PlayerController>();
+        ability = GetComponent<PlayerAbility>();
 
         DefaultRegSpd = regSpd;  //stored default vlaues for player speed
         DefaultHighSpd = highSpd; //stored default vlaues for player speed
@@ -82,8 +83,6 @@ public class ShipController : MonoBehaviour
     private void Update()
     {
         //new stuff testing
-      
-
         if (!cont.gameIsPaused)
         {
             //Get inputs
@@ -100,8 +99,13 @@ public class ShipController : MonoBehaviour
             //speed = Mathf.Lerp(speed, lerpToSpd, Time.deltaTime * spdLerpAmt); /// orginal equation dont delete
             speed = Mathf.Lerp(speed, lerpToSpd, t);
 
-            if (Input.GetButtonDown("Fire3") && curDashCools <= 0 && !sideDashing)
+            if (Input.GetButtonDown("Dash") && curDashCools <= 0 && !sideDashing)
             {
+                if (Input.GetButton("Fire4")) 
+                {
+                    ability.DodgeAbility();
+                }
+
                 anim.SetTrigger("Dash");
                 curDashCools = dashCooldown;
                 dashing = true;
@@ -109,6 +113,11 @@ public class ShipController : MonoBehaviour
 
             if (Input.GetButtonDown("SideDashLeft") && curDashCools <= 0 && !dashing)
             {
+                if (Input.GetButton("Fire4"))
+                {
+                    ability.DodgeAbility();
+                }
+
                 //Replace with side dash animation
                 dashDir = -1;
                 anim.SetTrigger("Dash");
@@ -118,6 +127,11 @@ public class ShipController : MonoBehaviour
 
             if (Input.GetButtonDown("SideDashRight") && curDashCools <= 0 && !dashing)
             {
+                if (Input.GetButton("Fire4"))
+                {
+                    ability.DodgeAbility();
+                }
+
                 //Replace with side dash animation
                 dashDir = 1;
                 anim.SetTrigger("Dash");
@@ -125,9 +139,17 @@ public class ShipController : MonoBehaviour
                 sideDashing = true;
             }
 
-
-            if (Input.GetButton("Boost"))
+            //Turning 180 degrees inputs
+            //
+            //
+            if (Input.GetButton("HalfTurn") && !turning)
             {
+
+            }
+
+            if (Input.GetButton("MouseBoost") || Input.GetAxis("ControllerBoost") > 0)
+            {
+                //print("Boosting");
                 lerpToSpd = superSpd;
             }
             else
@@ -150,6 +172,16 @@ public class ShipController : MonoBehaviour
             //Cursor.visible = player.joystick;
             //player.joystick = true;
         }
+    }
+
+    //Coroutine for half turning
+    //
+    //
+    public IEnumerator HalfTurn()
+    {
+
+
+        yield return null;
     }
 
     [HideInInspector]

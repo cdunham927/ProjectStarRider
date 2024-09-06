@@ -41,10 +41,10 @@ public class PlayerAbility : MonoBehaviour
             UseAbility();
         }
 
-        if (Input.GetButtonDown("Fire4") && (curActiveTime > (oneCharge)))
-        {
-            DodgeAbility();
-        }
+        //if (Input.GetButtonDown("Fire4") && (curActiveTime > (oneCharge)))
+        //{
+        //    DodgeAbility();
+        //}
 
         //Editor
         if (Application.isEditor && Input.GetKeyDown(KeyCode.Alpha6))
@@ -75,13 +75,16 @@ public class PlayerAbility : MonoBehaviour
 
     public void DodgeAbility()
     {
-        if (cont.meshRenderer != null) cont.meshRenderer.material.color = Color.yellow * cont.blinkIntensity;
-        Invoke("ResetMaterial", cont.blinkDuration);
+        if (curActiveTime > (oneCharge))
+        {
+            if (cont.meshRenderer != null) cont.meshRenderer.material.color = Color.yellow * cont.blinkIntensity;
+            Invoke("ResetMaterial", cont.blinkDuration);
 
-        Instantiate(decoy, positionToSpawn.transform.position, transform.rotation);
+            Instantiate(decoy, positionToSpawn.transform.position, transform.rotation);
 
-        curActiveTime -= oneCharge;
-        //decoy sfx
-        AS.PlayOneShot(cont.PlayerSfx[0]);
+            curActiveTime -= oneCharge;
+            //decoy sfx
+            AS.PlayOneShot(cont.PlayerSfx[0]);
+        }
     }
 }
