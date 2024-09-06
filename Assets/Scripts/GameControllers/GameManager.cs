@@ -155,10 +155,11 @@ public class GameManager : MonoBehaviour
         cinCam = player.GetComponentInChildren<CinemachineVirtualCamera>();
         if (cinCam == null) cinCam = FindObjectOfType<CinemachineVirtualCamera>();
 
-        cinCam.Follow = player.camFollow;
-        cinCam.LookAt = camGroup.transform;
-        camGroup.AddMember(player.transform, 1, 10);
-        camGroup.AddMember(player.camFollow, 1.5f, 1);
+        //Cinemachine camera look at stuff
+        //cinCam.Follow = player.camFollow;
+        //cinCam.LookAt = camGroup.transform;
+        //camGroup.AddMember(player.transform, 1, 10);
+        //camGroup.AddMember(player.camFollow, 1.5f, 1);
 
 
         //allGameObjects = FindObjectsOfType<GameObject>();
