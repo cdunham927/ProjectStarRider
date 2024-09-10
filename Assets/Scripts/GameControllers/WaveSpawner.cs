@@ -34,6 +34,8 @@ public class WaveSpawner : MonoBehaviour
     public int[] enemiesPerWave;
     public GameObject[] enemyTypes;
 
+    public bool triggered = false;
+
     private void Awake()
     {
         player = FindObjectOfType<PlayerController>();
@@ -48,22 +50,23 @@ public class WaveSpawner : MonoBehaviour
     {
         if (player == null) player = FindObjectOfType<PlayerController>();
 
-        if (player != null) { 
-        if (curEnemies <= 0 && curWave < numWaves)
-        {
-            if (spawnAroundPlayer)
+        if (player != null && triggered) 
+        { 
+            if (curEnemies <= 0 && curWave < numWaves)
             {
-                curEnemies = enemiesPerWave[curWave];
-                for (int i = 0; i < curEnemies; i++)
+                if (spawnAroundPlayer)
                 {
-                    //Spawn randomly in radius around player
-                    //Vector3 spawnPos = (player.transform.position * minSpawnRadius) + (Random.insideUnitSphere * Random.Range(0, maxSpawnRadius));
-                    Vector3 spawnPos = player.transform.position + (Random.insideUnitSphere * Random.Range(0, maxSpawnRadius));
-                    GameObject e = enemyTypes[Random.Range(0, enemyTypes.Length)];
-                    Instantiate(e, spawnPos, Quaternion.identity);
+                    curEnemies = enemiesPerWave[curWave];
+                    for (int i = 0; i < curEnemies; i++)
+                    {
+                        //Spawn randomly in radius around player
+                        //Vector3 spawnPos = (player.transform.position * minSpawnRadius) + (Random.insideUnitSphere * Random.Range(0, maxSpawnRadius));
+                        Vector3 spawnPos = player.transform.position + (Random.insideUnitSphere * Random.Range(0, maxSpawnRadius));
+                        GameObject e = enemyTypes[Random.Range(0, enemyTypes.Length)];
+                        Instantiate(e, spawnPos, Quaternion.identity);
+                    }
+                    curWave++;
                 }
-                curWave++;
-            }
 
                 if (!spawnAroundPlayer)
                 {
@@ -121,5 +124,13 @@ public class WaveSpawner : MonoBehaviour
             cont.Victory();
         }
         Debug.Log("Dead enemy: Remaining - " + curEnemies.ToString());
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            triggered = true;
+        }
     }
 }
