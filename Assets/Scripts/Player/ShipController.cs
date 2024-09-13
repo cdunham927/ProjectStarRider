@@ -209,8 +209,8 @@ public class ShipController : MonoBehaviour
         {
             aimPos = Vector2.Lerp(aimPos, new Vector2(Screen.width / 2 + (Input.GetAxis("JoystickAxis4") * controllerSensitivity), Screen.height / 2 - (Input.GetAxis("JoystickAxis5") * controllerSensitivity)), controllerLerp * Time.fixedDeltaTime);
         }
-        //else aimPos = Vector2.Lerp(aimPos, new Vector2(Screen.width / 2 + (Input.mousePosition.x), Screen.height / 2 - (Input.mousePosition.y)), mouseLerp * Time.fixedDeltaTime);
-        else aimPos = Vector2.Lerp(aimPos, Input.mousePosition, mouseLerp * Time.fixedDeltaTime);
+        else aimPos = Vector2.Lerp(aimPos, new Vector2(Screen.width / 2 + (Input.mousePosition.x), Screen.height / 2 - (Input.mousePosition.y)), mouseLerp * Time.fixedDeltaTime);
+        //else aimPos = Vector2.Lerp(aimPos, Input.mousePosition, mouseLerp * Time.fixedDeltaTime);
 
         yaw = (aimPos.x - screenCenter.x) / screenCenter.x;
         yaw = (Mathf.Abs(yaw) > deadZoneRadius) ? yaw : 0f;
