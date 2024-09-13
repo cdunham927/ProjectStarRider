@@ -285,24 +285,36 @@ public class PlayerController : MonoBehaviour
 
     public void GetSavedSettings()
     {
-        if (PlayerPrefs.HasKey("ControllerSensitivity")) ship.controllerLerp = PlayerPrefs.GetFloat("ControllerSensitivity", rotSpd);
-        if (PlayerPrefs.HasKey("MouseSensitivity")) ship.mouseLerp = PlayerPrefs.GetFloat("MouseSensitivity", lookSpd);
-        if (PlayerPrefs.HasKey("Invert")) ship.invertControls = (PlayerPrefs.GetInt("Invert") == 1) ? true : false;
+        if (ship != null)
+        {
+            if (PlayerPrefs.HasKey("ControllerSensitivity")) ship.controllerLerp = PlayerPrefs.GetFloat("ControllerSensitivity", rotSpd);
+            if (PlayerPrefs.HasKey("MouseSensitivity")) ship.mouseLerp = PlayerPrefs.GetFloat("MouseSensitivity", lookSpd);
+            if (PlayerPrefs.HasKey("Invert")) ship.invertControls = (PlayerPrefs.GetInt("Invert") == 1) ? true : false;
+        }
     }
 
     public void GetInvert()
     {
-        if (PlayerPrefs.HasKey("Invert")) ship.invertControls = (PlayerPrefs.GetInt("Invert") == 1) ? true : false;
+        if (ship != null)
+        {
+            if (PlayerPrefs.HasKey("Invert")) ship.invertControls = (PlayerPrefs.GetInt("Invert") == 1) ? true : false;
+        }
     }
 
     public void GetMouseSensitivity()
     {
-        if (PlayerPrefs.HasKey("MouseSensitivity")) ship.mouseLerp = PlayerPrefs.GetFloat("MouseSensitivity", lookSpd);
+        if (ship != null)
+        {
+            if (PlayerPrefs.HasKey("MouseSensitivity")) ship.mouseLerp = PlayerPrefs.GetFloat("MouseSensitivity", lookSpd);
+        }
     }
 
     public void GetControllerSensitivity()
     {
-        if (PlayerPrefs.HasKey("ControllerSensitivity")) ship.controllerLerp = PlayerPrefs.GetFloat("ControllerSensitivity", rotSpd);
+        if (ship != null)
+        {
+            if (PlayerPrefs.HasKey("ControllerSensitivity")) ship.controllerLerp = PlayerPrefs.GetFloat("ControllerSensitivity", rotSpd);
+        }
     }
 
     public void speedUp(float amt)
