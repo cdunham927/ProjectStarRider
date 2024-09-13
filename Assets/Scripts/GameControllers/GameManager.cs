@@ -154,12 +154,15 @@ public class GameManager : MonoBehaviour
         {
             if (PlayerPrefs.HasKey("CharacterSelect"))
                 player = Instantiate(CharacterPrefabs[PlayerPrefs.GetInt("CharacterSelect")]).GetComponent<PlayerController>();
-            if (player != null)
+            if (player == null)
                 player = Instantiate(CharacterPrefabs[0]).GetComponent<PlayerController>();
         }
 
-        cinCam = player.GetComponentInChildren<CinemachineVirtualCamera>();
-        if (cinCam == null) cinCam = FindObjectOfType<CinemachineVirtualCamera>();
+        if (player != null)
+        {
+            cinCam = player.GetComponentInChildren<CinemachineVirtualCamera>();
+            if (cinCam == null) cinCam = FindObjectOfType<CinemachineVirtualCamera>();
+        }
 
         //Cinemachine camera look at stuff
         //cinCam.Follow = player.camFollow;
@@ -261,8 +264,11 @@ public class GameManager : MonoBehaviour
 
     private void OnDisable()
     {
-        PlayerPrefs.SetInt("Joystick", (player.joystick == false) ? 0 : 1);
-        PlayerPrefs.Save();
+        if (player != null)
+        {
+            PlayerPrefs.SetInt("Joystick", (player.joystick == false) ? 0 : 1);
+            PlayerPrefs.Save();
+        }
     }
 
     public void DeadEnemy()
@@ -316,7 +322,7 @@ public class GameManager : MonoBehaviour
             if (gameIsPaused && !optionsMenu.activeInHierarchy)
             {
                 if (cursor != null) cursorImage.enabled = true;
-                player.UnfreezeRotation();
+                if (player != null) player.UnfreezeRotation();
                 Resume();
             }
             else if (!gameIsPaused && !optionsMenu.activeInHierarchy) {
@@ -324,7 +330,7 @@ public class GameManager : MonoBehaviour
                 EventSystem.current.SetSelectedGameObject(null);
                 EventSystem.current.SetSelectedGameObject(scene.optionsFirstSelected);
                 if (cursor != null) cursorImage.enabled = false;
-                player.FreezeRotation();
+                if (player != null) player.FreezeRotation();
                 Pause();
             }
             else
@@ -523,7 +529,7 @@ public class GameManager : MonoBehaviour
         optionsMenu.SetActive(false);
         ControllsUI.SetActive(false);
         //If player is using keyboard, show the mouse
-        if (!player.joystick)
+        if (player != null && !player.joystick)
         {
             //Show cursor
             Cursor.visible = true;
@@ -594,7 +600,7 @@ public class GameManager : MonoBehaviour
         pauseMenuUI.SetActive(false);
         Time.timeScale = 1f;
         gameIsPaused = false;
-        player.UnfreezeRotation();
+        if (player != null) player.UnfreezeRotation();
 
         //Disable non-gameover ui
         foreach (GameObject o in nonMenuObjects)
