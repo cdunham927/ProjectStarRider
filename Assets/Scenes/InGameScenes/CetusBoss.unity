@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.4615489, g: 0.24247932, b: 0.8503279, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -7895,6 +7895,11 @@ GameObject:
 --- !u!95 &969850882 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 4640306360401318995, guid: b3bdcf6ad6839414db7ff05e34850eda, type: 3}
+  m_PrefabInstance: {fileID: 969850878}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &969850883 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6154660521567802399, guid: b3bdcf6ad6839414db7ff05e34850eda, type: 3}
   m_PrefabInstance: {fileID: 969850878}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &979989539
@@ -18796,15 +18801,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 839120014534578350, guid: d07c4c6d9cfc41d478e128b6e2b52985, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2360.9778
+      value: 1326.4216
       objectReference: {fileID: 0}
     - target: {fileID: 839120014534578350, guid: d07c4c6d9cfc41d478e128b6e2b52985, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 196.53111
+      value: 140.317
       objectReference: {fileID: 0}
     - target: {fileID: 839120014534578350, guid: d07c4c6d9cfc41d478e128b6e2b52985, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 2839.1
+      value: 2863.9487
       objectReference: {fileID: 0}
     - target: {fileID: 839120014534578350, guid: d07c4c6d9cfc41d478e128b6e2b52985, type: 3}
       propertyPath: m_LocalRotation.w
@@ -18869,7 +18874,7 @@ PrefabInstance:
     - target: {fileID: 839120014534578353, guid: d07c4c6d9cfc41d478e128b6e2b52985, type: 3}
       propertyPath: m_Targets.Array.data[1].target
       value: 
-      objectReference: {fileID: 1794914553}
+      objectReference: {fileID: 969850883}
     - target: {fileID: 839120014534578353, guid: d07c4c6d9cfc41d478e128b6e2b52985, type: 3}
       propertyPath: m_Targets.Array.data[1].weight
       value: 1.25
@@ -37933,6 +37938,7 @@ MonoBehaviour:
   dashCooldown: 0.5
   dashTime: 0
   curDashTime: 0
+  dashDir: 1
   controllerSensitivity: 0
   invertControls: 0
   controllerLerp: 0

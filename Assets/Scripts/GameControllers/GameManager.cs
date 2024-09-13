@@ -138,7 +138,6 @@ public class GameManager : MonoBehaviour
     Image cursorImage;
 
     //Tells us which character to spawn in when a level starts
-    public bool spawnPlayer = false;
     public GameObject[] CharacterPrefabs;
     public CinemachineVirtualCamera cinCam;
     public CinemachineTargetGroup camGroup;
@@ -150,11 +149,10 @@ public class GameManager : MonoBehaviour
 
         //Spawn in player
         //Might have to have reference to a spawn point for the player to go to
-        if (spawnPlayer)
-        {
-            if (PlayerPrefs.HasKey("CharacterSelect")) player = Instantiate(CharacterPrefabs[PlayerPrefs.GetInt("CharacterSelect")]).GetComponent<PlayerController>();
-            else player = Instantiate(CharacterPrefabs[0]).GetComponent<PlayerController>();
-        }
+        if (PlayerPrefs.HasKey("CharacterSelect"))
+             player = Instantiate(CharacterPrefabs[PlayerPrefs.GetInt("CharacterSelect")]).GetComponent<PlayerController>();
+        if(player != null)
+            player = Instantiate(CharacterPrefabs[0]).GetComponent<PlayerController>();
 
         cinCam = player.GetComponentInChildren<CinemachineVirtualCamera>();
         if (cinCam == null) cinCam = FindObjectOfType<CinemachineVirtualCamera>();
@@ -374,7 +372,7 @@ public class GameManager : MonoBehaviour
                 GameOver();
             }
 
-            //if (Input.GetKeyDown(KeyCode.V)) Victory();
+            if (Input.GetKeyDown(KeyCode.V)) Victory();
         }
     }
 
