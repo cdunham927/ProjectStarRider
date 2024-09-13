@@ -146,7 +146,7 @@ public class ShipController : MonoBehaviour
             {
                 turning = true;
                 Invoke("ResetHalfTurn", 2f);
-                StartCoroutine("HalfTurn");
+                //StartCoroutine("HalfTurn");
             }
 
             if (Input.GetButton("MouseBoost") || Input.GetAxis("ControllerBoost") > 0)
@@ -184,17 +184,17 @@ public class ShipController : MonoBehaviour
     //Coroutine for half turning
     //
     //
-    public IEnumerator HalfTurn()
-    {
-        float startDeg = 0;
-        while(startDeg < halfTurnDegrees)
-        {
-            startDeg += halfTurnRotSpd * Time.deltaTime;
-            transform.RotateAround(transform.position, Vector3.up, startDeg);
-        }
-
-        yield return null;
-    }
+    //public IEnumerator HalfTurn()
+    //{
+    //    float startDeg = 0;
+    //    while(startDeg < halfTurnDegrees)
+    //    {
+    //        startDeg += halfTurnRotSpd * Time.deltaTime;
+    //        transform.RotateAround(transform.position, Vector3.up, startDeg);
+    //    }
+    //
+    //    yield return null;
+    //}
 
     [HideInInspector]
     public Vector2 aimPos;
