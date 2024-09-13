@@ -142,9 +142,11 @@ public class ShipController : MonoBehaviour
             //Turning 180 degrees inputs
             //
             //
-            if (Input.GetButton("HalfTurn") && !turning)
+            if (Input.GetButtonDown("HalfTurn") && !turning)
             {
-
+                turning = true;
+                Invoke("ResetHalfTurn", 2f);
+                StartCoroutine("HalfTurn");
             }
 
             if (Input.GetButton("MouseBoost") || Input.GetAxis("ControllerBoost") > 0)
@@ -174,12 +176,22 @@ public class ShipController : MonoBehaviour
         }
     }
 
+    void ResetHalfTurn()
+    {
+        turning = false;
+    }
+
     //Coroutine for half turning
     //
     //
     public IEnumerator HalfTurn()
     {
-
+        float startDeg = 0;
+        while(startDeg < halfTurnDegrees)
+        {
+            startDeg += halfTurnRotSpd * Time.deltaTime;
+            transform.RotateAround(transform.position, Vector3.up, startDeg);
+        }
 
         yield return null;
     }
@@ -197,7 +209,8 @@ public class ShipController : MonoBehaviour
         {
             aimPos = Vector2.Lerp(aimPos, new Vector2(Screen.width / 2 + (Input.GetAxis("JoystickAxis4") * controllerSensitivity), Screen.height / 2 - (Input.GetAxis("JoystickAxis5") * controllerSensitivity)), controllerLerp * Time.fixedDeltaTime);
         }
-        else aimPos = Vector2.Lerp(aimPos, Input.mousePosition, mouseLerp * Time.fixedDeltaTime);
+        else aimPos = Vector2.Lerp(aimPos, new Vector2(Screen.width / 2 + (Input.mousePosition.x), Screen.height / 2 - (Input.mousePosition.y)), mouseLerp * Time.fixedDeltaTime);
+        //else aimPos = Vector2.Lerp(aimPos, Input.mousePosition, mouseLerp * Time.fixedDeltaTime);
 
         yaw = (aimPos.x - screenCenter.x) / screenCenter.x;
         yaw = (Mathf.Abs(yaw) > deadZoneRadius) ? yaw : 0f;
