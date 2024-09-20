@@ -20,6 +20,7 @@ public class WaveSpawner : MonoBehaviour
     //Decrement this when an enemy dies
     int curEnemies;
     public TMP_Text waveEnemiesText;
+    public TMP_Text waveEnemiesText2;
 
     [HideInInspector]
     public string curWaveString;
@@ -43,7 +44,8 @@ public class WaveSpawner : MonoBehaviour
         curWave = 0;
         curEnemies = 0;
 
-        waveEnemiesText = GameObject.FindGameObjectWithTag("WaveText").GetComponent<TMP_Text>();
+        //if (waveEnemiesText == null) waveEnemiesText = GameObject.FindGameObjectWithTag("WaveText").GetComponent<TMP_Text>();
+        //if (waveEnemiesText2 == null) waveEnemiesText2 = GameObject.FindGameObjectWithTag("WaveText2").GetComponent<TMP_Text>();
     }
 
     private void Update()
@@ -103,6 +105,7 @@ public class WaveSpawner : MonoBehaviour
 
         curWaveString = "Wave " + curWave.ToString() + " of " + numWaves.ToString() + " \nEnemies left: " + curEnemies.ToString(); ;
         waveEnemiesText.text = curWaveString;
+        waveEnemiesText2.text = curWaveString;
     }
 
     private void OnDrawGizmosSelected()

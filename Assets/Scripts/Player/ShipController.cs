@@ -65,8 +65,10 @@ public class ShipController : MonoBehaviour
     //Variables for half turn
     public float halfTurnDegrees = 180f;
     float curDegrees;
+    float desDegrees;
     public float halfTurnRotSpd = 45f;
     bool turning = false;
+    //public float turningSpd;
 
     private void Awake()
     {
@@ -142,11 +144,12 @@ public class ShipController : MonoBehaviour
             //Turning 180 degrees inputs
             //
             //
+            //curDegrees = transform.rotation.y;
             if (Input.GetButtonDown("HalfTurn") && !turning)
             {
                 turning = true;
-                Invoke("ResetHalfTurn", 2f);
-                //StartCoroutine("HalfTurn");
+                curDegrees = transform.rotation.y;
+                desDegrees = transform.rotation.y + halfTurnDegrees;
             }
 
             if (Input.GetButton("MouseBoost") || Input.GetAxis("ControllerBoost") > 0)
@@ -176,11 +179,6 @@ public class ShipController : MonoBehaviour
         }
     }
 
-    void ResetHalfTurn()
-    {
-        turning = false;
-    }
-
     //Coroutine for half turning
     //
     //
@@ -204,6 +202,23 @@ public class ShipController : MonoBehaviour
         //Need to lerp to our rotations by the sensitivities in the settings
         //
         //
+
+        if (turning && curDegrees < desDegrees)
+        {
+            curDegrees += halfTurnRotSpd * Time.fixedDeltaTime;
+            transform.RotateAround(transform.position, Vector3.up, halfTurnRotSpd * Time.fixedDeltaTime);
+        }
+
+        //if (turning && curDegrees < halfTurnDegrees)
+        //{
+        //    curDegrees += halfTurnRotSpd * Time.fixedDeltaTime;
+        //    transform.RotateAround(transform.position, Vector3.up, curDegrees * Time.fixedDeltaTime);
+        //}
+
+        if (turning && curDegrees >= halfTurnDegrees)
+        {
+            turning = false;
+        }
 
         if (player.joystick)
         {
