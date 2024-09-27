@@ -26,8 +26,15 @@ public class ObstacleAvoidingEnemyController : EnemyControllerBase
     public bool spdIncreases;
     public float spdLerp;
 
+    //Object avoidance
+    public float rayLength;
+    public LayerMask hitMask;
+    Vector3 rayDir;
+
     protected override void Awake()
     {
+        if (spawnPos == null) spawnPos = gameObject;
+
         base.Awake();
 
         curSpd = spd;
@@ -42,6 +49,64 @@ public class ObstacleAvoidingEnemyController : EnemyControllerBase
     // Update is called once per frame
     protected override void Update()
     {
+        Vector3 fwd = transform.TransformDirection(Vector3.forward);
+        Vector3 fwdLeft = transform.TransformDirection(Vector3.forward) + transform.TransformDirection(Vector3.left);
+        Vector3 fwdRight = transform.TransformDirection(Vector3.forward) + transform.TransformDirection(Vector3.right);
+        Vector3 fwdUp = transform.TransformDirection(Vector3.forward) + transform.TransformDirection(Vector3.up);
+        Vector3 fwdDown = transform.TransformDirection(Vector3.forward) + transform.TransformDirection(Vector3.down);
+        Vector3 back = transform.TransformDirection(Vector3.back);
+
+        //Check forward
+        if (Physics.Raycast(transform.position, fwd, rayLength, hitMask))
+        {
+            //Check front left
+            if (Physics.Raycast(transform.position, fwdLeft, rayLength, hitMask))
+            {
+                //print("Obstacle left");
+                //We're hitting an object, check right next
+                //Check front right
+                if (Physics.Raycast(transform.position, fwdRight, rayLength, hitMask))
+                {
+                    //Somethings in the way left and right of the enemy
+                    //rayDir = back;
+                    //print("Obstacles left and right");
+                }
+                else
+                {
+                    rayDir = fwdRight;
+                }
+            }
+            else
+            {
+                rayDir = fwdLeft;
+            }
+            //Check front up
+            if (Physics.Raycast(transform.position, fwdUp, rayLength, hitMask))
+            {
+                //print("Obstacle above");
+                //We're hitting an object, check down next
+                //Check front down
+                if (Physics.Raycast(transform.position, fwdDown, rayLength, hitMask))
+                {
+                    //print("Obstacle above and below");
+                    //Somethings in the way above and below the enemy
+                    //rayDir = back;
+                }
+                else
+                {
+                    rayDir = fwdDown;
+                }
+            }
+            else
+            {
+                rayDir = fwdUp;
+            }
+        }
+        else
+        {
+            rayDir = fwd;
+        }
+
         //If the player is close enough
         if (playerInRange && player != null)
         {
@@ -67,7 +132,8 @@ public class ObstacleAvoidingEnemyController : EnemyControllerBase
                 Vector3 newDir = Vector3.RotateTowards(transform.forward, targDir, lerpSpd * Time.deltaTime, 0.0f);
                 transform.rotation = Quaternion.LookRotation(newDir);
 
-                bod.velocity = (transform.forward * (1.0f + Time.fixedDeltaTime)) * curSpd; //velcoity algorthim for the porjectile
+                //bod.velocity = ((transform.forward * (1.0f + Time.fixedDeltaTime)) * curSpd; //velcoity algorthim for the porjectile
+                bod.velocity = (rayDir * (1.0f + Time.fixedDeltaTime)) * curSpd; //velcoity algorthim for the porjectile
             }
         }
 

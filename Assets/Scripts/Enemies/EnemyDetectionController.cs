@@ -10,6 +10,7 @@ public class EnemyDetectionController : MonoBehaviour
 
     private void Awake()
     {
+        parent = GetComponentInParent<EnemyControllerBase>();
         //hpBar = GetComponent<Healthbar>();
         anim = parent.anim;
     }

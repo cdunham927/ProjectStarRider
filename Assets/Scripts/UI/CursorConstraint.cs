@@ -62,8 +62,16 @@ public class CursorConstraint : MonoBehaviour
         //    r.position = aimPos;
         //}
 
-        Vector2 controllerPos = new Vector2(Screen.width / 2 + (Input.GetAxis("JoystickAxis4") * ship.controllerSensitivity), Screen.height / 2 - (Input.GetAxis("JoystickAxis5") * ship.controllerSensitivity));
-        aimPos = Vector2.Lerp(aimPos, controllerPos, controllerLerpSpd * Time.deltaTime);
+        if (player.joystick)
+        {
+            Vector2 controllerPos = new Vector2(Screen.width / 2 + (Input.GetAxis("JoystickAxis4") * ship.controllerSensitivity), Screen.height / 2 - (Input.GetAxis("JoystickAxis5") * ship.controllerSensitivity));
+            aimPos = Vector2.Lerp(aimPos, controllerPos, controllerLerpSpd * Time.deltaTime);
+        }
+        else
+        {
+            Vector2 mousePos = new Vector2(Screen.width / 2 + (Input.GetAxis("MouseX") * ship.mouseSensitivity), Screen.height / 2 - (-Input.GetAxis("MouseY") * ship.mouseSensitivity));
+            aimPos = Vector2.Lerp(aimPos, mousePos, controllerLerpSpd * Time.deltaTime);
+        }
 
         r.position = aimPos;
     }

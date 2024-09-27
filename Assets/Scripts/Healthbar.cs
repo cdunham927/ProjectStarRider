@@ -30,6 +30,7 @@ public class Healthbar : MonoBehaviour
 
     private void Awake()
     {
+        stats = GetComponent<EnemyControllerBase>();
         cam = FindObjectOfType<Camera>();
         //startPos = canv.transform.localPosition;
         player = FindObjectOfType<PlayerController>();

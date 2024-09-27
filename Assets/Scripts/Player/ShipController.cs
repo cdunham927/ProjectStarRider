@@ -54,6 +54,7 @@ public class ShipController : MonoBehaviour
 
     PlayerController player;
     public float controllerSensitivity;
+    public float mouseSensitivity;
     public bool invertControls = false;
 
     public float controllerLerp;
@@ -225,7 +226,11 @@ public class ShipController : MonoBehaviour
             aimPos = Vector2.Lerp(aimPos, new Vector2(Screen.width / 2 + (Input.GetAxis("JoystickAxis4") * controllerSensitivity), Screen.height / 2 - (Input.GetAxis("JoystickAxis5") * controllerSensitivity)), controllerLerp * Time.fixedDeltaTime);
         }
         //else aimPos = Vector2.Lerp(aimPos, new Vector2(Screen.width / 2 + (Input.mousePosition.x), Screen.height / 2 - (Input.mousePosition.y)), mouseLerp * Time.fixedDeltaTime);
-        else aimPos = Vector2.Lerp(aimPos, Input.mousePosition, mouseLerp * Time.fixedDeltaTime);
+        else
+        {
+            aimPos = Vector2.Lerp(aimPos, new Vector2(Screen.width / 2 + (Input.GetAxis("MouseX") * mouseSensitivity), Screen.height / 2 - (-Input.GetAxis("MouseY") * mouseSensitivity)), mouseLerp * Time.fixedDeltaTime);
+            //aimPos = Vector2.Lerp(aimPos, Input.mousePosition, mouseLerp * Time.fixedDeltaTime);
+        }
 
         //Warp mouse position to middle of screen over time
         
