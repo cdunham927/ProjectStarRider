@@ -6,7 +6,7 @@ public class MinimapObjController : MonoBehaviour
 {
     public Transform par;
     public float size;
-    Vector2 sizeMod;
+    //Vector2 sizeMod;
     public Vector3 posOffset;
     public Vector3 rotationOffset;
     public bool reparent = true;
@@ -14,11 +14,11 @@ public class MinimapObjController : MonoBehaviour
     private void Awake()
     {
         par = transform.parent;
-        sizeMod = transform.parent.localScale;
+        //sizeMod = transform.parent.localScale;
         if (reparent)
         {
             transform.SetParent(null);
-            transform.localScale = new Vector3(size * sizeMod.x, size * sizeMod.y, 1);
+            transform.localScale = new Vector3(size, size, 1);
         }
     }
 
@@ -28,7 +28,7 @@ public class MinimapObjController : MonoBehaviour
         {
             if (par.gameObject.activeInHierarchy)
             {
-                transform.position = new Vector3(par.position.x + posOffset.x, par.position.y + posOffset.y, par.position.z + posOffset.z);
+                transform.position = new Vector3(par.position.x + posOffset.x, posOffset.y, par.position.z + posOffset.z);
                 transform.rotation = Quaternion.Euler(90, par.eulerAngles.y, par.eulerAngles.z + rotationOffset.z);
             }
             else
