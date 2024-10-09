@@ -62,12 +62,33 @@ public class EnemyIndicator : MonoBehaviour
             {
 
                 img.enabled = true;
+                //if (desiredPos.y > Screen.height / 2)
+                //{
+                //    desiredPos.y = actualClampY;
+                //}
+                //else
+                //{
+                //    desiredPos.y = yClampMin;
+                //}
 
-                desiredPos = screenSpace;
-                desiredPos.x = Mathf.Clamp(desiredPos.x, xClampMin, actualClampX);
-                desiredPos.y = Mathf.Clamp(desiredPos.y, yClampMin, actualClampY);
-                rect.position = desiredPos;
+
+                //if (desiredPos.x > 0 && desiredPos.x < Screen.width)
+                //{
+                //    if (desiredPos.y > Screen.height / 2)
+                //    {
+                //        desiredPos.y = actualClampY;
+                //    }
+                //    else
+                //    {
+                //        desiredPos.y = yClampMin;
+                //    }
+                //}
+                //rect.position = desiredPos;
             }
+            desiredPos = screenSpace;
+            desiredPos.x = Mathf.Clamp(desiredPos.x, xClampMin, actualClampX);
+            desiredPos.y = Mathf.Clamp(desiredPos.y, yClampMin, actualClampY);
+            rect.position = desiredPos;
         }
     }
 }

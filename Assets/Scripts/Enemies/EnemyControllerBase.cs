@@ -123,6 +123,13 @@ public class EnemyControllerBase : MonoBehaviour
     //public bool pathfindsToPlayer = false;
     CinemachineVirtualCamera cam;
 
+    [Space]
+    [Header("Enemy Indicator")]
+    public GameObject enemyIndicator;
+    EnemyIndicator eI;
+
+    //public MeshRenderer mesh;
+
     private void Start()
     {
      
@@ -131,6 +138,8 @@ public class EnemyControllerBase : MonoBehaviour
   
     protected virtual void Awake()
     {
+        //mesh = GetComponent<MeshRenderer>();
+
         cam = FindObjectOfType<CinemachineVirtualCamera>();
         if (perlin == null && cam != null) perlin = cam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
         anim = GetComponentInChildren<Animator>();
@@ -169,6 +178,15 @@ public class EnemyControllerBase : MonoBehaviour
         //Get minimap object
         if (minimapObj == null) minimapObj = GetComponentInChildren<MinimapObjController>().gameObject;
         if (minimapObj != null) minimapObj.SetActive(true);
+
+        //Enemy Indicator
+        eI = Instantiate(enemyIndicator).GetComponent<EnemyIndicator>();
+        if (eI != null && cont != null)
+        {
+            eI.transform.SetParent(null);
+            eI.enemy = gameObject;
+            eI.transform.SetParent(cont.transform);
+        }
     }
 
     protected virtual void Idle() { }
@@ -203,6 +221,14 @@ public class EnemyControllerBase : MonoBehaviour
 
     protected virtual void Update()
     {
+        if (eI == null && cont != null)
+        {
+            eI = Instantiate(enemyIndicator).GetComponent<EnemyIndicator>();
+            eI.transform.SetParent(null);
+            eI.enemy = gameObject;
+            eI.transform.SetParent(cont.transform);
+        }
+
         switch (currentState)
         {
             case (enemystates.idle):
@@ -223,6 +249,18 @@ public class EnemyControllerBase : MonoBehaviour
             case (enemystates.death):
                 Death();
                 break;
+        }
+
+        if (eI != null)
+        {
+            if (skinnedMeshRenderer.isVisible)
+            {
+                eI.parentVisible = true;
+            }
+            else
+            {
+                eI.parentVisible = false;
+            }
         }
 
         if (Application.isEditor)
