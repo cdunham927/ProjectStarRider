@@ -42,6 +42,8 @@ public class HomingEnemyController : EnemyControllerBase
     // Update is called once per frame
     protected override void Update()
     {
+        base.Update();
+
         //If the player is close enough
         if (playerInRange && player != null)
         {
@@ -70,8 +72,6 @@ public class HomingEnemyController : EnemyControllerBase
                 bod.velocity = (transform.forward * (1.0f + Time.fixedDeltaTime)) * curSpd; //velcoity algorthim for the porjectile
             }
         }
-
-
     }
 
     protected override void Alert()

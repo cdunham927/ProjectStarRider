@@ -206,9 +206,6 @@ public class EnemyControllerBase : MonoBehaviour
         currentState = toState;
     }
 
-   
-
-
     public void ShakeCamera()
     {
         if (perlin != null)
@@ -221,14 +218,6 @@ public class EnemyControllerBase : MonoBehaviour
 
     protected virtual void Update()
     {
-        if (eI == null && cont != null)
-        {
-            eI = Instantiate(enemyIndicator).GetComponent<EnemyIndicator>();
-            eI.transform.SetParent(null);
-            eI.enemy = gameObject;
-            eI.transform.SetParent(cont.transform);
-        }
-
         switch (currentState)
         {
             case (enemystates.idle):
@@ -354,6 +343,11 @@ public class EnemyControllerBase : MonoBehaviour
                 hasReduced = true;
                 barrier.redCnt();
                 barrier = null;
+            }
+
+            if (eI != null)
+            {
+                Destroy(eI.gameObject);
             }
 
             Instantiate(deathVFX, transform.position, transform.rotation);
