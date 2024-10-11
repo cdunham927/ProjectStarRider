@@ -388,7 +388,7 @@ public class GameManager : MonoBehaviour
                 GameOver();
             }
 
-            if (Input.GetKeyDown(KeyCode.V)) Victory();
+            //if (Input.GetKeyDown(KeyCode.V)) Victory();
         }
     }
 
