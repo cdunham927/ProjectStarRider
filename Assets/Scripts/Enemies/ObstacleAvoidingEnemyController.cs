@@ -30,6 +30,8 @@ public class ObstacleAvoidingEnemyController : EnemyControllerBase
     public float rayLength;
     public LayerMask hitMask;
     Vector3 rayDir;
+    public float castSize = 15.5f;
+    public float castDistance = 75.0f;
 
     protected override void Awake()
     {
@@ -46,65 +48,77 @@ public class ObstacleAvoidingEnemyController : EnemyControllerBase
         CancelInvoke();
     }
 
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, castSize);
+        Gizmos.DrawWireSphere(transform.position + (transform.forward * castDistance), castSize);
+        Gizmos.color = Color.white;
+    }
+
     // Update is called once per frame
     protected override void Update()
     {
+        Vector3 intendedDir;
         Vector3 fwd = transform.TransformDirection(Vector3.forward);
         Vector3 fwdLeft = transform.TransformDirection(Vector3.forward) + transform.TransformDirection(Vector3.left);
         Vector3 fwdRight = transform.TransformDirection(Vector3.forward) + transform.TransformDirection(Vector3.right);
         Vector3 fwdUp = transform.TransformDirection(Vector3.forward) + transform.TransformDirection(Vector3.up);
         Vector3 fwdDown = transform.TransformDirection(Vector3.forward) + transform.TransformDirection(Vector3.down);
         Vector3 back = transform.TransformDirection(Vector3.back);
+        Vector3 backLeft = transform.TransformDirection(Vector3.back) + transform.TransformDirection(Vector3.left);
+        Vector3 backRight = transform.TransformDirection(Vector3.back) + transform.TransformDirection(Vector3.right);
+        Vector3 backUp = transform.TransformDirection(Vector3.back) + transform.TransformDirection(Vector3.up);
+        Vector3 backDown = transform.TransformDirection(Vector3.back) + transform.TransformDirection(Vector3.down);
 
-        //Check forward
-        if (Physics.Raycast(transform.position, fwd, rayLength, hitMask))
+        Ray fwdRay = new Ray(transform.position, transform.forward);
+        Ray leftRay = new Ray(transform.position, -transform.right);
+        Ray rightRay = new Ray(transform.position, transform.right);
+        Ray upRay = new Ray(transform.position, transform.up);
+        Ray downRay = new Ray(transform.position, -transform.up);
+
+        float fwdWeight = 0.0f;
+        //Vector3 fwdActual = transform.TransformDirection(Vector3.forward) * (Vector3.one * fwdWeight);
+
+
+        //If theres an obstacle in front of us
+        if (Physics.SphereCast(fwdRay, castSize, castDistance, hitMask))
         {
-            //Check front left
-            if (Physics.Raycast(transform.position, fwdLeft, rayLength, hitMask))
+            //If theres something to our left
+            if (Physics.SphereCast(leftRay, castSize, castDistance, hitMask))
             {
-                //print("Obstacle left");
-                //We're hitting an object, check right next
-                //Check front right
-                if (Physics.Raycast(transform.position, fwdRight, rayLength, hitMask))
-                {
-                    //Somethings in the way left and right of the enemy
-                    //rayDir = back;
-                    //print("Obstacles left and right");
-                }
-                else
-                {
-                    rayDir = fwdRight;
-                }
+                rayDir = backRight;
             }
+            //If theres something to our right
+            else if (Physics.SphereCast(rightRay, castSize, castDistance, hitMask))
+            {
+                rayDir = backLeft;
+            }
+            //If theres something in front and to our sides
             else
+            {
+                //rayDir = back;
+            }
+        }
+        //If theres NOT an obstacle in front of us
+        else
+        {
+            fwdWeight = 1.0f;
+            //Nothing in front, something to our left
+            if (Physics.SphereCast(leftRay, castSize, castDistance, hitMask))
+            {
+                rayDir = fwdRight;
+            }
+            //Nothing in front, something to our right
+            else if (Physics.SphereCast(rightRay, castSize, castDistance, hitMask))
             {
                 rayDir = fwdLeft;
             }
-            //Check front up
-            if (Physics.Raycast(transform.position, fwdUp, rayLength, hitMask))
-            {
-                //print("Obstacle above");
-                //We're hitting an object, check down next
-                //Check front down
-                if (Physics.Raycast(transform.position, fwdDown, rayLength, hitMask))
-                {
-                    //print("Obstacle above and below");
-                    //Somethings in the way above and below the enemy
-                    //rayDir = back;
-                }
-                else
-                {
-                    rayDir = fwdDown;
-                }
-            }
+            //Nothing in front, something to our sides
             else
             {
-                rayDir = fwdUp;
+                rayDir = fwd;
             }
-        }
-        else
-        {
-            rayDir = fwd;
         }
 
         //If the player is close enough
@@ -133,7 +147,7 @@ public class ObstacleAvoidingEnemyController : EnemyControllerBase
                 transform.rotation = Quaternion.LookRotation(newDir);
 
                 //bod.velocity = ((transform.forward * (1.0f + Time.fixedDeltaTime)) * curSpd; //velcoity algorthim for the porjectile
-                bod.velocity = (rayDir * (1.0f + Time.fixedDeltaTime)) * curSpd; //velcoity algorthim for the porjectile
+                bod.velocity = (rayDir * (1.0f + Time.fixedDeltaTime)) * curSpd; //velocity algorthim for the porjectile
             }
         }
 
