@@ -123,7 +123,28 @@ public class SentinelRegular : EnemyControllerBase
 
     void PatternCAttack()
     {
+        if (bulletPool == null) bulletPool = cont.enemyBulPool;
+        float angle = 0;
+        float increment = 360 / numBullets;
+        for (int i = 0; i < numBullets; i++)
+        {
+            //Get pooled bullet
+            GameObject bul = bulletPool.GetPooledObject();
+            if (bul != null)
+            {
+                //Put it where the enemy position is
+                bul.transform.position = transform.position;
+                //Aim it at the player
+                //Activate it at the enemy position
+                bul.SetActive(true);
+                bul.transform.rotation = Quaternion.identity;
 
+                angle += increment;
+
+                bul.transform.rotation = Quaternion.Euler(0, angle, 0);
+                bul.GetComponent<EnemyBullet>().Push();
+            }
+        }
     }
 
     public int numBullets = 30;
