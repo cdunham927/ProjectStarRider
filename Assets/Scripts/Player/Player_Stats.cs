@@ -221,7 +221,7 @@ public class Player_Stats : MonoBehaviour
         if (!PlayerDead)
         {
             reactionAnim.SetInteger("Hp", Curr_hp);
-            HealBlink();
+            //HealBlink();
             reactionImage.color = healColor;
             Invoke("ResetGradient", flashTime);
             Instantiate(healVFX, VfxPositionToSpawn.transform.position, transform.rotation);
@@ -279,7 +279,7 @@ public class Player_Stats : MonoBehaviour
                 if (Curr_hp <= flashThreshold) healthImageFlash.SetActive(true);
                 //anything that takes place when the hp is zero should go here
                 Curr_hp -= damageAmount;
-                DamageBlink();
+                //DamageBlink();
                 //Play damage sound
                 AddScore(0, true);
 
@@ -345,19 +345,7 @@ public class Player_Stats : MonoBehaviour
         
     }
 
-    void DamageBlink() 
-    {
-        //Debug.Log("Player Blinking");
-        meshRenderer.material.color = Color.red * blinkIntensity;
-        Invoke("ResetMaterial",blinkDuration);
-    }
 
-    void HealBlink()
-    {
-        //Debug.Log("Player Healed");
-        meshRenderer.material.color = Color.green * blinkIntensity;
-        Invoke("ResetMaterial", blinkDuration);
-    }
 
     void ResetMaterial()
    {

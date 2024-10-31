@@ -9,7 +9,7 @@ public class EnemyBullet : Bullet
 
 
     public GameObject collisonExplosion;
-    public TrailRenderer trail;
+    private TrailRenderer trail;
 
     public GameObject spawnPos;
     public ObjectPool hitVFXPool;
@@ -22,7 +22,7 @@ public class EnemyBullet : Bullet
     {
         cont = FindObjectOfType<GameManager>();
         hitVFXPool = cont.enemyHitVFXPool;
-        //trail = GetComponentInChildren<TrailRenderer>();
+        trail = GetComponentInChildren<TrailRenderer>();
     }
 
     public override void OnEnable()

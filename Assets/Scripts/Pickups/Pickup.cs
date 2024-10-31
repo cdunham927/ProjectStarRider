@@ -8,6 +8,7 @@ public abstract class Pickup : MonoBehaviour
     protected float distance;
     //PlayerController player;
     protected Player_Stats stats;
+    protected PlayerVFXHolder vfxTrigger;
     protected PlayerController Pcontroller;
     public float PickUpSpd = 10f;
     //public float rotSpd;
@@ -28,6 +29,7 @@ public abstract class Pickup : MonoBehaviour
     public virtual void OnEnable()
     {
         stats = FindObjectOfType<Player_Stats>();
+        vfxTrigger = FindObjectOfType<PlayerVFXHolder>();
         Pcontroller = FindObjectOfType<PlayerController>();
 
     }

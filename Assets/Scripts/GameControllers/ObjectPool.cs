@@ -20,6 +20,8 @@ public class ObjectPool : MonoBehaviour
 
     [System.NonSerialized] ObjectPool next;
 
+    TrailRenderer trailRenderer;
+
     public static T Create<T>(T prefab, Vector3 pos, Quaternion rot) where T : ObjectPool
     {
         T result = null;
@@ -50,7 +52,7 @@ public class ObjectPool : MonoBehaviour
     private void Awake()
     {
         //SharedInstance = this;
-
+        trailRenderer = GetComponent<TrailRenderer>();
         //Spawn x amount of items and add them to the pool
         for (int i = 0; i < amountToPool; i++)
         {
@@ -150,6 +152,8 @@ public class ObjectPool : MonoBehaviour
             //Activate it
             o.SetActive(true);
         }
+
+        if(trailRenderer != null) trailRenderer.Clear();
     }
 
 
