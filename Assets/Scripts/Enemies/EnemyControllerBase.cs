@@ -380,8 +380,12 @@ public class EnemyControllerBase : MonoBehaviour
         //tempMats[ind].color = Color.red * blinkBrightness;
         skinnedMeshRenderer.materials = tempMats;
 
+        skinnedMeshRenderer.material.SetColor("_Color", Color.red );
+        
         //skinnedMeshRenderer.material.color = Color.red * blinkBrightness;
         Invoke("ResetMaterial", blinkDuration);
+
+        
     }
 
     void ResetMaterial()
@@ -422,5 +426,5 @@ public class EnemyControllerBase : MonoBehaviour
         //plays the animation
         anim.Play(newState);
     }
-
+    
 }

@@ -20,7 +20,7 @@ public class PlayerVFXHolder :  MonoBehaviour
 
     // vfx setting for player damage
     [Header("Damage Blink Settings: ")]
-    public float blinkDuration = 0.3f;
+    public float blinkDuration = 0.5f;
     public float blinkIntensity = 2.0f;
 
     //refercnce to player stats
@@ -36,7 +36,7 @@ public class PlayerVFXHolder :  MonoBehaviour
     {
         dVfx = Instantiate(deathVFX);
         dVfx.SetActive(false);
-
+       
         meshRenderer = GetComponentInChildren<MeshRenderer>();
         stats = FindObjectOfType<Player_Stats>();
     }
@@ -115,20 +115,21 @@ public class PlayerVFXHolder :  MonoBehaviour
     void DamageBlink()
     {
         //Debug.Log("Player Blinking");
-        meshRenderer.material.color = Color.red * blinkIntensity;
+        meshRenderer.material.SetColor("_Color" ,Color.red * blinkIntensity );
         Invoke("ResetMaterial", blinkDuration);
     }
 
     void HealBlink()
     {
         //Debug.Log("Player Healed");
-        meshRenderer.material.color = Color.green * blinkIntensity;
+        meshRenderer.material.SetColor("_Color", Color.green * blinkIntensity);
+       
         Invoke("ResetMaterial", blinkDuration);
     }
 
     void ResetMaterial()
     {
-        meshRenderer.material.color = Color.white;
+        meshRenderer.material.SetColor("_Color", Color.white );
     }
 
     public void SetInvunerable()

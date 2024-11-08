@@ -88,6 +88,12 @@ public class Player_Stats : MonoBehaviour
     public Color healColor;
     public float flashTime = 0.1f;
 
+    //refercnce to player stats
+    protected PlayerVFXHolder vfx;
+    
+    //refercnce to player stats
+    protected PortraitController portrait;
+    
     //Player takes damage, show bullet effect
     public GameObject redBulletImpact;
 
@@ -324,10 +330,13 @@ public class Player_Stats : MonoBehaviour
 
                 //Reaction UI animations
                 if (reactionAnim != null)
-                {
+                { 
+                    
                     reactionAnim.SetTrigger("Hurt");
                     reactionAnim.SetInteger("Hp", Curr_hp);
                 }
+
+               
                 //pCont.FreezeRotation();
                 //pCont.UnfreezeRotation();
 

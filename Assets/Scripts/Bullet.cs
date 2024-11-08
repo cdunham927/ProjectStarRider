@@ -17,13 +17,15 @@ public class Bullet : MonoBehaviour
     public bool speedUp;
     public float pushSpd;
 
-    Bullet[] bullets;
-    int bulletCount;
-    private Vector3 pos;
+    //public Bullet[] bullets;
+    //public int bulletCount;
 
+   
+    
     public virtual void OnEnable() 
-    { 
+    {
         //float step =  (speed  + Random.Range(0, randSpdMod)) * Time.deltaTime;
+        
         Invoke("Disable", disableTime);
     }
 

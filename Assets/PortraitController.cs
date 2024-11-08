@@ -85,4 +85,6 @@ public class PortraitController : MonoBehaviour
         reactionImage.color = regColor;
     }
 
+   
+
 }

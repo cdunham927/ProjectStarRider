@@ -23,6 +23,7 @@ public class EnemyBullet : Bullet
         cont = FindObjectOfType<GameManager>();
         hitVFXPool = cont.enemyHitVFXPool;
         trail = GetComponentInChildren<TrailRenderer>();
+
     }
 
     public override void OnEnable()
@@ -41,7 +42,13 @@ public class EnemyBullet : Bullet
 
     private void Update()
     {
-        if (speedUp) rb.AddForce(transform.forward * pushSpd);
+        float dt = Time.deltaTime;
+       
+        
+        if (speedUp)
+        {
+            rb.AddForce(transform.forward * (pushSpd * dt));
+        }
     }
 
     private void OnTriggerEnter(Collider collision)
