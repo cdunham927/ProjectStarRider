@@ -33,6 +33,19 @@ public class ObstacleAvoidingEnemyController : EnemyControllerBase
     public float castSize = 15.5f;
     public float castDistance = 75.0f;
 
+    //Steering variables
+    public float steerForce;
+    public float numRays;
+    public float weight = 5.0f;
+    //Context arrays
+    protected Vector2[] rayDirections;
+    protected float[] interest;
+    protected float[] danger;
+    //Movement vars
+    Vector2 chosenDir = Vector2.zero;
+    Vector2 vel = Vector2.zero;
+    Vector2 accel = Vector2.zero;
+
     protected override void Awake()
     {
         if (spawnPos == null) spawnPos = gameObject;
