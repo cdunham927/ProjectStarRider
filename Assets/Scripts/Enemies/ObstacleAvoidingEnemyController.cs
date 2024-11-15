@@ -34,11 +34,11 @@ public class ObstacleAvoidingEnemyController : EnemyControllerBase
     public float castDistance = 75.0f;
 
     //Steering variables
-    public float steerForce;
-    public float numRays;
+    public float steerForce = 0.1f;
+    public int numRays = 8;
     public float weight = 5.0f;
     //Context arrays
-    protected Vector2[] rayDirections;
+    protected Quaternion[] rayDirections;
     protected float[] interest;
     protected float[] danger;
     //Movement vars
@@ -54,6 +54,18 @@ public class ObstacleAvoidingEnemyController : EnemyControllerBase
 
         curSpd = spd;
         bod = GetComponent<Rigidbody>();
+
+        System.Array.Resize(ref interest, numRays);
+        System.Array.Resize(ref danger, numRays);
+        System.Array.Resize(ref rayDirections, numRays);
+
+        for (int i = 0; i < numRays; i++) {
+            var angle = (i * 2 * Mathf.PI / numRays); 
+            //float x = Mathf.Sin(angle);
+            //float y = Mathf.Cos(angle);
+            //rayDirections[i] = new Vector3(0, 0, angle);
+            rayDirections[i] = Quaternion.Euler(0, Mathf.Rad2Deg * angle, 0);
+        }
     }
 
     void OnDisable()
@@ -63,10 +75,18 @@ public class ObstacleAvoidingEnemyController : EnemyControllerBase
 
     private void OnDrawGizmosSelected()
     {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, castSize);
-        Gizmos.DrawWireSphere(transform.position + (transform.forward * castDistance), castSize);
-        Gizmos.color = Color.white;
+        //Gizmos.color = Color.yellow;
+        //Gizmos.DrawWireSphere(transform.position, castSize);
+        //Gizmos.DrawWireSphere(transform.position + (transform.forward * castDistance), castSize);
+        //Gizmos.color = Color.white;
+
+        if (rayDirections.Length > 0) {
+            for (int i = 0; i < numRays; i++)
+            {
+                //Vector3 dir = Vector3.forward * rayDirections[i];
+                //Debug.DrawRay(transform.position, Quaternion.Euler(rayDirections[i]), Color.red, castDistance);
+            }
+        }
     }
 
     // Update is called once per frame
