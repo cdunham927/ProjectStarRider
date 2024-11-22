@@ -38,12 +38,12 @@ public class ObstacleAvoidingEnemyController : EnemyControllerBase
     public int numRays = 8;
     public float weight = 5.0f;
     //Context arrays
-    protected Quaternion[] rayDirections;
+    public Vector3[] rayDirections;
     protected float[] interest;
     protected float[] danger;
     //Movement vars
     Vector2 chosenDir = Vector2.zero;
-    Vector2 vel = Vector2.zero;
+    Vector3 vel = Vector3.zero;
     Vector2 accel = Vector2.zero;
 
     protected override void Awake()
@@ -59,13 +59,21 @@ public class ObstacleAvoidingEnemyController : EnemyControllerBase
         System.Array.Resize(ref danger, numRays);
         System.Array.Resize(ref rayDirections, numRays);
 
-        for (int i = 0; i < numRays; i++) {
-            var angle = (i * 2 * Mathf.PI / numRays); 
-            //float x = Mathf.Sin(angle);
-            //float y = Mathf.Cos(angle);
-            //rayDirections[i] = new Vector3(0, 0, angle);
-            rayDirections[i] = Quaternion.Euler(0, Mathf.Rad2Deg * angle, 0);
-        }
+        rayDirections[0] = transform.forward;
+        rayDirections[1] = transform.forward - transform.right;
+        rayDirections[2] = -transform.right;
+        rayDirections[3] = -transform.forward - transform.right;
+        rayDirections[4] = -transform.forward;
+        rayDirections[5] = -transform.forward + transform.right;
+        rayDirections[6] = transform.right;
+        rayDirections[7] = transform.forward + transform.right;
+
+        //for (int i = 0; i < rayDirections.Length; i++)
+        //{
+        //    var angle = i * 2 * Mathf.PI / numRays;
+        //    angle *= Mathf.Rad2Deg;
+        //    //rayDirections[i] = Vector3.forward + (Vector3.right  angle);
+        //}
     }
 
     void OnDisable()
@@ -81,78 +89,51 @@ public class ObstacleAvoidingEnemyController : EnemyControllerBase
         //Gizmos.color = Color.white;
 
         if (rayDirections.Length > 0) {
-            for (int i = 0; i < numRays; i++)
+            //Vector3 dir = Vector3.forward * rayDirections[i];
+            //Debug.DrawRay(transform.position, Quaternion.Euler(rayDirections[i]), Color.red, castDistance);
+            for (int i = 0; i < rayDirections.Length; i++)
             {
-                //Vector3 dir = Vector3.forward * rayDirections[i];
-                //Debug.DrawRay(transform.position, Quaternion.Euler(rayDirections[i]), Color.red, castDistance);
+                Gizmos.color = Color.red;
+                Debug.DrawRay(transform.position, rayDirections[i] * rayLength);
             }
         }
+    }
+
+    void ContextMove()
+    {
+        SetInterest();
+        SetDanger();
+        ChooseDirection();
+        var desVel = chosenDir * curSpd;
+        vel = Vector3.Lerp(vel, desVel, Time.deltaTime * steerForce);
+        //Rotate obj too
+        transform.rotation = Quaternion.LookRotation(vel);
+    }
+
+    void SetInterest()
+    {
+        if (player != null) SetDefaultInterest();
+    }
+
+    void SetDefaultInterest()
+    {
+        for (int i = 0; i < numRays; i++)
+        {
+            var d = Vector3.Dot(rayDirections[i], player.transform.position - transform.position);
+            interest[i] = Mathf.Clamp(interest[i], 0, d);
+        }
+    }
+
+    void SetDanger()
+    {
+
     }
 
     // Update is called once per frame
     protected override void Update()
     {
-        Vector3 intendedDir;
-        Vector3 fwd = transform.TransformDirection(Vector3.forward);
-        Vector3 fwdLeft = transform.TransformDirection(Vector3.forward) + transform.TransformDirection(Vector3.left);
-        Vector3 fwdRight = transform.TransformDirection(Vector3.forward) + transform.TransformDirection(Vector3.right);
-        Vector3 fwdUp = transform.TransformDirection(Vector3.forward) + transform.TransformDirection(Vector3.up);
-        Vector3 fwdDown = transform.TransformDirection(Vector3.forward) + transform.TransformDirection(Vector3.down);
-        Vector3 back = transform.TransformDirection(Vector3.back);
-        Vector3 backLeft = transform.TransformDirection(Vector3.back) + transform.TransformDirection(Vector3.left);
-        Vector3 backRight = transform.TransformDirection(Vector3.back) + transform.TransformDirection(Vector3.right);
-        Vector3 backUp = transform.TransformDirection(Vector3.back) + transform.TransformDirection(Vector3.up);
-        Vector3 backDown = transform.TransformDirection(Vector3.back) + transform.TransformDirection(Vector3.down);
-
-        Ray fwdRay = new Ray(transform.position, transform.forward);
-        Ray leftRay = new Ray(transform.position, -transform.right);
-        Ray rightRay = new Ray(transform.position, transform.right);
-        Ray upRay = new Ray(transform.position, transform.up);
-        Ray downRay = new Ray(transform.position, -transform.up);
-
-        float fwdWeight = 0.0f;
-        //Vector3 fwdActual = transform.TransformDirection(Vector3.forward) * (Vector3.one * fwdWeight);
-
-
-        //If theres an obstacle in front of us
-        if (Physics.SphereCast(fwdRay, castSize, castDistance, hitMask))
-        {
-            //If theres something to our left
-            if (Physics.SphereCast(leftRay, castSize, castDistance, hitMask))
-            {
-                rayDir = backRight;
-            }
-            //If theres something to our right
-            else if (Physics.SphereCast(rightRay, castSize, castDistance, hitMask))
-            {
-                rayDir = backLeft;
-            }
-            //If theres something in front and to our sides
-            else
-            {
-                //rayDir = back;
-            }
-        }
-        //If theres NOT an obstacle in front of us
-        else
-        {
-            fwdWeight = 1.0f;
-            //Nothing in front, something to our left
-            if (Physics.SphereCast(leftRay, castSize, castDistance, hitMask))
-            {
-                rayDir = fwdRight;
-            }
-            //Nothing in front, something to our right
-            else if (Physics.SphereCast(rightRay, castSize, castDistance, hitMask))
-            {
-                rayDir = fwdLeft;
-            }
-            //Nothing in front, something to our sides
-            else
-            {
-                rayDir = fwd;
-            }
-        }
+        ContextMove();
+        bod.AddForce(vel * Time.deltaTime);
 
         //If the player is close enough
         if (playerInRange && player != null)
@@ -225,12 +206,15 @@ public class ObstacleAvoidingEnemyController : EnemyControllerBase
 
         if (collision.CompareTag("Wall")) // trigger on wall tag object
         {
-            if (hitVFXPool == null) hitVFXPool = cont.enemyHitVFXPool;
-            GameObject hit = hitVFXPool.GetPooledObject();
-            hit.transform.position = spawnPos.transform.position;
-            hit.transform.rotation = collision.transform.rotation;
-            //bul.GetComponent<Rigidbody>().velocity = bod.velocity;
-            hit.SetActive(true);
+            if (cont != null && hitVFXPool == null)
+            {
+                hitVFXPool = cont.enemyHitVFXPool;
+                GameObject hit = hitVFXPool.GetPooledObject();
+                hit.transform.position = spawnPos.transform.position;
+                hit.transform.rotation = collision.transform.rotation;
+                //bul.GetComponent<Rigidbody>().velocity = bod.velocity;
+                hit.SetActive(true);
+            }
             Invoke("Disable", 0.001f);
         }
     }
