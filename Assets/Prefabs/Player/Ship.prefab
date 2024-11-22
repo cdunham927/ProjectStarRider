@@ -970,7 +970,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0
+      scalar: 30
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -10045,7 +10045,6 @@ MonoBehaviour:
   positionToSpawn: {fileID: 4638639763867632517}
   mat: {fileID: 2100000, guid: f18fe1169c46b2a46ae69874ab81131f, type: 2}
   DashVfx: {fileID: 4638639763063334899}
-  SpeedLineVfx: {fileID: 615927654669839435}
   meshRenderer: {fileID: 0}
   sys: {fileID: 615927654669839433}
   sysEmit: 1
@@ -10256,6 +10255,12 @@ MonoBehaviour:
   VfxPositionToSpawn: {fileID: 4638639763867632517}
   blinkDuration: 0.3
   blinkIntensity: 2
+  minEmission: 25
+  speedEmission: 10
+  maxEmission: 150
+  speedLerp: 0.5
+  emissionUpLerp: 0.75
+  emissionDownLerp: 25
 --- !u!65 &4638639762591759977
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -20883,11 +20888,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7262275620497145618, guid: 5af8fa4ddd7d50f4eb3349835e040d18, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.000000007152559
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7262275620497145618, guid: 5af8fa4ddd7d50f4eb3349835e040d18, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.060001247
+      value: -0.06000001
       objectReference: {fileID: 0}
     - target: {fileID: 7262275620497145618, guid: 5af8fa4ddd7d50f4eb3349835e040d18, type: 3}
       propertyPath: m_LocalPosition.z

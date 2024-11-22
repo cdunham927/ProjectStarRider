@@ -129,6 +129,11 @@ public class ObstacleAvoidingEnemyController : EnemyControllerBase
 
     }
 
+    void ChooseDirection()
+    {
+
+    }
+
     // Update is called once per frame
     protected override void Update()
     {

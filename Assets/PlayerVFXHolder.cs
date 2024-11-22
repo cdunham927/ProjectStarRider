@@ -35,6 +35,18 @@ public class PlayerVFXHolder :  MonoBehaviour
     GameObject dVfx;
     MeshRenderer meshRenderer;
 
+    public float minEmission;
+    public float speedEmission;
+    public float maxEmission;
+    public float speedLerp;
+    public float emissionUpLerp;
+    public float emissionDownLerp;
+    bool boosting = false;
+    bool speeding = false;
+    float curEmission = 0.0f;
+
+    ParticleSystem Speed;
+
     private void Awake()
     {
         dVfx = Instantiate(deathVFX);
@@ -42,6 +54,8 @@ public class PlayerVFXHolder :  MonoBehaviour
        
         meshRenderer = GetComponentInChildren<MeshRenderer>();
         stats = FindObjectOfType<Player_Stats>();
+
+        Speed = SpeedLines_VFX.GetComponent<ParticleSystem>();
     }
 
 
@@ -88,20 +102,52 @@ public class PlayerVFXHolder :  MonoBehaviour
        Input.GetAxis("XboxHorizontalTurn");
        Input.GetAxis("XboxVerticalTurn");
         */
-        
-        if (Input.GetAxis("XboxLeftTrigger") > 0 ) 
+
+        //Forward on joystick, mild speedlines
+        if (Input.GetButton("Vertical") || Input.GetAxis("Vertical") > 0)
+        {
+            speeding = true;
+        }
+        else
+        {
+            speeding = false;
+        }
+
+        //Boosting, major speedlines
+        if (Input.GetButton("MouseBoost") || Input.GetAxis("ControllerBoost") > 0)
         {
             //SpeedLines_VFX.SetActive(true);
-            SpeedLines();
-            
-
+            boosting = true;
         }
-
         else 
         {
-            ReduceSpeedLines();
-
+            boosting = false;
         }
+
+        var emission = Speed.emission;
+        if (speeding && !boosting)
+        {
+            curEmission = Mathf.Lerp(curEmission, speedEmission, Time.deltaTime * speedLerp);
+        }
+
+        if (boosting)
+        {
+            if (curEmission >= minEmission) curEmission = Mathf.Lerp(curEmission, maxEmission, Time.deltaTime * emissionUpLerp);
+            else
+            {
+                curEmission = minEmission;
+            }
+
+
+            //curEmission = minEmission;
+            //emission.rateOverTime = 50.0f;
+        }
+        if (!boosting && !speeding)
+        {
+            curEmission = Mathf.Lerp(curEmission, 0.0f, Time.deltaTime * emissionDownLerp);
+        }
+
+        emission.rateOverTime = curEmission;
     }
 
     public void Damage(int damageAmount) 
@@ -172,30 +218,6 @@ public class PlayerVFXHolder :  MonoBehaviour
     public void SetDamageable()
     {
         stats.invulnerable = false;
-    }
-
-   void SpeedLines()
-    {
-        //SpeedLines_VFX.SetActive(true);
-        ParticleSystem Speed = SpeedLines_VFX.GetComponent<ParticleSystem>();
-        var emission = Speed.emission;
-        emission.rateOverTime = 50.0f;
-        
-        
-    }
-
-    void ReduceSpeedLines() 
-    {
-        ParticleSystem Speed = SpeedLines_VFX.GetComponent<ParticleSystem>();
-        var emission = Speed.emission;
-        emission.rateOverTime = 50.0f;
-        if (Input.GetAxis("XboxLeftTrigger") <= 0)
-        {
-
-            emission.rateOverTime = 0.0f;
-
-        }
-
     }
 
 }
