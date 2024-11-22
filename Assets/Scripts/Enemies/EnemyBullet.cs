@@ -11,7 +11,7 @@ public class EnemyBullet : Bullet
     public GameObject collisonExplosion;
     private TrailRenderer trail;
 
-    public GameObject spawnPos;
+    //public GameObject spawnPos;
     public ObjectPool hitVFXPool;
     GameManager cont;
 
@@ -58,7 +58,8 @@ public class EnemyBullet : Bullet
             collision.gameObject.GetComponent<Player_Stats>().Damage(damage);
             if (hitVFXPool == null) hitVFXPool = cont.enemyHitVFXPool;
             GameObject hit = hitVFXPool.GetPooledObject();
-            hit.transform.position = spawnPos.transform.position;
+            //hit.transform.position = spawnPos.transform.position;
+            hit.transform.position = collision.transform.position;
             hit.transform.rotation = collision.transform.rotation;
             //bul.GetComponent<Rigidbody>().velocity = bod.velocity;
             hit.SetActive(true);
@@ -68,7 +69,7 @@ public class EnemyBullet : Bullet
         {
             if (hitVFXPool == null) hitVFXPool = cont.enemyHitVFXPool;
             GameObject hit = hitVFXPool.GetPooledObject();
-            hit.transform.position = spawnPos.transform.position;
+            hit.transform.position = collision.transform.position;
             hit.transform.rotation = collision.transform.rotation;
             //bul.GetComponent<Rigidbody>().velocity = bod.velocity;
             hit.SetActive(true);
@@ -79,7 +80,8 @@ public class EnemyBullet : Bullet
             collision.gameObject.GetComponent<DecoyController>().Damage();
             if (hitVFXPool == null) hitVFXPool = cont.enemyHitVFXPool;
             GameObject hit = hitVFXPool.GetPooledObject();
-            hit.transform.position = spawnPos.transform.position;
+            //hit.transform.position = spawnPos.transform.position;
+            hit.transform.position = collision.transform.position;
             hit.transform.rotation = collision.transform.rotation;
             //bul.GetComponent<Rigidbody>().velocity = bod.velocity;
             hit.SetActive(true);
@@ -91,7 +93,8 @@ public class EnemyBullet : Bullet
             //Invoke("DelayDestruction" , 0.5f);
             if (hitVFXPool == null) hitVFXPool = cont.enemyHitVFXPool;
             GameObject hit = hitVFXPool.GetPooledObject();
-            hit.transform.position = spawnPos.transform.position;
+            //hit.transform.position = spawnPos.transform.position;
+            hit.transform.position = collision.transform.position;
             hit.transform.rotation = collision.transform.rotation;
             //bul.GetComponent<Rigidbody>().velocity = bod.velocity;
             hit.SetActive(true);

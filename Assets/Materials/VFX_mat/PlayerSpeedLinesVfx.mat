@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: SpeedLines
+  m_Name: PlayerSpeedLinesVfx
   m_Shader: {fileID: -6465566751694194690, guid: 79e281b82f2b5f94fb864ceaf8116cf5, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords: []
@@ -75,6 +75,10 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _ScreenBorders:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _SpecGlossMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -94,13 +98,15 @@ Material:
     m_Ints: []
     m_Floats:
     - _AlphaClip: 0
-    - _Animation: 0
+    - _AlphaPower: 9.56
+    - _Animation: 0.76
+    - _Blackness: 0.3
     - _Blend: 0
     - _BumpScale: 1
     - _CastShadows: 0
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0
-    - _Cull: 2
+    - _Cull: 0
     - _Cutoff: 0.5
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
@@ -112,15 +118,17 @@ Material:
     - _LineCount: 266.5
     - _Line_Density: 0.5
     - _Line_Falloff: 0.25
+    - _Line_Length_Scale: 6.9
+    - _Line_Speed: 0.16
     - _LinesRemap: 0.32
     - _Lines_Power: 0
     - _Metallic: 0
-    - _NoiseScale: 0
+    - _NoiseScale: 7.64
     - _OcclusionStrength: 1
     - _Parallax: 0.005
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _RadialScale: 0
+    - _RadialScale: 0.721
     - _ReceiveShadows: 1
     - _Screen_Center_Mask_Edge: 0.5
     - _Screen_Center_Mask_Size: 0.036

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
+using Unity.Burst;
 using System;
 
 /// <summary>
@@ -16,6 +17,8 @@ public class PlayerVFXHolder :  MonoBehaviour
     [Header("Visual Effects: ")]
     public GameObject deathVFX;
     public GameObject healVFX;
+    //public ParticleSystem SpeedLines_VFX;
+    public GameObject SpeedLines_VFX;
     public Transform VfxPositionToSpawn;
 
     // vfx setting for player damage
@@ -72,6 +75,34 @@ public class PlayerVFXHolder :  MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        /*
+         Input.GetAxis("XboxLeftTrigger");
+        Input.GetAxis("XboxRightTrigger");
+        Input.GetAxis("XboxDpadHorizontal");
+        Input.GetAxis("XboxDpadVertical");
+        Input.GetAxis("XboxHorizontal");
+        Input.GetAxis("XboxVertical");
+       Input.GetAxis("XboxAltitude");
+       Input.GetAxis("XboxHorizontalTurn");
+       Input.GetAxis("XboxVerticalTurn");
+        */
+        
+        if (Input.GetAxis("XboxLeftTrigger") > 0 ) 
+        {
+            //SpeedLines_VFX.SetActive(true);
+            SpeedLines();
+            
+
+        }
+
+        else 
+        {
+            ReduceSpeedLines();
+
+        }
+    }
 
     public void Damage(int damageAmount) 
     {
@@ -142,4 +173,29 @@ public class PlayerVFXHolder :  MonoBehaviour
     {
         stats.invulnerable = false;
     }
+
+   void SpeedLines()
+    {
+        //SpeedLines_VFX.SetActive(true);
+        ParticleSystem Speed = SpeedLines_VFX.GetComponent<ParticleSystem>();
+        var emission = Speed.emission;
+        emission.rateOverTime = 50.0f;
+        
+        
+    }
+
+    void ReduceSpeedLines() 
+    {
+        ParticleSystem Speed = SpeedLines_VFX.GetComponent<ParticleSystem>();
+        var emission = Speed.emission;
+        emission.rateOverTime = 50.0f;
+        if (Input.GetAxis("XboxLeftTrigger") <= 0)
+        {
+
+            emission.rateOverTime = 0.0f;
+
+        }
+
+    }
+
 }

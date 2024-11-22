@@ -87,8 +87,8 @@ public class PlayerController : MonoBehaviour
     [Header(" Player Vfx Settings")]
     public GameObject DashVfx;
 
-    protected GameObject SpeedlinesPS;
-    public GameObject SpeedLineVfx;
+    //protected GameObject SpeedlinesPS;
+    //public GameObject SpeedLineVfx;
 
     [HideInInspector]
     public MeshRenderer meshRenderer;
@@ -152,8 +152,8 @@ public class PlayerController : MonoBehaviour
         dashPS.SetActive(false);
 
         //instatie Inactive Gameobjects Speed lines
-        SpeedlinesPS = Instantiate(SpeedLineVfx);
-        SpeedlinesPS.SetActive(false);
+        //SpeedlinesPS = Instantiate(SpeedLineVfx);
+        //SpeedlinesPS.SetActive(false);
     }
 
     protected Vector3 dashDir;
