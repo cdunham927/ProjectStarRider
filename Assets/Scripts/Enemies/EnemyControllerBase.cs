@@ -93,7 +93,7 @@ public class EnemyControllerBase : MonoBehaviour
     public EnemyManager manager;
 
     [Header("Damage Blink Settings : ")]
-    public float blinkDuration = 0.3f;
+    public float blinkDuration = 0.2f;
     public float blinkBrightness = 2.0f;
     float blinkTimer;
     public SkinnedMeshRenderer skinnedMeshRenderer;
@@ -374,7 +374,7 @@ public class EnemyControllerBase : MonoBehaviour
     protected void DamageBlink()
     {
         //Debug.Log("Enemy Blinking");
-        blinkDuration -= Time.deltaTime;
+        //blinkDuration -= Time.deltaTime;
 
         Material[] tempMats = skinnedMeshRenderer.materials;
         //tempMats[ind].color = Color.red * blinkBrightness;
@@ -391,10 +391,10 @@ public class EnemyControllerBase : MonoBehaviour
     void ResetMaterial()
     {
         //skinnedMeshRenderer.material.color = origCol;
-        Material[] tempMats = skinnedMeshRenderer.materials;
+        //Material[] tempMats = skinnedMeshRenderer.materials;
         //tempMats[ind].color = origCol;
-        skinnedMeshRenderer.materials = tempMats;
-        //skinnedMeshRenderer.material.color = Color.white;
+        //skinnedMeshRenderer.materials = tempMats;
+        skinnedMeshRenderer.material.SetColor("_Color", Color.white);
     }
 
 

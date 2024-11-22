@@ -20,18 +20,20 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: SpeedLines
+  m_Name: MainMenuActionLines
   m_Shader: {fileID: -6465566751694194690, guid: 79e281b82f2b5f94fb864ceaf8116cf5, type: 3}
-  m_ValidKeywords: []
+  m_ValidKeywords:
+  - _SURFACE_TYPE_TRANSPARENT
   m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 2000
+  m_CustomRenderQueue: 3000
   stringTagMap:
-    RenderType: Opaque
+    RenderType: Transparent
   disabledShaderPasses:
   - SHADOWCASTER
+  - DepthOnly
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
@@ -75,6 +77,10 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _ScreenBorders:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _SpecGlossMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -93,54 +99,59 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _Alpha: 1
     - _AlphaClip: 0
-    - _Animation: 0
-    - _Blend: 0
+    - _AlphaPower: 9.56
+    - _Animation: 0.81
+    - _Blackness: 0.3
+    - _Blend: 2
     - _BumpScale: 1
     - _CastShadows: 0
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0
-    - _Cull: 2
+    - _Cull: 0
     - _Cutoff: 0.5
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
-    - _DstBlend: 0
+    - _DstBlend: 1
     - _EnvironmentReflections: 1
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
-    - _LineCount: 266.5
-    - _Line_Density: 0.5
-    - _Line_Falloff: 0.25
+    - _LineCount: 180
+    - _Line_Density: 0.43
+    - _Line_Falloff: 0.231
+    - _Line_Length_Scale: 6.9
+    - _Line_Speed: 0.16
     - _LinesRemap: 0.32
     - _Lines_Power: 0
     - _Metallic: 0
-    - _NoiseScale: 0
+    - _NoiseScale: 2.7
     - _OcclusionStrength: 1
     - _Parallax: 0.005
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _RadialScale: 0
+    - _RadialScale: 0.632
     - _ReceiveShadows: 1
-    - _Screen_Center_Mask_Edge: 0.5
-    - _Screen_Center_Mask_Size: 0.036
+    - _Screen_Center_Mask_Edge: 0.501
+    - _Screen_Center_Mask_Size: 0.0389
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SphereMaskHardness: 0.4
     - _SphereMaskRadius: 0.51
-    - _SrcBlend: 1
-    - _Surface: 0
+    - _SrcBlend: 5
+    - _Surface: 1
     - _Tiling: 0
     - _WorkflowMode: 1
     - _ZTest: 4
-    - _ZWrite: 1
+    - _ZWrite: 0
     - _ZWriteControl: 0
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _LineColor: {r: 1, g: 1, b: 1, a: 0}
+    - _LineColor: {r: 1, g: 0.9858491, b: 0.9858491, a: 1}
     - _Screen_Center: {r: 0.5, g: 0.5, b: 0, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
     - _SphereMaskPower: {r: 0, g: 0, b: 0, a: 0}
