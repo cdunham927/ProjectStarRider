@@ -17,8 +17,8 @@ public class PlayerVFXHolder :  MonoBehaviour
     [Header("Visual Effects: ")]
     public GameObject deathVFX;
     public GameObject healVFX;
-    //public ParticleSystem SpeedLines_VFX;
     public GameObject SpeedLines_VFX;
+    public GameObject Dash_VFX;
     public Transform VfxPositionToSpawn;
 
     // vfx setting for player damage
@@ -35,6 +35,7 @@ public class PlayerVFXHolder :  MonoBehaviour
     GameObject dVfx;
     MeshRenderer meshRenderer;
 
+    [Header("Speed Lines Settings: ")]
     public float minEmission;
     public float speedEmission;
     public float maxEmission;
@@ -43,10 +44,12 @@ public class PlayerVFXHolder :  MonoBehaviour
     public float emissionDownLerp;
     bool boosting = false;
     bool speeding = false;
+    bool dashing = false;
     float curEmission = 0.0f;
+    float D_curEmission = 0.0f;
 
     ParticleSystem Speed;
-
+    ParticleSystem Dash;
     private void Awake()
     {
         dVfx = Instantiate(deathVFX);
@@ -56,6 +59,7 @@ public class PlayerVFXHolder :  MonoBehaviour
         stats = FindObjectOfType<Player_Stats>();
 
         Speed = SpeedLines_VFX.GetComponent<ParticleSystem>();
+        Dash = Dash_VFX.GetComponent<ParticleSystem>();
     }
 
 
@@ -91,63 +95,86 @@ public class PlayerVFXHolder :  MonoBehaviour
 
     private void Update()
     {
-        /*
-         Input.GetAxis("XboxLeftTrigger");
-        Input.GetAxis("XboxRightTrigger");
-        Input.GetAxis("XboxDpadHorizontal");
-        Input.GetAxis("XboxDpadVertical");
-        Input.GetAxis("XboxHorizontal");
-        Input.GetAxis("XboxVertical");
-       Input.GetAxis("XboxAltitude");
-       Input.GetAxis("XboxHorizontalTurn");
-       Input.GetAxis("XboxVerticalTurn");
-        */
+        //side dash 
+        if (Input.GetButton("SideDashRight") || Input.GetAxis("SideDashRight") > 0)
+        {
+            dashing = true;
+        }
+        else if (Input.GetButton("SideDashLeft") || Input.GetAxis("SideDashLeft") > 0)
+        {
+            dashing = true;
+        }
+        else 
+        {
+            dashing = false;
+        }
 
         //Forward on joystick, mild speedlines
         if (Input.GetButton("Vertical") || Input.GetAxis("Vertical") > 0)
         {
+           
             speeding = true;
+           
         }
         else
         {
             speeding = false;
+          
         }
 
         //Boosting, major speedlines
         if (Input.GetButton("MouseBoost") || Input.GetAxis("ControllerBoost") > 0)
         {
-            //SpeedLines_VFX.SetActive(true);
+           
             boosting = true;
+            dashing = true;
         }
         else 
         {
             boosting = false;
+            dashing = false;
         }
 
+        // emision Pasrticle system variable
         var emission = Speed.emission;
+        var Demission = Dash.emission;
+
+        
         if (speeding && !boosting)
         {
-            curEmission = Mathf.Lerp(curEmission, speedEmission, Time.deltaTime * speedLerp);
+            Speeding();
         }
 
-        if (boosting)
+        
+         if (boosting)
+         {
+             Boosting();
+         }
+
+        if (dashing) 
         {
-            if (curEmission >= minEmission) curEmission = Mathf.Lerp(curEmission, maxEmission, Time.deltaTime * emissionUpLerp);
-            else
-            {
-                curEmission = minEmission;
-            }
-
-
-            //curEmission = minEmission;
-            //emission.rateOverTime = 50.0f;
+            DashVFX();
         }
-        if (!boosting && !speeding)
+
+        if (!dashing ) 
         {
-            curEmission = Mathf.Lerp(curEmission, 0.0f, Time.deltaTime * emissionDownLerp);
+            D_curEmission = Mathf.Lerp(D_curEmission, 0.0f, Time.deltaTime * emissionDownLerp);
+          
+
         }
+        
+        if (!boosting && !speeding )
+        {
+           
+            LowerEmission();
+        }
+
+        
 
         emission.rateOverTime = curEmission;
+        Demission.rateOverTime = D_curEmission;
+
+       
     }
 
     public void Damage(int damageAmount) 
@@ -187,8 +214,6 @@ public class PlayerVFXHolder :  MonoBehaviour
 
     }
 
-   
-
     void DamageBlink()
     {
         //Debug.Log("Player Blinking");
@@ -207,6 +232,36 @@ public class PlayerVFXHolder :  MonoBehaviour
     void ResetMaterial()
     {
         meshRenderer.material.SetColor("_Color", Color.white );
+    }
+
+    void Speeding() 
+    {
+      
+        curEmission = Mathf.Lerp(curEmission, speedEmission, Time.deltaTime * speedLerp);
+ 
+    }
+
+    void Boosting()
+    {
+        if (curEmission >= minEmission)
+            curEmission = Mathf.Lerp(curEmission, maxEmission, Time.deltaTime * emissionUpLerp);
+        else
+        {
+            curEmission = minEmission;
+        }
+    }
+
+    void LowerEmission() 
+    {
+        curEmission = Mathf.Lerp(curEmission, 0.0f, Time.deltaTime * emissionDownLerp);
+        //D_curEmission = Mathf.Lerp(D_curEmission, 0.0f, Time.deltaTime * emissionDownLerp);
+    }
+
+    void DashVFX()
+    {
+
+        D_curEmission = Mathf.Lerp(D_curEmission, speedEmission, Time.deltaTime * speedLerp);
+      
     }
 
     public void SetInvunerable()
