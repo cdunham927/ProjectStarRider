@@ -148,8 +148,11 @@ public class PlayerController : MonoBehaviour
         //curActiveTime = 0;
 
         //instatie Inactive Gameobjects Dash Particel System 
-        dashPS = Instantiate(DashVfx);
-        dashPS.SetActive(false);
+
+
+
+        //dashPS = Instantiate(DashVfx);
+        //dashPS.SetActive(false);
 
         //instatie Inactive Gameobjects Speed lines
         //SpeedlinesPS = Instantiate(SpeedLineVfx);

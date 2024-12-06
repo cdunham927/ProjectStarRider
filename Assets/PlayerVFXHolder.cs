@@ -10,7 +10,7 @@ using System;
 /// based on button presses 
 /// script should read player inputs and stats
 /// </summary>
-public class PlayerVFXHolder :  MonoBehaviour
+public class PlayerVFXHolder : MonoBehaviour
 {
 
     // assign and place vfx here
@@ -28,8 +28,8 @@ public class PlayerVFXHolder :  MonoBehaviour
 
     //refercnce to player stats
     protected Player_Stats stats;
-    
-   
+
+
 
     GameManager gm;
     GameObject dVfx;
@@ -44,9 +44,13 @@ public class PlayerVFXHolder :  MonoBehaviour
     public float emissionDownLerp;
     bool boosting = false;
     bool speeding = false;
+    bool sidedash = false;
     bool dashing = false;
     float curEmission = 0.0f;
     float D_curEmission = 0.0f;
+    public float dashParts = 1f;
+    float dashTime = 0.0f;
+    float dashTimeToZero = 1f;
 
     ParticleSystem Speed;
     ParticleSystem Dash;
@@ -54,12 +58,14 @@ public class PlayerVFXHolder :  MonoBehaviour
     {
         dVfx = Instantiate(deathVFX);
         dVfx.SetActive(false);
-       
+
         meshRenderer = GetComponentInChildren<MeshRenderer>();
         stats = FindObjectOfType<Player_Stats>();
 
         Speed = SpeedLines_VFX.GetComponent<ParticleSystem>();
         Dash = Dash_VFX.GetComponent<ParticleSystem>();
+
+        if (!Dash.gameObject.activeSelf) Dash.gameObject.SetActive(true);
     }
 
 
@@ -67,7 +73,7 @@ public class PlayerVFXHolder :  MonoBehaviour
     {
         if (!stats.PlayerDead)
         {
-            
+
             HealBlink();
             Invoke("ResetGradient", blinkDuration);
             Instantiate(healVFX, VfxPositionToSpawn.transform.position, transform.rotation);
@@ -86,118 +92,125 @@ public class PlayerVFXHolder :  MonoBehaviour
                     //healVFX.SetActive(true);
                 }
             }
-            
-           
 
-           
+
+
+
         }
     }
 
     private void Update()
-    {
+    {   //|| Input.GetAxis("SideDashLeft") > 0
         //side dash 
-        if (Input.GetButton("SideDashRight") || Input.GetAxis("SideDashRight") > 0)
+        if (Input.GetButtonDown("SideDashRight") && dashTime <= 0)
         {
-            dashing = true;
-            D_curEmission = Mathf.Lerp(D_curEmission, speedEmission, Time.deltaTime * speedLerp);
-
-        }
-        else if (Input.GetButton("SideDashLeft") || Input.GetAxis("SideDashLeft") > 0)
-        {
+            dashTime = dashTimeToZero;
             dashing = true;
         }
-        else 
+        else if (Input.GetButtonDown("SideDashLeft") && dashTime <= 0)
+        {
+            dashTime = dashTimeToZero;
+            dashing = true;
+        }
+        else
         {
             dashing = false;
         }
+        
+        //if (!Dash.gameObject.activeSelf) Dash.gameObject.SetActive(true);
+        //D_curEmission = 1;
+
+        if (dashTime > 0)
+        {
+            dashTime -= Time.deltaTime;
+            D_curEmission = dashParts;
+        }
+        else
+        {
+            D_curEmission = 0.0f;
+        }
+
+        //if ((Input.GetButtonUp("SideDashRight") || Mathf.Abs(Input.GetAxis("SideDashRight")) < 0.1f || Input.GetButtonUp("SideDashLeft") || Mathf.Abs(Input.GetAxis("SideDashLeft")) < 0.1f))
+        //{
+        //    Invoke("ResetSidedash", 1f);
+        //}
+
+        //if (sidedash)
+        //{
+        //    D_curEmission = Mathf.Lerp(D_curEmission, speedEmission, Time.deltaTime * speedLerp);
+        //}
+        //else
+        //{
+        //    D_curEmission = Mathf.Lerp(D_curEmission, 0f, Time.deltaTime * speedLerp);
+        //}
 
         //Forward on joystick, mild speedlines
         if (Input.GetButton("Vertical") || Input.GetAxis("Vertical") > 0)
         {
-           
             speeding = true;
-           
         }
         else
         {
             speeding = false;
-          
         }
 
         //Boosting, major speedlines
         if (Input.GetButton("MouseBoost") || Input.GetAxis("ControllerBoost") > 0)
         {
-           
+
             boosting = true;
-            dashing = true;
+            //dashing = true;
         }
-        else 
+        else
         {
             boosting = false;
-            dashing = false;
+            //dashing = false;
         }
 
         // emision Pasrticle system variable
         var emission = Speed.emission;
         var Demission = Dash.emission;
 
-        
+
         if (speeding && !boosting)
         {
             Speeding();
         }
 
-        
-         if (boosting)
-         {
-             Boosting();
-         }
-
-        if (dashing) 
+        if (boosting)
         {
-            DashVFX();
+            Boosting();
         }
 
-        if (!dashing ) 
+        if (!boosting && !speeding)
         {
-            D_curEmission = Mathf.Lerp(D_curEmission, 0.0f, Time.deltaTime * emissionDownLerp);
-          
 
-        }
-        
-        if (!boosting && !speeding )
-        {
-           
             LowerEmission();
         }
 
-        
-
         emission.rateOverTime = curEmission;
         Demission.rateOverTime = D_curEmission;
-
-       
     }
 
-    public void Damage(int damageAmount) 
+    public void Damage(int damageAmount)
     {
         if (!gm.gameIsOver)
         {
             if (!stats.invulnerable)
             {
-             
+
                 //anything that takes place when the hp is zero should go here
-                
+
                 DamageBlink();
-                
+
                 //Play damage sound
-             
+
 
                 //healthImage.color = hitColor;
-               
+
                 Invoke("ResetGradient", blinkDuration);
 
-               
+
                 if (stats.Curr_hp <= 0)
                 {
                     //Spawn death vfx
@@ -207,10 +220,7 @@ public class PlayerVFXHolder :  MonoBehaviour
                     dVfx.SetActive(true);
                     //o.transform.SetParent(this.transform);
                     //Debug.Log("Player dying");
-                    
                 }
-
-                
             }
         }
 
@@ -219,7 +229,7 @@ public class PlayerVFXHolder :  MonoBehaviour
     void DamageBlink()
     {
         //Debug.Log("Player Blinking");
-        meshRenderer.material.SetColor("_Color" ,Color.red * blinkIntensity );
+        meshRenderer.material.SetColor("_Color", Color.red * blinkIntensity);
         Invoke("ResetMaterial", blinkDuration);
     }
 
@@ -227,20 +237,18 @@ public class PlayerVFXHolder :  MonoBehaviour
     {
         //Debug.Log("Player Healed");
         meshRenderer.material.SetColor("_Color", Color.green * blinkIntensity);
-       
+
         Invoke("ResetMaterial", blinkDuration);
     }
 
     void ResetMaterial()
     {
-        meshRenderer.material.SetColor("_Color", Color.white );
+        meshRenderer.material.SetColor("_Color", Color.white);
     }
 
-    void Speeding() 
+    void Speeding()
     {
-      
         curEmission = Mathf.Lerp(curEmission, speedEmission, Time.deltaTime * speedLerp);
- 
     }
 
     void Boosting()
@@ -253,17 +261,15 @@ public class PlayerVFXHolder :  MonoBehaviour
         }
     }
 
-    void LowerEmission() 
+    void LowerEmission()
     {
         curEmission = Mathf.Lerp(curEmission, 0.0f, Time.deltaTime * emissionDownLerp);
         //D_curEmission = Mathf.Lerp(D_curEmission, 0.0f, Time.deltaTime * emissionDownLerp);
     }
 
-    void DashVFX()
+    void ResetSidedash()
     {
-
-        D_curEmission = Mathf.Lerp(D_curEmission, speedEmission, Time.deltaTime * speedLerp);
-      
+        sidedash = false;
     }
 
     public void SetInvunerable()

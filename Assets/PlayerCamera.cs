@@ -22,7 +22,7 @@ public class PlayerCamera : MonoBehaviour
     private void Awake()
     {
         CinemachineBrain brain = Camera.main.GetComponent<CinemachineBrain>();
-        CinemachineVirtualCamera specificCamera = GameObject.Find("MyVirtualCamera").GetComponent<CinemachineVirtualCamera>();
+        //CinemachineVirtualCamera specificCamera = GameObject.Find("MyVirtualCamera").GetComponent<CinemachineVirtualCamera>();
         if (brain == null)
         {
             brain = Camera.main.gameObject.AddComponent<CinemachineBrain>();
