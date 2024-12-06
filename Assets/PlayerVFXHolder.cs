@@ -99,6 +99,8 @@ public class PlayerVFXHolder :  MonoBehaviour
         if (Input.GetButton("SideDashRight") || Input.GetAxis("SideDashRight") > 0)
         {
             dashing = true;
+            D_curEmission = Mathf.Lerp(D_curEmission, speedEmission, Time.deltaTime * speedLerp);
+
         }
         else if (Input.GetButton("SideDashLeft") || Input.GetAxis("SideDashLeft") > 0)
         {
