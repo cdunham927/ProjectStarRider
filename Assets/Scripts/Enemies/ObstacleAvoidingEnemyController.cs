@@ -107,7 +107,7 @@ public class ObstacleAvoidingEnemyController : EnemyControllerBase
         var desVel = chosenDir * curSpd;
         vel = Vector3.Lerp(vel, desVel, Time.deltaTime * steerForce);
         //Rotate obj too
-        transform.rotation = Quaternion.LookRotation(vel);
+        if(vel != Vector3.zero)transform.rotation = Quaternion.LookRotation(vel);
     }
 
     void SetInterest()

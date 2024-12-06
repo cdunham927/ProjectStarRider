@@ -682,6 +682,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e394fc6d70bc83d4d883aa3936afc51a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &287102551 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4112874366383624702, guid: b1eff018e926eaf4f936a38d2fc7e37c, type: 3}
+  m_PrefabInstance: {fileID: 1794914552}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4700f9f03ad19f94baf0367cb7a9c988, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &334776668
 GameObject:
   m_ObjectHideFlags: 0
@@ -2155,7 +2166,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302762743768171265, guid: 6b93a3113a51896478068f5d7da39efd, type: 3}
       propertyPath: field of view
-      value: 75
+      value: 119.64009
       objectReference: {fileID: 0}
     - target: {fileID: 4302762743768171265, guid: 6b93a3113a51896478068f5d7da39efd, type: 3}
       propertyPath: m_FocalLength
@@ -8166,6 +8177,14 @@ PrefabInstance:
       propertyPath: EmissionModule.rateOverTime.scalar
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4112874366383624702, guid: b1eff018e926eaf4f936a38d2fc7e37c, type: 3}
+      propertyPath: m_MaxFOV
+      value: 119.6401
+      objectReference: {fileID: 0}
+    - target: {fileID: 4112874366383624702, guid: b1eff018e926eaf4f936a38d2fc7e37c, type: 3}
+      propertyPath: m_MinFOV
+      value: 89.64005
+      objectReference: {fileID: 0}
     - target: {fileID: 4638639762591759981, guid: b1eff018e926eaf4f936a38d2fc7e37c, type: 3}
       propertyPath: m_Name
       value: Ship
@@ -8306,10 +8325,46 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 180
       objectReference: {fileID: 0}
+    - target: {fileID: 6974129906388013147, guid: b1eff018e926eaf4f936a38d2fc7e37c, type: 3}
+      propertyPath: m_Lens.FieldOfView
+      value: 120
+      objectReference: {fileID: 0}
+    - target: {fileID: 7700358716931397750, guid: b1eff018e926eaf4f936a38d2fc7e37c, type: 3}
+      propertyPath: defFov
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 7700358716931397750, guid: b1eff018e926eaf4f936a38d2fc7e37c, type: 3}
+      propertyPath: spdFov
+      value: 120
+      objectReference: {fileID: 0}
+    - target: {fileID: 7700358716931397750, guid: b1eff018e926eaf4f936a38d2fc7e37c, type: 3}
+      propertyPath: fovLerp
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7700358716931397750, guid: b1eff018e926eaf4f936a38d2fc7e37c, type: 3}
+      propertyPath: maxFastFov
+      value: 120
+      objectReference: {fileID: 0}
+    - target: {fileID: 7700358716931397750, guid: b1eff018e926eaf4f936a38d2fc7e37c, type: 3}
+      propertyPath: maxSlowFov
+      value: 75
+      objectReference: {fileID: 0}
+    - target: {fileID: 7700358716931397750, guid: b1eff018e926eaf4f936a38d2fc7e37c, type: 3}
+      propertyPath: minFastFov
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 7700358716931397750, guid: b1eff018e926eaf4f936a38d2fc7e37c, type: 3}
+      propertyPath: minSlowFov
+      value: 45
+      objectReference: {fileID: 0}
     - target: {fileID: 7700358716931397750, guid: b1eff018e926eaf4f936a38d2fc7e37c, type: 3}
       propertyPath: playercamera
       value: 
       objectReference: {fileID: 207998931}
+    - target: {fileID: 7700358716931397750, guid: b1eff018e926eaf4f936a38d2fc7e37c, type: 3}
+      propertyPath: specificCamera
+      value: 
+      objectReference: {fileID: 287102551}
     - target: {fileID: 8465689763232767971, guid: b1eff018e926eaf4f936a38d2fc7e37c, type: 3}
       propertyPath: m_IsActive
       value: 1
