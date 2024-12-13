@@ -42,9 +42,14 @@ public class ObstacleAvoidingEnemyController : EnemyControllerBase
     protected float[] interest;
     protected float[] danger;
     //Movement vars
-    Vector2 chosenDir = Vector2.zero;
+    Vector3 chosenDir = Vector3.zero;
     Vector3 vel = Vector3.zero;
     Vector2 accel = Vector2.zero;
+    //context based movement
+    public bool cbm = true;
+    public float cbmSpd;
+    public float drawLen;
+    public float yOffset = 15f;
 
     protected override void Awake()
     {
@@ -93,8 +98,8 @@ public class ObstacleAvoidingEnemyController : EnemyControllerBase
             //Debug.DrawRay(transform.position, Quaternion.Euler(rayDirections[i]), Color.red, castDistance);
             for (int i = 0; i < rayDirections.Length; i++)
             {
-                Gizmos.color = Color.red;
-                Debug.DrawRay(transform.position, rayDirections[i] * rayLength);
+                //Gizmos.color = Color.red;
+                //Debug.DrawRay(transform.position, rayDirections[i] * rayLength);
             }
         }
     }
@@ -104,7 +109,7 @@ public class ObstacleAvoidingEnemyController : EnemyControllerBase
         SetInterest();
         SetDanger();
         ChooseDirection();
-        var desVel = chosenDir * curSpd;
+        var desVel = chosenDir * cbmSpd;
         vel = Vector3.Lerp(vel, desVel, Time.deltaTime * steerForce);
         //Rotate obj too
         if(vel != Vector3.zero)transform.rotation = Quaternion.LookRotation(vel);
@@ -120,25 +125,66 @@ public class ObstacleAvoidingEnemyController : EnemyControllerBase
         for (int i = 0; i < numRays; i++)
         {
             var d = Vector3.Dot(rayDirections[i], player.transform.position - transform.position);
-            interest[i] = Mathf.Clamp(interest[i], 0, d);
+            interest[i] = Mathf.Max(interest[i], 0, d);
         }
     }
 
     void SetDanger()
     {
-
+        for (int i = 0; i < numRays; i++)
+        {
+            //Check directions, set danger if we hit anything with a raycast
+            if (Physics.Raycast(transform.position, rayDirections[i] * rayLength, hitMask))
+            {
+                danger[i] = weight;
+            }
+            else
+            {
+                danger[i] = 0f;
+            }
+        }
     }
 
     void ChooseDirection()
     {
-
+        for (int i = 0; i < numRays; i++)
+        {
+            //If theres any danger in a direction, we cant go that way
+            if (danger[i] > 0)
+                interest[i] = -weight;
+        }
+        //add all directions together to get desired direction
+        chosenDir = Vector3.zero;
+        for (int i = 0; i < numRays; i++)
+        {
+            chosenDir += rayDirections[i] * interest[i];
+        }
+        //normalize vector
+        chosenDir = chosenDir.normalized;
+        //Debug.DrawLine(transform.position, (transform.position + (Vector3)chosenDir) * drawLen);
     }
 
     // Update is called once per frame
     protected override void Update()
     {
-        ContextMove();
-        bod.AddForce(vel * Time.deltaTime);
+        if (cbm)
+        {
+            distance = Vector3.Distance(transform.position, player.transform.position);
+            if ((stopsBeforePlayer && distance > stopDistance) || !stopsBeforePlayer)
+            {
+                ContextMove();
+                bod.AddForce(vel * Time.deltaTime);
+
+                if ((player.transform.position.y - transform.position.y) > yOffset)
+                {
+                    bod.AddForce(Vector3.up * cbmSpd * Time.deltaTime);
+                }
+                else if ((player.transform.position.y - transform.position.y) < -yOffset)
+                {
+                    bod.AddForce(-Vector3.up * cbmSpd * Time.deltaTime);
+                }
+            }
+        }
 
         //If the player is close enough
         if (playerInRange && player != null)
@@ -158,19 +204,20 @@ public class ObstacleAvoidingEnemyController : EnemyControllerBase
             //    ChangeState(enemystates.alert);
             //}
 
-            distance = Vector3.Distance(transform.position, player.transform.position);
-            if ((stopsBeforePlayer && distance > stopDistance) || !stopsBeforePlayer)
+            if (!cbm)
             {
-                Vector3 targDir = player.transform.position - transform.position;
-                Vector3 newDir = Vector3.RotateTowards(transform.forward, targDir, lerpSpd * Time.deltaTime, 0.0f);
-                transform.rotation = Quaternion.LookRotation(newDir);
+                distance = Vector3.Distance(transform.position, player.transform.position);
+                if ((stopsBeforePlayer && distance > stopDistance) || !stopsBeforePlayer)
+                {
+                    Vector3 targDir = player.transform.position - transform.position;
+                    Vector3 newDir = Vector3.RotateTowards(transform.forward, targDir, lerpSpd * Time.deltaTime, 0.0f);
+                    transform.rotation = Quaternion.LookRotation(newDir);
 
-                //bod.velocity = ((transform.forward * (1.0f + Time.fixedDeltaTime)) * curSpd; //velcoity algorthim for the porjectile
-                bod.velocity = (rayDir * (1.0f + Time.fixedDeltaTime)) * curSpd; //velocity algorthim for the porjectile
+                    //bod.velocity = ((transform.forward * (1.0f + Time.fixedDeltaTime)) * curSpd; //velcoity algorthim for the porjectile
+                    bod.velocity = (rayDir * (1.0f + Time.fixedDeltaTime)) * curSpd; //velocity algorthim for the porjectile
+                }
             }
         }
-
-
     }
 
     protected override void Alert()
