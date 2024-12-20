@@ -16,9 +16,6 @@ public class PlayerAbility : MonoBehaviour
     public float maxImagesTime = 40f;
     public float rechargeSpd = 2.5f;
 
-    public GameObject decoy;
-    public Transform positionToSpawn;
-
     // Start is called before the first frame update
     public virtual void Awake()
     {
@@ -73,18 +70,8 @@ public class PlayerAbility : MonoBehaviour
         cont.AS.PlayOneShot(cont.PlayerSfx[0]);
     }
 
-    public void DodgeAbility()
+    public virtual void DodgeAbility()
     {
-        if (curActiveTime > (oneCharge))
-        {
-            if (cont.meshRenderer != null) cont.meshRenderer.material.color = Color.yellow * cont.blinkIntensity;
-            Invoke("ResetMaterial", cont.blinkDuration);
 
-            Instantiate(decoy, positionToSpawn.transform.position, transform.rotation);
-
-            curActiveTime -= oneCharge;
-            //decoy sfx
-            AS.PlayOneShot(cont.PlayerSfx[0]);
-        }
     }
 }

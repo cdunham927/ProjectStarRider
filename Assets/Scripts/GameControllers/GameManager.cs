@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour
     public GameObject explosionPoolPrefab;
     //Player needs to grab from this pool
     public GameObject playerBulletPoolPrefab;
+    public GameObject[] playerBulletPrefabList;
     //Enemies need to grab from this pool
     public GameObject enemyBulletPoolPrefab;
     //Enemies need to grab from this pool
@@ -221,7 +222,18 @@ public class GameManager : MonoBehaviour
         hpPool = Instantiate(hpPoolPrefab).GetComponent<ObjectPool>();
         bombPool = Instantiate(bombPoolPrefab).GetComponent<ObjectPool>();
         explosionPool = Instantiate(explosionPoolPrefab).GetComponent<ObjectPool>();
-        bulPool = Instantiate(playerBulletPoolPrefab).GetComponent<ObjectPool>(); ;
+
+        if (PlayerPrefs.HasKey("CharacterSelect"))
+        {
+            Debug.Log("Character: " + PlayerPrefs.GetInt("CharacterSelect"));
+            bulPool = Instantiate(playerBulletPrefabList[PlayerPrefs.GetInt("CharacterSelect")]).GetComponent<ObjectPool>();
+        }
+        else
+        {
+            Debug.Log("No character select playerpref");
+            bulPool = Instantiate(playerBulletPoolPrefab).GetComponent<ObjectPool>();
+        }
+
         enemyBulPool = Instantiate(enemyBulletPoolPrefab).GetComponent<ObjectPool>();
         enemySGPool = Instantiate(enemySGBulletPoolPrefab).GetComponent<ObjectPool>();
         enemySnipePool = Instantiate(enemySnipeBulletPoolPrefab).GetComponent<ObjectPool>();

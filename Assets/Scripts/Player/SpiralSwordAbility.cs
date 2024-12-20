@@ -2,14 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AfterImageAbility : PlayerAbility
+public class SpiralSwordAbility : PlayerAbility
 {
     [Header("AfterImage Object : ")]
     public GameObject[] afterimages;
-
-
-    public GameObject decoy;
-    public Transform positionToSpawn;
 
     bool allActive;
 
@@ -56,16 +52,6 @@ public class AfterImageAbility : PlayerAbility
 
     public override void DodgeAbility()
     {
-        if (curActiveTime > (oneCharge))
-        {
-            if (cont.meshRenderer != null) cont.meshRenderer.material.color = Color.yellow * cont.blinkIntensity;
-            Invoke("ResetMaterial", cont.blinkDuration);
 
-            Instantiate(decoy, positionToSpawn.transform.position, transform.rotation);
-
-            curActiveTime -= oneCharge;
-            //decoy sfx
-            AS.PlayOneShot(cont.PlayerSfx[0]);
-        }
     }
 }
