@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7262275620497145619}
   - component: {fileID: 5754526031916603689}
   - component: {fileID: 4400582474091118264}
-  - component: {fileID: 9080694895619899436}
+  - component: {fileID: 3746874429996666380}
   - component: {fileID: 392889718532170595}
   - component: {fileID: 4610293632587941305}
   m_Layer: 0
@@ -125,7 +125,7 @@ MonoBehaviour:
   m_Damping: 8
   m_MinFOV: 29
   m_MaxFOV: 75
---- !u!114 &9080694895619899436
+--- !u!114 &3746874429996666380
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -134,18 +134,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 7262275620497145628}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0c11265b855408d42af33d62691f5194, type: 3}
+  m_Script: {fileID: 11500000, guid: 00b2d199b96b516448144ab30fb26aed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_ApplyAfter: 2
   m_ChannelMask: 1
   m_Gain: 1
   m_Use2DDistance: 0
-  m_UseLocalSpace: 1
+  m_UseCameraSpace: 1
   m_ReactionSettings:
-    m_SecondaryNoise: {fileID: 0}
-    m_AmplitudeGain: 1
-    m_FrequencyGain: 1
-    m_Duration: 1
+    m_SecondaryNoise: {fileID: 11400000, guid: 69ce8388f6785dd4c8c39915efece2f4, type: 2}
+    m_AmplitudeGain: 0.1
+    m_FrequencyGain: 0.1
+    m_Duration: 5
     m_NoiseOffsets: {x: 0, y: 0, z: 0}
 --- !u!114 &392889718532170595
 MonoBehaviour:
@@ -322,7 +323,7 @@ MonoBehaviour:
   m_TargetMovementOnly: 1
   m_ScreenX: 0.5
   m_ScreenY: 0.5
-  m_CameraDistance: 10
+  m_CameraDistance: 4
   m_DeadZoneWidth: 0
   m_DeadZoneHeight: 0.008097166
   m_DeadZoneDepth: 0
