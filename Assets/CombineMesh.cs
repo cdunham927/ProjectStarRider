@@ -17,11 +17,13 @@ public class CombineMesh : MonoBehaviour
         {
             // Collects  meshes
             MeshFilter filter = child.GetComponent<MeshFilter>();
-            combine[index].mesh = filter.sharedMesh;
-            combine[index].transform = child.localToWorldMatrix;
-            child.gameObject.SetActive(false);
-            index++;
-
+            if (filter != null)
+            {
+                combine[index].mesh = filter.sharedMesh;
+                combine[index].transform = child.localToWorldMatrix;
+                child.gameObject.SetActive(false);
+                index++;
+            }
         }
 
         //combines meshes

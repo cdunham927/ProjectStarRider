@@ -180,12 +180,15 @@ public class EnemyControllerBase : MonoBehaviour
         if (minimapObj != null) minimapObj.SetActive(true);
 
         //Enemy Indicator
-        eI = Instantiate(enemyIndicator).GetComponent<EnemyIndicator>();
-        if (eI != null && cont != null)
+        if (enemyIndicator != null)
         {
-            eI.transform.SetParent(null);
-            eI.enemy = gameObject;
-            eI.transform.SetParent(cont.transform);
+            eI = Instantiate(enemyIndicator).GetComponent<EnemyIndicator>();
+            if (eI != null && cont != null)
+            {
+                eI.transform.SetParent(null);
+                eI.enemy = gameObject;
+                eI.transform.SetParent(cont.transform);
+            }
         }
     }
 

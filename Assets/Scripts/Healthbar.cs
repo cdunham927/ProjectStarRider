@@ -27,17 +27,23 @@ public class Healthbar : MonoBehaviour
     public float size;
     //public Shapes.Rectangle innerRect;
 
+    public bool bossUI;
+
 
     private void Awake()
     {
-        stats = GetComponent<EnemyControllerBase>();
+        if (!bossUI) stats = GetComponent<EnemyControllerBase>();
         cam = FindObjectOfType<Camera>();
         //startPos = canv.transform.localPosition;
         player = FindObjectOfType<PlayerController>();
+
+        if (bossUI)
+            stats = FindObjectOfType<BossControllerBase>();
     }
 
     private void LateUpdate()
     {
+
         if (player != null && player.gameObject.activeInHierarchy)
         {
             //slider.transform.LookAt(transform.position + Camera.main.transform.rotation * Vector3.forward, Camera.main.transform.rotation * Vector3.up);
@@ -56,8 +62,11 @@ public class Healthbar : MonoBehaviour
 
     private void OnEnable()
     {
-        SwitchUIActive(false);
-        SetMaxHealth((int)stats.maxHp);
+        if (stats != null)
+        {
+            SwitchUIActive(false);
+            SetMaxHealth((int)stats.maxHp);
+        }
 
         //canv.transform.SetParent(stats.transform);
         //canv.transform.localPosition = startPos;
@@ -90,12 +99,16 @@ public class Healthbar : MonoBehaviour
 
     private void Update()
     {
-        if (otherSlider != null) otherSlider.fillAmount = Mathf.Lerp(otherSlider.fillAmount, otherSlider.fillAmount = (float)stats.curHp / (float)stats.maxHp, lerpSpd * Time.deltaTime);
-        if (otherSliderRed != null) otherSliderRed.fillAmount = Mathf.Lerp(otherSliderRed.fillAmount, otherSliderRed.fillAmount = (float)stats.curHp / (float)stats.maxHp, slowLerpSpd * Time.deltaTime);
-
-        if (otherSlider == null && otherSliderRed == null)
+        if (stats != null)
         {
-            slider.fillAmount = Mathf.Lerp(slider.fillAmount, (float)stats.curHp / (float)stats.maxHp, 10f * Time.deltaTime);
+
+            if (otherSlider != null) otherSlider.fillAmount = Mathf.Lerp(otherSlider.fillAmount, otherSlider.fillAmount = (float)stats.curHp / (float)stats.maxHp, lerpSpd * Time.deltaTime);
+            if (otherSliderRed != null) otherSliderRed.fillAmount = Mathf.Lerp(otherSliderRed.fillAmount, otherSliderRed.fillAmount = (float)stats.curHp / (float)stats.maxHp, slowLerpSpd * Time.deltaTime);
+
+            if (otherSlider == null && otherSliderRed == null)
+            {
+                slider.fillAmount = Mathf.Lerp(slider.fillAmount, (float)stats.curHp / (float)stats.maxHp, 10f * Time.deltaTime);
+            }
         }
     }
 }
