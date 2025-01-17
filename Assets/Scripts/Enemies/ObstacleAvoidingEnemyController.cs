@@ -50,6 +50,7 @@ public class ObstacleAvoidingEnemyController : EnemyControllerBase
     public float cbmSpd;
     public float drawLen;
     public float yOffset = 15f;
+    public float straightCheckRange = 300f;
 
     protected override void Awake()
     {
@@ -170,7 +171,20 @@ public class ObstacleAvoidingEnemyController : EnemyControllerBase
         if (cbm)
         {
             distance = Vector3.Distance(transform.position, player.transform.position);
-            if ((stopsBeforePlayer && distance > stopDistance) || !stopsBeforePlayer)
+            if (distance < straightCheckRange && (stopsBeforePlayer && distance > stopDistance))
+            {
+                Debug.Log("Going straight for player");
+                if (Physics.Raycast(transform.position, player.transform.position - transform.position, straightCheckRange, hitMask))
+                {
+                    Debug.Log("Something in the way");
+                }
+                else
+                {
+                    Debug.Log("Nothing blocking");
+                    bod.AddForce((player.transform.position - transform.position) * cbmSpd * Time.deltaTime);
+                }
+            }
+            else if (distance > straightCheckRange && (stopsBeforePlayer && distance > stopDistance) || !stopsBeforePlayer)
             {
                 ContextMove();
                 bod.AddForce(vel * Time.deltaTime);
