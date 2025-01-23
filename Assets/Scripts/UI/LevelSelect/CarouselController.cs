@@ -118,7 +118,7 @@ public class CarouselController : MonoBehaviour
             //cam.LookAt = children[curSelected].camLook;
 
             //Change level text
-            levelText.text = "Level " + (curSelected + 1).ToString() + "\n" + children[curSelected].levelName;
+            //levelText.text = "Level " + (curSelected + 1).ToString() + "\n" + children[curSelected].levelName;
         }
     }
 
