@@ -57,6 +57,7 @@ public class Player_Bullet : Bullet
     {
         if (col.CompareTag("Enemy"))
         {
+            Debug.Log(col.name);
             //Debug.Log("Hit Enemy");
             col.gameObject.GetComponent<EnemyControllerBase>().Damage(damage);
             //ContactPoint cp = col.GetContact(0);
@@ -74,6 +75,7 @@ public class Player_Bullet : Bullet
         }
         if (col.CompareTag("RaceEnemy"))
         {
+            Debug.Log(col.name);
             //Debug.Log("Hit Enemy");
             col.gameObject.GetComponent<RaceEnemy>().Shot();
             //ContactPoint cp = col.GetContact(0);
@@ -92,6 +94,7 @@ public class Player_Bullet : Bullet
 
         if (col.CompareTag("DWall"))
         {
+            Debug.Log(col.name);
             col.gameObject.GetComponent<DestructibleObject>().TakeDamage(damage);
             //ContactPoint cp = col.GetContact(0);
             if (hitVFXPool == null) hitVFXPool = cont.hitVFXPool;
@@ -109,6 +112,7 @@ public class Player_Bullet : Bullet
     
         if (col.CompareTag("BossHitPoint"))
         {
+            Debug.Log(col.name);
             //Debug.Log("Hit Enemy");
             col.gameObject.GetComponent<BossHitPointController>().Damage(damage);
             //ContactPoint cp = col.GetContact(0);
@@ -127,6 +131,7 @@ public class Player_Bullet : Bullet
     
         if (col.CompareTag("Barrier"))
         {
+            Debug.Log(col.name);
             //Debug.Log("Hit Enemy");
             col.gameObject.GetComponent<BarrierController>().Damage(damage);
             //ContactPoint cp = col.GetContact(0);
@@ -145,6 +150,7 @@ public class Player_Bullet : Bullet
     
         if (col.CompareTag("Wall"))
         {
+            Debug.Log(col.name);
             if (hitVFXPool == null) hitVFXPool = cont.hitVFXPool;
     
             //Reflect bullet
@@ -166,6 +172,7 @@ public class Player_Bullet : Bullet
     
         if (col.CompareTag("DestructBullets"))
         {
+            Debug.Log(col.name);
             //Debug.Log("Hit Enemy");
             col.gameObject.GetComponent<DestructableBullets>().Damage(damage);
             //ContactPoint cp = col.GetContact(0);
