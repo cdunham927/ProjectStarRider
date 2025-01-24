@@ -130,6 +130,10 @@ public class EnemyControllerBase : MonoBehaviour
 
     //public MeshRenderer mesh;
 
+    public bool hasIframes = false;
+    float iframes;
+    public float iframeTime = 0.2f;
+
     private void Start()
     {
      
@@ -243,6 +247,8 @@ public class EnemyControllerBase : MonoBehaviour
                 break;
         }
 
+        if (hasIframes & iframes > 0) iframes -= Time.deltaTime;
+
         if (eI != null)
         {
             if (skinnedMeshRenderer.isVisible)
@@ -280,11 +286,24 @@ public class EnemyControllerBase : MonoBehaviour
 
     public virtual void Damage(int damageAmount)
     {
-        if (anim != null) anim.SetTrigger("Hit");
-        hpBar.SwitchUIActive(true);
-        curHp -= damageAmount;
-        //healthScript.SetHealth((int)curHp);
-        DamageBlink();
+        if (hasIframes && iframes <= 0)
+        {
+            if (anim != null) anim.SetTrigger("Hit");
+            hpBar.SwitchUIActive(true);
+            curHp -= damageAmount;
+            //healthScript.SetHealth((int)curHp);
+            DamageBlink();
+
+            iframes = iframeTime;
+        }
+        if (!hasIframes)
+        {
+            if (anim != null) anim.SetTrigger("Hit");
+            hpBar.SwitchUIActive(true);
+            curHp -= damageAmount;
+            //healthScript.SetHealth((int)curHp);
+            DamageBlink();
+        }
         //Debug.Log("Enemy took damage");
 
         //DamageBlinking

@@ -18,6 +18,8 @@ public class GameManager : MonoBehaviour
     public GameObject bombPoolPrefab;
     //Enemies need to grab from this pool
     public GameObject explosionPoolPrefab;
+    //Enemies need to grab from this pool
+    public GameObject playerExplosionPoolPrefab;
     //Player needs to grab from this pool
     public GameObject playerBulletPoolPrefab;
     public GameObject[] playerBulletPrefabList;
@@ -71,6 +73,8 @@ public class GameManager : MonoBehaviour
     public ObjectPool bombPool;
     [HideInInspector]
     public ObjectPool explosionPool;
+    [HideInInspector]
+    public ObjectPool playerExplosionPool;
     [HideInInspector]
     public ObjectPool bulPool;
     [HideInInspector]
@@ -222,6 +226,7 @@ public class GameManager : MonoBehaviour
         hpPool = Instantiate(hpPoolPrefab).GetComponent<ObjectPool>();
         bombPool = Instantiate(bombPoolPrefab).GetComponent<ObjectPool>();
         explosionPool = Instantiate(explosionPoolPrefab).GetComponent<ObjectPool>();
+        playerExplosionPool = Instantiate(playerExplosionPoolPrefab).GetComponent<ObjectPool>();
 
         if (PlayerPrefs.HasKey("CharacterSelect"))
         {

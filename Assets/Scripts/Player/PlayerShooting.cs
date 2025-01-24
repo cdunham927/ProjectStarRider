@@ -49,6 +49,10 @@ public class PlayerShooting : MonoBehaviour
     ShipController ship;
     public bool affectsCursor;
 
+    public bool chargedShot = false;
+    float curCharge;
+    public float chargeTime;
+
     private void Awake()
     {
         player = FindObjectOfType<PlayerController>();
@@ -109,12 +113,35 @@ public class PlayerShooting : MonoBehaviour
             debugTransform.position = raycastHit.point;
             mouseWorldPosition = raycastHit.point;
         }
-        
-        if ((Input.GetButton("Fire1") || Input.GetAxis("Altfire1") > 0) && curShootCools <= 0f && !gm.gameIsPaused)
+
+        if (!chargedShot && (Input.GetButton("Fire1") || Input.GetAxis("Altfire1") > 0) && curShootCools <= 0f && !gm.gameIsPaused)
         {
             Shoot(true);
             PlaySound();
         }
+
+        //Charge shot stuff start
+        //
+        //If we have a charge shot and we're holding down the fire button, we start charging
+        if (chargedShot && (Input.GetButtonDown("Fire1") || Input.GetAxis("Altfire1") > 0) && curShootCools <= 0f && !gm.gameIsPaused)
+        {
+            curCharge += Time.deltaTime;
+        }
+
+        //If we let go of the charge button and we dont have enough charge, we uncharge the shot
+        if (chargedShot && curCharge >= 0 && (Input.GetButtonUp("Fire1") || Input.GetAxis("Altfire1") <= 0) && !gm.gameIsPaused)
+        {
+            curCharge -= Time.deltaTime;
+        }
+
+        //If we have a charge shot and we've held down the fire button long enough and let go, we shoot
+        if (chargedShot && curCharge >= chargeTime && (Input.GetButtonUp("Fire1") || Input.GetAxis("Altfire1") <= 0) && !gm.gameIsPaused)
+        {
+            Shoot(true);
+            PlaySound();
+        }
+        //
+        //Charge shot stuff end
 
         if (curShootCools > 0f) 
             curShootCools -= Time.deltaTime;
@@ -152,6 +179,11 @@ public class PlayerShooting : MonoBehaviour
         //Player Recoil
         bod.AddForce(-bod.transform.forward * recoilForce * Time.deltaTime, ForceMode.Impulse);
         PlayerIsShooting = newShooting;
+    }
+
+    public void ChargedShot()
+    {
+
     }
 
     public void PlaySound()
