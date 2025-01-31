@@ -32,16 +32,19 @@ public class CetusController : BossControllerBase
     public GameObject[] waveThreeWaterPillars;
 
     float curHpLoss = 0;
+   
     //In the 1st phase, every 20% hp lost will do sonic laser attack
     [Header(" Phase 1 Settings : ")]
     public bool phaseOneLossAttack = false;
     public float phaseOneLossPerc = 0.20f;
     float pOLA;
+    
     //In the 2nd phase, every 15% hp lost will do sonic laser attack
     [Header(" Phase 2 Settings : ")]
     public bool phaseTwoLossAttack = false;
     public float phaseTwoLossPerc = 0.15f;
     float pTLA;
+    
     //In the 3rd phase, every 10% hp lost will do sonic laser attack
     [Header(" Phase 3 Settings : ")]
     public bool phaseThreeLossAttack = false;

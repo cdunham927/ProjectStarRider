@@ -71,6 +71,10 @@ public class ShipController : MonoBehaviour
     bool turning = false;
     //public float turningSpd;
 
+    //Aniamtion State  make sure string match name of animations
+    const string BarrelRoll = "StarRiderShip|BarrelRoll";
+    const string DamageSpin = "StarRiderShip|Spin";
+
     private void Awake()
     {
         cont = FindObjectOfType<GameManager>();
@@ -269,16 +273,28 @@ public class ShipController : MonoBehaviour
         {
             bod.AddForce(transform.forward * (explosiveForce * Time.fixedDeltaTime), ForceMode.Impulse);
             dashing = false;
+            ChangeAnimationState(BarrelRoll);
         }
 
         if (sideDashing && !dashing)
         {
             bod.AddForce(transform.right * dashDir * (explosiveForce * Time.fixedDeltaTime), ForceMode.Impulse);
             sideDashing = false;
+            ChangeAnimationState(BarrelRoll);
         }
 
         Vector3 playerRotation = transform.rotation.eulerAngles;
         playerRotation.z = 0;
         transform.rotation = Quaternion.Euler(playerRotation);
+    }
+
+    public void ChangeAnimationState(string newState)
+    {
+
+        // stop the same animation from interrutping itself
+        //if (currentState == newState) return;
+
+        //plays the animation
+        anim.Play(newState);
     }
 }
