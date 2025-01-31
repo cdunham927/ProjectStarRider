@@ -362,13 +362,9 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8300000, guid: 367060e923806d844bf9089345e4dbd4, type: 3}
     - target: {fileID: 6720885632238254949, guid: 6d3271e5ae24096479bd8dc3b11d13f7, type: 3}
-      propertyPath: BGMSfx.Array.size
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 6720885632238254949, guid: 6d3271e5ae24096479bd8dc3b11d13f7, type: 3}
-      propertyPath: BGMSfx.Array.data[2]
+      propertyPath: audioSourceArray.Array.data[2]
       value: 
-      objectReference: {fileID: 8300000, guid: 54b11ef408a8efa41af37a51a91f2f26, type: 3}
+      objectReference: {fileID: 1942004276}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6d3271e5ae24096479bd8dc3b11d13f7, type: 3}
 --- !u!82 &101121958 stripped
@@ -2126,7 +2122,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302762743768171265, guid: 6b93a3113a51896478068f5d7da39efd, type: 3}
       propertyPath: field of view
-      value: 103.6363
+      value: 75.56559
       objectReference: {fileID: 0}
     - target: {fileID: 4302762743768171265, guid: 6b93a3113a51896478068f5d7da39efd, type: 3}
       propertyPath: m_FocalLength
@@ -8700,6 +8696,107 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Damping: 0
+--- !u!1 &1942004271 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 877252893838211539, guid: 6d3271e5ae24096479bd8dc3b11d13f7, type: 3}
+  m_PrefabInstance: {fileID: 101121957}
+  m_PrefabAsset: {fileID: 0}
+--- !u!82 &1942004276
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1942004271}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: -5818701710252422464, guid: e94e86a227e4d4d4eb428bc609fd30dc, type: 2}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &1954277566
 GameObject:
   m_ObjectHideFlags: 0
@@ -11247,11 +11344,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3572770594336735767, guid: 287e83fa30cb8e943878bc29ef3105d4, type: 3}
       propertyPath: m_MaxFOV
-      value: 103.6363
+      value: 75.56559
       objectReference: {fileID: 0}
     - target: {fileID: 3572770594336735767, guid: 287e83fa30cb8e943878bc29ef3105d4, type: 3}
       propertyPath: m_MinFOV
-      value: 73.63628
+      value: 45.56556
       objectReference: {fileID: 0}
     - target: {fileID: 5249254145918283140, guid: 287e83fa30cb8e943878bc29ef3105d4, type: 3}
       propertyPath: m_Name

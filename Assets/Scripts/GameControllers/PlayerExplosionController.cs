@@ -31,6 +31,13 @@ public class PlayerExplosionController : MonoBehaviour
         }
     }
 
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, castSize);
+    }
+
+
     private void OnDisable()
     {
         CancelInvoke();
@@ -38,7 +45,7 @@ public class PlayerExplosionController : MonoBehaviour
 
     void Disable()
     {
-        if (MusicController.instance != null) MusicController.instance.audioSourceArray[6].PlayOneShot(explodeSound, vol);
+        if (MusicController.instance != null) MusicController.instance.audioSourceArray[2].PlayOneShot(explodeSound, vol);
         gameObject.SetActive(false);
     }
 }
