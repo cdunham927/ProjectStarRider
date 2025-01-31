@@ -44,7 +44,7 @@ GameObject:
   - component: {fileID: 8394380888543073608}
   - component: {fileID: 8605465833849930473}
   - component: {fileID: 8394380888543073719}
-  - component: {fileID: 1968070579207620679}
+  - component: {fileID: 4369756315219691405}
   m_Layer: 0
   m_Name: PlayerBomb
   m_TagString: Bullet
@@ -61,7 +61,7 @@ Transform:
   m_GameObject: {fileID: 8605465833849930476}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 63.784996, y: 9.04, z: -60.02}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
+  m_LocalScale: {x: 2.25, y: 2.25, z: 2.25}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8605465834798362170}
@@ -148,7 +148,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00e607bcd77ee23458c028497adf7efd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 2500
+  speed: 3750
   slowSpd: 0
   fastSpd: 0
   randSpdMod: 0
@@ -168,8 +168,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   playerExplosionPool: {fileID: 0}
---- !u!65 &1968070579207620679
-BoxCollider:
+--- !u!135 &4369756315219691405
+SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -179,8 +179,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2.05, y: -1.8, z: 1.27}
-  m_Center: {x: 0, y: 0, z: 4.18}
+  m_Radius: 1.125
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &8605465834798362171
 GameObject:
   m_ObjectHideFlags: 0
