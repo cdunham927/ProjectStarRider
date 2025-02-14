@@ -28,9 +28,9 @@ public class WaveSpawner : MonoBehaviour
 
     //Spawn in a sphere around the player
     public bool spawnAroundPlayer = false;
-    [Range(3f, 25f)]
+    [Range(3f, 50f)]
     public float minSpawnRadius = 5f;
-    [Range(10f, 1000f)]
+    [Range(10f, 5000f)]
     public float maxSpawnRadius = 100f;
     public int[] enemiesPerWave;
     public GameObject[] enemyTypes;
