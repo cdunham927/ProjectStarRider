@@ -10,4 +10,42 @@ public class DialogueController : MonoBehaviour
     /// based on the player health
     /// script should read player stats and pull triggers 
     /// </summary>
+    /// 
+
+    //refercnce to player stats
+    protected Player_Stats stats;
+    public bool lowHealth = false;
+    
+    //Array for Dialgue triigers to spawn
+    public GameObject[] DialogueTriggers;
+    private void Awake()
+    {
+
+        stats = FindObjectOfType<Player_Stats>();
+    }
+
+    public void Update()
+    {
+        if (stats.Curr_hp <= 50)
+        {
+            
+            LowHealth();
+        }
+    }
+
+    void LowHealth() 
+    {
+        lowHealth = true;
+    }
+
+    
+
+    void heal() 
+    { 
+    
+    }
+
+
 }
+
+
