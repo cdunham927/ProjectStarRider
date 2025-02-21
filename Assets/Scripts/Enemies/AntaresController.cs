@@ -30,7 +30,13 @@ public class AntaresController : BossControllerBase
 
     public ObjectPool homingBulletPool;
     public int numBullets = 8;
-    public GameObject bulSpawn;
+    public int extraBullets = 8;
+    public GameObject[] bulSpawns;
+    public float leftBulStartTime, leftBulRepeatTime, allBulStopTime;
+    public float rightBulStartTime, rightBulRepeatTime;
+    public float bulSpawnTime;
+
+    public float meleeRange;
 
     public Dialogue thirdPhaseDialogue;
 
@@ -47,6 +53,9 @@ public class AntaresController : BossControllerBase
     private int currentWaypointIndex = 0;
     public float pathChangeDistance = 2f;
     public float rotSpd = 15f;
+
+    public float headWeight;
+    public float bodyWeight;
 
     //Aniamtion State  make sure string match name of animations
     //const string Cetus_Reflect = "Armature|Reflect";
@@ -82,6 +91,12 @@ public class AntaresController : BossControllerBase
         anim = GetComponentInChildren<Animator>();
 
         attackCools = startAttackCools;
+    }
+
+    private void OnAnimatorIK(int layerIndex)
+    {
+        anim.SetLookAtPosition(player.transform.position);
+        anim.SetLookAtWeight(1, bodyWeight, headWeight);
     }
 
     protected override void OnEnable()
@@ -129,15 +144,22 @@ public class AntaresController : BossControllerBase
 
     protected override void Attack()
     {
-        //If the player is close enough
-        //We can probably use this to determine if we do a scorpion tail attack or shoot bullets at the player
-        if (playerInRange && curHp > 0 & player != null && pStats != null && pStats.Curr_hp > 0)
+        playerInRange = Vector3.Distance(transform.position, player.transform.position) < meleeRange;
+
+        if (curHp > 0 && player != null && pStats != null && pStats.Curr_hp > 0)
         {
-            AttackOne();
-        }
-        else
-        {
-            AttackTwo();
+            //If the player is close enough
+            //We can probably use this to determine if we do a scorpion tail attack or shoot bullets at the player
+            if (!playerInRange)
+            {
+                isAttacking = true;
+                AttackOne();
+            }
+            else
+            {
+                isAttacking = true;
+                AttackTwo();
+            }
         }
     }
 
@@ -166,10 +188,80 @@ public class AntaresController : BossControllerBase
 
     void RangedAttack()
     {
+        //Spam shots from both arms
+        if (Random.value > 0.7f)
+        {
+            print("Cowboy attack");
+            anim.Play("Antares|Shooting_Cowboy");
 
+            InvokeRepeating("SpawnLeftBullets", leftBulStartTime, leftBulRepeatTime);
+            InvokeRepeating("SpawnRightBullets", rightBulStartTime, rightBulRepeatTime);
+            Invoke("CancelAllBullet", allBulStopTime);
+        }
+        //Left or right
+        else
+        {
+            if (Random.value > 0.5f)
+            {
+                print("Attacking right");
+                anim.Play("Antares|Shoot");
+            }
+            else
+            {
+                print("Attacking left");
+                anim.Play("Antares|Shoot Flipped");
+            }
+
+            Invoke("SpawnBullets", bulSpawnTime);
+            Invoke("CancelAllBullet", 2f);
+        }
     }
 
     void SpawnBullets()
+    {
+        for (int i = 0; i < extraBullets; i++)
+        {
+            //Spawn at every other position(so we dont have 50 bullets spawn)
+            //if (i % 2 == 0)
+            //{
+            GameObject bul = homingBulletPool.GetPooledObject();
+            if (bul != null)
+            {
+                //Put it where the enemy position is
+                bul.transform.position = bulSpawns[0].transform.position;
+                bul.transform.Rotate(Random.Range(-accx, accx), Random.Range(-accy, accy), 0);
+
+                //Aim it at the player
+                //
+                //var offset = 0f;
+                //Vector2 direction = player.transform.position - t.transform.position;
+
+                //direction.Normalize();
+                //float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+
+                //Activate it at the enemy position
+                bul.SetActive(true);
+                //bul.transform.rotation = Quaternion.Euler(Vector3.forward * (angle + offset));
+                //bul.transform.forward = Vector3.forward * (angle + offset);
+                bul.transform.rotation = Quaternion.Euler(Random.Range(0, 360), Random.Range(0, 360), Random.Range(0, 360));
+                //bul.GetComponent<EnemyBullet>().Push();
+            }
+            //}
+        }
+        AS.PlayOneShot(PlayerSfx[1]);
+
+        ChangeState(enemystates.alert);
+    }
+
+    void CancelAllBullet()
+    {
+        isAttacking = false;
+        CancelInvoke("SpawnBullets");
+        CancelInvoke("SpawnLeftBullets");
+        CancelInvoke("SpawnRightBullets");
+    }
+
+    void SpawnLeftBullets()
     {
         for (int i = 0; i < numBullets; i++)
         {
@@ -180,7 +272,43 @@ public class AntaresController : BossControllerBase
             if (bul != null)
             {
                 //Put it where the enemy position is
-                bul.transform.position = bulSpawn.transform.position;
+                bul.transform.position = bulSpawns[1].transform.position;
+                bul.transform.Rotate(Random.Range(-accx, accx), Random.Range(-accy, accy), 0);
+
+                //Aim it at the player
+                //
+                //var offset = 0f;
+                //Vector2 direction = player.transform.position - t.transform.position;
+
+                //direction.Normalize();
+                //float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+
+                //Activate it at the enemy position
+                bul.SetActive(true);
+                //bul.transform.rotation = Quaternion.Euler(Vector3.forward * (angle + offset));
+                //bul.transform.forward = Vector3.forward * (angle + offset);
+                bul.transform.rotation = Quaternion.Euler(Random.Range(0, 360), Random.Range(0, 360), Random.Range(0, 360));
+                //bul.GetComponent<EnemyBullet>().Push();
+            }
+            //}
+        }
+        AS.PlayOneShot(PlayerSfx[1]);
+
+        ChangeState(enemystates.alert);
+    }
+
+    void SpawnRightBullets()
+    {
+        for (int i = 0; i < numBullets; i++)
+        {
+            //Spawn at every other position(so we dont have 50 bullets spawn)
+            //if (i % 2 == 0)
+            //{
+            GameObject bul = homingBulletPool.GetPooledObject();
+            if (bul != null)
+            {
+                //Put it where the enemy position is
+                bul.transform.position = bulSpawns[2].transform.position;
                 bul.transform.Rotate(Random.Range(-accx, accx), Random.Range(-accy, accy), 0);
 
                 //Aim it at the player
