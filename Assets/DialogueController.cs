@@ -15,9 +15,12 @@ public class DialogueController : MonoBehaviour
     //refercnce to player stats
     protected Player_Stats stats;
     public bool lowHealth = false;
-    
+
     //Array for Dialgue triigers to spawn
-    public GameObject[] DialogueTriggers;
+    //public GameObject[] DialogueTriggers;
+
+    public GameObject PLAYER;
+
     private void Awake()
     {
 
@@ -31,19 +34,29 @@ public class DialogueController : MonoBehaviour
             
             LowHealth();
         }
+
+        else
+            lowHealth = false;
+
     }
 
     void LowHealth() 
     {
         lowHealth = true;
+        if (lowHealth == true) 
+        { 
+            DialogueManager.StartConversation("Low Health");
+        }
+        
+      
     }
 
-    
+    void pickup() 
+    {
 
-    void heal() 
-    { 
-    
+        DialogueManager.StartConversation("Pick Up");
     }
+
 
 
 }
