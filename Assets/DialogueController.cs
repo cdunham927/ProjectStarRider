@@ -32,7 +32,8 @@ public class DialogueController : MonoBehaviour
         if (stats.Curr_hp <= 50)
         {
             
-            LowHealth();
+            //LowHealth();
+            Invoke("LowHealth", 1.0f);
         }
 
         else
@@ -46,7 +47,9 @@ public class DialogueController : MonoBehaviour
         if (lowHealth == true) 
         { 
             DialogueManager.StartConversation("Low Health");
+            lowHealth = false;
         }
+        
         
       
     }
