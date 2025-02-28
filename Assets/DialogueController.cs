@@ -14,8 +14,8 @@ public class DialogueController : MonoBehaviour
 
     //refercnce to player stats
     protected Player_Stats stats;
+    public bool halfHealth = false;
     public bool lowHealth = false;
-
     //Array for Dialgue triigers to spawn
     //public GameObject[] DialogueTriggers;
 
@@ -25,19 +25,28 @@ public class DialogueController : MonoBehaviour
     {
 
         stats = FindObjectOfType<Player_Stats>();
+        Invoke("MissionStart", .5f);
+
     }
+
 
     public void Update()
     {
-        if (stats.Curr_hp <= 50)
+        if (stats.Curr_hp <= (stats.Max_hp/2) && !halfHealth) 
         {
             
             //LowHealth();
-            Invoke("LowHealth", 1.0f);
+            Invoke("HalfHealth", .5f);
         }
 
-        else
-            lowHealth = false;
+        if (stats.Curr_hp <= (stats.Max_hp / 3) && !lowHealth)
+        {
+
+            //LowHealth();
+            Invoke("LowHealth", .5f);
+        }
+
+
 
     }
 
@@ -47,13 +56,32 @@ public class DialogueController : MonoBehaviour
         if (lowHealth == true) 
         { 
             DialogueManager.StartConversation("Low Health");
-            lowHealth = false;
+            
         }
         
         
       
     }
 
+    void HalfHealth()
+    {
+        halfHealth = true;
+        if (halfHealth == true)
+        {
+            DialogueManager.StartConversation("Low Health");
+
+        }
+
+
+
+    }
+
+    void MissionStart() 
+    {
+
+        DialogueManager.StartConversation("Tutorial 01");
+    }
+    
     void pickup() 
     {
 
