@@ -9,7 +9,7 @@ public class RotateObject : MonoBehaviour
     public float rotSpdZ;
     [Range(1, 5)]
     public float rotMod;
-    float curRotMod;
+    float curRotMod = 1f;
 
     private void Awake()
     {

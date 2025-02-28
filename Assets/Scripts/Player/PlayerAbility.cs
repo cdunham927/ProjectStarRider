@@ -8,10 +8,10 @@ public class PlayerAbility : MonoBehaviour
     protected AudioSource AS;
     protected GameManager gm;
 
-    [HideInInspector]
+    //Just making them public so we can see them in the inspector
     public float curActiveTime;
-    [HideInInspector]
     public float oneCharge;
+
     public float maxCharges = 4;
     public float maxImagesTime = 40f;
     public float rechargeSpd = 2.5f;
@@ -30,10 +30,12 @@ public class PlayerAbility : MonoBehaviour
     // Update is called once per frame
     public virtual void Update()
     {
-        if (curActiveTime < maxImagesTime) curActiveTime += Time.deltaTime * rechargeSpd;
+        if (curActiveTime <= maxImagesTime) curActiveTime += Time.deltaTime * rechargeSpd;
+
+        if (curActiveTime > maxImagesTime) curActiveTime = maxImagesTime;
 
         //Use special if we have a charge
-        if (Input.GetButtonDown("Fire2") && (curActiveTime > (oneCharge)))
+        if (Input.GetButtonDown("Fire2") && (curActiveTime >= (oneCharge)))
         {
             UseAbility();
         }
