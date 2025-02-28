@@ -120,7 +120,8 @@ public class Player_Stats : MonoBehaviour
         meshRenderer = GetComponentInChildren<MeshRenderer>();
 
         //Camera shake things
-        if (cine == null) cine = FindObjectOfType<CinemachineVirtualCamera>();
+        if (cine == null) cine = GetComponentInChildren<CinemachineVirtualCamera>();
+        //if (cine == null) cine = FindObjectOfType<CinemachineVirtualCamera>();
         if (perlin == null)  perlin = FindObjectOfType<CinemachineVirtualCamera>().GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
 
         src = GetComponent<AudioSource>();
@@ -310,6 +311,7 @@ public class Player_Stats : MonoBehaviour
 
                 if (Curr_hp <= 0)
                 {
+                    cine.gameObject.transform.SetParent(null);
                     //Play explosion sound
                     src.PlayOneShot(explodeClip, explodeVolume);
                     //Stop player movement
@@ -351,7 +353,6 @@ public class Player_Stats : MonoBehaviour
     {
         FindObjectOfType<GameManager>().GameOver();
         gameObject.SetActive(false);
-        
     }
 
 
