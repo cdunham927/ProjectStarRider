@@ -27,7 +27,7 @@ public class EnemyIndicator : MonoBehaviour
     //public float actualClampX;
     //public float actualClampY;
 
-    MPImage img;
+    public MPImage img;
     RectTransform canvasRect;
 
     private void Awake()
