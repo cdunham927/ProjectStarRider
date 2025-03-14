@@ -116,6 +116,7 @@ public class OptionsController : MonoBehaviour
     public void Back()
     {
         scene.Back();
+        
     }
 
     float GetMusicVolume()

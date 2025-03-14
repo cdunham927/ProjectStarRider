@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using Cinemachine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class CarouselController : MonoBehaviour
 {
@@ -32,16 +33,19 @@ public class CarouselController : MonoBehaviour
 
     //Menu functions:
     //Story mode
-        //Select mission
-            //Select pilot
+    //Select mission
+    //Select pilot
     //Options
     //Quit
 
     //Set our first target
+
+    EventSystem ES;
     private void Awake()
     {
         anim = GetComponent<Animator>();
         group.AddMember(children[curSelected].camLook, 1, 0);
+        ES = FindObjectOfType<EventSystem>();
     }
 
     private void Update()
@@ -65,6 +69,7 @@ public class CarouselController : MonoBehaviour
                     buttons[curSelected].gameObject.SetActive(false);
                     curSelected = test;
                     buttons[curSelected].gameObject.SetActive(true);
+                    EventSystem.current.SetSelectedGameObject(buttons[curSelected].gameObject);
                 }
                 else
                 {
@@ -72,6 +77,7 @@ public class CarouselController : MonoBehaviour
                     buttons[curSelected].gameObject.SetActive(false);
                     curSelected = (inp > 0) ? 0 : children.Length - 1;
                     buttons[curSelected].gameObject.SetActive(true);
+                    EventSystem.current.SetSelectedGameObject(buttons[curSelected].gameObject);
                 }
 
                 //

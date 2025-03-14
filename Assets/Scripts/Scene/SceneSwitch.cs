@@ -13,7 +13,8 @@ public class SceneSwitch : MonoBehaviour
     /// ATTENTION :  THIS CODE IS OLD AN OUTDATED PLEASE ARCHIVE
     ///
     /// </summary>
-    
+
+    CarouselController CarouselController;
     
     GameManager cont;
     //public AudioClip tutorialSong;
@@ -62,7 +63,9 @@ public class SceneSwitch : MonoBehaviour
         overworld = FindObjectOfType<OverworldMenuController>();
         cont = FindObjectOfType<GameManager>();
         if (optionsMenu == null && FindObjectOfType<LevelLoader>() != null) optionsMenu = FindObjectOfType<LevelLoader>().optionsMenu;
+        if (optionsMenu == null && FindObjectOfType<LevelLoader>() != null) optionsMenu = GameObject.FindGameObjectWithTag("OptionsMenu");
         if (optionsMenu == null && FindObjectOfType<LevelLoader>() == null) optionsMenu = Instantiate(optionsPrefab);
+        optionsMenu.gameObject.SetActive(false);
         startGameButton = GameObject.FindGameObjectWithTag("StartGameButton");
         //levelSelectFirst = GameObject.FindGameObjectWithTag("");
 
@@ -83,6 +86,8 @@ public class SceneSwitch : MonoBehaviour
 
         if (cont != null) pauseMenu = cont.pauseMenuUI;
         if (overworld != null) pauseMenu = overworld.pauseMenu;
+
+        CarouselController = FindObjectOfType<CarouselController>();
     }
 
     IEnumerator LoadScene(string n)
@@ -223,36 +228,45 @@ public class SceneSwitch : MonoBehaviour
 
     public void Back()
     {
-        //MusicController.instance.PlaySound();
-        if (pauseMenu == null && cont != null)
+        if (CarouselController != null)
         {
-            pauseMenu = cont.pauseMenuUI;
-        }
-        if (pauseMenu != null)
-        {
-            pauseMenu.SetActive(true);
-        }
-        else
-        {
-            if (startGameButton != null)
-            {
-                startGameButton.SetActive(true);
-                GameObject.Find("OptionsMenu").SetActive(false);
-
-            }
-            //if (mainMenu != null) mainMenu.SetActive(true);
-            EventSystem.current.SetSelectedGameObject(null);
-            EventSystem.current.SetSelectedGameObject(GameObject.Find("StartGameButton"));
-            return;
-        }
-        if (optionsMenu != null)
-        {
+            CarouselController.buttons[1].gameObject.SetActive(true);
             optionsMenu.SetActive(false);
         }
-        if (selectMenu != null) selectMenu.SetActive(false);
-        if (mainMenu != null) mainMenu.SetActive(true);
-        EventSystem.current.SetSelectedGameObject(null);
-        EventSystem.current.SetSelectedGameObject(lastSelected);
+
+        else
+        {
+            //MusicController.instance.PlaySound();
+            if (pauseMenu == null && cont != null)
+            {
+                pauseMenu = cont.pauseMenuUI;
+            }
+            if (pauseMenu != null)
+            {
+                pauseMenu.SetActive(true);
+            }
+            else
+            {
+                if (startGameButton != null)
+                {
+                    startGameButton.SetActive(true);
+                    GameObject.Find("OptionsMenu").SetActive(false);
+
+                }
+                //if (mainMenu != null) mainMenu.SetActive(true);
+                EventSystem.current.SetSelectedGameObject(null);
+                EventSystem.current.SetSelectedGameObject(GameObject.Find("StartGameButton"));
+                return;
+            }
+            if (optionsMenu != null)
+            {
+                optionsMenu.SetActive(false);
+            }
+            if (selectMenu != null) selectMenu.SetActive(false);
+            if (mainMenu != null) mainMenu.SetActive(true);
+            EventSystem.current.SetSelectedGameObject(null);
+            EventSystem.current.SetSelectedGameObject(lastSelected);
+        }
     }
 
     public void Restart()
