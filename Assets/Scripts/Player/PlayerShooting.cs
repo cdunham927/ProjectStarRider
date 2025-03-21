@@ -152,6 +152,20 @@ public class PlayerShooting : MonoBehaviour
             if (curCharge > 0) curCharge -= Time.deltaTime * incSpd;
         }
 
+        if (chargedShot)
+        {
+            if (charging)
+            {
+                //Find ui, start animating it
+
+            }
+            else
+            {
+                //Reset ui
+
+            }
+        }
+
         //
         //Charge shot stuff end
 

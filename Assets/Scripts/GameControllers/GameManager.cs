@@ -94,6 +94,7 @@ public class GameManager : MonoBehaviour
 
 
     public MPImage[] afterimages;
+    public MPImage spiralFill;
     public EnemyManager[] enemyManager;
     public int enemyCount = 0;
     public GameObject controlsText;
