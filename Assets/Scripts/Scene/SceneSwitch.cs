@@ -49,6 +49,7 @@ public class SceneSwitch : MonoBehaviour
     [HideInInspector]
     public GameObject mainMenuButton;
     public GameObject pauseMenu;
+   
     public GameObject startGameButton;
 
     OverworldMenuController overworld;
@@ -193,7 +194,10 @@ public class SceneSwitch : MonoBehaviour
         {
             if (startGameButton != null)　startGameButton.SetActive(false);
         }
-        if (optionsMenu != null) optionsMenu.SetActive(true);
+        
+        if (optionsMenu != null) 
+            optionsMenu.SetActive(true);
+        
         if (optionsFirstSelected == null)
         {
             optionsFirstSelected = GameObject.FindGameObjectWithTag("FirstSelected");
@@ -217,10 +221,21 @@ public class SceneSwitch : MonoBehaviour
         {
             if (startGameButton != null) startGameButton.SetActive(false);
         }
+
+        if (optionsMenu != null)
+            optionsMenu.SetActive(true);
+
+
         if (selectMenu != null)
         {
             selectMenu.SetActive(true);
         }
+
+        if (levelSelectFirst == null)
+        {
+            levelSelectFirst = GameObject.FindGameObjectWithTag("FirstSelected");
+        }
+
         if (mainMenu != null) mainMenu.SetActive(false);
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(levelSelectFirst);
