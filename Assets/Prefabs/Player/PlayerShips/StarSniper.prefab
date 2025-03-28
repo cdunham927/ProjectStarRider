@@ -10294,6 +10294,7 @@ GameObject:
   - component: {fileID: 3213805195889960032}
   - component: {fileID: 2360310342298016556}
   - component: {fileID: 1426469001044397782}
+  - component: {fileID: 203084202274416433}
   - component: {fileID: 2745689727386989026}
   - component: {fileID: 2360310342298016553}
   - component: {fileID: 2360310342298016552}
@@ -10436,9 +10437,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   curActiveTime: 0
   oneCharge: 0
-  maxCharges: 4
-  maxImagesTime: 40
+  maxCharges: 1
+  maxImagesTime: 20
   rechargeSpd: 2.5
+  vfx: {fileID: 2360310342986172840}
+  playerRenderer: {fileID: 2360310342498068153}
+  seethroughMat: {fileID: 2100000, guid: f18fe1169c46b2a46ae69874ab81131f, type: 2}
+  abilityTime: 5
+--- !u!114 &203084202274416433
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2360310342298016559}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e4edfdf27bcf834db06b9c178f569b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fillImage: {fileID: 0}
+  uiLerp: 10
 --- !u!114 &2745689727386989026
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10505,6 +10524,7 @@ MonoBehaviour:
   healColor: {r: 0.4392157, g: 1, b: 0.38431373, a: 1}
   flashTime: 0.5
   redBulletImpact: {fileID: 6108864283411289591, guid: 85fa723b1f3435f4fa8556c64a65d15b, type: 3}
+  invisible: 0
 --- !u!114 &2360310342298016552
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21526,6 +21546,18 @@ PrefabInstance:
     - target: {fileID: 2073276983, guid: 5af8fa4ddd7d50f4eb3349835e040d18, type: 3}
       propertyPath: m_TrackedObjectOffset.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3746874429996666380, guid: 5af8fa4ddd7d50f4eb3349835e040d18, type: 3}
+      propertyPath: m_ReactionSettings.m_NoiseOffsets.x
+      value: -926.9192
+      objectReference: {fileID: 0}
+    - target: {fileID: 3746874429996666380, guid: 5af8fa4ddd7d50f4eb3349835e040d18, type: 3}
+      propertyPath: m_ReactionSettings.m_NoiseOffsets.y
+      value: 128.2164
+      objectReference: {fileID: 0}
+    - target: {fileID: 3746874429996666380, guid: 5af8fa4ddd7d50f4eb3349835e040d18, type: 3}
+      propertyPath: m_ReactionSettings.m_NoiseOffsets.z
+      value: 350.49033
       objectReference: {fileID: 0}
     - target: {fileID: 4400582474091118264, guid: 5af8fa4ddd7d50f4eb3349835e040d18, type: 3}
       propertyPath: m_MaxFOV

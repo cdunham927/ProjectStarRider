@@ -97,6 +97,9 @@ public class Player_Stats : MonoBehaviour
     //Player takes damage, show bullet effect
     public GameObject redBulletImpact;
 
+    //Stealth variables
+    public bool invisible = false;
+
     private void OnEnable()
     {
         Curr_hp = Max_hp;
@@ -277,7 +280,7 @@ public class Player_Stats : MonoBehaviour
     {
         if (!gm.gameIsOver)
         {
-            if (!invulnerable)
+            if (!invulnerable && !invisible)
             {
                 if (anim != null) anim.SetTrigger("Hit");
 

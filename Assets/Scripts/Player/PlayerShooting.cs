@@ -55,9 +55,12 @@ public class PlayerShooting : MonoBehaviour
     public float chargeTime;
     public float incSpd = 5f;
 
+    Player_Stats stats;
+
     private void Awake()
     {
         player = FindObjectOfType<PlayerController>();
+        stats = FindObjectOfType<Player_Stats>();
         ship = FindObjectOfType<ShipController>();
         gm = FindObjectOfType<GameManager>();
         bod = GetComponentInParent<Rigidbody>();
@@ -184,6 +187,11 @@ public class PlayerShooting : MonoBehaviour
 
     public void Shoot( bool newShooting)
     {
+        if (stats.invisible)
+        {
+            stats.invisible = false;
+        }
+
         if (bulPool == null) bulPool = cont.bulPool;
         GameObject bul = bulPool.GetPooledObject();
         bul.transform.position = bulSpawn.position;
