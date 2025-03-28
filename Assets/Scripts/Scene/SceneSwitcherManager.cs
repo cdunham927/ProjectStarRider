@@ -122,6 +122,21 @@ public class SceneSwitcherManager : MonoBehaviour
 
     }
 
+
+    public IEnumerator ToLevelSelectScene()
+    {
+        music = FindObjectOfType<MusicController>();
+        if (music != null)
+        {
+            musicAnim = music.GetComponent<Animator>();
+            musicAnim.SetTrigger("fadeOut");
+        }
+        yield return new WaitForSeconds(waitTime);
+        SceneManager.LoadScene(_SceneToLoad[4]);
+
+
+    }
+
     // testing base for any scene base don assignment
     public IEnumerator ToScene()
     {

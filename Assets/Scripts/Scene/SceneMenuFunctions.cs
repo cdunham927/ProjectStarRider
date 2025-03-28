@@ -208,32 +208,14 @@ public class SceneMenuFunctions : SceneSwitcherManager
         Application.Quit();
     }
 
-    public void LevelSelect()
+    public GameObject LevelSelectButton;
+    public void GoToLevelSelect()
     {
+        //Save character selected
+        //PlayerPrefs.SetInt("CharacterSelect", character);
+
         //MusicController.instance.PlaySound();
-        lastSelected = EventSystem.current.currentSelectedGameObject;
-        if (pauseMenu == null && cont != null)
-        {
-            pauseMenu = cont.pauseMenuUI;
-        }
-        //If we're in the main game, deactivate pause menu
-        if (pauseMenu != null) 
-            pauseMenu.SetActive(false);
-        //Else we're in the main menu so we activate the main menu stuff again
-        
-        else
-        {
-            if (startGameButton != null) startGameButton.SetActive(false);
-        }
-        
-        if (optionsMenu != null) 
-            optionsMenu.SetActive(true);
-       
-        if (optionsFirstSelected == null)
-        {
-            optionsFirstSelected = GameObject.FindGameObjectWithTag("FirstSelected");
-        }
-        EventSystem.current.SetSelectedGameObject(null);
-        EventSystem.current.SetSelectedGameObject(optionsFirstSelected);
+        Time.timeScale = 1f;
+        StartCoroutine(ToLevelSelectScene());
     }
 }
