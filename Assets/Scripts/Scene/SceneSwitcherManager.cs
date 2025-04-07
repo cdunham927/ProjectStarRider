@@ -180,7 +180,7 @@ public class SceneSwitcherManager : MonoBehaviour
                     musicAnim = music.GetComponent<Animator>();
                     musicAnim.SetTrigger("fadeOut");
                 }
-                yield return new WaitForSeconds(TranstionClip.length - .2f);
+                yield return new WaitForSeconds(TranstionClip.length - .1f);
                 //instance.StartCoroutine(instance.FadeOutThenSchangeScene());
                 SceneManager.LoadScene(_SceneToLoad[0]);
             }
