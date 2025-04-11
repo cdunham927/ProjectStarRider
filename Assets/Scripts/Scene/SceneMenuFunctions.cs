@@ -54,6 +54,7 @@ public class SceneMenuFunctions : SceneSwitcherManager
     {
         //MusicController.instance.PlaySound();
         Time.timeScale = 1f;
+        SceneManager.LoadScene(1);
         //StartCoroutine(ToHubScene());
     }
 
@@ -72,6 +73,13 @@ public class SceneMenuFunctions : SceneSwitcherManager
         //MusicController.instance.PlaySound();
         Time.timeScale = 1f;
         StartCoroutine(ToCetusBossScene());
+    }
+
+    public void LoadLevel(int levelIndex)
+    {
+        //MusicController.instance.PlaySound();
+        Time.timeScale = 1f;
+        SceneManager.LoadScene(levelIndex);
     }
 
     public void GoToScene()

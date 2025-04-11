@@ -12754,6 +12754,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1638338109}
   m_CullTransparentMesh: 0
+--- !u!114 &1650211087 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2119259773251690149, guid: 80f1592a667db6c4bb7966f52b62662c, type: 3}
+  m_PrefabInstance: {fileID: 695863807}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 948eb5c87210e994d9f91c2c25b9a8b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1652135362
 GameObject:
   m_ObjectHideFlags: 0
@@ -19039,28 +19050,16 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
-        m_MethodName: PlayOneShot
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 8300000, guid: ebf17baf27243b842a7cfca600744a36, type: 3}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: CarouselController, Assembly-CSharp
-        m_MethodName: OpenCharacterSelect
-        m_Mode: 1
+      - m_Target: {fileID: 1650211087}
+        m_TargetAssemblyTypeName: SceneMenuFunctions, Assembly-CSharp
+        m_MethodName: LoadLevel
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 3
           m_FloatArgument: 0
-          m_StringArgument: CetusBoss
+          m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!1 &7748417000624677266
@@ -19293,7 +19292,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: -4.2920003, y: 0.9736666}
   m_AnchorMax: {x: -2.828, y: 1.3396665}
-  m_AnchoredPosition: {x: -8.4200735, y: 0}
+  m_AnchoredPosition: {x: -8.420044, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &7748417000713845111
@@ -19340,14 +19339,14 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
-        m_Mode: 1
+      - m_Target: {fileID: 1650211087}
+        m_TargetAssemblyTypeName: SceneMenuFunctions, Assembly-CSharp
+        m_MethodName: LoadLevel
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
-          m_IntArgument: 0
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 3
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -19615,14 +19614,14 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1650211087}
         m_TargetAssemblyTypeName: SceneMenuFunctions, Assembly-CSharp
-        m_MethodName: GoToCetus
+        m_MethodName: LoadLevel
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 1
+          m_IntArgument: 3
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -20619,7 +20618,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: -4.2799997, y: 0.6394122}
   m_AnchorMax: {x: -2.8436322, y: 0.96666706}
-  m_AnchoredPosition: {x: 4.3400583, y: 0}
+  m_AnchoredPosition: {x: 4.340088, y: 0}
   m_SizeDelta: {x: -5.1457825, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &9105058059356226925

@@ -111,13 +111,19 @@ public class SceneSwitch : MonoBehaviour
         }
         yield return new WaitForSeconds(waitTime);
         SceneManager.LoadScene(n);
-        
+
     }
 
     public void NextScene()
     {
         //MusicController.instance.PlaySound();
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+    }
+
+    public void LoadLevel(int levelIndex)
+    {
+        //MusicController.instance.PlaySound();
+        SceneManager.LoadScene(levelIndex);
     }
 
     IEnumerator ToTutorialScene()
