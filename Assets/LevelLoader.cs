@@ -42,7 +42,7 @@ public class LevelLoader : MonoBehaviour
         //if (Manager != null) optionsMenu = Manager.pauseMenuUI;
         //else
         //    optionsMenu = Instantiate(optionsPrefab);
-        levelLoaderUIInstance = Instantiate(levelLoaderUIPrefab);
+        if (levelLoaderUIPrefab != null) levelLoaderUIInstance = Instantiate(levelLoaderUIPrefab);
 
         loadingScreen = levelLoaderUIInstance.transform.GetChild(0).gameObject;
         sl = levelLoaderUIInstance.GetComponentInChildren<Slider>();
