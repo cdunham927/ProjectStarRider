@@ -7,7 +7,8 @@ using MPUIKIT;
 [RequireComponent(typeof(AfterImageAbility))]
 public class AfterimageUI : MonoBehaviour
 {
-    AfterImageAbility after;
+    PlayerAbility ability;
+    GameManager cont;
 
     [Header("AfterImage Icons : ")]
     public MPImage[] afterimageUI;
@@ -20,11 +21,16 @@ public class AfterimageUI : MonoBehaviour
 
     private void Awake()
     {
-        after = GetComponent<AfterImageAbility>();
-        if (FindObjectOfType<GameManager>() != null) afterimageUI = FindObjectOfType<GameManager>().afterimages;
+        cont = FindObjectOfType<GameManager>();
+        ability = GetComponent<PlayerAbility>();
+        if (cont != null)
+        {
+            cont.spiralFill.gameObject.SetActive(false);
+            afterimageUI = FindObjectOfType<GameManager>().afterimages;
+        }
 
         //4 charges max, so 1 charge is 1/4th of the max image time
-        oneCharge = after.maxImagesTime / after.maxCharges;
+        oneCharge = ability.maxImagesTime / ability.maxCharges;
     }
 
     void Update()
@@ -32,15 +38,15 @@ public class AfterimageUI : MonoBehaviour
         //afterimageUI[0].color - Color.Lerp(afterimagesUI[].color, ())
 
         //0-8
-        if (afterimageUI[0] != null) afterimageUI[0].fillAmount = Mathf.Lerp(afterimageUI[0].fillAmount, (after.curActiveTime) / (oneCharge * 1f), uiLerp * Time.deltaTime);
-        if (afterimageUI[0] != null) afterimageUI[0].sprite = (after.curActiveTime < oneCharge * 1f) ? emptyImage : filledImage;
+        if (afterimageUI[0] != null) afterimageUI[0].fillAmount = Mathf.Lerp(afterimageUI[0].fillAmount, (ability.curActiveTime) / (oneCharge * 1f), uiLerp * Time.deltaTime);
+        if (afterimageUI[0] != null) afterimageUI[0].sprite = (ability.curActiveTime < oneCharge * 1f) ? emptyImage : filledImage;
         //8-16
         if (afterimageUI[1] != null)
         {
-            if (after.curActiveTime > oneCharge)
+            if (ability.curActiveTime > oneCharge)
             {
-                afterimageUI[1].fillAmount = Mathf.Lerp(afterimageUI[1].fillAmount, (after.curActiveTime) / (oneCharge * 2f), uiLerp * Time.deltaTime);
-                afterimageUI[1].sprite = (after.curActiveTime < oneCharge * 2f) ? emptyImage : filledImage;
+                afterimageUI[1].fillAmount = Mathf.Lerp(afterimageUI[1].fillAmount, (ability.curActiveTime) / (oneCharge * 2f), uiLerp * Time.deltaTime);
+                afterimageUI[1].sprite = (ability.curActiveTime < oneCharge * 2f) ? emptyImage : filledImage;
             }
 
             else
@@ -52,10 +58,10 @@ public class AfterimageUI : MonoBehaviour
         //16-24
         if (afterimageUI[2] != null)
         {
-            if (after.curActiveTime > (oneCharge * 2f))
+            if (ability.curActiveTime > (oneCharge * 2f))
             {
-                afterimageUI[2].fillAmount = Mathf.Lerp(afterimageUI[2].fillAmount, (after.curActiveTime) / (oneCharge * 3f), uiLerp * Time.deltaTime);
-                afterimageUI[2].sprite = (after.curActiveTime < oneCharge * 3f) ? emptyImage : filledImage;
+                afterimageUI[2].fillAmount = Mathf.Lerp(afterimageUI[2].fillAmount, (ability.curActiveTime) / (oneCharge * 3f), uiLerp * Time.deltaTime);
+                afterimageUI[2].sprite = (ability.curActiveTime < oneCharge * 3f) ? emptyImage : filledImage;
             }
 
             else
@@ -67,10 +73,10 @@ public class AfterimageUI : MonoBehaviour
         //24-32
         if (afterimageUI[3] != null)
         {
-            if (after.curActiveTime > (oneCharge * 3f))
+            if (ability.curActiveTime > (oneCharge * 3f))
             {
-                afterimageUI[3].fillAmount = Mathf.Lerp(afterimageUI[3].fillAmount, after.curActiveTime / after.maxImagesTime, uiLerp * Time.deltaTime);
-                afterimageUI[3].sprite = (after.curActiveTime < after.maxImagesTime) ? emptyImage : filledImage;
+                afterimageUI[3].fillAmount = Mathf.Lerp(afterimageUI[3].fillAmount, ability.curActiveTime / ability.maxImagesTime, uiLerp * Time.deltaTime);
+                afterimageUI[3].sprite = (ability.curActiveTime < ability.maxImagesTime) ? emptyImage : filledImage;
             }
 
             else

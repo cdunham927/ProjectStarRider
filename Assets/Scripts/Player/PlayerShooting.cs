@@ -57,6 +57,8 @@ public class PlayerShooting : MonoBehaviour
 
     Player_Stats stats;
 
+    public Animator chargeAnim;
+
     private void Awake()
     {
         player = FindObjectOfType<PlayerController>();
@@ -72,6 +74,18 @@ public class PlayerShooting : MonoBehaviour
         mVfx.SetActive(false);
 
         cursor = GameObject.FindGameObjectWithTag("Cursor");
+
+        //Find sniper animator, deactivate it if we're not using a sniper class
+        chargeAnim = GameObject.FindGameObjectWithTag("SniperAnim").GetComponent<Animator>();
+        if (!chargedShot)
+        {
+            chargeAnim.gameObject.SetActive(false);
+        }
+        else
+        {
+            cursor.SetActive(false);
+        }
+
 
         if (cursor != null)
         {
@@ -155,17 +169,17 @@ public class PlayerShooting : MonoBehaviour
             if (curCharge > 0) curCharge -= Time.deltaTime * incSpd;
         }
 
-        if (chargedShot)
+        if (chargedShot && chargeAnim != null)
         {
-            if (charging)
+            if (charging && curCharge >= chargeTime)
             {
                 //Find ui, start animating it
-
+                chargeAnim.SetBool("Charging", true);
             }
             else
             {
                 //Reset ui
-
+                chargeAnim.SetBool("Charging", false);
             }
         }
 

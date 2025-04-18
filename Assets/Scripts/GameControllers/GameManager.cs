@@ -92,7 +92,8 @@ public class GameManager : MonoBehaviour
     [HideInInspector]
     public ObjectPool bigTurretBulletPool;
 
-
+    public GameObject afterimageParent;
+    public GameObject spiralFillParent;
     public MPImage[] afterimages;
     public MPImage spiralFill;
     public EnemyManager[] enemyManager;

@@ -4826,6 +4826,7 @@ GameObject:
   - component: {fileID: 6522438813250878863}
   - component: {fileID: 8917711691289485375}
   - component: {fileID: 4293134507909743944}
+  - component: {fileID: 1803876912335165994}
   m_Layer: 0
   m_Name: Sword
   m_TagString: Untagged
@@ -4906,7 +4907,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 79036328349843108}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1.0000004, y: 1, z: 1.0000004}
@@ -4926,6 +4927,9 @@ MonoBehaviour:
   rotSpdX: 60
   rotSpdY: 60
   rotSpdZ: 60
+  hover: 0
+  amplitude: 2
+  speed: 1.5
   rotMod: 0
 --- !u!114 &4293134507909743944
 MonoBehaviour:
@@ -4940,6 +4944,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeToDeactivate: 4
+--- !u!114 &1803876912335165994
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 79036328349843108}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 433239df442250d4bb759d631b470a38, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 8
+  spawnPos: {fileID: 79036328349843108}
+  hitVFXPool: {fileID: 0}
+  iframeTime: 0.1
 --- !u!1 &1055983747489900287
 GameObject:
   m_ObjectHideFlags: 0
@@ -5094,6 +5114,9 @@ MonoBehaviour:
   rotSpdX: 0
   rotSpdY: -360
   rotSpdZ: 0
+  hover: 0
+  amplitude: 2
+  speed: 1.5
   rotMod: 0
 --- !u!1 &2344629817306648444
 GameObject:
@@ -5109,6 +5132,7 @@ GameObject:
   - component: {fileID: 8416881450441071500}
   - component: {fileID: 7002968025858354394}
   - component: {fileID: 5841775680631244029}
+  - component: {fileID: 1982042370624700166}
   m_Layer: 0
   m_Name: Sword
   m_TagString: Untagged
@@ -5189,7 +5213,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2344629817306648444}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1.0000004, y: 1, z: 1.0000004}
@@ -5209,6 +5233,9 @@ MonoBehaviour:
   rotSpdX: 60
   rotSpdY: 60
   rotSpdZ: 60
+  hover: 0
+  amplitude: 2
+  speed: 1.5
   rotMod: 0
 --- !u!114 &5841775680631244029
 MonoBehaviour:
@@ -5223,6 +5250,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeToDeactivate: 4
+--- !u!114 &1982042370624700166
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2344629817306648444}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 433239df442250d4bb759d631b470a38, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 8
+  spawnPos: {fileID: 2344629817306648444}
+  hitVFXPool: {fileID: 0}
+  iframeTime: 0.1
 --- !u!1 &3460409232341177653
 GameObject:
   m_ObjectHideFlags: 0
@@ -5237,6 +5280,7 @@ GameObject:
   - component: {fileID: 8391597008654824486}
   - component: {fileID: 4429233130184454412}
   - component: {fileID: 5777774146561209427}
+  - component: {fileID: 3460602172230036995}
   m_Layer: 0
   m_Name: Sword
   m_TagString: Untagged
@@ -5317,7 +5361,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3460409232341177653}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1.0000004, y: 1, z: 1.0000004}
@@ -5337,6 +5381,9 @@ MonoBehaviour:
   rotSpdX: 60
   rotSpdY: 60
   rotSpdZ: 60
+  hover: 0
+  amplitude: 2
+  speed: 1.5
   rotMod: 0
 --- !u!114 &5777774146561209427
 MonoBehaviour:
@@ -5351,6 +5398,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeToDeactivate: 4
+--- !u!114 &3460602172230036995
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3460409232341177653}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 433239df442250d4bb759d631b470a38, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 8
+  spawnPos: {fileID: 3460409232341177653}
+  hitVFXPool: {fileID: 0}
+  iframeTime: 0.1
 --- !u!1 &4052146929298040095
 GameObject:
   m_ObjectHideFlags: 0
@@ -11001,6 +11064,7 @@ GameObject:
   - component: {fileID: 5249254145918283136}
   - component: {fileID: 5249254145918283141}
   - component: {fileID: 5249254145918283164}
+  - component: {fileID: 341991275}
   m_Layer: 0
   m_Name: StarBomber
   m_TagString: Player
@@ -11015,7 +11079,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5249254145918283140}
-  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: -0.7071068}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: -0, w: -0.7071068}
   m_LocalPosition: {x: 163, y: 1463.776, z: 0}
   m_LocalScale: {x: 100, y: 100, z: 100}
   m_ConstrainProportionsScale: 1
@@ -11209,6 +11273,7 @@ MonoBehaviour:
   healColor: {r: 0.4392157, g: 1, b: 0.38431373, a: 1}
   flashTime: 0.5
   redBulletImpact: {fileID: 6108864283411289591, guid: 85fa723b1f3435f4fa8556c64a65d15b, type: 3}
+  invisible: 0
 --- !u!114 &5249254145918283139
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11244,6 +11309,7 @@ MonoBehaviour:
   charging: 0
   chargeTime: 0
   incSpd: 5
+  chargeAnim: {fileID: 0}
 --- !u!114 &7087524419626290079
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11414,6 +11480,22 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &341991275
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5249254145918283140}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d96edb1f14e25e74e98ca0266ddd76fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  afterimageUI: []
+  emptyImage: {fileID: 21300000, guid: 3269d2c507e3be449887c7e3ed25f248, type: 3}
+  filledImage: {fileID: 21300000, guid: 3269d2c507e3be449887c7e3ed25f248, type: 3}
+  uiLerp: 10
 --- !u!1 &6012945589270339181
 GameObject:
   m_ObjectHideFlags: 0
@@ -21263,6 +21345,7 @@ GameObject:
   - component: {fileID: 6595834041724907735}
   - component: {fileID: 2623008890783652361}
   - component: {fileID: 1128893214450048658}
+  - component: {fileID: 2785477454506014880}
   m_Layer: 0
   m_Name: Sword
   m_TagString: Untagged
@@ -21343,7 +21426,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9191022393952434517}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1.0000004, y: 1, z: 1.0000004}
@@ -21363,6 +21446,9 @@ MonoBehaviour:
   rotSpdX: 60
   rotSpdY: 60
   rotSpdZ: 60
+  hover: 0
+  amplitude: 2
+  speed: 1.5
   rotMod: 0
 --- !u!114 &1128893214450048658
 MonoBehaviour:
@@ -21377,6 +21463,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeToDeactivate: 4
+--- !u!114 &2785477454506014880
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9191022393952434517}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 433239df442250d4bb759d631b470a38, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 8
+  spawnPos: {fileID: 9191022393952434517}
+  hitVFXPool: {fileID: 0}
+  iframeTime: 0.1
 --- !u!1001 &185860012784284130
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -21510,13 +21612,25 @@ PrefabInstance:
       propertyPath: m_TrackedObjectOffset.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3746874429996666380, guid: 5af8fa4ddd7d50f4eb3349835e040d18, type: 3}
+      propertyPath: m_ReactionSettings.m_NoiseOffsets.x
+      value: 441.31918
+      objectReference: {fileID: 0}
+    - target: {fileID: 3746874429996666380, guid: 5af8fa4ddd7d50f4eb3349835e040d18, type: 3}
+      propertyPath: m_ReactionSettings.m_NoiseOffsets.y
+      value: -828.44714
+      objectReference: {fileID: 0}
+    - target: {fileID: 3746874429996666380, guid: 5af8fa4ddd7d50f4eb3349835e040d18, type: 3}
+      propertyPath: m_ReactionSettings.m_NoiseOffsets.z
+      value: -722.3633
+      objectReference: {fileID: 0}
     - target: {fileID: 4400582474091118264, guid: 5af8fa4ddd7d50f4eb3349835e040d18, type: 3}
       propertyPath: m_MaxFOV
-      value: 75.00006
+      value: 116.254
       objectReference: {fileID: 0}
     - target: {fileID: 4400582474091118264, guid: 5af8fa4ddd7d50f4eb3349835e040d18, type: 3}
       propertyPath: m_MinFOV
-      value: 45.00003
+      value: 86.25395
       objectReference: {fileID: 0}
     - target: {fileID: 7262275620497145618, guid: 5af8fa4ddd7d50f4eb3349835e040d18, type: 3}
       propertyPath: m_RootOrder

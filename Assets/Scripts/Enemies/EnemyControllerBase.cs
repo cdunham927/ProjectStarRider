@@ -235,13 +235,13 @@ public class EnemyControllerBase : MonoBehaviour
                 Patrol();
                 break;
             case (enemystates.alert):
-                if (!pStats.invisible)
+                if (pStats != null && !pStats.invisible)
                 {
                     Alert();
                 }
                 break;
             case (enemystates.attack):
-                if (!pStats.invisible)
+                if (pStats != null && !pStats.invisible)
                 {
                     Attack();
                 }

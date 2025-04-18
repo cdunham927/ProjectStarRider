@@ -7,6 +7,7 @@ using MPUIKIT;
 public class StealthUI : MonoBehaviour
 {
     PlayerAbility ability;
+    GameManager cont;
 
     [Header("AfterImage Icons : ")]
     public MPImage fillImage;
@@ -17,8 +18,14 @@ public class StealthUI : MonoBehaviour
 
     private void Awake()
     {
+        cont = FindObjectOfType<GameManager>();
         ability = GetComponent<PlayerAbility>();
-        if (FindObjectOfType<GameManager>() != null) fillImage = FindObjectOfType<GameManager>().spiralFill;
+        if (cont != null)
+        {
+            cont.afterimageParent.SetActive(false);
+            fillImage = cont.spiralFill;
+        }
+
 
         //4 charges max, so 1 charge is 1/4th of the max image time
         oneCharge = ability.maxImagesTime / ability.maxCharges;
