@@ -10207,6 +10207,7 @@ MonoBehaviour:
   healColor: {r: 0.4392157, g: 1, b: 0.38431373, a: 1}
   flashTime: 0.5
   redBulletImpact: {fileID: 6108864283411289591, guid: 85fa723b1f3435f4fa8556c64a65d15b, type: 3}
+  invisible: 0
 --- !u!114 &4638639762591759978
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10239,7 +10240,10 @@ MonoBehaviour:
     m_Bits: 863
   affectsCursor: 1
   chargedShot: 0
+  charging: 0
   chargeTime: 0
+  incSpd: 5
+  chargeAnim: {fileID: 0}
 --- !u!114 &7700358716931397750
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20887,6 +20891,10 @@ PrefabInstance:
     - target: {fileID: 2073276983, guid: 5af8fa4ddd7d50f4eb3349835e040d18, type: 3}
       propertyPath: m_TrackedObjectOffset.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4400582474091118264, guid: 5af8fa4ddd7d50f4eb3349835e040d18, type: 3}
+      propertyPath: m_Damping
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 7262275620497145618, guid: 5af8fa4ddd7d50f4eb3349835e040d18, type: 3}
       propertyPath: m_RootOrder

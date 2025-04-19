@@ -3400,7 +3400,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302762743768171265, guid: 6b93a3113a51896478068f5d7da39efd, type: 3}
       propertyPath: field of view
-      value: 82.66353
+      value: 73.1136
       objectReference: {fileID: 0}
     - target: {fileID: 4302762743768171265, guid: 6b93a3113a51896478068f5d7da39efd, type: 3}
       propertyPath: m_FocalLength
@@ -14934,6 +14934,10 @@ PrefabInstance:
       value: 80
       objectReference: {fileID: 0}
     - target: {fileID: 615927654669839433, guid: b1eff018e926eaf4f936a38d2fc7e37c, type: 3}
+      propertyPath: startDelay.scalar
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 615927654669839433, guid: b1eff018e926eaf4f936a38d2fc7e37c, type: 3}
       propertyPath: EmissionModule.m_BurstCount
       value: 0
       objectReference: {fileID: 0}
@@ -14942,8 +14946,16 @@ PrefabInstance:
       value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 615927654669839433, guid: b1eff018e926eaf4f936a38d2fc7e37c, type: 3}
+      propertyPath: InitialModule.startSpeed.scalar
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 615927654669839433, guid: b1eff018e926eaf4f936a38d2fc7e37c, type: 3}
       propertyPath: EmissionModule.rateOverTime.scalar
       value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 615927654669839433, guid: b1eff018e926eaf4f936a38d2fc7e37c, type: 3}
+      propertyPath: InitialModule.startLifetime.scalar
+      value: 0.45
       objectReference: {fileID: 0}
     - target: {fileID: 615927654669839433, guid: b1eff018e926eaf4f936a38d2fc7e37c, type: 3}
       propertyPath: InitialModule.startSpeed.minScalar
@@ -15167,11 +15179,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4112874366383624702, guid: b1eff018e926eaf4f936a38d2fc7e37c, type: 3}
       propertyPath: m_MaxFOV
-      value: 103.6958
+      value: 110
       objectReference: {fileID: 0}
     - target: {fileID: 4112874366383624702, guid: b1eff018e926eaf4f936a38d2fc7e37c, type: 3}
       propertyPath: m_MinFOV
-      value: 82.66353
+      value: 73.1136
       objectReference: {fileID: 0}
     - target: {fileID: 4387901989287355368, guid: b1eff018e926eaf4f936a38d2fc7e37c, type: 3}
       propertyPath: m_IsActive
@@ -15525,6 +15537,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5850862398393200929, guid: b1eff018e926eaf4f936a38d2fc7e37c, type: 3}
+      propertyPath: speedEmission
+      value: 80
+      objectReference: {fileID: 0}
     - target: {fileID: 5879563561367821587, guid: b1eff018e926eaf4f936a38d2fc7e37c, type: 3}
       propertyPath: m_MinVertexDistance
       value: 1
@@ -15645,6 +15661,18 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 1901736361}
+    - target: {fileID: 7700358716931397750, guid: b1eff018e926eaf4f936a38d2fc7e37c, type: 3}
+      propertyPath: maxFastFov
+      value: 110
+      objectReference: {fileID: 0}
+    - target: {fileID: 7700358716931397750, guid: b1eff018e926eaf4f936a38d2fc7e37c, type: 3}
+      propertyPath: maxSlowFov
+      value: 110
+      objectReference: {fileID: 0}
+    - target: {fileID: 7700358716931397750, guid: b1eff018e926eaf4f936a38d2fc7e37c, type: 3}
+      propertyPath: minSlowFov
+      value: 50
+      objectReference: {fileID: 0}
     - target: {fileID: 7801085847204761082, guid: b1eff018e926eaf4f936a38d2fc7e37c, type: 3}
       propertyPath: m_Layer
       value: 13
