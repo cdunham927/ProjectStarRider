@@ -18,6 +18,9 @@ public class ShipController : MonoBehaviour
     public Animator anim;
     Rigidbody bod;
     float pitch, roll, yaw = 0f;
+    float rotPitch, rotRoll, rotYaw = 0f;
+    public float rotSpd;
+    public GameObject rotObj;
 
     public float deadZoneRadius = 0.1f;
     Vector2 screenCenter => new Vector2(Screen.width * 0.5f, Screen.height * 0.5f);
@@ -62,6 +65,7 @@ public class ShipController : MonoBehaviour
 
     GameManager cont;
     PlayerAbility ability;
+    Player_Stats stats;
 
     //Variables for half turn
     public float halfTurnDegrees = 180f;
@@ -81,6 +85,7 @@ public class ShipController : MonoBehaviour
         //anim = GetComponentInChildren<Animator>();
         bod = GetComponent<Rigidbody>();
         player = GetComponent<PlayerController>();
+        stats = GetComponent<Player_Stats>();
         ability = GetComponent<PlayerAbility>();
 
         DefaultRegSpd = regSpd;  //stored default vlaues for player speed
@@ -108,7 +113,7 @@ public class ShipController : MonoBehaviour
 
             if (Input.GetButtonDown("Dash") && curDashCools <= 0 && !sideDashing)
             {
-                if (Input.GetButton("Fire4")) 
+                if (Input.GetButton("Fire4"))
                 {
                     ability.DodgeAbility();
                 }
@@ -168,11 +173,27 @@ public class ShipController : MonoBehaviour
 
                 if (vert > 0)
                 {
-                    if (curDashTime > 0) lerpToSpd = superSpd;
-                    else lerpToSpd = highSpd;
+                    if (curDashTime > 0)
+                    {
+                        lerpToSpd = superSpd;
+
+                        stats.ShakeCamera(1.5f);
+                    }
+                    else
+                    {
+                        stats.ShakeCamera(1f);
+                        lerpToSpd = highSpd;
+                    }
                 }
-                else if (vert < 0) lerpToSpd = slowSpd;
-                else lerpToSpd = regSpd;
+                else if (vert < 0)
+                {
+                    lerpToSpd = slowSpd;
+                }
+                else
+                {
+                    stats.ShakeCamera(0.325f);
+                    lerpToSpd = regSpd;
+                }
 
             }
 
@@ -180,9 +201,28 @@ public class ShipController : MonoBehaviour
             if (curDashTime > 0) curDashTime -= Time.deltaTime;
 
             //Cursor.visible = player.joystick;
-            //player.joystick = true;
+            //player.joystick = true;//Get the Screen positions of the object
+
+            ////Rotate towards mouse
+            //Vector2 positionOnScreen = Camera.main.WorldToViewportPoint(rotObj.transform.position);
+            ////Get the Screen position of the mouse
+            //Vector3 mouseWorldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition + Vector3.forward * 10f);
+            ////Get the angle between the points
+            //float angle = AngleBetweenTwoPoints(positionOnScreen, mouseWorldPosition);
+            ////Ta Daaa
+            //rotObj.transform.rotation = Quaternion.Euler(new Vector3(0f, 0f, angle));
+
+            //Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            //if (Physics.Raycast(ray, out RaycastHit raycastHit))
+            //{
+            //    rotObj.transform.LookAt(new Vector3(raycastHit.point.x, rotObj.transform.position.y, raycastHit.point.z));
+            //}
         }
     }
+    //float AngleBetweenTwoPoints(Vector3 a, Vector3 b)
+    //{
+    //    return Mathf.Atan2(a.y - b.y, a.x - b.x) * Mathf.Rad2Deg;
+    //}
 
     //Coroutine for half turning
     //
@@ -245,6 +285,15 @@ public class ShipController : MonoBehaviour
         pitch = (aimPos.y - screenCenter.y) / screenCenter.y;
         pitch = (Mathf.Abs(pitch) > deadZoneRadius) ? pitch : 0f;
 
+        ////Get rotation positions
+        //rotPitch = (aimPos.y - screenCenter.y) / screenCenter.y;
+        //rotYaw = (aimPos.x - screenCenter.x) / screenCenter.x;
+        ////Clamp rotation positions so we dont turn the ship too much
+        //rotPitch = Mathf.Clamp(rotPitch, -0.0825f, 0.0825f);
+        //rotPitch = Mathf.Lerp(rotPitch, 0, Time.fixedDeltaTime * 10f);
+        //rotYaw = Mathf.Clamp(rotYaw, -0.0425f, 0.0425f);
+        //rotYaw = Mathf.Lerp(rotYaw, 0, Time.fixedDeltaTime * 10f);
+
         mouseDistance = Vector2.ClampMagnitude(mouseDistance, 1f);
         //Roll uses q and e to roll the ship, I dont think we want that
         //thrust = Input.GetAxis("Vertical");
@@ -267,10 +316,25 @@ public class ShipController : MonoBehaviour
             bod.AddTorque(transform.up * (yawForce * yaw * Time.fixedDeltaTime));
         }
 
+        //rotObj.transform.Rotate((-transform.up * rotYaw * rotSpd) - (transform.right * rotPitch * rotSpd));
+        //Rotate ship towards movement
+        //if (!Mathf.Approximately(0f, rotPitch)) {
+        //    rotObj.transform.RotateAround(rotObj.transform.position, -transform.right, Time.fixedDeltaTime * rotSpd * rotPitch);
+        //}
+        //if (!Mathf.Approximately(0f, rotYaw))
+        //{
+        //    rotObj.transform.RotateAround(rotObj.transform.position, transform.up, Time.fixedDeltaTime * rotSpd * rotYaw);
+        //}
+        //if (Mathf.Approximately(0f, rotPitch) && Mathf.Approximately(0f, rotYaw))
+        //{
+        //    //rotObj.transform.localRotation = Quaternion.Lerp(rotObj.transform.localRotation, Quaternion.identity, rotSpd * Time.fixedDeltaTime);
+        //}
+
         bod.AddForce(transform.forward * (speed * Time.fixedDeltaTime));
 
         if (dashing && !sideDashing)
         {
+            stats.ShakeCamera(12f);
             bod.AddForce(transform.forward * (explosiveForce * Time.fixedDeltaTime), ForceMode.Impulse);
             dashing = false;
             ChangeAnimationState(BarrelRoll);
@@ -278,6 +342,7 @@ public class ShipController : MonoBehaviour
 
         if (sideDashing && !dashing)
         {
+            stats.ShakeCamera(12f);
             bod.AddForce(transform.right * dashDir * (explosiveForce * Time.fixedDeltaTime), ForceMode.Impulse);
             sideDashing = false;
             ChangeAnimationState(BarrelRoll);

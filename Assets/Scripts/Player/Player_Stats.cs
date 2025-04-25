@@ -58,7 +58,7 @@ public class Player_Stats : MonoBehaviour
     [Header("Camera Shake Settings: ")]
     //Camera shake on take damage
     CinemachineVirtualCamera cine;
-    CinemachineBasicMultiChannelPerlin perlin;
+    public CinemachineBasicMultiChannelPerlin perlin;
     public float shakeTimer = 0.2f;
     public float shakeAmt = 1f;
     float curTime;
@@ -125,7 +125,7 @@ public class Player_Stats : MonoBehaviour
         //Camera shake things
         if (cine == null) cine = GetComponentInChildren<CinemachineVirtualCamera>();
         //if (cine == null) cine = FindObjectOfType<CinemachineVirtualCamera>();
-        if (perlin == null)  perlin = FindObjectOfType<CinemachineVirtualCamera>().GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
+        if (cine != null && perlin == null)  perlin = cine.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
 
         src = GetComponent<AudioSource>();
 
@@ -159,11 +159,11 @@ public class Player_Stats : MonoBehaviour
         if (amt > 0 && scoreMultiplier < maxMultiplier) scoreMultiplier += multiplierIncrements;
     }
 
-    public void ShakeCamera()
+    public void ShakeCamera(float shake = 1f)
     {
         if (perlin != null)
         {
-            perlin.m_AmplitudeGain = shakeAmt;
+            perlin.m_AmplitudeGain = shake;
             curTime = shakeTimer;
         }
     }
@@ -297,9 +297,10 @@ public class Player_Stats : MonoBehaviour
                 reactionImage.color = hitColor;
                 Invoke("ResetGradient", flashTime);
 
+                ShakeCamera(shakeAmt);
+
                 if (Curr_hp > 0)
                 {
-                    ShakeCamera();
                     if(curTime > 0) 
                     {
                         curTime -= Time.deltaTime;

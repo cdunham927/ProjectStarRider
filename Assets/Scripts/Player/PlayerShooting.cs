@@ -140,16 +140,17 @@ public class PlayerShooting : MonoBehaviour
         }
 
         //Charge shot stuff start
-        //
         //If we have a charge shot and we're holding down the fire button, we start charging
-        if (chargedShot && (Input.GetButtonDown("Fire1") || Input.GetAxis("Altfire1") > 0) && curShootCools <= 0f && !gm.gameIsPaused)
+        if (chargedShot && (Input.GetButton("Fire1") || Input.GetAxis("Altfire1") > 0) && curShootCools <= 0f && !gm.gameIsPaused)
         {
             charging = true;
         }
 
         //If we let go of the charge button and we dont have enough charge, we uncharge the shot
-        if (chargedShot && !(Input.GetButton("Fire1") || Input.GetAxis("Altfire1") > 0) && !gm.gameIsPaused)
+        if (chargedShot && curCharge < chargeTime && (Input.GetButtonUp("Fire1") && Mathf.Approximately(Input.GetAxis("Altfire1"), 0)) && !gm.gameIsPaused)
         {
+            //curCharge = 0f;
+            charging = false;
             //curCharge -= Time.deltaTime * incSpd;
         }
 
@@ -166,7 +167,7 @@ public class PlayerShooting : MonoBehaviour
         }
         else
         {
-            if (curCharge > 0) curCharge -= Time.deltaTime * incSpd;
+            if (curCharge > 0) curCharge = 0f;
         }
 
         if (chargedShot && chargeAnim != null)

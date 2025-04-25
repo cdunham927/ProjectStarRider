@@ -10081,6 +10081,8 @@ MonoBehaviour:
   rollForce: 785
   yawForce: 785
   anim: {fileID: 4638639763867632516}
+  rotSpd: 0
+  rotObj: {fileID: 4638639763867632632}
   deadZoneRadius: 0.15
   spdLerpAmt: 15
   slowSpd: 0
@@ -10190,6 +10192,7 @@ MonoBehaviour:
   explodeClip: {fileID: 8300000, guid: d95b1d6a3c5707c4397f2a42fb2d5678, type: 3}
   hitVolume: 1
   explodeVolume: 0.675
+  perlin: {fileID: 0}
   shakeTimer: 0.1
   shakeAmt: 5
   blinkDuration: 0.3
@@ -10243,6 +10246,7 @@ MonoBehaviour:
   charging: 0
   chargeTime: 0
   incSpd: 5
+  chargeAnim: {fileID: 0}
 --- !u!114 &7700358716931397750
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20897,11 +20901,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7262275620497145618, guid: 5af8fa4ddd7d50f4eb3349835e040d18, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.000021967893
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7262275620497145618, guid: 5af8fa4ddd7d50f4eb3349835e040d18, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.0400171
+      value: -0.040000003
       objectReference: {fileID: 0}
     - target: {fileID: 7262275620497145618, guid: 5af8fa4ddd7d50f4eb3349835e040d18, type: 3}
       propertyPath: m_LocalPosition.z
@@ -21043,6 +21047,23 @@ MonoBehaviour:
   m_MaximumFOV: 60
   m_MinimumOrthoSize: 1
   m_MaximumOrthoSize: 5000
+--- !u!114 &3189724728691074636
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6974129907213513557}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68bb026fafb42b14791938953eaace77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_NoiseProfile: {fileID: 11400000, guid: 69ce8388f6785dd4c8c39915efece2f4, type: 2}
+  m_PivotOffset: {x: 0, y: 0, z: 0}
+  m_AmplitudeGain: 1
+  m_FrequencyGain: 1
+  mNoiseOffsets: {x: 0, y: 0, z: 0}
 --- !u!1001 &725805417439486475
 PrefabInstance:
   m_ObjectHideFlags: 0

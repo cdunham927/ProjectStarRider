@@ -10229,7 +10229,7 @@ Transform:
   - {fileID: 5598075403779994057}
   - {fileID: 5598075401974231115}
   - {fileID: 2163689159271240585}
-  - {fileID: 6812795480098720436}
+  - {fileID: 7225558387415252915}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 270, z: 0}
@@ -10304,6 +10304,8 @@ MonoBehaviour:
   rollForce: 785
   yawForce: 785
   anim: {fileID: 5598075403193310904}
+  rotSpd: 0
+  rotObj: {fileID: 5598075403193310916}
   deadZoneRadius: 0.15
   spdLerpAmt: 15
   slowSpd: 0
@@ -10341,13 +10343,13 @@ MonoBehaviour:
   maxCharges: 4
   maxImagesTime: 40
   rechargeSpd: 2.5
-  decoy: {fileID: 672394538714028356, guid: 6bf31ec77d43dd7489eeac3613f0cda5, type: 3}
-  positionToSpawn: {fileID: 5598075402320733011}
   afterimages:
   - {fileID: 4964242970589144514}
   - {fileID: 4964242971333816879}
   - {fileID: 4964242970281644683}
   - {fileID: 4964242970936401432}
+  decoy: {fileID: 672394538714028356, guid: 6bf31ec77d43dd7489eeac3613f0cda5, type: 3}
+  positionToSpawn: {fileID: 5598075402320733011}
 --- !u!114 &5178749463858059644
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10413,6 +10415,7 @@ MonoBehaviour:
   explodeClip: {fileID: 8300000, guid: d95b1d6a3c5707c4397f2a42fb2d5678, type: 3}
   hitVolume: 1
   explodeVolume: 0.675
+  perlin: {fileID: 0}
   shakeTimer: 0.1
   shakeAmt: 5
   blinkDuration: 0.3
@@ -10430,6 +10433,7 @@ MonoBehaviour:
   healColor: {r: 0.4392157, g: 1, b: 0.38431373, a: 1}
   flashTime: 0.5
   redBulletImpact: {fileID: 6108864283411289591, guid: 85fa723b1f3435f4fa8556c64a65d15b, type: 3}
+  invisible: 0
 --- !u!114 &5598075402320733014
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10461,6 +10465,11 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 863
   affectsCursor: 1
+  chargedShot: 0
+  charging: 0
+  chargeTime: 0
+  incSpd: 5
+  chargeAnim: {fileID: 0}
 --- !u!114 &7436202570468689226
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20958,11 +20967,15 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7186437265660788868, guid: 45c0a0664dbff294da473b0621f01a4e, type: 3}
+      propertyPath: m_RootOrder
+      value: 6
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 45c0a0664dbff294da473b0621f01a4e, type: 3}
---- !u!224 &6812795480098720436 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 6446591604047639939, guid: 45c0a0664dbff294da473b0621f01a4e, type: 3}
+--- !u!4 &7225558387415252915 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7186437265660788868, guid: 45c0a0664dbff294da473b0621f01a4e, type: 3}
   m_PrefabInstance: {fileID: 575631223358865207}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &715587055156785786
@@ -21130,6 +21143,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Damping: 0
+--- !u!114 &5026249643708123414
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7865131654455946857}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68bb026fafb42b14791938953eaace77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_NoiseProfile: {fileID: 11400000, guid: 69ce8388f6785dd4c8c39915efece2f4, type: 2}
+  m_PivotOffset: {x: 0, y: 0, z: 0}
+  m_AmplitudeGain: 1
+  m_FrequencyGain: 1
+  mNoiseOffsets: {x: 0, y: 0, z: 0}
 --- !u!114 &7865131655282478439 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7262275620497145629, guid: 5af8fa4ddd7d50f4eb3349835e040d18, type: 3}

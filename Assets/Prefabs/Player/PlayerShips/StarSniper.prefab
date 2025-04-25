@@ -9916,6 +9916,9 @@ MonoBehaviour:
   rotSpdX: 60
   rotSpdY: 60
   rotSpdZ: 60
+  hover: 0
+  amplitude: 2
+  speed: 1.5
   rotMod: 0
 --- !u!114 &7472100088207829049
 MonoBehaviour:
@@ -10403,6 +10406,8 @@ MonoBehaviour:
   rollForce: 716
   yawForce: 716
   anim: {fileID: 2360310342498068166}
+  rotSpd: 0
+  rotObj: {fileID: 2360310342498068154}
   deadZoneRadius: 0.15
   spdLerpAmt: 15
   slowSpd: 0
@@ -10507,6 +10512,7 @@ MonoBehaviour:
   explodeClip: {fileID: 8300000, guid: d95b1d6a3c5707c4397f2a42fb2d5678, type: 3}
   hitVolume: 1
   explodeVolume: 0.675
+  perlin: {fileID: 0}
   shakeTimer: 0.1
   shakeAmt: 5
   blinkDuration: 0.3
@@ -10560,6 +10566,7 @@ MonoBehaviour:
   charging: 0
   chargeTime: 0.5
   incSpd: 2
+  chargeAnim: {fileID: 0}
 --- !u!114 &739550203141782836
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11241,6 +11248,9 @@ MonoBehaviour:
   rotSpdX: 60
   rotSpdY: 60
   rotSpdZ: 60
+  hover: 0
+  amplitude: 2
+  speed: 1.5
   rotMod: 0
 --- !u!114 &4110292303126770262
 MonoBehaviour:
@@ -16283,6 +16293,9 @@ MonoBehaviour:
   rotSpdX: 60
   rotSpdY: 60
   rotSpdZ: 60
+  hover: 0
+  amplitude: 2
+  speed: 1.5
   rotMod: 0
 --- !u!114 &4050530382776976120
 MonoBehaviour:
@@ -21326,6 +21339,9 @@ MonoBehaviour:
   rotSpdX: 60
   rotSpdY: 60
   rotSpdZ: 60
+  hover: 0
+  amplitude: 2
+  speed: 1.5
   rotMod: 0
 --- !u!114 &6020430908560028643
 MonoBehaviour:
@@ -21391,6 +21407,9 @@ MonoBehaviour:
   rotSpdX: 0
   rotSpdY: -360
   rotSpdZ: 0
+  hover: 0
+  amplitude: 2
+  speed: 1.5
   rotMod: 0
 --- !u!1001 &1402313686032839683
 PrefabInstance:
@@ -21682,6 +21701,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Damping: 0
+--- !u!114 &5960849785533292494
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 24582582925628951}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68bb026fafb42b14791938953eaace77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_NoiseProfile: {fileID: 11400000, guid: 69ce8388f6785dd4c8c39915efece2f4, type: 2}
+  m_PivotOffset: {x: 0, y: 0, z: 0}
+  m_AmplitudeGain: 1
+  m_FrequencyGain: 1
+  mNoiseOffsets: {x: 0, y: 0, z: 0}
 --- !u!4 &24582583106778390 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7262275620497145618, guid: 5af8fa4ddd7d50f4eb3349835e040d18, type: 3}
