@@ -4884,6 +4884,11 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   affectsCursor: 0
+  chargedShot: 0
+  charging: 0
+  chargeTime: 0
+  incSpd: 5
+  chargeAnim: {fileID: 0}
 --- !u!82 &1492024944959960810
 AudioSource:
   m_ObjectHideFlags: 0
@@ -4994,7 +4999,9 @@ PlayableDirector:
   m_WrapMode: 0
   m_DirectorUpdateMode: 1
   m_InitialTime: 0
-  m_SceneBindings: []
+  m_SceneBindings:
+  - key: {fileID: 4584264674342134930, guid: 9012febb50ab31f42922ef9d9bf0a91f, type: 2}
+    value: {fileID: 2238101234696727428}
   m_ExposedReferences:
     m_References:
     - 2e26ded61d7a53a4cbfc915c816dd49d: {fileID: 7920983558073152772}
