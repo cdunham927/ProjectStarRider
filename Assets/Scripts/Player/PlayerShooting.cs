@@ -73,24 +73,29 @@ public class PlayerShooting : MonoBehaviour
         mVfx = Instantiate(muzzle);
         mVfx.SetActive(false);
 
-        cursor = GameObject.FindGameObjectWithTag("Cursor");
-
-        //Find sniper animator, deactivate it if we're not using a sniper class
-        chargeAnim = GameObject.FindGameObjectWithTag("SniperAnim").GetComponent<Animator>();
-        if (!chargedShot)
+        if (affectsCursor)
         {
-            chargeAnim.gameObject.SetActive(false);
-        }
-        else
-        {
-            cursor.SetActive(false);
-        }
+            cursor = GameObject.FindGameObjectWithTag("Cursor");
+
+            //Find sniper animator, deactivate it if we're not using a sniper class
+            chargeAnim = GameObject.FindGameObjectWithTag("SniperAnim").GetComponent<Animator>();
+            if (!chargedShot && chargeAnim != null)
+            {
+                if (chargeAnim != null)
+                    chargeAnim.gameObject.SetActive(false);
+            }
+            else
+            {
+                if (cursor != null)
+                    cursor.SetActive(false);
+            }
 
 
-        if (cursor != null)
-        {
-            i = cursor.GetComponent<Image>();
-            r = cursor.GetComponent<RectTransform>();
+            if (cursor != null)
+            {
+                i = cursor.GetComponent<Image>();
+                r = cursor.GetComponent<RectTransform>();
+            }
         }
 
         //r.SetParent(null);

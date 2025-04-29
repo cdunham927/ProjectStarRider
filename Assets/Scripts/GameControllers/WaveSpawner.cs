@@ -28,7 +28,7 @@ public class WaveSpawner : MonoBehaviour
 
     //Spawn in a sphere around the player
     public bool spawnAroundPlayer = false;
-    [Range(3f, 50f)]
+    [Range(3f, 1000f)]
     public float minSpawnRadius = 5f;
     [Range(10f, 5000f)]
     public float maxSpawnRadius = 100f;
@@ -63,7 +63,7 @@ public class WaveSpawner : MonoBehaviour
                     {
                         //Spawn randomly in radius around player
                         //Vector3 spawnPos = (player.transform.position * minSpawnRadius) + (Random.insideUnitSphere * Random.Range(0, maxSpawnRadius));
-                        Vector3 spawnPos = player.transform.position + (Random.insideUnitSphere * Random.Range(0, maxSpawnRadius));
+                        Vector3 spawnPos = player.transform.position + (Random.insideUnitSphere * Random.Range(minSpawnRadius, maxSpawnRadius));
                         GameObject e = enemyTypes[Random.Range(0, enemyTypes.Length)];
                         Instantiate(e, spawnPos, Quaternion.identity);
                     }

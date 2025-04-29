@@ -25,7 +25,7 @@ public class AfterimageUI : MonoBehaviour
         ability = GetComponent<PlayerAbility>();
         if (cont != null)
         {
-            cont.spiralFill.gameObject.SetActive(false);
+            cont.spiralFillParent.gameObject.SetActive(false);
             afterimageUI = FindObjectOfType<GameManager>().afterimages;
         }
 
