@@ -25,6 +25,7 @@ public class ShipController : MonoBehaviour
     public float deadZoneRadius = 0.1f;
     Vector2 screenCenter => new Vector2(Screen.width * 0.5f, Screen.height * 0.5f);
     private Vector2 mouseDistance;
+    
     //Speed values
     [Header("Speed values")]
     public float spdLerpAmt;
