@@ -152,7 +152,7 @@ public class PlayerShooting : MonoBehaviour
         }
 
         //If we let go of the charge button and we dont have enough charge, we uncharge the shot
-        if (chargedShot && curCharge < chargeTime && (Input.GetButtonUp("Fire1") && Mathf.Approximately(Input.GetAxis("Altfire1"), 0)) && !gm.gameIsPaused)
+        if (chargedShot && curCharge < chargeTime && (!Input.GetButton("Fire1") && Mathf.Approximately(Input.GetAxis("Altfire1"), 0)) && !gm.gameIsPaused)
         {
             //curCharge = 0f;
             charging = false;
@@ -160,7 +160,7 @@ public class PlayerShooting : MonoBehaviour
         }
 
         //If we have a charge shot and we've held down the fire button long enough and let go, we shoot
-        if (charging && chargedShot && curCharge >= chargeTime && (Input.GetButtonUp("Fire1") && Input.GetAxis("Altfire1") <= 0) && curShootCools <= 0 && !gm.gameIsPaused)
+        if (charging && chargedShot && curCharge >= chargeTime && (!Input.GetButton("Fire1") && Input.GetAxis("Altfire1") <= 0.1f) && curShootCools <= 0 && !gm.gameIsPaused)
         {
             Shoot(true);
             PlaySound();
@@ -205,7 +205,7 @@ public class PlayerShooting : MonoBehaviour
         //else aimRay = Camera.main.ScreenPointToRay(Input.mousePosition);
     }
 
-    public void Shoot( bool newShooting)
+    public void Shoot(bool newShooting)
     {
         if (stats.invisible)
         {
@@ -220,6 +220,9 @@ public class PlayerShooting : MonoBehaviour
         bul.transform.rotation = Quaternion.LookRotation(aimRay.direction, Vector3.up);
 
         //bul.transform.rotation = player.transform.rotation;
+
+        //Set bullets starting speed to players speed
+        bul.GetComponent<Rigidbody>().velocity = bod.velocity;
 
         bul.SetActive(true);
        

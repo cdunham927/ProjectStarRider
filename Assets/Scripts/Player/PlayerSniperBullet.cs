@@ -41,12 +41,13 @@ public class PlayerSniperBullet : Bullet
 
     public override void OnEnable()
     {
+        startVel = bod.velocity;
         hp = maxHp;
 
         // Ball direction at start
         //direction = transform.forward * 0.02f;
         direction = transform.forward;
-        bod.velocity = transform.forward * speed;
+        bod.velocity = startVel + (transform.forward * speed);
 
         spawned = false;
         base.OnEnable();
