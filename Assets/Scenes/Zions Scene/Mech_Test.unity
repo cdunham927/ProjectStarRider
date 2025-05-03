@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.36690795, g: 0.3182751, b: 0.6262039, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -123,6 +123,28 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &9400163 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4638639763718083911, guid: b1eff018e926eaf4f936a38d2fc7e37c, type: 3}
+  m_PrefabInstance: {fileID: 1794914552}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &9400165
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9400163}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d0915de2f17d3549a21f823e5e9e071, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  applyLocal: 1
+  clearAnimationsOnViewChange: 1
+  vehicleHandle: {fileID: 1794914554}
+  animations:
+  - {fileID: 0}
 --- !u!1 &11122382
 GameObject:
   m_ObjectHideFlags: 0
@@ -3826,7 +3848,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302762743768171265, guid: 6b93a3113a51896478068f5d7da39efd, type: 3}
       propertyPath: field of view
-      value: 50.00002
+      value: 54.43353
       objectReference: {fileID: 0}
     - target: {fileID: 4302762743768171265, guid: 6b93a3113a51896478068f5d7da39efd, type: 3}
       propertyPath: m_FocalLength
@@ -15574,6 +15596,10 @@ PrefabInstance:
       value: 80
       objectReference: {fileID: 0}
     - target: {fileID: 615927654669839433, guid: b1eff018e926eaf4f936a38d2fc7e37c, type: 3}
+      propertyPath: moveWithTransform
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 615927654669839433, guid: b1eff018e926eaf4f936a38d2fc7e37c, type: 3}
       propertyPath: startDelay.scalar
       value: 0.5
       objectReference: {fileID: 0}
@@ -15835,7 +15861,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4112874366383624702, guid: b1eff018e926eaf4f936a38d2fc7e37c, type: 3}
       propertyPath: m_MinFOV
-      value: 50.00002
+      value: 54.43353
+      objectReference: {fileID: 0}
+    - target: {fileID: 4115174044504438085, guid: b1eff018e926eaf4f936a38d2fc7e37c, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.0009
+      objectReference: {fileID: 0}
+    - target: {fileID: 4115174044504438085, guid: b1eff018e926eaf4f936a38d2fc7e37c, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4115174044504438085, guid: b1eff018e926eaf4f936a38d2fc7e37c, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4387901989287355368, guid: b1eff018e926eaf4f936a38d2fc7e37c, type: 3}
       propertyPath: m_IsActive
@@ -16230,6 +16268,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5879563561367821587, guid: b1eff018e926eaf4f936a38d2fc7e37c, type: 3}
+      propertyPath: m_Parameters.alignment
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5879563561367821587, guid: b1eff018e926eaf4f936a38d2fc7e37c, type: 3}
       propertyPath: m_Parameters.colorGradient.atime1
       value: 12684
       objectReference: {fileID: 0}
@@ -16240,6 +16282,18 @@ PrefabInstance:
     - target: {fileID: 5879563561367821587, guid: b1eff018e926eaf4f936a38d2fc7e37c, type: 3}
       propertyPath: m_Parameters.colorGradient.key1.a
       value: 0.8980392
+      objectReference: {fileID: 0}
+    - target: {fileID: 5879563561367821587, guid: b1eff018e926eaf4f936a38d2fc7e37c, type: 3}
+      propertyPath: m_Parameters.colorGradient.key1.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5879563561367821587, guid: b1eff018e926eaf4f936a38d2fc7e37c, type: 3}
+      propertyPath: m_Parameters.colorGradient.key1.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5879563561367821587, guid: b1eff018e926eaf4f936a38d2fc7e37c, type: 3}
+      propertyPath: m_Parameters.colorGradient.key1.r
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5879563561367821587, guid: b1eff018e926eaf4f936a38d2fc7e37c, type: 3}
       propertyPath: m_Parameters.colorGradient.key2.a
@@ -16283,7 +16337,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6801945128658146442, guid: b1eff018e926eaf4f936a38d2fc7e37c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.0134
+      value: -0.0039
       objectReference: {fileID: 0}
     - target: {fileID: 6868156001616857662, guid: b1eff018e926eaf4f936a38d2fc7e37c, type: 3}
       propertyPath: m_IsActive
@@ -16500,23 +16554,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 6868156001616857662, guid: b1eff018e926eaf4f936a38d2fc7e37c, type: 3}
   m_PrefabInstance: {fileID: 1794914552}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1794914557
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1794914555}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6ac87f1faffa4a34f9eda25fc8bc8903, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Rigidbody: {fileID: 0}
-  sideRotationToRoll: 20
-  sideMovementToRoll: -0.15
-  verticalTurnFollowing: 8
-  sideTurnFollowing: 5
 --- !u!1 &1818409668
 GameObject:
   m_ObjectHideFlags: 0

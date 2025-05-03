@@ -11,8 +11,8 @@ public class ShipController : MonoBehaviour
 
     [SerializeField]
     [Range(75f, 1000f)]
-    float pitchForce = 500f, 
-        rollForce = 500f, 
+    float pitchForce = 500f,
+        rollForce = 500f,
         yawForce = 500f;
 
     public Animator anim;
@@ -25,7 +25,7 @@ public class ShipController : MonoBehaviour
     public float deadZoneRadius = 0.1f;
     Vector2 screenCenter => new Vector2(Screen.width * 0.5f, Screen.height * 0.5f);
     private Vector2 mouseDistance;
-    
+
     //Speed values
     [Header("Speed values")]
     public float spdLerpAmt;
@@ -278,7 +278,7 @@ public class ShipController : MonoBehaviour
         }
 
         //Warp mouse position to middle of screen over time
-        
+
 
         yaw = (aimPos.x - screenCenter.x) / screenCenter.x;
         yaw = (Mathf.Abs(yaw) > deadZoneRadius) ? yaw : 0f;
@@ -364,3 +364,5 @@ public class ShipController : MonoBehaviour
         anim.Play(newState);
     }
 }
+
+  
