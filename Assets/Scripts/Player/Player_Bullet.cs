@@ -31,9 +31,10 @@ public class Player_Bullet : Bullet
 
     public override void OnEnable()
     {
+        startVel = bod.velocity;
         spawned = false;
         base.OnEnable();
-        rb.velocity = transform.forward * speed;
+        rb.velocity = startVel + (transform.forward * speed);
 
         //Get minimap object
         if (minimapObj == null) minimapObj = GetComponentInChildren<MinimapObjController>().gameObject;
