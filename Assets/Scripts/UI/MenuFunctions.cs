@@ -108,4 +108,9 @@ public class MenuFunctions : MonoBehaviour
     {
         cont.Controlls();
     }
+
+    public void TurnOffUI()
+    {
+        FindObjectOfType<SceneSwitch>().TurnOffUI();
+    }
 }

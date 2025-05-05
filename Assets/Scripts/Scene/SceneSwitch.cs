@@ -356,5 +356,13 @@ public class SceneSwitch : MonoBehaviour
         StartCoroutine(LoadScene(n));
     }
 
+    public void TurnOffUI() 
+    {
+
+        if (pauseMenu != null)
+        {
+            pauseMenu.SetActive(false);
+        }
+    }
 
 }
