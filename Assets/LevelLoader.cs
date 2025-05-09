@@ -74,11 +74,11 @@ public class LevelLoader : MonoBehaviour
     {
         //loads the scene in the background
         //AsyncOperation operation = SceneManager.LoadSceneAsync(name);
-        SceneManager.LoadScene(sceneName);
-        
+        StartCoroutine(LoadAsynchronously(sceneName));
+
     }
 
-    IEnumerator LoadAsynchronously (int sceneIndex)
+    IEnumerator LoadAsynchronously(int sceneIndex)
     {
         //Music stuff
         music = FindObjectOfType<MusicController>();
@@ -87,12 +87,42 @@ public class LevelLoader : MonoBehaviour
             musicAnim = music.GetComponent<Animator>();
             musicAnim.SetTrigger("fadeOut");
         }
-        
+
         yield return new WaitForSeconds(waitTime);
         //if (music != null) music.ChangeSong(songs[sceneIndex]);
 
 
         AsyncOperation operation = SceneManager.LoadSceneAsync(sceneIndex);
+        if (loadingScreen != null)
+        {
+            loadingScreen.SetActive(true);
+            while (!operation.isDone)
+            {
+                float progress = Mathf.Clamp01(operation.progress / .9f);
+                sl.value = progress;
+                progressText.text = progress * 100f + "%";
+                //throw out a message of current progress
+                Debug.Log(progress);
+
+                yield return null;
+            }
+        }
+    }
+    IEnumerator LoadAsynchronously(string sceneName)
+    {
+        //Music stuff
+        music = FindObjectOfType<MusicController>();
+        if (music != null)
+        {
+            musicAnim = music.GetComponent<Animator>();
+            musicAnim.SetTrigger("fadeOut");
+        }
+
+        yield return new WaitForSeconds(waitTime);
+        //if (music != null) music.ChangeSong(songs[sceneIndex]);
+
+
+        AsyncOperation operation = SceneManager.LoadSceneAsync(sceneName);
         if (loadingScreen != null)
         {
             loadingScreen.SetActive(true);

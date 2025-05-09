@@ -209,20 +209,19 @@ public class MusicController : MonoBehaviour
 
 
             default:
-               
-                audioSourceArray[0].clip = audioClipArray[2];
-                audioSourceArray[1].clip = audioClipArray[2];
+                if (audioSourceArray[0] != null) audioSourceArray[0].clip = audioClipArray[2];
+                if (audioSourceArray[1] != null) audioSourceArray[1].clip = audioClipArray[2];
                 break;
 
 
         }
-        
-        double introDuration = (double)audioSourceArray[0].clip.samples / audioSourceArray[0].clip.frequency;
-        double startTime = AudioSettings.dspTime + 0.2;
-        audioSourceArray[0].PlayScheduled(startTime);
-        audioSourceArray[1].PlayScheduled(startTime + introDuration);
 
-
+        if (audioSourceArray[0] != null && audioSourceArray[1] != null)
+        {
+            double introDuration = (double)audioSourceArray[0].clip.samples / audioSourceArray[0].clip.frequency;
+            double startTime = AudioSettings.dspTime + 0.2;
+            audioSourceArray[0].PlayScheduled(startTime);
+            audioSourceArray[1].PlayScheduled(startTime + introDuration);
+        }
     }
-
 }
