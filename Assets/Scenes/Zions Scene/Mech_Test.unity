@@ -3800,7 +3800,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3490135104266017035, guid: 6b93a3113a51896478068f5d7da39efd, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 4166.0107
+      value: 4176.801
       objectReference: {fileID: 0}
     - target: {fileID: 3490135104266017035, guid: 6b93a3113a51896478068f5d7da39efd, type: 3}
       propertyPath: m_LocalPosition.y
@@ -3808,7 +3808,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3490135104266017035, guid: 6b93a3113a51896478068f5d7da39efd, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -2.9220004
+      value: -2.9219992
       objectReference: {fileID: 0}
     - target: {fileID: 3490135104266017035, guid: 6b93a3113a51896478068f5d7da39efd, type: 3}
       propertyPath: m_LocalRotation.w
@@ -3848,7 +3848,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302762743768171265, guid: 6b93a3113a51896478068f5d7da39efd, type: 3}
       propertyPath: field of view
-      value: 50.00003
+      value: 29
       objectReference: {fileID: 0}
     - target: {fileID: 4302762743768171265, guid: 6b93a3113a51896478068f5d7da39efd, type: 3}
       propertyPath: m_FocalLength
@@ -4626,7 +4626,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &820969298
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15593,11 +15593,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 288757043841080689, guid: b1eff018e926eaf4f936a38d2fc7e37c, type: 3}
       propertyPath: m_CameraDistance
-      value: 0.01
+      value: 0.8
       objectReference: {fileID: 0}
     - target: {fileID: 288757043841080689, guid: b1eff018e926eaf4f936a38d2fc7e37c, type: 3}
       propertyPath: m_LookaheadSmoothing
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 288757043841080689, guid: b1eff018e926eaf4f936a38d2fc7e37c, type: 3}
+      propertyPath: m_TrackedObjectOffset.y
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 615927654669839432, guid: b1eff018e926eaf4f936a38d2fc7e37c, type: 3}
       propertyPath: m_LocalPosition.x
@@ -15866,14 +15870,6 @@ PrefabInstance:
     - target: {fileID: 3419843345478165710, guid: b1eff018e926eaf4f936a38d2fc7e37c, type: 3}
       propertyPath: ColorModule.gradient.maxGradient.m_NumColorKeys
       value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 4112874366383624702, guid: b1eff018e926eaf4f936a38d2fc7e37c, type: 3}
-      propertyPath: m_MaxFOV
-      value: 110
-      objectReference: {fileID: 0}
-    - target: {fileID: 4112874366383624702, guid: b1eff018e926eaf4f936a38d2fc7e37c, type: 3}
-      propertyPath: m_MinFOV
-      value: 50.00003
       objectReference: {fileID: 0}
     - target: {fileID: 4115174044504438085, guid: b1eff018e926eaf4f936a38d2fc7e37c, type: 3}
       propertyPath: m_LocalPosition.x
@@ -16263,6 +16259,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5466791535594518127, guid: b1eff018e926eaf4f936a38d2fc7e37c, type: 3}
+      propertyPath: m_Offset.z
+      value: -10
+      objectReference: {fileID: 0}
     - target: {fileID: 5775197273848051198, guid: b1eff018e926eaf4f936a38d2fc7e37c, type: 3}
       propertyPath: hudCamera
       value: 
@@ -16276,44 +16276,48 @@ PrefabInstance:
       value: 80
       objectReference: {fileID: 0}
     - target: {fileID: 5879563561367821587, guid: b1eff018e926eaf4f936a38d2fc7e37c, type: 3}
-      propertyPath: m_MinVertexDistance
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5879563561367821587, guid: b1eff018e926eaf4f936a38d2fc7e37c, type: 3}
       propertyPath: m_Parameters.alignment
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5879563561367821587, guid: b1eff018e926eaf4f936a38d2fc7e37c, type: 3}
-      propertyPath: m_Parameters.colorGradient.atime1
-      value: 12684
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+    - target: {fileID: 5879563561367821587, guid: b1eff018e926eaf4f936a38d2fc7e37c, type: 3}
+      propertyPath: m_Parameters.widthCurve.m_Curve.Array.size
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5879563561367821587, guid: b1eff018e926eaf4f936a38d2fc7e37c, type: 3}
-      propertyPath: m_Parameters.colorGradient.atime2
-      value: 36131
+      propertyPath: m_Parameters.widthCurve.m_Curve.Array.data[1].time
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5879563561367821587, guid: b1eff018e926eaf4f936a38d2fc7e37c, type: 3}
-      propertyPath: m_Parameters.colorGradient.key1.a
-      value: 0.8980392
+      propertyPath: m_Parameters.widthCurve.m_Curve.Array.data[2].time
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5879563561367821587, guid: b1eff018e926eaf4f936a38d2fc7e37c, type: 3}
-      propertyPath: m_Parameters.colorGradient.key1.b
+      propertyPath: m_Parameters.widthCurve.m_Curve.Array.data[1].value
+      value: 0.50710905
+      objectReference: {fileID: 0}
+    - target: {fileID: 5879563561367821587, guid: b1eff018e926eaf4f936a38d2fc7e37c, type: 3}
+      propertyPath: m_Parameters.widthCurve.m_Curve.Array.data[2].value
+      value: 0.52623373
+      objectReference: {fileID: 0}
+    - target: {fileID: 5879563561367821587, guid: b1eff018e926eaf4f936a38d2fc7e37c, type: 3}
+      propertyPath: m_Parameters.widthCurve.m_Curve.Array.data[1].inSlope
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5879563561367821587, guid: b1eff018e926eaf4f936a38d2fc7e37c, type: 3}
-      propertyPath: m_Parameters.colorGradient.key1.g
+      propertyPath: m_Parameters.widthCurve.m_Curve.Array.data[1].inWeight
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5879563561367821587, guid: b1eff018e926eaf4f936a38d2fc7e37c, type: 3}
-      propertyPath: m_Parameters.colorGradient.key1.r
+      propertyPath: m_Parameters.widthCurve.m_Curve.Array.data[1].outSlope
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5879563561367821587, guid: b1eff018e926eaf4f936a38d2fc7e37c, type: 3}
-      propertyPath: m_Parameters.colorGradient.key2.a
-      value: 0.019981503
-      objectReference: {fileID: 0}
-    - target: {fileID: 5879563561367821587, guid: b1eff018e926eaf4f936a38d2fc7e37c, type: 3}
-      propertyPath: m_Parameters.colorGradient.m_NumAlphaKeys
-      value: 4
+      propertyPath: m_Parameters.widthCurve.m_Curve.Array.data[1].outWeight
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5989855992023089623, guid: b1eff018e926eaf4f936a38d2fc7e37c, type: 3}
       propertyPath: TrailModule.enabled
@@ -16405,15 +16409,15 @@ PrefabInstance:
       objectReference: {fileID: 371052526}
     - target: {fileID: 6974129906388013140, guid: b1eff018e926eaf4f936a38d2fc7e37c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.000000003884297
+      value: 0.0000000048459063
       objectReference: {fileID: 0}
     - target: {fileID: 6974129906388013140, guid: b1eff018e926eaf4f936a38d2fc7e37c, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.0018425232
+      value: -0.0044997167
       objectReference: {fileID: 0}
     - target: {fileID: 6974129906388013140, guid: b1eff018e926eaf4f936a38d2fc7e37c, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.0120554445
+      value: 0.013071308
       objectReference: {fileID: 0}
     - target: {fileID: 6974129906388013140, guid: b1eff018e926eaf4f936a38d2fc7e37c, type: 3}
       propertyPath: m_LocalRotation.w
@@ -16453,7 +16457,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6974129906388013147, guid: b1eff018e926eaf4f936a38d2fc7e37c, type: 3}
       propertyPath: m_Lens.FieldOfView
-      value: 125.8
+      value: 120
       objectReference: {fileID: 0}
     - target: {fileID: 7205621228325201101, guid: b1eff018e926eaf4f936a38d2fc7e37c, type: 3}
       propertyPath: m_Layer
@@ -16463,18 +16467,6 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 1901736361}
-    - target: {fileID: 7700358716931397750, guid: b1eff018e926eaf4f936a38d2fc7e37c, type: 3}
-      propertyPath: maxFastFov
-      value: 110
-      objectReference: {fileID: 0}
-    - target: {fileID: 7700358716931397750, guid: b1eff018e926eaf4f936a38d2fc7e37c, type: 3}
-      propertyPath: maxSlowFov
-      value: 110
-      objectReference: {fileID: 0}
-    - target: {fileID: 7700358716931397750, guid: b1eff018e926eaf4f936a38d2fc7e37c, type: 3}
-      propertyPath: minSlowFov
-      value: 50
-      objectReference: {fileID: 0}
     - target: {fileID: 7757811328995047296, guid: b1eff018e926eaf4f936a38d2fc7e37c, type: 3}
       propertyPath: m_RootOrder
       value: 5

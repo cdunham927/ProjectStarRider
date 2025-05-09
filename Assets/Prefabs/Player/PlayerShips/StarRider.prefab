@@ -10261,10 +10261,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playercamera: {fileID: 6974129906388013147}
   specificCamera: {fileID: 4112874366383624702}
-  minSlowFov: 45
-  maxSlowFov: 75
-  minFastFov: 90
-  maxFastFov: 120
+  minSlowFov: 50
+  maxSlowFov: 150
+  minFastFov: 100
+  maxFastFov: 150
   fovLerp: 2
 --- !u!114 &5850862398393200929
 MonoBehaviour:
@@ -11185,7 +11185,7 @@ TrailRenderer:
     colorGradient:
       serializedVersion: 2
       key0: {r: 1, g: 0, b: 0, a: 1}
-      key1: {r: 1, g: 1, b: 1, a: 0.8980392}
+      key1: {r: 0, g: 0, b: 0, a: 0}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
@@ -11201,7 +11201,7 @@ TrailRenderer:
       ctime6: 0
       ctime7: 0
       atime0: 0
-      atime1: 34017
+      atime1: 21140
       atime2: 64379
       atime3: 64379
       atime4: 0
@@ -11217,7 +11217,7 @@ TrailRenderer:
     textureMode: 0
     shadowBias: 0.5
     generateLightingData: 1
-  m_MinVertexDistance: 0
+  m_MinVertexDistance: 0.1
   m_Autodestruct: 0
   m_Emitting: 1
 --- !u!1 &8465689763232767971
@@ -20977,6 +20977,10 @@ PrefabInstance:
     - target: {fileID: 4400582474091118264, guid: 5af8fa4ddd7d50f4eb3349835e040d18, type: 3}
       propertyPath: m_Damping
       value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5754526031916603689, guid: 5af8fa4ddd7d50f4eb3349835e040d18, type: 3}
+      propertyPath: m_Offset.z
+      value: -8
       objectReference: {fileID: 0}
     - target: {fileID: 7262275620497145618, guid: 5af8fa4ddd7d50f4eb3349835e040d18, type: 3}
       propertyPath: m_RootOrder
