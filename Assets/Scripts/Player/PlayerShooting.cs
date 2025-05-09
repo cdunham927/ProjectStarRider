@@ -78,7 +78,8 @@ public class PlayerShooting : MonoBehaviour
             cursor = GameObject.FindGameObjectWithTag("Cursor");
 
             //Find sniper animator, deactivate it if we're not using a sniper class
-            chargeAnim = GameObject.FindGameObjectWithTag("SniperAnim").GetComponent<Animator>();
+            GameObject chargeObj = GameObject.FindGameObjectWithTag("SniperAnim");
+            if (chargeObj != null) chargeAnim = chargeObj.GetComponent<Animator>();
             if (!chargedShot && chargeAnim != null)
             {
                 if (chargeAnim != null)

@@ -347,7 +347,7 @@ public class GameManager : MonoBehaviour
                 }
                 Resume();
             }
-            else if (!gameIsPaused && !optionsMenu.activeInHierarchy) {
+            else if (!gameIsPaused && optionsMenu != null && !optionsMenu.activeInHierarchy) {
                 //EventSystem.current.firstSelectedGameObject = mainMenuButton;
                 EventSystem.current.SetSelectedGameObject(null);
                 EventSystem.current.SetSelectedGameObject(scene.optionsFirstSelected);

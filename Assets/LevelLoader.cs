@@ -42,14 +42,18 @@ public class LevelLoader : MonoBehaviour
         //if (Manager != null) optionsMenu = Manager.pauseMenuUI;
         //else
         //    optionsMenu = Instantiate(optionsPrefab);
-        if (levelLoaderUIPrefab != null) levelLoaderUIInstance = Instantiate(levelLoaderUIPrefab);
 
-        loadingScreen = levelLoaderUIInstance.transform.GetChild(0).gameObject;
-        sl = levelLoaderUIInstance.GetComponentInChildren<Slider>();
-        progressText = levelLoaderUIInstance.GetComponentInChildren<Text>();
+        if (levelLoaderUIPrefab == null)
+        {
+            levelLoaderUIInstance = Instantiate(levelLoaderUIPrefab);
+            loadingScreen = levelLoaderUIInstance.transform.GetChild(0).gameObject;
+            sl = levelLoaderUIInstance.GetComponentInChildren<Slider>();
+            progressText = levelLoaderUIInstance.GetComponentInChildren<Text>();
 
-        //Deactivate so we don't see them when we spawn them
-        loadingScreen.SetActive(false);
+            //Deactivate so we don't see them when we spawn them
+            loadingScreen.SetActive(false);
+        }
+
         //sl.gameObject.SetActive(false);
         //loadingScreen.gameObject.SetActive(false);
     }
@@ -89,16 +93,19 @@ public class LevelLoader : MonoBehaviour
 
 
         AsyncOperation operation = SceneManager.LoadSceneAsync(sceneIndex);
-        loadingScreen.SetActive(true);
-        while(!operation.isDone)
+        if (loadingScreen != null)
         {
-            float progress = Mathf.Clamp01(operation.progress / .9f);
-            sl.value = progress;
-            progressText.text = progress * 100f + "%";
-            //throw out a message of current progress
-            Debug.Log(progress);
+            loadingScreen.SetActive(true);
+            while (!operation.isDone)
+            {
+                float progress = Mathf.Clamp01(operation.progress / .9f);
+                sl.value = progress;
+                progressText.text = progress * 100f + "%";
+                //throw out a message of current progress
+                Debug.Log(progress);
 
-            yield return null;
+                yield return null;
+            }
         }
     }
 

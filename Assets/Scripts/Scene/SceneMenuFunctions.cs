@@ -214,6 +214,7 @@ public class SceneMenuFunctions : SceneSwitcherManager
     void Quit()
     {
         Application.Quit();
+        if (Application.isEditor) UnityEditor.EditorApplication.isPlaying = false;
     }
 
     public GameObject LevelSelectButton;

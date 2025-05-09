@@ -21,8 +21,8 @@ public class MenuManagers : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
-        _mainMenuCanvas.SetActive(false);
-        _settingsMenuMenuCanvas.SetActive(false);
+        if (_mainMenuCanvas != null) _mainMenuCanvas.SetActive(false);
+        if (_settingsMenuMenuCanvas != null) _settingsMenuMenuCanvas.SetActive(false);
     }
 
     // Update is called once per frame

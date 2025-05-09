@@ -97,8 +97,14 @@ public class SceneSwitch : MonoBehaviour
 
         if (cont != null) pauseMenu = cont.pauseMenuUI;
         if (overworld != null) pauseMenu = overworld.pauseMenu;
+        if (cont == null && overworld == null)
+        {
+            pauseMenu = GameObject.FindGameObjectWithTag("OptionsMenu");
+        }
 
         CarouselController = FindObjectOfType<CarouselController>();
+
+        if (pauseMenu != null) pauseMenu.SetActive(false);
     }
 
     IEnumerator LoadScene(string n)
@@ -363,6 +369,8 @@ public class SceneSwitch : MonoBehaviour
         {
             pauseMenu.SetActive(false);
         }
+        //print("SceneSwitch obj: " + gameObject);
+        //print(pauseMenu);
     }
 
 }

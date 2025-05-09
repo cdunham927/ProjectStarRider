@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class MenuFunctions : MonoBehaviour
 {
@@ -12,11 +13,18 @@ public class MenuFunctions : MonoBehaviour
 
     GameManager cont;
     SceneSwitch scene;
+    public GameObject pauseMenu;
+    public GameObject hubOptionsMenuButton;
 
     private void Awake()
     {
         cont = FindObjectOfType<GameManager>();
         scene = FindObjectOfType<SceneSwitch>();
+
+        if (pauseMenu != null)
+        {
+            pauseMenu.SetActive(false);
+        }
     }
 
     public void PlaySound()
@@ -26,57 +34,57 @@ public class MenuFunctions : MonoBehaviour
 
     public void GameOver()
     {
-        cont.GameOver();
+        if (cont != null) cont.GameOver();
     }
 
     public void Victory()
     {
-        cont.Victory();
+        if (cont != null) cont.Victory();
     }
 
     public void Pause()
     {
-        cont.Pause();
+        if (cont != null) cont.Pause();
     }
 
     public void Resume()
     {
-        cont.Resume();
+        if (cont != null) cont.Resume();
     }
 
     public void NextScene()
     {
-        scene.NextScene();
+        if (scene != null) scene.NextScene();
     }
 
     public void QuitGame()
     {
-        scene.QuitGame();
+        if (scene != null) scene.QuitGame();
     }
 
     public void Options()
     {
-        scene.Options();
+        if (scene != null) scene.Options();
     }
 
     public void Back()
     {
-        FindObjectOfType<SceneSwitch>().Back();
+        if (scene != null) scene.Back();
     }
 
     public void Restart()
     {
-        scene.Restart();
+        if (scene != null) scene.Restart();
     }
 
     public void GoToMainMenu()
     {
-        scene.GoToMainMenu();
+        if (scene != null) scene.GoToMainMenu();
     }
 
     public void GoToHub()
     {
-        scene.GoToHub();
+        if (scene != null) scene.GoToHub();
     }
 
     public void OpenUrl()
@@ -111,6 +119,15 @@ public class MenuFunctions : MonoBehaviour
 
     public void TurnOffUI()
     {
-        FindObjectOfType<SceneSwitch>().TurnOffUI();
+        if (scene != null) scene.TurnOffUI();
+        if (pauseMenu != null)
+        {
+            pauseMenu.SetActive(false);
+        }
+
+        if (hubOptionsMenuButton != null)
+        {
+            EventSystem.current.SetSelectedGameObject(hubOptionsMenuButton);
+        }
     }
 }
