@@ -37,6 +37,11 @@ public class WaveSpawner : MonoBehaviour
 
     public bool triggered = false;
 
+    public float enemySize = 10f;
+    public LayerMask hitMask;
+    int attempts = 0;
+    public float heightDiff;
+
     private void Awake()
     {
         player = FindObjectOfType<PlayerController>();
@@ -64,8 +69,42 @@ public class WaveSpawner : MonoBehaviour
                         //Spawn randomly in radius around player
                         //Vector3 spawnPos = (player.transform.position * minSpawnRadius) + (Random.insideUnitSphere * Random.Range(0, maxSpawnRadius));
                         Vector3 spawnPos = player.transform.position + (Random.insideUnitSphere * Random.Range(minSpawnRadius, maxSpawnRadius));
-                        GameObject e = enemyTypes[Random.Range(0, enemyTypes.Length)];
-                        Instantiate(e, spawnPos, Quaternion.identity);
+                        Vector3 testSpawn = new Vector3(spawnPos.x, player.transform.position.y + Random.Range(-heightDiff, heightDiff), spawnPos.z);
+
+                        //Check if we're hitting anything
+                        bool hittingObj = false;
+                        attempts = 0;
+                        if (Physics.CheckSphere(testSpawn, enemySize, hitMask))
+                        {
+                            hittingObj = true;
+                        }
+                        else hittingObj = false;
+
+                        while (hittingObj && attempts < 10) {
+                            spawnPos = player.transform.position + (Random.insideUnitSphere * Random.Range(minSpawnRadius, maxSpawnRadius));
+                            testSpawn = new Vector3(spawnPos.x, player.transform.position.y + Random.Range(-heightDiff, heightDiff), spawnPos.z);
+
+                            if (Physics.CheckSphere(spawnPos, enemySize, hitMask))
+                            {
+                                hittingObj = true;
+                            }
+                            else hittingObj = false;
+
+                            attempts++;
+                        }
+
+                        if (hittingObj)
+                        {
+                            //If we're not hitting something, spawn the object there
+                            GameObject e = enemyTypes[Random.Range(0, enemyTypes.Length)];
+                            Instantiate(e, transform.position, Quaternion.identity);
+                        }
+                        else
+                        {
+                            //If we're not hitting something, spawn the object there
+                            GameObject e = enemyTypes[Random.Range(0, enemyTypes.Length)];
+                            Instantiate(e, testSpawn, Quaternion.identity);
+                        }
                     }
                     curWave++;
                 }

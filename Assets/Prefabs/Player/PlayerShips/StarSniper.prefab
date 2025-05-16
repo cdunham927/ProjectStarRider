@@ -10320,7 +10320,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2360310342298016559}
-  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: -0.7071068}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: -0, w: -0.7071068}
   m_LocalPosition: {x: 163, y: 1463.776, z: 0}
   m_LocalScale: {x: 100, y: 100, z: 100}
   m_ConstrainProportionsScale: 1
@@ -10406,7 +10406,7 @@ MonoBehaviour:
   rollForce: 716
   yawForce: 716
   anim: {fileID: 2360310342498068166}
-  rotSpd: 0
+  rotSpd: 100
   rotObj: {fileID: 2360310342498068154}
   deadZoneRadius: 0.15
   spdLerpAmt: 15
@@ -21548,15 +21548,19 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2073276983, guid: 5af8fa4ddd7d50f4eb3349835e040d18, type: 3}
       propertyPath: m_LookaheadTime
-      value: 0.082
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2073276983, guid: 5af8fa4ddd7d50f4eb3349835e040d18, type: 3}
       propertyPath: m_CameraDistance
-      value: 6
+      value: 0.8
       objectReference: {fileID: 0}
     - target: {fileID: 2073276983, guid: 5af8fa4ddd7d50f4eb3349835e040d18, type: 3}
       propertyPath: m_LookaheadIgnoreY
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2073276983, guid: 5af8fa4ddd7d50f4eb3349835e040d18, type: 3}
+      propertyPath: m_LookaheadSmoothing
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2073276983, guid: 5af8fa4ddd7d50f4eb3349835e040d18, type: 3}
       propertyPath: m_TrackedObjectOffset.x
@@ -21580,11 +21584,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4400582474091118264, guid: 5af8fa4ddd7d50f4eb3349835e040d18, type: 3}
       propertyPath: m_MaxFOV
-      value: 75.00006
+      value: 96.85957
       objectReference: {fileID: 0}
     - target: {fileID: 4400582474091118264, guid: 5af8fa4ddd7d50f4eb3349835e040d18, type: 3}
       propertyPath: m_MinFOV
-      value: 45.00003
+      value: 66.85957
+      objectReference: {fileID: 0}
+    - target: {fileID: 4400582474091118264, guid: 5af8fa4ddd7d50f4eb3349835e040d18, type: 3}
+      propertyPath: m_Damping
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5754526031916603689, guid: 5af8fa4ddd7d50f4eb3349835e040d18, type: 3}
+      propertyPath: m_Offset.z
+      value: -10
       objectReference: {fileID: 0}
     - target: {fileID: 7262275620497145618, guid: 5af8fa4ddd7d50f4eb3349835e040d18, type: 3}
       propertyPath: m_RootOrder
@@ -21592,15 +21604,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7262275620497145618, guid: 5af8fa4ddd7d50f4eb3349835e040d18, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.0000000019383661
+      value: 1.9383722e-10
       objectReference: {fileID: 0}
     - target: {fileID: 7262275620497145618, guid: 5af8fa4ddd7d50f4eb3349835e040d18, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.048780747
+      value: -0.0065043406
       objectReference: {fileID: 0}
     - target: {fileID: 7262275620497145618, guid: 5af8fa4ddd7d50f4eb3349835e040d18, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.012195131
+      value: 0.012195123
       objectReference: {fileID: 0}
     - target: {fileID: 7262275620497145618, guid: 5af8fa4ddd7d50f4eb3349835e040d18, type: 3}
       propertyPath: m_LocalRotation.w
@@ -21715,7 +21727,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_NoiseProfile: {fileID: 11400000, guid: 69ce8388f6785dd4c8c39915efece2f4, type: 2}
   m_PivotOffset: {x: 0, y: 0, z: 0}
-  m_AmplitudeGain: 1
+  m_AmplitudeGain: 0.325
   m_FrequencyGain: 1
   mNoiseOffsets: {x: 0, y: 0, z: 0}
 --- !u!4 &24582583106778390 stripped
@@ -21755,6 +21767,10 @@ PrefabInstance:
     - target: {fileID: 3186689563028925450, guid: 45c0a0664dbff294da473b0621f01a4e, type: 3}
       propertyPath: m_Name
       value: HUD
+      objectReference: {fileID: 0}
+    - target: {fileID: 3186689563028925450, guid: 45c0a0664dbff294da473b0621f01a4e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6446591604047639939, guid: 45c0a0664dbff294da473b0621f01a4e, type: 3}
       propertyPath: m_Pivot.x

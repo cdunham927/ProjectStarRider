@@ -478,9 +478,9 @@ public class GameManager : MonoBehaviour
             }
             if (controlsText != null) controlsText.SetActive(false);
             //EventSystem.current.SetSelectedGameObject(victoryButton);
-            //VictoryUI.SetActive(true);
-             Time.timeScale = 1f;
-        StartCoroutine(LoadScene(n));
+            VictoryUI.SetActive(true);
+            Time.timeScale = 1f;
+            //StartCoroutine(LoadScene(n));
             EventSystem.current.SetSelectedGameObject(null);
             EventSystem.current.SetSelectedGameObject(victoryButton);
             Time.timeScale = 1f;
