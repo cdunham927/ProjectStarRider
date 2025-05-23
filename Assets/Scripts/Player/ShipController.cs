@@ -80,6 +80,8 @@ public class ShipController : MonoBehaviour
     const string BarrelRoll = "StarRiderShip|BarrelRoll";
     const string DamageSpin = "StarRiderShip|Spin";
 
+    public float freezeTime = 3f;
+
     private void Awake()
     {
         cont = FindObjectOfType<GameManager>();
@@ -91,6 +93,16 @@ public class ShipController : MonoBehaviour
 
         DefaultRegSpd = regSpd;  //stored default vlaues for player speed
         DefaultHighSpd = highSpd; //stored default vlaues for player speed
+
+        bod.velocity = Vector3.zero;
+        bod.freezeRotation = true;
+
+        Invoke("Unfreeze", freezeTime);
+    }
+
+    void Unfreeze()
+    {
+        bod.freezeRotation = false;
     }
 
     private void Update()

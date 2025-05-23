@@ -98,8 +98,7 @@ public class EnemyControllerBase : MonoBehaviour
     public float blinkBrightness = 2.0f;
     float blinkTimer;
     public SkinnedMeshRenderer skinnedMeshRenderer;
-
-   
+    Material origMat;
 
     [Header(" Animation controller : ")]
     public Animator anim;
@@ -129,7 +128,10 @@ public class EnemyControllerBase : MonoBehaviour
     public GameObject enemyIndicator;
     EnemyIndicator eI;
 
+    //Material[] tempMats;
+    //Color[] originalColors;
     //public MeshRenderer mesh;
+    Material hitMat;
 
     public bool hasIframes = false;
     float iframes;
@@ -144,13 +146,15 @@ public class EnemyControllerBase : MonoBehaviour
     protected virtual void Awake()
     {
         //mesh = GetComponent<MeshRenderer>();
+        hitMat = new Material(Shader.Find("Specular"));
+        hitMat.color = Color.red;
 
         cam = FindObjectOfType<CinemachineVirtualCamera>();
         if (perlin == null && cam != null) perlin = cam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
         anim = GetComponentInChildren<Animator>();
         //Get original color of material for damage flashes
         if (skinnedMeshRenderer == null) skinnedMeshRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
-        origCol = skinnedMeshRenderer.materials[ind].color;
+        //origCol = skinnedMeshRenderer.materials[ind].color;
 
         healthScript = GetComponent<Healthbar>();
         pStats = FindObjectOfType<Player_Stats>();
@@ -164,6 +168,17 @@ public class EnemyControllerBase : MonoBehaviour
 
     protected virtual void OnEnable()
     {
+        //tempMats = skinnedMeshRenderer.materials;
+        //origCol = skinnedMeshRenderer.material.color;
+        origMat = skinnedMeshRenderer.material;
+
+        //originalColors = new Color[] { };
+
+        //for (int i = 0; i < tempMats.Length; i++)
+        //{
+        //    originalColors[i] = tempMats[i].color;
+        //}
+
         ResetMaterial();
         hasAdded = false;
         player = FindObjectOfType<PlayerController>();
@@ -284,8 +299,6 @@ public class EnemyControllerBase : MonoBehaviour
         col.enabled = cl;
     }
 
-   
-
     public int GetHealth()
     {
         return (int)curHp;
@@ -402,28 +415,30 @@ public class EnemyControllerBase : MonoBehaviour
 
     protected void DamageBlink()
     {
-        //Debug.Log("Enemy Blinking");
-        //blinkDuration -= Time.deltaTime;
+        //skinnedMeshRenderer.materials = tempMats;
+        skinnedMeshRenderer.material = hitMat;
 
-        Material[] tempMats = skinnedMeshRenderer.materials;
-        //tempMats[ind].color = Color.red * blinkBrightness;
-        skinnedMeshRenderer.materials = tempMats;
-
-        skinnedMeshRenderer.material.SetColor("_Color", Color.red );
-        
+        //for (int i = 0; i < tempMats.Length; i++)
+        //{
+        //    tempMats[i].color = originalColors[i];
+        //}
         //skinnedMeshRenderer.material.color = Color.red * blinkBrightness;
         Invoke("ResetMaterial", blinkDuration);
-
-        
     }
 
     void ResetMaterial()
     {
+        //for (int i = 0; i < tempMats.Length; i++)
+        //{
+        //    tempMats[i].color = originalColors[i];
+        //}
+
         //skinnedMeshRenderer.material.color = origCol;
         //Material[] tempMats = skinnedMeshRenderer.materials;
         //tempMats[ind].color = origCol;
         //skinnedMeshRenderer.materials = tempMats;
-        skinnedMeshRenderer.material.SetColor("_Color", Color.white);
+
+        skinnedMeshRenderer.material = origMat;
     }
 
 

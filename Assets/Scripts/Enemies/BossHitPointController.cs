@@ -69,6 +69,14 @@ public class BossHitPointController : MonoBehaviour
                 //gameObject.SetActive(false);
             }
         }
+
+        //Retaliate against attack
+        //boss.retaliatePos = transform.position;
+        //boss.Retaliate();
+    }
+
+    public void Retaliate()
+    {
         //Retaliate against attack
         boss.retaliatePos = transform.position;
         boss.Retaliate();

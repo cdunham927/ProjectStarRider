@@ -351,7 +351,7 @@ public class GameManager : MonoBehaviour
                 //EventSystem.current.firstSelectedGameObject = mainMenuButton;
                 EventSystem.current.SetSelectedGameObject(null);
                 EventSystem.current.SetSelectedGameObject(scene.optionsFirstSelected);
-                if (cursor != null) cursorImage.enabled = false;
+                if (cursor != null && cursorImage != null) cursorImage.enabled = false;
                 if (player != null)
                 {
                     player.FreezeRotation();
@@ -510,7 +510,8 @@ public class GameManager : MonoBehaviour
         //}
         yield return new WaitForSeconds(waitTime);
         //if (music != null) music.ChangeSong(menuSong);
-        SceneManager.LoadScene(3);
+        //SceneManager.LoadScene(3);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
     IEnumerator ToMenuScene()
     {
@@ -603,7 +604,7 @@ public class GameManager : MonoBehaviour
 
     public void Resume()
     {
-        if (cursor != null) cursorImage.enabled = true;
+        if (cursor != null && cursorImage != null) cursorImage.enabled = true;
         //Activate enemycounttext
         if (enemyCountText != null)
         {
