@@ -61,6 +61,7 @@ public class Player_Stats : MonoBehaviour
     public CinemachineBasicMultiChannelPerlin perlin;
     public float shakeTimer = 0.2f;
     public float shakeAmt = 1f;
+    public float bigShakeAmt = 5f;
     float curTime;
     
     
@@ -125,7 +126,7 @@ public class Player_Stats : MonoBehaviour
         //Camera shake things
         if (cine == null) cine = GetComponentInChildren<CinemachineVirtualCamera>();
         //if (cine == null) cine = FindObjectOfType<CinemachineVirtualCamera>();
-        if (cine != null && perlin == null)  perlin = cine.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
+        if (cine != null && perlin == null) perlin = cine.GetComponentInChildren<CinemachineBasicMultiChannelPerlin>();
 
         src = GetComponent<AudioSource>();
 
@@ -297,7 +298,8 @@ public class Player_Stats : MonoBehaviour
                 reactionImage.color = hitColor;
                 Invoke("ResetGradient", flashTime);
 
-                ShakeCamera(shakeAmt);
+                if (Curr_hp > 0) ShakeCamera(shakeAmt);
+                else ShakeCamera(bigShakeAmt);
 
                 if (Curr_hp > 0)
                 {

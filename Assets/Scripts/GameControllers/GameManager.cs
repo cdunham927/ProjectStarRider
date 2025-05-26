@@ -340,7 +340,7 @@ public class GameManager : MonoBehaviour
 
             if (gameIsPaused && !optionsMenu.activeInHierarchy)
             {
-                if (cursor != null) cursorImage.enabled = true;
+                if (cursor != null && cursorImage != null) cursorImage.enabled = true;
                 if (player != null)
                 {
                     player.UnfreezeRotation();

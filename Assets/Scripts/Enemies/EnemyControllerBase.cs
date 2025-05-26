@@ -81,6 +81,7 @@ public class EnemyControllerBase : MonoBehaviour
     public float shakeTimer = 0.1f;
     float curTime;
     public float shakeAmt = .5f;
+    public float deathShake = 5f;
 
     [Header(" Icon for minimap : ")]
     public GameObject minimapObj;
@@ -150,14 +151,13 @@ public class EnemyControllerBase : MonoBehaviour
         hitMat.color = Color.red;
 
         cam = FindObjectOfType<CinemachineVirtualCamera>();
-        if (perlin == null && cam != null) perlin = cam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
+        if (perlin == null && cam != null) perlin = cam.GetComponentInChildren<CinemachineBasicMultiChannelPerlin>();
         anim = GetComponentInChildren<Animator>();
         //Get original color of material for damage flashes
         if (skinnedMeshRenderer == null) skinnedMeshRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
         //origCol = skinnedMeshRenderer.materials[ind].color;
 
         healthScript = GetComponent<Healthbar>();
-        pStats = FindObjectOfType<Player_Stats>();
         src = GetComponent<AudioSource>();
         //bulletPool = cont.enemyBulPool;
 
@@ -168,6 +168,7 @@ public class EnemyControllerBase : MonoBehaviour
 
     protected virtual void OnEnable()
     {
+        pStats = FindObjectOfType<Player_Stats>();
         //tempMats = skinnedMeshRenderer.materials;
         //origCol = skinnedMeshRenderer.material.color;
         origMat = skinnedMeshRenderer.material;
@@ -229,13 +230,9 @@ public class EnemyControllerBase : MonoBehaviour
         currentState = toState;
     }
 
-    public void ShakeCamera()
+    public void ShakeCamera(float amt = 0.5f)
     {
-        if (perlin != null)
-        {
-            perlin.m_AmplitudeGain = shakeAmt;
-            curTime = shakeTimer;
-        }
+        pStats.ShakeCamera(amt);
     }
 
 
@@ -335,7 +332,7 @@ public class EnemyControllerBase : MonoBehaviour
         //skinnedMeshRenderer.materials[2].color = Color.white * intensity;
         if (curHp <= 0 && !spawned)
         {
-            ShakeCamera();
+            ShakeCamera(deathShake);
             if (Random.value < bombSpawnChance && !spawnedPickup && bombPool != null)
             {
                 GameObject bomb = bombPool.GetPooledObject();
