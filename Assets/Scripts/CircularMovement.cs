@@ -1,0 +1,55 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class CircularMovement : MonoBehaviour
+{
+    float dir;
+    public float startAngle;
+    float angle = 0;
+    public float radius = 1f;
+    public float yStart = 1f;
+    public float angularSpeed = 20f;
+    public Transform target;
+    Vector3 circleCenter;
+
+    public float speedVariance;
+    public float yStartVariance;
+    public float radiusVariance;
+
+    float yVar, spdVar, radVar;
+
+    private void Awake()
+    {
+        if (Random.value > 0.5f) dir = 1;
+        else dir = -1;
+
+        startAngle = Random.Range(0, 360);
+        if (target != null) circleCenter = target.transform.position;
+        angle = startAngle;
+
+        spdVar = Random.Range(-speedVariance, speedVariance);
+        yVar = Random.Range(-yStartVariance, yStartVariance);
+        spdVar = Random.Range(-speedVariance, speedVariance);
+    }
+
+    void Update()
+    {
+        angle += dir * (angularSpeed + spdVar) * Time.deltaTime;
+
+        // Normalize the angle from 0 to 360.
+        angle %= 360f;
+        float radians = angle * Mathf.Deg2Rad;
+
+        Vector3 pos = circleCenter + new Vector3(Mathf.Cos(angle), 0, Mathf.Sin(angle)) * (radius + radVar);
+        pos.y = yStart + circleCenter.y + yVar;
+
+        //Vector3 pos = new Vector3(
+        //   angle * Mathf.Sin(radians),
+        //   angle * Mathf.Cos(radians));
+        //pos *= radius;
+        //pos += circleCenter;
+
+        transform.position = pos;
+    }
+}

@@ -13,6 +13,7 @@ public class SeaAngelController : EnemyControllerBase
     public AudioClip ShotSounds;
     private AudioSource AS;
 
+    public bool hasCircularMovement;
 
     protected override void Awake()
     {
@@ -20,6 +21,10 @@ public class SeaAngelController : EnemyControllerBase
     }
     protected override void OnEnable()
     {
+        if (!hasCircularMovement) {
+            GetComponent<CircularMovement>().enabled = false;
+        }
+
         seaAngelMesh.SetActive(false);
         seaAngelMesh.SetActive(true);
         base.OnEnable();
