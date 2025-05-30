@@ -20,7 +20,7 @@ public class DialogueController : MonoBehaviour
     //public GameObject[] DialogueTriggers;
 
     public GameObject PLAYER;
-
+    public string Conversation;
     private void Awake()
     {
 
@@ -79,7 +79,8 @@ public class DialogueController : MonoBehaviour
     void MissionStart() 
     {
 
-        DialogueManager.StartConversation("Tutorial 01");
+        //DialogueManager.StartConversation("Tutorial 01");
+        DialogueManager.StartConversation(Conversation);
     }
     
     void pickup() 
