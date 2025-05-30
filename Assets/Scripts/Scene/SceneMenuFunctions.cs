@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
 using System;
+using UnityEditor;
 
 public class SceneMenuFunctions : SceneSwitcherManager
 {
@@ -214,7 +215,7 @@ public class SceneMenuFunctions : SceneSwitcherManager
     void Quit()
     {
         Application.Quit();
-        if (Application.isEditor) UnityEditor.EditorApplication.isPlaying = false;
+        //if (Application.isEditor) EditorApplication.isPlaying = false;
     }
 
     public GameObject LevelSelectButton;
