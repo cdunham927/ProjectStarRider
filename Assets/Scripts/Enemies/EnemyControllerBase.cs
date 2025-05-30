@@ -132,7 +132,7 @@ public class EnemyControllerBase : MonoBehaviour
     //Material[] tempMats;
     //Color[] originalColors;
     //public MeshRenderer mesh;
-    Material hitMat;
+    public Material hitMat;
 
     public bool hasIframes = false;
     float iframes;
@@ -147,8 +147,6 @@ public class EnemyControllerBase : MonoBehaviour
     protected virtual void Awake()
     {
         //mesh = GetComponent<MeshRenderer>();
-        hitMat = new Material(Shader.Find("Specular"));
-        hitMat.color = Color.red;
 
         cam = FindObjectOfType<CinemachineVirtualCamera>();
         if (perlin == null && cam != null) perlin = cam.GetComponentInChildren<CinemachineBasicMultiChannelPerlin>();

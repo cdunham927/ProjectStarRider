@@ -21,10 +21,6 @@ public enum Soundtype
 [RequireComponent(typeof(AudioSource))]
 public class MusicController : MonoBehaviour
 {
-    
-    
-    
-    
     //push musiccontroller pls
 
     public static MusicController instance;
@@ -107,7 +103,6 @@ public class MusicController : MonoBehaviour
     }*/
 
 
-
     void Awake()
     {
 
@@ -118,14 +113,7 @@ public class MusicController : MonoBehaviour
 
         // Hooks up the 'OnSceneLoaded' method to the sceneLoaded event
         SceneManager.sceneLoaded += OnSceneLoaded;
-
-        
-
     }
-
-
-
-
 
     public void ChangeSong(AudioClip ns)
     {
@@ -178,50 +166,58 @@ public class MusicController : MonoBehaviour
     void OnSceneLoaded(Scene scene, LoadSceneMode sceneMode) 
     {
        // checks current scene name
-        currentScene = SceneManager.GetActiveScene().name;
+       currentScene = SceneManager.GetActiveScene().name;
 
-       //plays music based off scene name
-       switch (scene.name) 
-       {
-            case "Main_Menu":
- 
-                audioSourceArray[0].clip = audioClipArray[0];
-                audioSourceArray[1].clip = audioClipArray[0];
-                break;
-
-            case "CetusBoss":
-                
-                audioSourceArray[0].clip = audioClipArray[1];
-                audioSourceArray[1].clip = audioClipArray[1];
-                break;
-           
-            case "AntaresBoss":
-               
-                audioSourceArray[0].clip = audioClipArray[0];
-                audioSourceArray[1].clip = audioClipArray[0];
-                break;
-            
-            case "AltairBoss":
-              
-                audioSourceArray[0].clip = audioClipArray[0];
-                audioSourceArray[1].clip = audioClipArray[0];
-                break;
-
-
-            default:
-                if (audioSourceArray[0] != null) audioSourceArray[0].clip = audioClipArray[2];
-                if (audioSourceArray[1] != null) audioSourceArray[1].clip = audioClipArray[2];
-                break;
-
-
-        }
-
-        if (audioSourceArray[0] != null && audioSourceArray[1] != null)
+        if (MusicController.instance != null && (MusicController.instance.audioSourceArray[0] == null || MusicController.instance.audioSourceArray[1] == null))
         {
-            double introDuration = (double)audioSourceArray[0].clip.samples / audioSourceArray[0].clip.frequency;
-            double startTime = AudioSettings.dspTime + 0.2;
-            audioSourceArray[0].PlayScheduled(startTime);
-            audioSourceArray[1].PlayScheduled(startTime + introDuration);
+            audioSourceArray = GetComponents<AudioSource>();
         }
+
+        if (MusicController.instance != null && MusicController.instance.audioSourceArray[0] != null && MusicController.instance.audioSourceArray[1] != null) 
+        {
+            //plays music based off scene name
+            switch (currentScene)
+            {
+
+                case "Main_Menu":
+
+                    MusicController.instance.audioSourceArray[0].clip = MusicController.instance.audioClipArray[0];
+                    MusicController.instance.audioSourceArray[1].clip = MusicController.instance.audioClipArray[0];
+                    break;
+
+                case "CetusBoss":
+
+                    MusicController.instance.audioSourceArray[0].clip = MusicController.instance.audioClipArray[1];
+                    MusicController.instance.audioSourceArray[1].clip = MusicController.instance.audioClipArray[1];
+                    break;
+
+                case "AntaresBoss":
+
+                    audioSourceArray[0].clip = audioClipArray[0];
+                    audioSourceArray[1].clip = audioClipArray[0];
+                    break;
+
+                case "AltairBoss":
+
+                    audioSourceArray[0].clip = audioClipArray[0];
+                    audioSourceArray[1].clip = audioClipArray[0];
+                    break;
+
+
+                default:
+                    if (audioSourceArray[0] != null) audioSourceArray[0].clip = audioClipArray[2];
+                    if (audioSourceArray[1] != null) audioSourceArray[1].clip = audioClipArray[2];
+                    break;
+
+            }
+        }
+
+       if (audioSourceArray[0] != null && audioSourceArray[1] != null)
+       {
+           double introDuration = (double)audioSourceArray[0].clip.samples / audioSourceArray[0].clip.frequency;
+           double startTime = AudioSettings.dspTime + 0.2;
+           audioSourceArray[0].PlayScheduled(startTime);
+           audioSourceArray[1].PlayScheduled(startTime + introDuration);
+       }
     }
 }

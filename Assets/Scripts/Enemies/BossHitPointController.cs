@@ -21,16 +21,13 @@ public class BossHitPointController : MonoBehaviour
 
     public SkinnedMeshRenderer skinnedMeshRenderer;
     Material origMat;
-    Material hitMat;
+    public Material hitMat;
     public float blinkDuration = 0.2f;
 
     private void Awake()
     {
         boss = FindObjectOfType<BossControllerBase>();
         breakHp = (boss.maxHp * (breakPercentage / 100));
-
-        hitMat = new Material(Shader.Find("Specular"));
-        hitMat.color = Color.red;
 
         if (skinnedMeshRenderer == null) skinnedMeshRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
     }
@@ -56,7 +53,7 @@ public class BossHitPointController : MonoBehaviour
 
     protected void DamageBlink()
     {
-        if (skinnedMeshRenderer != null)
+        if (skinnedMeshRenderer != null && hitMat != null)
         {
             skinnedMeshRenderer.material = hitMat;
 

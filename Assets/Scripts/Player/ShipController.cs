@@ -278,25 +278,28 @@ public class ShipController : MonoBehaviour
             turning = false;
         }
 
-        if (player.joystick)
+        if (bod.freezeRotation == false)
         {
-            aimPos = Vector2.Lerp(aimPos, new Vector2(Screen.width / 2 + (Input.GetAxis("JoystickAxis4") * controllerSensitivity), Screen.height / 2 - (Input.GetAxis("JoystickAxis5") * controllerSensitivity)), controllerLerp * Time.fixedDeltaTime);
+            if (player.joystick)
+            {
+                aimPos = Vector2.Lerp(aimPos, new Vector2(Screen.width / 2 + (Input.GetAxis("JoystickAxis4") * controllerSensitivity), Screen.height / 2 - (Input.GetAxis("JoystickAxis5") * controllerSensitivity)), controllerLerp * Time.fixedDeltaTime);
+            }
+            //else aimPos = Vector2.Lerp(aimPos, new Vector2(Screen.width / 2 + (Input.mousePosition.x), Screen.height / 2 - (Input.mousePosition.y)), mouseLerp * Time.fixedDeltaTime);
+            else
+            {
+                aimPos = Vector2.Lerp(aimPos, new Vector2(Screen.width / 2 + (Input.GetAxis("MouseX") * mouseSensitivity), Screen.height / 2 - (-Input.GetAxis("MouseY") * mouseSensitivity)), mouseLerp * Time.fixedDeltaTime);
+                //aimPos = Vector2.Lerp(aimPos, Input.mousePosition, mouseLerp * Time.fixedDeltaTime);
+            }
+
+            //Warp mouse position to middle of screen over time
+
+
+            yaw = (aimPos.x - screenCenter.x) / screenCenter.x;
+            yaw = (Mathf.Abs(yaw) > deadZoneRadius) ? yaw : 0f;
+
+            pitch = (aimPos.y - screenCenter.y) / screenCenter.y;
+            pitch = (Mathf.Abs(pitch) > deadZoneRadius) ? pitch : 0f;
         }
-        //else aimPos = Vector2.Lerp(aimPos, new Vector2(Screen.width / 2 + (Input.mousePosition.x), Screen.height / 2 - (Input.mousePosition.y)), mouseLerp * Time.fixedDeltaTime);
-        else
-        {
-            aimPos = Vector2.Lerp(aimPos, new Vector2(Screen.width / 2 + (Input.GetAxis("MouseX") * mouseSensitivity), Screen.height / 2 - (-Input.GetAxis("MouseY") * mouseSensitivity)), mouseLerp * Time.fixedDeltaTime);
-            //aimPos = Vector2.Lerp(aimPos, Input.mousePosition, mouseLerp * Time.fixedDeltaTime);
-        }
-
-        //Warp mouse position to middle of screen over time
-
-
-        yaw = (aimPos.x - screenCenter.x) / screenCenter.x;
-        yaw = (Mathf.Abs(yaw) > deadZoneRadius) ? yaw : 0f;
-
-        pitch = (aimPos.y - screenCenter.y) / screenCenter.y;
-        pitch = (Mathf.Abs(pitch) > deadZoneRadius) ? pitch : 0f;
 
         ////Get rotation positions
         //rotPitch = (aimPos.y - screenCenter.y) / screenCenter.y;

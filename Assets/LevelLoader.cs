@@ -26,6 +26,7 @@ public class LevelLoader : MonoBehaviour
     public GameObject optionsPrefab;
     public GameObject optionsMenu;
 
+    public bool alreadyLoading = false;
 
 
     //public int levelindexNumber;
@@ -35,7 +36,7 @@ public class LevelLoader : MonoBehaviour
     private void Awake()
     {
         //finds Game Manager for Ref
-
+        alreadyLoading = false;
         Manager = FindObjectOfType<GameManager>();
 
         //Spawn UI, get references
@@ -142,9 +143,13 @@ public class LevelLoader : MonoBehaviour
 
     public void GoToScene()
     {
-        MusicController.instance.PlaySound();
-        Time.timeScale = 1f;
-        StartCoroutine(ToScene());
+        if (!alreadyLoading)
+        {
+            alreadyLoading = true;
+            MusicController.instance.PlaySound();
+            Time.timeScale = 1f;
+            StartCoroutine(ToScene());
+        }
     }
 
 
