@@ -16,16 +16,18 @@ public class DialogueController : MonoBehaviour
     protected Player_Stats stats;
     public bool halfHealth = false;
     public bool lowHealth = false;
+    
+    
     //Array for Dialgue triigers to spawn
     //public GameObject[] DialogueTriggers;
 
     public GameObject PLAYER;
-    public string Conversation;
+    public string Conversation; // go into dialogue tab >> converstatsion adn copy and paste the coverstation label you want to play at the start of the level
     private void Awake()
     {
 
         stats = FindObjectOfType<Player_Stats>();
-        Invoke("MissionStart", .5f);
+        Invoke("MissionStart", 1f);
 
     }
 
@@ -46,8 +48,16 @@ public class DialogueController : MonoBehaviour
             Invoke("LowHealth", .5f);
         }
 
+        
 
+    }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "Pick Up" && stats.Curr_hp <= (stats.Max_hp / 2) && !halfHealth) 
+        {
+            DialogueManager.StartConversation("Pick Up");
+        }
     }
 
     void LowHealth() 
