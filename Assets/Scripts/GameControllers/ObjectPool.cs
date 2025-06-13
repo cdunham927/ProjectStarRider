@@ -18,6 +18,12 @@ public class ObjectPool : MonoBehaviour
 
     //private ObjectPool<objectToPool>();
 
+
+    /*
+	For the prefab, next points at the head of the freelist.
+	For inactive instances, next points at the next inactive instance.
+	For active instances, next points back at the source prefab.
+	*/
     [System.NonSerialized] ObjectPool next;
 
     TrailRenderer trailRenderer;
