@@ -19,10 +19,17 @@ public class CircularMovement : MonoBehaviour
 
     float yVar, spdVar, radVar;
 
+    public bool rotateToo = false;
+    public float xRot, yRot, zRot, rotSpd;
+    float rotDir = 1;
+
     private void Awake()
     {
         if (Random.value > 0.5f) dir = 1;
         else dir = -1;
+
+        if (Random.value > 0.5f) rotDir = 1;
+        else rotDir = -1;
 
         startAngle = Random.Range(0, 360);
         if (target != null) circleCenter = target.transform.position;
@@ -51,5 +58,10 @@ public class CircularMovement : MonoBehaviour
         //pos += circleCenter;
 
         transform.position = pos;
+
+        if (rotateToo)
+        {
+            transform.Rotate(rotDir * xRot * Time.deltaTime * rotSpd, rotDir * yRot * Time.deltaTime * rotSpd, rotDir * zRot * Time.deltaTime * rotSpd);
+        }
     }
 }

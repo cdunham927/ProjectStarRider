@@ -1267,6 +1267,7 @@ GameObject:
   - component: {fileID: 8294810921843640164}
   - component: {fileID: 6894732570565579110}
   - component: {fileID: 1161641064559945880}
+  - component: {fileID: 3565427185156061771}
   m_Layer: 6
   m_Name: Sentinel_Prefab SG
   m_TagString: Enemy
@@ -1391,6 +1392,7 @@ MonoBehaviour:
   hitMat: {fileID: 2100000, guid: f6cefa63b2353f946a022cc2ec97217d, type: 2}
   hasIframes: 0
   iframeTime: 0.2
+  hasCircularMovement: 0
 --- !u!135 &6894732570565579110
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1500,6 +1502,31 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &3565427185156061771
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8294810921843640165}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ecf5bac11556554d8fd74bf73b2e49f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startAngle: 0
+  radius: 1
+  yStart: 1
+  angularSpeed: 20
+  target: {fileID: 0}
+  speedVariance: 0
+  yStartVariance: 0
+  radiusVariance: 0
+  rotateToo: 0
+  xRot: 0
+  yRot: 0
+  zRot: 0
+  rotSpd: 0
 --- !u!1 &8953812460782308485
 GameObject:
   m_ObjectHideFlags: 0

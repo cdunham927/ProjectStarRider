@@ -138,6 +138,8 @@ public class EnemyControllerBase : MonoBehaviour
     float iframes;
     public float iframeTime = 0.2f;
 
+    public bool hasCircularMovement;
+
     private void Start()
     {
      
@@ -166,6 +168,14 @@ public class EnemyControllerBase : MonoBehaviour
 
     protected virtual void OnEnable()
     {
+        if (GetComponent<CircularMovement>() != null)
+        {
+            if (!hasCircularMovement)
+            {
+                GetComponent<CircularMovement>().enabled = false;
+            }
+        }
+
         pStats = FindObjectOfType<Player_Stats>();
         //tempMats = skinnedMeshRenderer.materials;
         //origCol = skinnedMeshRenderer.material.color;
