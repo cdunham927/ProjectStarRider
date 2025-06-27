@@ -190,11 +190,11 @@ public class ShipController : MonoBehaviour
                     {
                         lerpToSpd = superSpd;
 
-                        stats.ShakeCamera(1.5f);
+                        stats.ShakeCamera(0.325f);
                     }
                     else
                     {
-                        stats.ShakeCamera(1f);
+                        stats.ShakeCamera(0.325f);
                         lerpToSpd = highSpd;
                     }
                 }
@@ -204,7 +204,7 @@ public class ShipController : MonoBehaviour
                 }
                 else
                 {
-                    stats.ShakeCamera(0.325f);
+                    stats.ShakeCamera(0.0f);
                     lerpToSpd = regSpd;
                 }
 

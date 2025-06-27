@@ -18,6 +18,8 @@ public class PlayerVFXHolder : MonoBehaviour
     public GameObject deathVFX;
     public GameObject healVFX;
     public GameObject SpeedLines_VFX;
+    public GameObject SpeedLines_L;
+    public GameObject SpeedLines_R;
     public GameObject Dash_VFX;
     public Transform VfxPositionToSpawn;
 
@@ -104,17 +106,21 @@ public class PlayerVFXHolder : MonoBehaviour
         //side dash 
         if (Input.GetButtonDown("SideDashRight") && dashTime <= 0)
         {
+            //SpeedLines_R.SetActive(true);
             dashTime = dashTimeToZero;
-            dashing = true;
+            sidedash = true;
         }
         else if (Input.GetButtonDown("SideDashLeft") && dashTime <= 0)
         {
+            //SpeedLines_L.SetActive(true);
             dashTime = dashTimeToZero;
-            dashing = true;
+            sidedash = true;
         }
         else
         {
-            dashing = false;
+            //SpeedLines_L.SetActive(false);
+            //SpeedLines_R.SetActive(false);
+            sidedash = false;
         }
         
         //if (!Dash.gameObject.activeSelf) Dash.gameObject.SetActive(true);
@@ -129,6 +135,22 @@ public class PlayerVFXHolder : MonoBehaviour
         {
             D_curEmission = 0.0f;
         }
+
+
+        if (sidedash == true) 
+        {
+            SpeedLines_L.SetActive(true);
+
+        }
+        else 
+        {
+
+            SpeedLines_L.SetActive(false);
+        }
+
+
+
+
 
         //if ((Input.GetButtonUp("SideDashRight") || Mathf.Abs(Input.GetAxis("SideDashRight")) < 0.1f || Input.GetButtonUp("SideDashLeft") || Mathf.Abs(Input.GetAxis("SideDashLeft")) < 0.1f))
         //{
