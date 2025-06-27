@@ -14,8 +14,11 @@ public class BoidsEnemy : EnemyControllerBase
     public float maxSteerForce = 1f;
     Rigidbody bod;
     public LayerMask boidsMask;
+    [RangeAttribute(0, 5)]
+    public float cohesion, separation, alignment;
     public float startSpd;
     public float spd;
+    public float accSpd;
     [HideInInspector]
     public Vector3 boidVel;
 
@@ -36,6 +39,7 @@ public class BoidsEnemy : EnemyControllerBase
         //{
         Vector3 desVel = player.transform.position - transform.position;
         Vector3 desLoc = Vector3.zero;
+        Vector3 desPos = Vector3.zero;
 
         Collider[] col = GetNeighbors();
         if (col.Length > 0)
@@ -47,10 +51,18 @@ public class BoidsEnemy : EnemyControllerBase
                 boids[i] = col[i].gameObject.GetComponent<BoidsEnemy>();
             }
             desVel += Align(boids);
-            desLoc = Cohesion(boids); ;
+            desLoc = Cohesion(boids);
+            desPos = Separation(boids);
+
+            desVel *= alignment;
+            desLoc *= cohesion;
+            desPos *= separation;
         }
 
-        bod.AddForce((desVel + desLoc) * spd * Time.deltaTime);
+        //bod.AddForce((desVel + desLoc + desPos) * spd * Time.deltaTime);
+        bod.velocity = ((desVel + desLoc + desPos) * accSpd * Time.deltaTime);
+        //bod.velocity = ((desVel + desLoc) * accSpd * Time.deltaTime);
+        //bod.velocity = ((desPos) * accSpd * Time.deltaTime);
     }
 
     Collider[] GetNeighbors()
@@ -61,16 +73,28 @@ public class BoidsEnemy : EnemyControllerBase
     //Separation - steer to avoid crowding local flockmates
     Vector3 Separation(BoidsEnemy[] otherBoids)
     {
-        Vector3 avgVector = new Vector3(0, 0, 0);
+        Vector3 separationForce = Vector3.zero;
+        //int total = 0;
         for (int i = 0; i < otherBoids.Length; i++)
         {
-            avgVector += otherBoids[i].gameObject.transform.position;
+            Vector3 diff = transform.position - otherBoids[i].transform.position;
+            float distance = diff.magnitude;
+            Vector3 away = -diff.normalized;
+            //print("Distance: " + distance);
+            if (distance > 0)
+            {
+                separationForce += away / distance;
+                //total++;
+            }
         }
-        avgVector /= otherBoids.Length;
-        avgVector -= transform.position;
-
+        //if (total > 0)
+        //{
+        //    separationForce /= total;
+        //    separationForce -= bod.velocity;
+        //}
+        
         //steeringForce = desiredVel(avgVector) - currentVelocity
-        return avgVector - bod.velocity;
+        return separationForce;
     }
 
 
@@ -96,7 +120,7 @@ public class BoidsEnemy : EnemyControllerBase
         Vector3 avgVector = new Vector3(0, 0, 0);
         for (int i = 0; i < otherBoids.Length; i++)
         {
-            avgVector += otherBoids[i].gameObject.transform.position;
+            avgVector += otherBoids[i].transform.position;
         }
         avgVector /= otherBoids.Length;
         avgVector -= transform.position;
