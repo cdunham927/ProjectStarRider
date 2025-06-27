@@ -106,13 +106,15 @@ public class PlayerVFXHolder : MonoBehaviour
         //side dash 
         if (Input.GetButtonDown("SideDashRight") && dashTime <= 0)
         {
-            //SpeedLines_R.SetActive(true);
+            SpeedLines_R.SetActive(true);
+            Invoke("ResetSidedash", dashTimeToZero);
             dashTime = dashTimeToZero;
             sidedash = true;
         }
         else if (Input.GetButtonDown("SideDashLeft") && dashTime <= 0)
         {
-            //SpeedLines_L.SetActive(true);
+            SpeedLines_L.SetActive(true);
+            Invoke("ResetSidedash", dashTimeToZero);
             dashTime = dashTimeToZero;
             sidedash = true;
         }
@@ -137,16 +139,16 @@ public class PlayerVFXHolder : MonoBehaviour
         }
 
 
-        if (sidedash == true) 
-        {
-            SpeedLines_L.SetActive(true);
-
-        }
-        else 
-        {
-
-            SpeedLines_L.SetActive(false);
-        }
+        //if (sidedash == true) 
+        //{
+        //    SpeedLines_L.SetActive(true);
+        //
+        //}
+        //else 
+        //{
+        //
+        //    SpeedLines_L.SetActive(false);
+        //}
 
 
 
@@ -291,6 +293,8 @@ public class PlayerVFXHolder : MonoBehaviour
 
     void ResetSidedash()
     {
+        SpeedLines_L.SetActive(false);
+        SpeedLines_R.SetActive(false);
         sidedash = false;
     }
 
