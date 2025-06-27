@@ -35,20 +35,22 @@ public class BoidsEnemy : EnemyControllerBase
         //if (checkCools <= 0)
         //{
         Vector3 desVel = player.transform.position - transform.position;
+        Vector3 desLoc = Vector3.zero;
 
-            Collider[] col = GetNeighbors();
-            if (col.Length > 0)
+        Collider[] col = GetNeighbors();
+        if (col.Length > 0)
+        {
+
+            BoidsEnemy[] boids = new BoidsEnemy[col.Length];
+            for (int i = 0; i < col.Length; i++) 
             {
-                BoidsEnemy[] boids = new BoidsEnemy[col.Length];
-                for (int i = 0; i < col.Length; i++) 
-                {
-                    boids[i] = col[i].gameObject.GetComponent<BoidsEnemy>();
-                }
-                desVel += Align(boids);
+                boids[i] = col[i].gameObject.GetComponent<BoidsEnemy>();
             }
+            desVel += Align(boids);
+            desLoc = Cohesion(boids); ;
+        }
 
-        bod.AddForce(desVel * Time.deltaTime * spd);
-        //}
+        bod.AddForce((desVel + desLoc) * spd * Time.deltaTime);
     }
 
     Collider[] GetNeighbors()
@@ -57,7 +59,19 @@ public class BoidsEnemy : EnemyControllerBase
     }
 
     //Separation - steer to avoid crowding local flockmates
+    Vector3 Separation(BoidsEnemy[] otherBoids)
+    {
+        Vector3 avgVector = new Vector3(0, 0, 0);
+        for (int i = 0; i < otherBoids.Length; i++)
+        {
+            avgVector += otherBoids[i].gameObject.transform.position;
+        }
+        avgVector /= otherBoids.Length;
+        avgVector -= transform.position;
 
+        //steeringForce = desiredVel(avgVector) - currentVelocity
+        return avgVector - bod.velocity;
+    }
 
 
     //Alignment - steer towards the average heading of local flockmates
@@ -77,15 +91,15 @@ public class BoidsEnemy : EnemyControllerBase
 
 
     //Cohesion - steer to move towards the average position (center mass) of local flockmates
-
     Vector3 Cohesion(BoidsEnemy[] otherBoids)
     {
         Vector3 avgVector = new Vector3(0, 0, 0);
         for (int i = 0; i < otherBoids.Length; i++)
         {
-            avgVector += otherBoids[i].boidVel;
+            avgVector += otherBoids[i].gameObject.transform.position;
         }
         avgVector /= otherBoids.Length;
+        avgVector -= transform.position;
 
         //steeringForce = desiredVel(avgVector) - currentVelocity
         return avgVector - bod.velocity;
