@@ -145,6 +145,11 @@ public class SentinelRegular : EnemyControllerBase
                 bul.GetComponent<EnemyBullet>().Push();
             }
         }
+
+        //Reset attack cooldown
+        attackCools = timeBetweenAttacks;
+
+        ChangeState(enemystates.alert);
     }
 
     public int numBullets = 30;
@@ -202,6 +207,7 @@ public class SentinelRegular : EnemyControllerBase
 
     protected override void OnEnable()
     {
+        bulletPool = FindObjectOfType<GameManager>().enemyBulPool;
         base.OnEnable();
         SetCollider(false);
     }

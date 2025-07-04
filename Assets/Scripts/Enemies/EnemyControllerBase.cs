@@ -139,17 +139,13 @@ public class EnemyControllerBase : MonoBehaviour
     public float iframeTime = 0.2f;
 
     public bool hasCircularMovement;
-
-    private void Start()
-    {
-     
-    }
+    BulletPatterns pattern;
 
   
     protected virtual void Awake()
     {
         //mesh = GetComponent<MeshRenderer>();
-
+        pattern = GetComponent<BulletPatterns>();
         cam = FindObjectOfType<CinemachineVirtualCamera>();
         if (perlin == null && cam != null) perlin = cam.GetComponentInChildren<CinemachineBasicMultiChannelPerlin>();
         anim = GetComponentInChildren<Animator>();
@@ -218,6 +214,15 @@ public class EnemyControllerBase : MonoBehaviour
                 eI.enemy = gameObject;
                 eI.transform.SetParent(cont.transform);
             }
+        }
+    }
+
+    public void UseBulletPattern()
+    {
+        if (pattern != null)
+        {
+            //Call which pattern you want to use in here and pass in the bullet pool and how many bullets you want spawned(if the pattern allows it)
+            pattern.SpiralPattern(bulletPool, 4);
         }
     }
 
@@ -291,6 +296,12 @@ public class EnemyControllerBase : MonoBehaviour
         if (Application.isEditor)
         {
             if (Input.GetKey(KeyCode.O)) Damage(1);
+
+            if (Input.GetKeyDown(KeyCode.N))
+            {
+                if (bulletPool == null) bulletPool = cont.enemyBulPool;
+                UseBulletPattern();
+            }
         }
     }
 

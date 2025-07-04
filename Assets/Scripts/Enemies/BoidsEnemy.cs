@@ -41,6 +41,8 @@ public class BoidsEnemy : EnemyControllerBase
         Vector3 desLoc = Vector3.zero;
         Vector3 desPos = Vector3.zero;
 
+        Vector3 neighborsForward = Vector3.zero;
+
         Collider[] col = GetNeighbors();
         if (col.Length > 0)
         {
