@@ -18,8 +18,8 @@ public class PlayerVFXHolder : MonoBehaviour
     public GameObject deathVFX;
     public GameObject healVFX;
     public GameObject SpeedLines_VFX;
-    public GameObject SpeedLines_L;
-    public GameObject SpeedLines_R;
+    //public GameObject SpeedLines_L;
+    //public GameObject SpeedLines_R;
     public GameObject Dash_VFX;
     public Transform VfxPositionToSpawn;
 
@@ -54,8 +54,10 @@ public class PlayerVFXHolder : MonoBehaviour
     float dashTime = 0.0f;
     float dashTimeToZero = 1f;
 
-    ParticleSystem Speed;
-    ParticleSystem Dash;
+    [SerializeField] ParticleSystem Speed;
+    [SerializeField] ParticleSystem Dash;
+    [SerializeField] ParticleSystem SpeedLines_L;
+    [SerializeField] ParticleSystem SpeedLines_R;
     private void Awake()
     {
         dVfx = Instantiate(deathVFX);
@@ -106,14 +108,18 @@ public class PlayerVFXHolder : MonoBehaviour
         //side dash 
         if (Input.GetButtonDown("SideDashRight") && dashTime <= 0)
         {
-            SpeedLines_R.SetActive(true);
+            //peedLines_R.SetActive(true);
+          
+            SpeedLines_R.Play();
             Invoke("ResetSidedash", dashTimeToZero);
             dashTime = dashTimeToZero;
             sidedash = true;
         }
         else if (Input.GetButtonDown("SideDashLeft") && dashTime <= 0)
         {
-            SpeedLines_L.SetActive(true);
+           // SpeedLines_L.SetActive(true);
+            SpeedLines_L.Play();
+         
             Invoke("ResetSidedash", dashTimeToZero);
             dashTime = dashTimeToZero;
             sidedash = true;
@@ -293,8 +299,10 @@ public class PlayerVFXHolder : MonoBehaviour
 
     void ResetSidedash()
     {
-        SpeedLines_L.SetActive(false);
-        SpeedLines_R.SetActive(false);
+        //SpeedLines_L.SetActive(false);
+        //SpeedLines_R.SetActive(false);
+        SpeedLines_L.Play();
+        SpeedLines_R.Play();
         sidedash = false;
     }
 
