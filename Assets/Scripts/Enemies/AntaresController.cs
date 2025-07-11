@@ -339,62 +339,62 @@ public class AntaresController : BossControllerBase
         Death();
     }
 
-    public override void Damage(int damageAmount)
-    {
-        hpBar.SwitchUIActive(true);
-        curHp -= damageAmount;
-        if (curHp > 0) DamageBlink();
-
-        //Check for phase change
-        if (curHp < phase3Thres)
-        {
-            currentPhase = 3;
-            return;
-        }
-        else if (curHp < phase2Thres)
-        {
-            currentPhase = 2;
-            return;
-        }
-        else currentPhase = 1;
-
-        curHpLoss += damageAmount;
-
-        switch (currentPhase)
-        {
-            case 3:
-                if (curHpLoss > pTtLA)
-                {
-                    //AttackThree();
-                    curHpLoss = 0;
-                }
-                break;
-            case 2:
-                if (curHpLoss > pTLA)
-                {
-                    //AttackThree();
-                    curHpLoss = 0;
-                }
-                break;
-            case 1:
-                if (curHpLoss > pOLA)
-                {
-                    //AttackThree();
-                    curHpLoss = 0;
-                }
-                break;
-        }
-
-        if (curHp <= 0)
-        {
-            if (minimapObj != null) minimapObj.SetActive(false);
-            if (manager != null) manager.EnemyDied();
-            AntaresDeath();
-
-            Instantiate(deathVFX, transform.position, transform.rotation);
-            Invoke("Disable", deathTime);
-        }
-    }
+    //public override void Damage(int damageAmount)
+    //{
+    //    hpBar.SwitchUIActive(true);
+    //    curHp -= damageAmount;
+    //    if (curHp > 0) DamageBlink();
+    //
+    //    //Check for phase change
+    //    if (curHp < phase3Thres)
+    //    {
+    //        currentPhase = 3;
+    //        return;
+    //    }
+    //    else if (curHp < phase2Thres)
+    //    {
+    //        currentPhase = 2;
+    //        return;
+    //    }
+    //    else currentPhase = 1;
+    //
+    //    curHpLoss += damageAmount;
+    //
+    //    switch (currentPhase)
+    //    {
+    //        case 3:
+    //            if (curHpLoss > pTtLA)
+    //            {
+    //                //AttackThree();
+    //                curHpLoss = 0;
+    //            }
+    //            break;
+    //        case 2:
+    //            if (curHpLoss > pTLA)
+    //            {
+    //                //AttackThree();
+    //                curHpLoss = 0;
+    //            }
+    //            break;
+    //        case 1:
+    //            if (curHpLoss > pOLA)
+    //            {
+    //                //AttackThree();
+    //                curHpLoss = 0;
+    //            }
+    //            break;
+    //    }
+    //
+    //    if (curHp <= 0)
+    //    {
+    //        if (minimapObj != null) minimapObj.SetActive(false);
+    //        if (manager != null) manager.EnemyDied();
+    //        AntaresDeath();
+    //
+    //        Instantiate(deathVFX, transform.position, transform.rotation);
+    //        Invoke("Disable", deathTime);
+    //    }
+    //}
 
 
     void PatternCAttack()

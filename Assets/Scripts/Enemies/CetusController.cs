@@ -8,12 +8,6 @@ public class CetusController : BossControllerBase
     public GameObject[] bulSpawnsTwo;
     public float lerpSpd;
 
-    //notifications
-    [Header("Player Objective notifactions: ")]
-    public GameObject[] _notifications;
-
-
-
     //Charge attack stuff
     public CapsuleCollider laserCollider;
     public float laserStartSize;
@@ -25,43 +19,11 @@ public class CetusController : BossControllerBase
 
     //bool playedDialogue = false;
 
-    public GameObject[] waveOneSpawns;
-    public GameObject[] waveTwoSpawns;
-    public GameObject[] waveTwoWaterPillars;
-    public GameObject[] waveThreeSpawns;
-    public GameObject[] waveThreeWaterPillars;
-
-    float curHpLoss = 0;
-   
-    //In the 1st phase, every 20% hp lost will do sonic laser attack
-    [Header(" Phase 1 Settings : ")]
-    public bool phaseOneLossAttack = false;
-    public float phaseOneLossPerc = 0.20f;
-    float pOLA;
-    
-    //In the 2nd phase, every 15% hp lost will do sonic laser attack
-    [Header(" Phase 2 Settings : ")]
-    public bool phaseTwoLossAttack = false;
-    public float phaseTwoLossPerc = 0.15f;
-    float pTLA;
-    
-    //In the 3rd phase, every 10% hp lost will do sonic laser attack
-    [Header(" Phase 3 Settings : ")]
-    public bool phaseThreeLossAttack = false;
-    public float phaseThreeLossPerc = 0.10f;
-    float pTtLA;
-
     public ObjectPool homingBulletPool;
 
     public ObjectPool sonicBulletPool;
     public int sonicBulletCount;
     public GameObject sonicSpawnPos;
-
-    public float spawnCooldown = 2f;
-
-    public bool hasSpawnedPhaseOne = false;
-    public bool hasSpawnedPhaseTwo = false;
-    public bool hasSpawnedPhaseThree = false;
 
     //public BarrierController barrier;
 
@@ -70,29 +32,7 @@ public class CetusController : BossControllerBase
 
     public GameObject barrierPushObj;
 
-    [Header("Audio Clips: ")]
-    public AudioClip[] PlayerSfx;
-    private AudioSource AS;
-
     public float startAttackCools = 15f;
-
-    //Aniamtion State  make sure string match name of animations
-    const string Cetus_Reflect = "Armature|Reflect";
-    const string Cetus_Idle = "Armature|Idle";
-    const string Cetus_Attack_1 = "Armature|Attack1";
-    const string Cetus_Attack_2 = "Armature|Attack2";
-    const string Cetus_Wings_R = "Armature|Idle";
-    const string Cetus_Wings_L= "Armature|Idle";
-    const string Cetus_Wings_All = "CetusArmature|WingSlaps_All";
-    const string Cetus_Bite = "CetusArmature|BiteBack";
-    const string Cetus_Tail_Swipe = "Armature|TailWhip";
-    const string Cetus_Dive = "Armature|Idle";
-    const string Cetus_Flustered = "Armature|Idle";
-    const string Cetus_Death = "Armature|Death";
-    const string Cetus_Roar = "CetusArmature|Roaring";
-    const string Cetus_Charge_Laser = "Charge Attack Edit";
-    const string Cetus_Charging = "Charge Attack Edit";
-    const string Cetus_Whirlwind = "CetusArmature|Whirlwind";
 
 
 
@@ -163,14 +103,6 @@ public class CetusController : BossControllerBase
         }
 
         //base.Update();
-
-        if (Application.isEditor)
-        {
-            if (Input.GetKeyDown(KeyCode.P))
-            {
-                Damage((int)maxHp / 2);
-            }
-        }
     }
 
     protected override void Attack()
@@ -295,60 +227,6 @@ public class CetusController : BossControllerBase
        
     }
 
-    public void SpawnAngels(int phase)
-    {
-        _notifications[0].SetActive(true);
-        ChangeAnimationState(Cetus_Roar);
-        switch (phase)
-        {
-            case 1:
-                //barrier.gameObject.SetActive(true);
-                barrier.SetEnemies(waveOneSpawns.Length);
-                //ChangeAnimationState(Cetus_Reflect);
-                foreach (GameObject g in waveOneSpawns)
-                {
-                    g.GetComponent<EnemyControllerBase>().barrier = barrier;
-                    g.SetActive(true);
-                }
-                break;
-            case 2:
-                //FindObjectOfType<CombatDialogueController>().StartDialogue(barrierDialogue);
-                barrier.gameObject.SetActive(true);
-                //ChangeAnimationState(Cetus_Reflect);
-                barrier.SetEnemies(waveTwoSpawns.Length);
-                foreach (GameObject g in waveTwoSpawns)
-                {
-                    g.GetComponent<EnemyControllerBase>().barrier = barrier;
-                    g.SetActive(true);
-                }
-                foreach (GameObject g in waveTwoWaterPillars)
-                {
-                    g.SetActive(true);
-                }
-                attackCools = spawnCooldown;
-                break;
-            case 3:
-                //FindObjectOfType<CombatDialogueController>().StartDialogue(barrierDialogue);
-                barrier.gameObject.SetActive(true);
-                //ChangeAnimationState(Cetus_Reflect);
-                barrier.SetEnemies(waveThreeSpawns.Length);
-                foreach (GameObject g in waveThreeSpawns)
-                {
-                    g.GetComponent<EnemyControllerBase>().barrier = barrier;
-                    g.SetActive(true);
-                }
-                foreach (GameObject g in waveThreeWaterPillars)
-                {
-                    g.SetActive(true);
-                }
-                attackCools = spawnCooldown;
-                break;
-        }
-
-        Invoke("ActivateBarrierPushObj", 0.75f);
-        Invoke("DeactivateBarrierPushObj", 2f);
-        AS.PlayOneShot(PlayerSfx[3]);
-    }
 
     void ActivateBarrierPushObj()
     {
@@ -481,100 +359,5 @@ public class CetusController : BossControllerBase
         AS.PlayOneShot(PlayerSfx[1]);
 
         ChangeState(enemystates.alert);
-    }
-
-    public void CetusDeath()
-    {
-        skinnedMeshRenderer.material.color = Color.white;
-        //anim.SetTrigger("Death");
-        ChangeAnimationState(Cetus_Death);
-        Death();
-    }
-
-    public override void Damage(int damageAmount)
-    {
-        //if (anim != null) anim.SetTrigger("Hit");
-        hpBar.SwitchUIActive(true);
-        curHp -= damageAmount;
-        //healthScript.SetHealth((int)curHp);
-        if(curHp > 0) DamageBlink();
-
-        if (curHp < phase3Thres && !hasSpawnedPhaseThree)
-        {
-            currentPhase = 3;
-            SpawnAngels(currentPhase);
-            hasSpawnedPhaseThree = true;
-        }
-        else if (curHp < phase2Thres && !hasSpawnedPhaseTwo)
-        {
-            currentPhase = 2;
-            SpawnAngels(currentPhase);
-            hasSpawnedPhaseTwo = true;
-        }
-        else currentPhase = 1;
-
-        curHpLoss += damageAmount;
-
-        switch (currentPhase)
-        {
-            case 3:
-                if (curHpLoss > pTtLA)
-                {
-                    //Do laser attack here then reset cooldown
-                    //Debug.Log("Lost 10% hp");
-                    AttackThree();
-                    curHpLoss = 0;
-                }
-                break;
-            case 2:
-                if (curHpLoss > pTLA)
-                {
-                    //Do laser attack here then reset cooldown
-                    //Debug.Log("Lost 15% hp");
-                    AttackThree();
-                    curHpLoss = 0;
-                }
-                break;
-            case 1:
-                if (curHpLoss > pOLA)
-                {
-                    //Do laser attack here then reset cooldown
-                    //Debug.Log("Lost 20% hp");
-                    AttackThree();
-                    curHpLoss = 0;
-                }
-                break;
-        }
-
-       
-        
-        //Debug.Log("Enemy took damage");
-
-        //DamageBlinking
-        //blinkTimer -= Time.deltaTime;
-        //float lerp = Mathf.Clamp01(blinkTimer / blinkDuration);
-        //float intensity = (lerp * blinkIntesity) + 1.0f;
-        //skinnedMeshRenderer.materials[0].color = Color.white * intensity;
-        //skinnedMeshRenderer.materials[1].color = Color.white * intensity;
-        //skinnedMeshRenderer.materials[2].color = Color.white * intensity;
-
-        if (curHp <= 0)
-        {
-            if (minimapObj != null) minimapObj.SetActive(false);
-            if (manager != null) manager.EnemyDied();
-            //FindObjectOfType<GameManager>().EnemyDiedEvent();
-            //if (anim != null) anim.SetTrigger("Death");
-            //Invoke("Disable", deathClip.length);
-
-            //if (!hasAdded)
-            //{
-            //    hasAdded = true;
-            //    pStats.AddScore(killScore);
-            //}
-            CetusDeath();
-
-            Instantiate(deathVFX, transform.position, transform.rotation);
-            Invoke("Disable", deathTime);
-        }
     }
 }

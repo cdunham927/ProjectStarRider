@@ -212,11 +212,6 @@ public class SentinelRegular : EnemyControllerBase
         SetCollider(false);
     }
 
-    public override void Damage(int damageAmount)
-    {
-        base.Damage(damageAmount);
-    }
-
     protected override void Update()
     {
         //If the player is close enough

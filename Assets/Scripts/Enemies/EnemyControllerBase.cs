@@ -5,7 +5,7 @@ using Cinemachine;
 using MPUIKIT;
 //using System;
 
-public class EnemyControllerBase : MonoBehaviour
+public class EnemyControllerBase : MonoBehaviour, IDamageable
 {
     //We only need idle, alert, attack for now
     public enum enemystates { idle, patrol, alert, attack, retreat, death };
@@ -320,7 +320,7 @@ public class EnemyControllerBase : MonoBehaviour
         return (int)curHp;
     }
 
-    public virtual void Damage(int damageAmount)
+    public void Damage(int damageAmount)
     {
         if (hasIframes && iframes <= 0)
         {
@@ -415,7 +415,7 @@ public class EnemyControllerBase : MonoBehaviour
         //blinkTimer = blinkDuration;
     }
 
-    protected void Disable()
+    public void Disable()
     {
         //FindObjectOfType<GameManager>().Victory();
         gameObject.SetActive(false);
