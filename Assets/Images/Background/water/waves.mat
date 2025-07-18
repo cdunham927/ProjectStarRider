@@ -106,6 +106,8 @@ Material:
     m_Ints: []
     m_Floats:
     - _AlphaClip: 0
+    - _BUILTIN_QueueControl: -1
+    - _BUILTIN_QueueOffset: 0
     - _Blend: 2
     - _BumpScale: 1
     - _CastShadows: 0
@@ -113,6 +115,7 @@ Material:
     - _ClearCoatSmoothness: 0
     - _Cull: 0
     - _Cutoff: 0.5
+    - _Depth: 5.49
     - _DepthFadeDistance: 1
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
@@ -120,17 +123,19 @@ Material:
     - _DstBlend: 0
     - _EnvironmentReflections: 1
     - _FLow_SPeed: 0.1
-    - _Flow_Speed: 0.03
+    - _Flow_Speed: 0.05
     - _Flow_Strength: -1.06
     - _FoamDistance: 1.5
     - _FoamLinesDiffrence: 1
     - _FoamScale: 85.39
-    - _FresnelPower: 11.3
+    - _FoamThickness: 28.28
+    - _FresnelPower: 6.35
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
     - _Gradient_Noise: 0
     - _Horizion_Distance: 8.72
+    - _Lerp_Float: 1
     - _Metallic: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.005
@@ -149,13 +154,13 @@ Material:
     - _WorkflowMode: 0
     - _ZTest: 4
     - _ZWrite: 1
-    - _ZWriteControl: 0
+    - _ZWriteControl: 1
     m_Colors:
     - Deep_Water: {r: 0.003921569, g: 0.007843138, b: 0.1039216, a: 1}
     - Shallow_Water: {r: 1, g: 1, b: 1, a: 1}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _DarkFoamColor: {r: 0.43867922, g: 0.6609775, b: 1, a: 0}
+    - _DarkFoamColor: {r: 0.4386792, g: 0.6609775, b: 1, a: 1}
     - _Deep_Color: {r: 0.9150943, g: 0.9150943, b: 0.9150943, a: 0}
     - _DepthColor: {r: 0.4449537, g: 0.9078618, b: 0.9528302, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
@@ -164,5 +169,18 @@ Material:
     - _LightColor: {r: 0, g: 0, b: 0, a: 0}
     - _LightFoamColor: {r: 1, g: 1, b: 1, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
-    - _WaterColor: {r: 0.12224099, g: 0.4767705, b: 0.6320754, a: 1}
+    - _WaterColor: {r: 0.12224097, g: 0.47677046, b: 0.6320754, a: 1}
   m_BuildTextureStacks: []
+--- !u!114 &8222717036394392662
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 639247ca83abc874e893eb93af2b5e44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 0
