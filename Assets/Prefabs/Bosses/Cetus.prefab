@@ -31,7 +31,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6154660521567802399}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8515318506981687192
 MonoBehaviour:
@@ -899,7 +899,7 @@ Transform:
   - {fileID: 8024457432158122993}
   - {fileID: 5355123998606831617}
   m_Father: {fileID: 6154660521567802399}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &4640306360401318995
 Animator:
@@ -1792,7 +1792,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6154660521567802399}
-  m_RootOrder: 9
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &4426386252879868942
 MeshFilter:
@@ -2703,7 +2703,7 @@ Transform:
   - {fileID: 5115677670086047819}
   - {fileID: 4312474422874208691}
   m_Father: {fileID: 6154660521567802399}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4061554902267552579
 GameObject:
@@ -3759,7 +3759,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6154660521567802399}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 6.395, y: -3.79, z: -6.26}
 --- !u!1 &5849733575411674649
 GameObject:
@@ -3916,7 +3916,6 @@ Transform:
   m_LocalScale: {x: 5, y: 5, z: 5}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 6154660522481104598}
   - {fileID: 3972982991325081715}
   - {fileID: 2234081566972966875}
   - {fileID: 4670451176331635195}
@@ -3941,16 +3940,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a403a10f79b32a64088a855a1017461a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentState: 0
   maxHp: 150
   curHp: 0
   killScore: 1000
-  timeBetweenAttacks: 1.5
   attackRange: 75
   bulletPool: {fileID: 0}
   playerInRange: 0
-  detectionCollider: {fileID: 6154660522481104596}
-  col: {fileID: 0}
+  startAttackCools: 6
   isRandom: 0
   accx: 1
   accy: 1
@@ -4034,7 +4030,6 @@ MonoBehaviour:
   chanceForAtkFour: 0.2
   chanceForAtkThree: 1
   chanceForAtkTwo: 0.65
-  bossBulletPool: {fileID: 7156312672638498231, guid: 33db5574b421a7447ae3c861ddc2b3fb, type: 3}
   deathTime: 1
   currentPhase: 1
   retaliatePos: {x: 0, y: 0, z: 0}
@@ -4084,7 +4079,6 @@ MonoBehaviour:
     sentences:
     - I need to destroy the enemies around the barrier to lower it.
   barrierPushObj: {fileID: 30708644571007574}
-  startAttackCools: 6
 --- !u!82 &6154660521567802429
 AudioSource:
   m_ObjectHideFlags: 0
@@ -4181,65 +4175,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!1 &6154660522481104603
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 6154660522481104598}
-  - component: {fileID: 6154660522481104596}
-  - component: {fileID: 6154660522481104597}
-  m_Layer: 0
-  m_Name: DetectionCollider (1)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &6154660522481104598
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6154660522481104603}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 30, y: 30, z: 30}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 6154660521567802399}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!135 &6154660522481104596
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6154660522481104603}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 20
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &6154660522481104597
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6154660522481104603}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c5eb068eb74496346ac7e590c6558b42, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  parent: {fileID: 7301387037551408824}
 --- !u!1 &6249176823312201621
 GameObject:
   m_ObjectHideFlags: 0
@@ -4342,7 +4277,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6154660521567802399}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &7098965260998459178
 BoxCollider:
@@ -5583,7 +5518,7 @@ Transform:
   - {fileID: 7996666208938740589}
   - {fileID: 464093306621463399}
   m_Father: {fileID: 6154660521567802399}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8062921834521179642
 GameObject:
@@ -9215,7 +9150,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1051193388902685316, guid: f9856b1f81f24ef4890ddea3e7de2e17, type: 3}
       propertyPath: m_RootOrder
-      value: 6
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1051193388902685316, guid: f9856b1f81f24ef4890ddea3e7de2e17, type: 3}
       propertyPath: m_LocalScale.x
@@ -9376,7 +9311,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3418302022817175231, guid: 5d8e27c8746cd044faf9728027641475, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3418302022817175231, guid: 5d8e27c8746cd044faf9728027641475, type: 3}
       propertyPath: m_LocalPosition.x
@@ -9473,6 +9408,10 @@ PrefabInstance:
     - target: {fileID: 7484756536833286337, guid: 5d8e27c8746cd044faf9728027641475, type: 3}
       propertyPath: m_LocalPosition.y
       value: 0.055
+      objectReference: {fileID: 0}
+    - target: {fileID: 7525745619089853544, guid: 5d8e27c8746cd044faf9728027641475, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7525745619089853544, guid: 5d8e27c8746cd044faf9728027641475, type: 3}
       propertyPath: m_Parameters.widthCurve.m_Curve.Array.data[1].time

@@ -316,22 +316,6 @@ public class ShipController : MonoBehaviour
 
         //yaw = Mathf.Clamp(yaw, -1f, 1f);
 
-        //Movement
-        if (!Mathf.Approximately(0f, pitch))
-        {
-            bod.AddTorque(-transform.right * (pitchForce * pitch * Time.fixedDeltaTime));
-        }
-
-        //if (!Mathf.Approximately(0f, roll))
-        //{
-        //    bod.AddTorque(transform.forward * (rollForce * roll * Time.fixedDeltaTime));
-        //}
-
-        if (!Mathf.Approximately(0f, yaw))
-        {
-            bod.AddTorque(transform.up * (yawForce * yaw * Time.fixedDeltaTime));
-        }
-
         //rotObj.transform.Rotate((-transform.up * rotYaw * rotSpd) - (transform.right * rotPitch * rotSpd));
         //Rotate ship towards movement
         //if (!Mathf.Approximately(0f, rotPitch)) {
@@ -346,27 +330,47 @@ public class ShipController : MonoBehaviour
         //    //rotObj.transform.localRotation = Quaternion.Lerp(rotObj.transform.localRotation, Quaternion.identity, rotSpd * Time.fixedDeltaTime);
         //}
 
-        bod.AddForce(transform.forward * (speed * Time.fixedDeltaTime));
-
-        if (dashing && !sideDashing)
+        if (!bod.freezeRotation)
         {
-            stats.ShakeCamera(12f);
-            bod.AddForce(transform.forward * (explosiveForce * Time.fixedDeltaTime), ForceMode.Impulse);
-            dashing = false;
-            ChangeAnimationState(BarrelRoll);
-        }
+            //Movement
+            if (!Mathf.Approximately(0f, pitch))
+            {
+                bod.AddTorque(-transform.right * (pitchForce * pitch * Time.fixedDeltaTime));
+            }
 
-        if (sideDashing && !dashing)
-        {
-            stats.ShakeCamera(12f);
-            bod.AddForce(transform.right * dashDir * (explosiveForce * Time.fixedDeltaTime), ForceMode.Impulse);
-            sideDashing = false;
-            ChangeAnimationState(BarrelRoll);
-        }
+            //if (!Mathf.Approximately(0f, roll))
+            //{
+            //    bod.AddTorque(transform.forward * (rollForce * roll * Time.fixedDeltaTime));
+            //}
 
-        Vector3 playerRotation = transform.rotation.eulerAngles;
-        playerRotation.z = 0;
-        transform.rotation = Quaternion.Euler(playerRotation);
+            if (!Mathf.Approximately(0f, yaw))
+            {
+                bod.AddTorque(transform.up * (yawForce * yaw * Time.fixedDeltaTime));
+            }
+
+
+            bod.AddForce(transform.forward * (speed * Time.fixedDeltaTime));
+
+            if (dashing && !sideDashing)
+            {
+                stats.ShakeCamera(12f);
+                bod.AddForce(transform.forward * (explosiveForce * Time.fixedDeltaTime), ForceMode.Impulse);
+                dashing = false;
+                ChangeAnimationState(BarrelRoll);
+            }
+
+            if (sideDashing && !dashing)
+            {
+                stats.ShakeCamera(12f);
+                bod.AddForce(transform.right * dashDir * (explosiveForce * Time.fixedDeltaTime), ForceMode.Impulse);
+                sideDashing = false;
+                ChangeAnimationState(BarrelRoll);
+            }
+
+            Vector3 playerRotation = transform.rotation.eulerAngles;
+            playerRotation.z = 0;
+            transform.rotation = Quaternion.Euler(playerRotation);
+        }
     }
 
     public void ChangeAnimationState(string newState)

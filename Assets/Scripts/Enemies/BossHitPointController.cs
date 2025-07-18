@@ -5,6 +5,7 @@ using UnityEngine;
 public class BossHitPointController : MonoBehaviour
 {
     BossControllerBase boss;
+    IDamageable idamage;
     [Range(1, 3)]
     public float dmgMult;
     [Range(0, 100)]
@@ -27,6 +28,7 @@ public class BossHitPointController : MonoBehaviour
     private void Awake()
     {
         boss = FindObjectOfType<BossControllerBase>();
+        idamage = boss.GetComponent<IDamageable>();
         breakHp = (boss.maxHp * (breakPercentage / 100));
 
         if (skinnedMeshRenderer == null) skinnedMeshRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
@@ -38,7 +40,7 @@ public class BossHitPointController : MonoBehaviour
         { 
             //Calculate Damage
             int totDmg = Mathf.RoundToInt((float)amt * dmgMult);
-            boss.Damage(totDmg);
+            idamage.Damage(totDmg);
 
             //Blow up the weakpoint if it takes too much damage;
             curDmg += totDmg;

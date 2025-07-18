@@ -371,7 +371,7 @@ public class PlayerController : MonoBehaviour
             //Take damage?
             stats.Damage(collisionDamage);
 
-            Invoke("ResetCam", 0.12f);
+            //Invoke("ResetCam", 0.12f);
         }
 
         if (collision.gameObject.CompareTag("Spike"))
@@ -380,7 +380,7 @@ public class PlayerController : MonoBehaviour
             Invoke("ResetHitWall", timeToMove);
             stats.Damage(spikeDamage);
             Invoke("KnockBack", 0.5f);
-            Invoke("ResetCam", 0.12f);
+            //Invoke("ResetCam", 0.12f);
 
         }
     }

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CetusController : BossControllerBase
+public class CetusController : BossControllerBase, IDamageable
 {
     public GameObject[] bulSpawn;
     public GameObject[] bulSpawnsTwo;
@@ -17,27 +17,20 @@ public class CetusController : BossControllerBase
     public LineRenderer laserRend;
     public GameObject laserObj;
 
-    //bool playedDialogue = false;
-
     public ObjectPool homingBulletPool;
 
     public ObjectPool sonicBulletPool;
     public int sonicBulletCount;
     public GameObject sonicSpawnPos;
 
-    //public BarrierController barrier;
-
     public Dialogue thirdPhaseDialogue;
     public Dialogue barrierDialogue;
 
     public GameObject barrierPushObj;
 
-    public float startAttackCools = 15f;
-
-
-
     protected override void Awake()
     {
+        playerInRange = true;
         //Boss does a special attack after losing a set amount of health per phase
         pOLA = maxHp * phaseOneLossPerc;
         pTLA = maxHp * phaseTwoLossPerc;
@@ -62,7 +55,6 @@ public class CetusController : BossControllerBase
         hasSpawnedPhaseOne = true;
         player = FindObjectOfType<PlayerController>();
         //detection = GetComponentInChildren<BossDetectionController>();
-        detectionCollider.radius = attackRange;
 
         base.OnEnable();
     }
@@ -74,7 +66,7 @@ public class CetusController : BossControllerBase
         //If the cooldown is greater than 0 we decrement it every frame
         if (attackCools > 0) attackCools -= Time.deltaTime;
         //If the player is close enough
-        if (playerInRange && curHp > 0 & player != null && pStats != null && pStats.Curr_hp > 0)
+        if (curHp > 0 & player != null && pStats != null && pStats.Curr_hp > 0)
         {
 
             //Probably have to rotate the boss towards the player
@@ -102,15 +94,21 @@ public class CetusController : BossControllerBase
             laserOn = false;
         }
 
-        //base.Update();
+        base.Update();
+
+        if (Application.isEditor)
+        {
+            if (Input.GetKeyDown(KeyCode.P))
+            {
+                Damage((int)maxHp / 2);
+            }
+        }
     }
 
     protected override void Attack()
     {
         if (!laserOn)
         {
-            //Sonic();
-
             //After phase 2 we stop shooting off at all the fins
             if (currentPhase < 3)
             {
@@ -142,8 +140,8 @@ public class CetusController : BossControllerBase
     //This attack shoots bullets out of all the fins
     protected override void AttackOne()
     {
-        //anim.SetTrigger("AttackOne");
         ChangeAnimationState(Cetus_Attack_1);
+
         //Get pooled bullet
         //Spawn a bunch of bullets
         Invoke("SpawnBunchaBullets", 0.85f);
@@ -182,12 +180,7 @@ public class CetusController : BossControllerBase
     {
         GameObject sBul = sonicBulletPool.GetPooledObject();
         sBul.transform.position = sonicSpawnPos.transform.position;
-        //sBul.transform.rotation = Quaternion.Euler(Random.Range(0, 360), Random.Range(0, 360), Random.Range(0, 360));
         sBul.SetActive(true);
-        //sBul.transform.LookAt(player.transform);
-        //sBul.transform.Rotate(Random.Range(-accx, accx), Random.Range(-accy, accy), Random.Range(-accx, accx));
-
-        //sBul.transform.forward = (player.transform.position - transform.position);
         sBul.transform.forward = sonicSpawnPos.transform.forward;
         sBul.transform.Rotate(Random.Range(-accx, accx), Random.Range(-accy, accy), 0);
 
@@ -196,25 +189,21 @@ public class CetusController : BossControllerBase
 
     public void TailAttack()
     {
-        //anim.SetTrigger("AttackFive");
         ChangeAnimationState(Cetus_Tail_Swipe);
     }
 
     public void BiteAttack()
     {
-        //anim.SetTrigger("AttackFive");
         ChangeAnimationState(Cetus_Bite);
     }
 
     public void WingAttack()
     {
-        //anim.SetTrigger("AttackFive");
         ChangeAnimationState(Cetus_Wings_All);
     }
 
     public void WhirlWindAttack()
     {
-        //anim.SetTrigger("AttackFive");
         ChangeAnimationState(Cetus_Whirlwind);
     }
 
@@ -226,7 +215,6 @@ public class CetusController : BossControllerBase
         attackCools = atkCooldowns[0];
        
     }
-
 
     void ActivateBarrierPushObj()
     {
@@ -241,8 +229,6 @@ public class CetusController : BossControllerBase
     public void SpawnBunchaBullets()
     {
         src.Play();
-        //if (bulletPool == null) bulletPool = cont.enemyBulPool;
-        //Get pooled bullet
         foreach (GameObject t in bulSpawnsTwo)
         {
             GameObject bul = bulletPool.GetPooledObject();
@@ -250,24 +236,15 @@ public class CetusController : BossControllerBase
             {
                 //Put it where the enemy position is
                 bul.transform.position = t.transform.position;
-                //Aim it at the player
-                //bul.transform.rotation = transform.rotation;
-                //Activate it at the enemy position
                 bul.SetActive(true);
                 bul.transform.LookAt(player.transform);
                 bul.transform.Rotate(Random.Range(-accx, accx), Random.Range(-accy, accy), 0);
-                //if (isRandom == true)
-                //{
-                //    bul.transform.rotation = Quaternion.Euler(Random.Range(0, 360), Random.Range(0, 360), Random.Range(0, 360));
-                //}
                 bul.GetComponent<EnemyBullet>().PushHard();
             }
         }
 
         //Reset attack cooldown
         //attackCools = atkCooldowns[1];
-
-        ChangeState(enemystates.alert);
     }
 
     //Laser attack
@@ -298,54 +275,14 @@ public class CetusController : BossControllerBase
 
     void SpawnBullets()
     {
-        //foreach (GameObject t in bulSpawn)
-        //{
-        //    GameObject bul = homingBulletPool.GetPooledObject();
-        //    if (bul != null)
-        //    {
-        //        //Put it where the enemy position is
-        //        bul.transform.position = t.transform.position;
-        //        bul.transform.Rotate(Random.Range(-accx, accx), Random.Range(-accy, accy), 0);
-        //
-        //        //Aim it at the player
-        //        //
-        //        //var offset = 0f;
-        //        //Vector2 direction = player.transform.position - t.transform.position;
-        //
-        //        //direction.Normalize();
-        //        //float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        //
-        //        //Activate it at the enemy position
-        //        bul.SetActive(true);
-        //        //bul.transform.rotation = Quaternion.Euler(Vector3.forward * (angle + offset));
-        //        //bul.transform.forward = Vector3.forward * (angle + offset);
-        //        bul.transform.rotation = Quaternion.Euler(Random.Range(0, 360), Random.Range(0, 360), Random.Range(0, 360));
-        //        //bul.GetComponent<EnemyBullet>().Push();
-        //    }
-        //}
-
-        //Shoot only like 4 or 5 bullets
-        //
-        //
         for (int i = 0; i < bulSpawn.Length; i++)
         {
-            //Spawn at every other position(so we dont have 50 bullets spawn)
-            //if (i % 2 == 0)
-            //{
                 GameObject bul = homingBulletPool.GetPooledObject();
                 if (bul != null)
                 {
                     //Put it where the enemy position is
                     bul.transform.position = bulSpawn[i].transform.position;
                     bul.transform.Rotate(Random.Range(-accx, accx), Random.Range(-accy, accy), 0);
-
-                    //Aim it at the player
-                    //
-                    //var offset = 0f;
-                    //Vector2 direction = player.transform.position - t.transform.position;
-
-                    //direction.Normalize();
-                    //float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
 
                     //Activate it at the enemy position
                     bul.SetActive(true);
@@ -354,10 +291,136 @@ public class CetusController : BossControllerBase
                     bul.transform.rotation = Quaternion.Euler(Random.Range(0, 360), Random.Range(0, 360), Random.Range(0, 360));
                     //bul.GetComponent<EnemyBullet>().Push();
                 }
-            //}
         }
         AS.PlayOneShot(PlayerSfx[1]);
+    }
+    public void Damage(int damageAmount)
+    {
+        //if (anim != null) anim.SetTrigger("Hit");
+        hpBar.SwitchUIActive(true);
+        curHp -= damageAmount;
+        //healthScript.SetHealth((int)curHp);
+        if (curHp > 0) DamageBlink();
 
-        ChangeState(enemystates.alert);
+        if (curHp < phase3Thres && !hasSpawnedPhaseThree)
+        {
+            currentPhase = 3;
+            SpawnAngels(currentPhase);
+            hasSpawnedPhaseThree = true;
+        }
+        else if (curHp < phase2Thres && !hasSpawnedPhaseTwo)
+        {
+            currentPhase = 2;
+            SpawnAngels(currentPhase);
+            hasSpawnedPhaseTwo = true;
+        }
+        else currentPhase = 1;
+
+        curHpLoss += damageAmount;
+
+        switch (currentPhase)
+        {
+            case 3:
+                if (curHpLoss > pTtLA)
+                {
+                    //Do laser attack here then reset cooldown
+                    //Debug.Log("Lost 10% hp");
+                    AttackThree();
+                    curHpLoss = 0;
+                }
+                break;
+            case 2:
+                if (curHpLoss > pTLA)
+                {
+                    //Do laser attack here then reset cooldown
+                    //Debug.Log("Lost 15% hp");
+                    AttackThree();
+                    curHpLoss = 0;
+                }
+                break;
+            case 1:
+                if (curHpLoss > pOLA)
+                {
+                    //Do laser attack here then reset cooldown
+                    //Debug.Log("Lost 20% hp");
+                    AttackThree();
+                    curHpLoss = 0;
+                }
+                break;
+        }
+
+        if (curHp <= 0)
+        {
+            if (minimapObj != null) minimapObj.SetActive(false);
+            if (manager != null) manager.EnemyDied();
+            //FindObjectOfType<GameManager>().EnemyDiedEvent();
+            //if (anim != null) anim.SetTrigger("Death");
+            //Invoke("Disable", deathClip.length);
+
+            //if (!hasAdded)
+            //{
+            //    hasAdded = true;
+            //    pStats.AddScore(killScore);
+            //}
+            BossDeath();
+
+            Instantiate(deathVFX, transform.position, transform.rotation);
+            Invoke("Disable", deathTime);
+        }
+    }
+
+    public void SpawnAngels(int phase)
+    {
+        _notifications[0].SetActive(true);
+        ChangeAnimationState(Cetus_Roar);
+        switch (phase)
+        {
+            case 1:
+                //barrier.gameObject.SetActive(true);
+                barrier.SetEnemies(waveOneSpawns.Length);
+                //ChangeAnimationState(Cetus_Reflect);
+                foreach (GameObject g in waveOneSpawns)
+                {
+                    g.GetComponent<EnemyControllerBase>().barrier = barrier;
+                    g.SetActive(true);
+                }
+                break;
+            case 2:
+                //FindObjectOfType<CombatDialogueController>().StartDialogue(barrierDialogue);
+                barrier.gameObject.SetActive(true);
+                //ChangeAnimationState(Cetus_Reflect);
+                barrier.SetEnemies(waveTwoSpawns.Length);
+                foreach (GameObject g in waveTwoSpawns)
+                {
+                    g.GetComponent<EnemyControllerBase>().barrier = barrier;
+                    g.SetActive(true);
+                }
+                foreach (GameObject g in waveTwoWaterPillars)
+                {
+                    g.SetActive(true);
+                }
+                attackCools = spawnCooldown;
+                break;
+            case 3:
+                //FindObjectOfType<CombatDialogueController>().StartDialogue(barrierDialogue);
+                barrier.gameObject.SetActive(true);
+                //ChangeAnimationState(Cetus_Reflect);
+                barrier.SetEnemies(waveThreeSpawns.Length);
+                foreach (GameObject g in waveThreeSpawns)
+                {
+                    g.GetComponent<EnemyControllerBase>().barrier = barrier;
+                    g.SetActive(true);
+                }
+                foreach (GameObject g in waveThreeWaterPillars)
+                {
+                    g.SetActive(true);
+                }
+                attackCools = spawnCooldown;
+                break;
+        }
+
+        Invoke("ActivateBarrierPushObj", 0.75f);
+        Invoke("DeactivateBarrierPushObj", 2f);
+        AS.PlayOneShot(PlayerSfx[3]);
     }
 }

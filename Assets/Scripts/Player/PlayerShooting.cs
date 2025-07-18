@@ -118,92 +118,96 @@ public class PlayerShooting : MonoBehaviour
 
     private void Update()
     {
-        if (cursor != null && affectsCursor)
-        {
-            var screenPoint = Input.mousePosition;
-            screenPoint.z = 10.0f; //distance of the plane from the camera
-            var pos = screenPoint;
-            pos.x = Mathf.Clamp(pos.x, Screen.width / 2 - constraint.x, Screen.width / 2 + constraint.x);
-            pos.y = Mathf.Clamp(pos.y, Screen.height / 2 - constraint.y, Screen.height / 2 + constraint.y);
-            pos.z = 10.0f;
-            r.position = pos;
-        }
 
-        Vector3 mouseWorldPosition = Vector3.zero;
-        
-        Vector2 screenCenterPoint = new Vector2(Screen.width / 2f, Screen.height / 2f);
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out RaycastHit raycastHit, 999f, aimColliderlayerMask)) 
+        if (!bod.freezeRotation)
         {
-            debugTransform.position = raycastHit.point;
-            mouseWorldPosition = raycastHit.point;
-        }
-
-        if (!chargedShot && (Input.GetButton("Fire1") || Input.GetAxis("Altfire1") > 0) && curShootCools <= 0f && !gm.gameIsPaused)
-        {
-            Shoot(true);
-            PlaySound();
-        }
-
-        //Charge shot stuff start
-        //If we have a charge shot and we're holding down the fire button, we start charging
-        if (chargedShot && (Input.GetButton("Fire1") || Input.GetAxis("Altfire1") > 0) && curShootCools <= 0f && !gm.gameIsPaused)
-        {
-            charging = true;
-        }
-
-        //If we let go of the charge button and we dont have enough charge, we uncharge the shot
-        if (chargedShot && curCharge < chargeTime && (!Input.GetButton("Fire1") && Mathf.Approximately(Input.GetAxis("Altfire1"), 0)) && !gm.gameIsPaused)
-        {
-            //curCharge = 0f;
-            charging = false;
-            //curCharge -= Time.deltaTime * incSpd;
-        }
-
-        //If we have a charge shot and we've held down the fire button long enough and let go, we shoot
-        if (charging && chargedShot && curCharge >= chargeTime && (!Input.GetButton("Fire1") && Input.GetAxis("Altfire1") <= 0.1f) && curShootCools <= 0 && !gm.gameIsPaused)
-        {
-            Shoot(true);
-            PlaySound();
-        }
-
-        if (charging)
-        {
-            if (curCharge <= chargeTime) curCharge += Time.deltaTime * incSpd;
-        }
-        else
-        {
-            if (curCharge > 0) curCharge = 0f;
-        }
-
-        if (chargedShot && chargeAnim != null)
-        {
-            if (charging && curCharge >= chargeTime)
+            if (cursor != null && affectsCursor)
             {
-                //Find ui, start animating it
-                chargeAnim.SetBool("Charging", true);
+                var screenPoint = Input.mousePosition;
+                screenPoint.z = 10.0f; //distance of the plane from the camera
+                var pos = screenPoint;
+                pos.x = Mathf.Clamp(pos.x, Screen.width / 2 - constraint.x, Screen.width / 2 + constraint.x);
+                pos.y = Mathf.Clamp(pos.y, Screen.height / 2 - constraint.y, Screen.height / 2 + constraint.y);
+                pos.z = 10.0f;
+                r.position = pos;
+            }
+
+            Vector3 mouseWorldPosition = Vector3.zero;
+
+            Vector2 screenCenterPoint = new Vector2(Screen.width / 2f, Screen.height / 2f);
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out RaycastHit raycastHit, 999f, aimColliderlayerMask))
+            {
+                debugTransform.position = raycastHit.point;
+                mouseWorldPosition = raycastHit.point;
+            }
+
+            if (!chargedShot && (Input.GetButton("Fire1") || Input.GetAxis("Altfire1") > 0) && curShootCools <= 0f && !gm.gameIsPaused)
+            {
+                Shoot(true);
+                PlaySound();
+            }
+
+            //Charge shot stuff start
+            //If we have a charge shot and we're holding down the fire button, we start charging
+            if (chargedShot && (Input.GetButton("Fire1") || Input.GetAxis("Altfire1") > 0) && curShootCools <= 0f && !gm.gameIsPaused)
+            {
+                charging = true;
+            }
+
+            //If we let go of the charge button and we dont have enough charge, we uncharge the shot
+            if (chargedShot && curCharge < chargeTime && (!Input.GetButton("Fire1") && Mathf.Approximately(Input.GetAxis("Altfire1"), 0)) && !gm.gameIsPaused)
+            {
+                //curCharge = 0f;
+                charging = false;
+                //curCharge -= Time.deltaTime * incSpd;
+            }
+
+            //If we have a charge shot and we've held down the fire button long enough and let go, we shoot
+            if (charging && chargedShot && curCharge >= chargeTime && (!Input.GetButton("Fire1") && Input.GetAxis("Altfire1") <= 0.1f) && curShootCools <= 0 && !gm.gameIsPaused)
+            {
+                Shoot(true);
+                PlaySound();
+            }
+
+            if (charging)
+            {
+                if (curCharge <= chargeTime) curCharge += Time.deltaTime * incSpd;
             }
             else
             {
-                //Reset ui
-                chargeAnim.SetBool("Charging", false);
+                if (curCharge > 0) curCharge = 0f;
             }
+
+            if (chargedShot && chargeAnim != null)
+            {
+                if (charging && curCharge >= chargeTime)
+                {
+                    //Find ui, start animating it
+                    chargeAnim.SetBool("Charging", true);
+                }
+                else
+                {
+                    //Reset ui
+                    chargeAnim.SetBool("Charging", false);
+                }
+            }
+
+            //
+            //Charge shot stuff end
+
+            if (curShootCools > 0f)
+                curShootCools -= Time.deltaTime;
+
+            if (ship == null) ship = FindObjectOfType<ShipController>();
+            if (ship != null) aimRay = Camera.main.ScreenPointToRay(ship.aimPos);
+
+            //if (player.joystick)
+            //{
+            //    aimRay = Camera.main.ScreenPointToRay(ship.aimPos);
+            //}
+            //else aimRay = Camera.main.ScreenPointToRay(Input.mousePosition);
         }
-
-        //
-        //Charge shot stuff end
-
-        if (curShootCools > 0f) 
-            curShootCools -= Time.deltaTime;
-
-        if (ship == null) ship = FindObjectOfType<ShipController>();
-        if (ship != null) aimRay = Camera.main.ScreenPointToRay(ship.aimPos);
-        
-        //if (player.joystick)
-        //{
-        //    aimRay = Camera.main.ScreenPointToRay(ship.aimPos);
-        //}
-        //else aimRay = Camera.main.ScreenPointToRay(Input.mousePosition);
     }
 
     public void Shoot(bool newShooting)

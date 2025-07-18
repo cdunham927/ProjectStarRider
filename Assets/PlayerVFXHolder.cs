@@ -106,120 +106,121 @@ public class PlayerVFXHolder : MonoBehaviour
     private void Update()
     {   //|| Input.GetAxis("SideDashLeft") > 0
         //side dash 
-        if (Input.GetButtonDown("SideDashRight") && dashTime <= 0)
-        {
-            //peedLines_R.SetActive(true);
-          
-            SpeedLines_R.Play();
-            Invoke("ResetSidedash", dashTimeToZero);
-            dashTime = dashTimeToZero;
-            sidedash = true;
-        }
-        else if (Input.GetButtonDown("SideDashLeft") && dashTime <= 0)
-        {
-           // SpeedLines_L.SetActive(true);
-            SpeedLines_L.Play();
-         
-            Invoke("ResetSidedash", dashTimeToZero);
-            dashTime = dashTimeToZero;
-            sidedash = true;
-        }
-        else
-        {
-            //SpeedLines_L.SetActive(false);
-            //SpeedLines_R.SetActive(false);
-            sidedash = false;
-        }
-        
-        //if (!Dash.gameObject.activeSelf) Dash.gameObject.SetActive(true);
-        //D_curEmission = 1;
 
-        if (dashTime > 0)
-        {
-            dashTime -= Time.deltaTime;
-            D_curEmission = dashParts;
-        }
-        else
-        {
-            D_curEmission = 0.0f;
-        }
+            if (Input.GetButtonDown("SideDashRight") && dashTime <= 0)
+            {
+                //peedLines_R.SetActive(true);
 
+                SpeedLines_R.Play();
+                Invoke("ResetSidedash", dashTimeToZero);
+                dashTime = dashTimeToZero;
+                sidedash = true;
+            }
+            else if (Input.GetButtonDown("SideDashLeft") && dashTime <= 0)
+            {
+                // SpeedLines_L.SetActive(true);
+                SpeedLines_L.Play();
 
-        //if (sidedash == true) 
-        //{
-        //    SpeedLines_L.SetActive(true);
-        //
-        //}
-        //else 
-        //{
-        //
-        //    SpeedLines_L.SetActive(false);
-        //}
+                Invoke("ResetSidedash", dashTimeToZero);
+                dashTime = dashTimeToZero;
+                sidedash = true;
+            }
+            else
+            {
+                //SpeedLines_L.SetActive(false);
+                //SpeedLines_R.SetActive(false);
+                sidedash = false;
+            }
+
+            //if (!Dash.gameObject.activeSelf) Dash.gameObject.SetActive(true);
+            //D_curEmission = 1;
+
+            if (dashTime > 0)
+            {
+                dashTime -= Time.deltaTime;
+                D_curEmission = dashParts;
+            }
+            else
+            {
+                D_curEmission = 0.0f;
+            }
 
 
+            //if (sidedash == true) 
+            //{
+            //    SpeedLines_L.SetActive(true);
+            //
+            //}
+            //else 
+            //{
+            //
+            //    SpeedLines_L.SetActive(false);
+            //}
 
 
 
-        //if ((Input.GetButtonUp("SideDashRight") || Mathf.Abs(Input.GetAxis("SideDashRight")) < 0.1f || Input.GetButtonUp("SideDashLeft") || Mathf.Abs(Input.GetAxis("SideDashLeft")) < 0.1f))
-        //{
-        //    Invoke("ResetSidedash", 1f);
-        //}
-
-        //if (sidedash)
-        //{
-        //    D_curEmission = Mathf.Lerp(D_curEmission, speedEmission, Time.deltaTime * speedLerp);
-        //}
-        //else
-        //{
-        //    D_curEmission = Mathf.Lerp(D_curEmission, 0f, Time.deltaTime * speedLerp);
-        //}
-
-        //Forward on joystick, mild speedlines
-        if (Input.GetButton("Vertical") || Input.GetAxis("Vertical") > 0)
-        {
-            speeding = true;
-        }
-        else
-        {
-            speeding = false;
-        }
-
-        //Boosting, major speedlines
-        if (Input.GetButton("MouseBoost") || Input.GetAxis("ControllerBoost") > 0)
-        {
-
-            boosting = true;
-            //dashing = true;
-        }
-        else
-        {
-            boosting = false;
-            //dashing = false;
-        }
-
-        // emision Pasrticle system variable
-        var emission = Speed.emission;
-        var Demission = Dash.emission;
 
 
-        if (speeding && !boosting)
-        {
-            Speeding();
-        }
+            //if ((Input.GetButtonUp("SideDashRight") || Mathf.Abs(Input.GetAxis("SideDashRight")) < 0.1f || Input.GetButtonUp("SideDashLeft") || Mathf.Abs(Input.GetAxis("SideDashLeft")) < 0.1f))
+            //{
+            //    Invoke("ResetSidedash", 1f);
+            //}
 
-        if (boosting)
-        {
-            Boosting();
-        }
+            //if (sidedash)
+            //{
+            //    D_curEmission = Mathf.Lerp(D_curEmission, speedEmission, Time.deltaTime * speedLerp);
+            //}
+            //else
+            //{
+            //    D_curEmission = Mathf.Lerp(D_curEmission, 0f, Time.deltaTime * speedLerp);
+            //}
 
-        if (!boosting && !speeding)
-        {
+            //Forward on joystick, mild speedlines
+            if (Input.GetButton("Vertical") || Input.GetAxis("Vertical") > 0)
+            {
+                speeding = true;
+            }
+            else
+            {
+                speeding = false;
+            }
 
-            LowerEmission();
-        }
+            //Boosting, major speedlines
+            if (Input.GetButton("MouseBoost") || Input.GetAxis("ControllerBoost") > 0)
+            {
 
-        emission.rateOverTime = curEmission;
-        Demission.rateOverTime = D_curEmission;
+                boosting = true;
+                //dashing = true;
+            }
+            else
+            {
+                boosting = false;
+                //dashing = false;
+            }
+
+            // emision Pasrticle system variable
+            var emission = Speed.emission;
+            var Demission = Dash.emission;
+
+
+            if (speeding && !boosting)
+            {
+                Speeding();
+            }
+
+            if (boosting)
+            {
+                Boosting();
+            }
+
+            if (!boosting && !speeding)
+            {
+
+                LowerEmission();
+            }
+
+            emission.rateOverTime = curEmission;
+            Demission.rateOverTime = D_curEmission;
     }
 
     public void Damage(int damageAmount)

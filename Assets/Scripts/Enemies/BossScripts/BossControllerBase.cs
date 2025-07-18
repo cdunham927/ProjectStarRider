@@ -5,15 +5,12 @@ using UnityEngine.UI;
 using TMPro;
 using Cinemachine;
 
-public class BossControllerBase : MonoBehaviour, IDamageable
+public class BossControllerBase : MonoBehaviour
 {
     //Start paste from enemycontrollerbase and cetuscontroller
     //
     //
     //
-    //We only need idle, alert, attack for now
-    public enum enemystates { idle, patrol, alert, attack, retreat, death };
-    public enemystates currentState;
     //Stats
     [Header(" Enemy Base Stats : ")]
     public float maxHp;
@@ -23,24 +20,18 @@ public class BossControllerBase : MonoBehaviour, IDamageable
     public float killScore = 100;
     protected bool hasAdded = false;
 
-    [Header(" Enemy Attack Settingss : ")]
-    //Time between attacks
-    public float timeBetweenAttacks;
+    [Header(" Enemy Attack Settings : ")]
     //Range for when the enemy starts attacking
     public float attackRange;
     //Current cooldown time for attacking
     protected float attackCools;
     //Object pool for bullets to shoot
     public ObjectPool bulletPool;
+
     //Checks if the player is in range
     public bool playerInRange = false;
 
-    //Set the radius for the detection collider
-    [Header(" Enemy site field : ")]
-    public SphereCollider detectionCollider;
-
-    [Header(" Enemy Hitbox : ")]
-    public Collider col;
+    public float startAttackCools = 15f;
 
     [Header(" Bullet accuracy Settingss : ")]
     //is random is the variations for shots being produced
@@ -137,7 +128,6 @@ public class BossControllerBase : MonoBehaviour, IDamageable
     float iframes;
     public float iframeTime = 0.2f;
 
-
     //Aniamtion State  make sure string match name of animations
     protected const string Cetus_Reflect = "Armature|Reflect";
     protected const string Cetus_Idle = "Armature|Idle";
@@ -223,7 +213,6 @@ public class BossControllerBase : MonoBehaviour, IDamageable
     public float chanceForAtkThree = 0.3f;
     public float chanceForAtkTwo = 0.3f;
 
-    public ObjectPool bossBulletPool;
     public float deathTime;
 
     public int currentPhase = 1;
@@ -236,19 +225,15 @@ public class BossControllerBase : MonoBehaviour, IDamageable
 
     protected virtual void Awake()
     {
-        //mesh = GetComponent<MeshRenderer>();
         cam = FindObjectOfType<CinemachineVirtualCamera>();
         if (perlin == null && cam != null) perlin = cam.GetComponentInChildren<CinemachineBasicMultiChannelPerlin>();
         anim = GetComponentInChildren<Animator>();
         //Get original color of material for damage flashes
         if (skinnedMeshRenderer == null) skinnedMeshRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
-        //origCol = skinnedMeshRenderer.materials[ind].color;
 
         healthScript = GetComponent<Healthbar>();
         src = GetComponent<AudioSource>();
-        //bulletPool = cont.enemyBulPool;
 
-        //hpBar = GetComponent<Healthbar>();
         spawned = false;
         spawnedPickup = false;
 
@@ -268,29 +253,18 @@ public class BossControllerBase : MonoBehaviour, IDamageable
 
     protected virtual void OnEnable()
     {
-        pStats = FindObjectOfType<Player_Stats>();
-        //tempMats = skinnedMeshRenderer.materials;
-        //origCol = skinnedMeshRenderer.material.color;
-        origMat = skinnedMeshRenderer.material;
-
-        //originalColors = new Color[] { };
-
-        //for (int i = 0; i < tempMats.Length; i++)
-        //{
-        //    originalColors[i] = tempMats[i].color;
-        //}
-
-        ResetMaterial();
-        hasAdded = false;
         player = FindObjectOfType<PlayerController>();
+        cont = FindObjectOfType<GameManager>();
+        pStats = FindObjectOfType<Player_Stats>();
+        
+        origMat = skinnedMeshRenderer.material;
+        ResetMaterial();
+
+        hasAdded = false;
         if (player != null) target = player.transform;
-        detectionCollider.radius = attackRange;
-        ChangeState(enemystates.idle);
         curHp = maxHp;
         hasReduced = false;
-        //skinnedMeshRenderer.material.color = origCol;
 
-        cont = FindObjectOfType<GameManager>();
         hpPool = cont.hpPool;
         bombPool = cont.bombPool;
 
@@ -315,34 +289,6 @@ public class BossControllerBase : MonoBehaviour, IDamageable
 
     protected virtual void Update()
     {
-        switch (currentState)
-        {
-            case (enemystates.idle):
-                Idle();
-                break;
-            case (enemystates.patrol):
-                Patrol();
-                break;
-            case (enemystates.alert):
-                if (pStats != null && !pStats.invisible)
-                {
-                    Alert();
-                }
-                break;
-            case (enemystates.attack):
-                if (pStats != null && !pStats.invisible)
-                {
-                    Attack();
-                }
-                break;
-            case (enemystates.retreat):
-                Retreat();
-                break;
-            case (enemystates.death):
-                Death();
-                break;
-        }
-
         if (hasIframes & iframes > 0) iframes -= Time.deltaTime;
 
         if (eI != null)
@@ -356,20 +302,7 @@ public class BossControllerBase : MonoBehaviour, IDamageable
                 eI.parentVisible = false;
             }
         }
-
-        if (Application.isEditor)
-        {
-            if (Input.GetKeyDown(KeyCode.P))
-            {
-                Damage((int)maxHp / 2);
-            }
-        }
     }
-
-    protected virtual void Idle() { }
-    protected virtual void Patrol() { }
-    protected virtual void Alert() { }
-    protected virtual void Retreat() { }
 
     protected virtual void Attack()
     {
@@ -400,11 +333,6 @@ public class BossControllerBase : MonoBehaviour, IDamageable
         }
     }
 
-    public void ChangeState(enemystates toState)
-    {
-        currentState = toState;
-    }
-
     protected virtual void Death()
     {
         GameManager cont = FindObjectOfType<GameManager>();
@@ -423,112 +351,20 @@ public class BossControllerBase : MonoBehaviour, IDamageable
     //When weak points get hit, retaliate
     public virtual void Retaliate() { }
 
-    public void Damage(int damageAmount)
-    {
-        //if (anim != null) anim.SetTrigger("Hit");
-        hpBar.SwitchUIActive(true);
-        curHp -= damageAmount;
-        //healthScript.SetHealth((int)curHp);
-        if (curHp > 0) DamageBlink();
-
-        if (curHp < phase3Thres && !hasSpawnedPhaseThree)
-        {
-            currentPhase = 3;
-            SpawnAngels(currentPhase);
-            hasSpawnedPhaseThree = true;
-        }
-        else if (curHp < phase2Thres && !hasSpawnedPhaseTwo)
-        {
-            currentPhase = 2;
-            SpawnAngels(currentPhase);
-            hasSpawnedPhaseTwo = true;
-        }
-        else currentPhase = 1;
-
-        curHpLoss += damageAmount;
-
-        switch (currentPhase)
-        {
-            case 3:
-                if (curHpLoss > pTtLA)
-                {
-                    //Do laser attack here then reset cooldown
-                    //Debug.Log("Lost 10% hp");
-                    AttackThree();
-                    curHpLoss = 0;
-                }
-                break;
-            case 2:
-                if (curHpLoss > pTLA)
-                {
-                    //Do laser attack here then reset cooldown
-                    //Debug.Log("Lost 15% hp");
-                    AttackThree();
-                    curHpLoss = 0;
-                }
-                break;
-            case 1:
-                if (curHpLoss > pOLA)
-                {
-                    //Do laser attack here then reset cooldown
-                    //Debug.Log("Lost 20% hp");
-                    AttackThree();
-                    curHpLoss = 0;
-                }
-                break;
-        }
-
-        if (curHp <= 0)
-        {
-            if (minimapObj != null) minimapObj.SetActive(false);
-            if (manager != null) manager.EnemyDied();
-            //FindObjectOfType<GameManager>().EnemyDiedEvent();
-            //if (anim != null) anim.SetTrigger("Death");
-            //Invoke("Disable", deathClip.length);
-
-            //if (!hasAdded)
-            //{
-            //    hasAdded = true;
-            //    pStats.AddScore(killScore);
-            //}
-            BossDeath();
-
-            Instantiate(deathVFX, transform.position, transform.rotation);
-            Invoke("Disable", deathTime);
-        }
-    }
     void ResetMaterial()
     {
-        //for (int i = 0; i < tempMats.Length; i++)
-        //{
-        //    tempMats[i].color = originalColors[i];
-        //}
-
-        //skinnedMeshRenderer.material.color = origCol;
-        //Material[] tempMats = skinnedMeshRenderer.materials;
-        //tempMats[ind].color = origCol;
-        //skinnedMeshRenderer.materials = tempMats;
-
         skinnedMeshRenderer.material = origMat;
     }
 
     protected void DamageBlink()
     {
-        //skinnedMeshRenderer.materials = tempMats;
         skinnedMeshRenderer.material = hitMat;
-
-        //for (int i = 0; i < tempMats.Length; i++)
-        //{
-        //    tempMats[i].color = originalColors[i];
-        //}
-        //skinnedMeshRenderer.material.color = Color.red * blinkBrightness;
         Invoke("ResetMaterial", blinkDuration);
     }
 
     public void BossDeath()
     {
         skinnedMeshRenderer.material.color = Color.white;
-        //anim.SetTrigger("Death");
         ChangeAnimationState(Boss_Death);
         Death();
     }
@@ -540,66 +376,8 @@ public class BossControllerBase : MonoBehaviour, IDamageable
 
     public void ChangeAnimationState(string newState)
     {
-
-        // stop the same animation from interrutping itself
-        //if (currentState == newState) return;
-
         //plays the animation
         anim.Play(newState);
     }
 
-    public void SpawnAngels(int phase)
-    {
-        _notifications[0].SetActive(true);
-        ChangeAnimationState(Cetus_Roar);
-        switch (phase)
-        {
-            case 1:
-                //barrier.gameObject.SetActive(true);
-                barrier.SetEnemies(waveOneSpawns.Length);
-                //ChangeAnimationState(Cetus_Reflect);
-                foreach (GameObject g in waveOneSpawns)
-                {
-                    g.GetComponent<EnemyControllerBase>().barrier = barrier;
-                    g.SetActive(true);
-                }
-                break;
-            case 2:
-                //FindObjectOfType<CombatDialogueController>().StartDialogue(barrierDialogue);
-                barrier.gameObject.SetActive(true);
-                //ChangeAnimationState(Cetus_Reflect);
-                barrier.SetEnemies(waveTwoSpawns.Length);
-                foreach (GameObject g in waveTwoSpawns)
-                {
-                    g.GetComponent<EnemyControllerBase>().barrier = barrier;
-                    g.SetActive(true);
-                }
-                foreach (GameObject g in waveTwoWaterPillars)
-                {
-                    g.SetActive(true);
-                }
-                attackCools = spawnCooldown;
-                break;
-            case 3:
-                //FindObjectOfType<CombatDialogueController>().StartDialogue(barrierDialogue);
-                barrier.gameObject.SetActive(true);
-                //ChangeAnimationState(Cetus_Reflect);
-                barrier.SetEnemies(waveThreeSpawns.Length);
-                foreach (GameObject g in waveThreeSpawns)
-                {
-                    g.GetComponent<EnemyControllerBase>().barrier = barrier;
-                    g.SetActive(true);
-                }
-                foreach (GameObject g in waveThreeWaterPillars)
-                {
-                    g.SetActive(true);
-                }
-                attackCools = spawnCooldown;
-                break;
-        }
-
-        Invoke("ActivateBarrierPushObj", 0.75f);
-        Invoke("DeactivateBarrierPushObj", 2f);
-        AS.PlayOneShot(PlayerSfx[3]);
-    }
 }

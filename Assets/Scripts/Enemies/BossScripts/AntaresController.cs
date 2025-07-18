@@ -2,32 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AntaresController : BossControllerBase
+public class AntaresController : BossControllerBase, IDamageable
 {
-    //notifications
-    [Header("Player Objective notifactions: ")]
-    public GameObject[] _notifications;
-
-    float curHpLoss = 0;
-
-    //Antares enemy phases
-    [Header(" Phase 1 Settings : ")]
-    public bool phaseOneLossAttack = false;
-    public float phaseOneLossPerc = 0.20f;
-    float pOLA;
-
-    //Phase 2 attack and %
-    [Header(" Phase 2 Settings : ")]
-    public bool phaseTwoLossAttack = false;
-    public float phaseTwoLossPerc = 0.15f;
-    float pTLA;
-
-    //Final phase attack info
-    [Header(" Phase 3 Settings : ")]
-    public bool phaseThreeLossAttack = false;
-    public float phaseThreeLossPerc = 0.10f;
-    float pTtLA;
-
     public ObjectPool homingBulletPool;
     public int numBullets = 8;
     public int extraBullets = 8;
@@ -40,12 +16,6 @@ public class AntaresController : BossControllerBase
 
     public Dialogue thirdPhaseDialogue;
 
-    [Header("Audio Clips: ")]
-    public AudioClip[] PlayerSfx;
-    private AudioSource AS;
-
-    public float startAttackCools = 15f;
-
     public bool isAttacking = false;
 
     public Transform[] waypoints; // Array of waypoint transforms
@@ -56,26 +26,6 @@ public class AntaresController : BossControllerBase
 
     public float headWeight;
     public float bodyWeight;
-
-    //Aniamtion State  make sure string match name of animations
-    //const string Cetus_Reflect = "Armature|Reflect";
-    //const string Cetus_Idle = "Armature|Idle";
-    //const string Cetus_Attack_1 = "Armature|Attack1";
-    //const string Cetus_Attack_2 = "Armature|Attack2";
-    //const string Cetus_Wings_R = "Armature|Idle";
-    //const string Cetus_Wings_L = "Armature|Idle";
-    //const string Cetus_Wings_All = "CetusArmature|WingSlaps_All";
-    //const string Cetus_Bite = "CetusArmature|BiteBack";
-    //const string Cetus_Tail_Swipe = "Armature|TailWhip";
-    //const string Cetus_Dive = "Armature|Idle";
-    //const string Cetus_Flustered = "Armature|Idle";
-    //const string Cetus_Death = "Armature|Death";
-    //const string Cetus_Roar = "CetusArmature|Roaring";
-    //const string Cetus_Charge_Laser = "Charge Attack Edit";
-    //const string Cetus_Charging = "Charge Attack Edit";
-    //const string Cetus_Whirlwind = "CetusArmature|Whirlwind";
-
-
 
     protected override void Awake()
     {
@@ -103,7 +53,6 @@ public class AntaresController : BossControllerBase
     {
         player = FindObjectOfType<PlayerController>();
         //detection = GetComponentInChildren<BossDetectionController>();
-        detectionCollider.radius = attackRange;
 
         base.OnEnable();
     }
@@ -217,42 +166,6 @@ public class AntaresController : BossControllerBase
         }
     }
 
-    void SpawnBullets()
-    {
-        for (int i = 0; i < extraBullets; i++)
-        {
-            //Spawn at every other position(so we dont have 50 bullets spawn)
-            //if (i % 2 == 0)
-            //{
-            GameObject bul = homingBulletPool.GetPooledObject();
-            if (bul != null)
-            {
-                //Put it where the enemy position is
-                bul.transform.position = bulSpawns[0].transform.position;
-                bul.transform.Rotate(Random.Range(-accx, accx), Random.Range(-accy, accy), 0);
-
-                //Aim it at the player
-                //
-                //var offset = 0f;
-                //Vector2 direction = player.transform.position - t.transform.position;
-
-                //direction.Normalize();
-                //float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-
-                //Activate it at the enemy position
-                bul.SetActive(true);
-                //bul.transform.rotation = Quaternion.Euler(Vector3.forward * (angle + offset));
-                //bul.transform.forward = Vector3.forward * (angle + offset);
-                bul.transform.rotation = Quaternion.Euler(Random.Range(0, 360), Random.Range(0, 360), Random.Range(0, 360));
-                //bul.GetComponent<EnemyBullet>().Push();
-            }
-            //}
-        }
-        AS.PlayOneShot(PlayerSfx[1]);
-
-        ChangeState(enemystates.alert);
-    }
-
     void CancelAllBullet()
     {
         isAttacking = false;
@@ -265,36 +178,17 @@ public class AntaresController : BossControllerBase
     {
         for (int i = 0; i < numBullets; i++)
         {
-            //Spawn at every other position(so we dont have 50 bullets spawn)
-            //if (i % 2 == 0)
-            //{
             GameObject bul = homingBulletPool.GetPooledObject();
             if (bul != null)
             {
                 //Put it where the enemy position is
                 bul.transform.position = bulSpawns[1].transform.position;
                 bul.transform.Rotate(Random.Range(-accx, accx), Random.Range(-accy, accy), 0);
-
-                //Aim it at the player
-                //
-                //var offset = 0f;
-                //Vector2 direction = player.transform.position - t.transform.position;
-
-                //direction.Normalize();
-                //float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-
-                //Activate it at the enemy position
                 bul.SetActive(true);
-                //bul.transform.rotation = Quaternion.Euler(Vector3.forward * (angle + offset));
-                //bul.transform.forward = Vector3.forward * (angle + offset);
                 bul.transform.rotation = Quaternion.Euler(Random.Range(0, 360), Random.Range(0, 360), Random.Range(0, 360));
-                //bul.GetComponent<EnemyBullet>().Push();
             }
-            //}
         }
         AS.PlayOneShot(PlayerSfx[1]);
-
-        ChangeState(enemystates.alert);
     }
 
     void SpawnRightBullets()
@@ -311,14 +205,6 @@ public class AntaresController : BossControllerBase
                 bul.transform.position = bulSpawns[2].transform.position;
                 bul.transform.Rotate(Random.Range(-accx, accx), Random.Range(-accy, accy), 0);
 
-                //Aim it at the player
-                //
-                //var offset = 0f;
-                //Vector2 direction = player.transform.position - t.transform.position;
-
-                //direction.Normalize();
-                //float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-
                 //Activate it at the enemy position
                 bul.SetActive(true);
                 //bul.transform.rotation = Quaternion.Euler(Vector3.forward * (angle + offset));
@@ -329,8 +215,6 @@ public class AntaresController : BossControllerBase
             //}
         }
         AS.PlayOneShot(PlayerSfx[1]);
-
-        ChangeState(enemystates.alert);
     }
 
     public void AntaresDeath()
@@ -338,64 +222,6 @@ public class AntaresController : BossControllerBase
         skinnedMeshRenderer.material.color = Color.white;
         Death();
     }
-
-    //public override void Damage(int damageAmount)
-    //{
-    //    hpBar.SwitchUIActive(true);
-    //    curHp -= damageAmount;
-    //    if (curHp > 0) DamageBlink();
-    //
-    //    //Check for phase change
-    //    if (curHp < phase3Thres)
-    //    {
-    //        currentPhase = 3;
-    //        return;
-    //    }
-    //    else if (curHp < phase2Thres)
-    //    {
-    //        currentPhase = 2;
-    //        return;
-    //    }
-    //    else currentPhase = 1;
-    //
-    //    curHpLoss += damageAmount;
-    //
-    //    switch (currentPhase)
-    //    {
-    //        case 3:
-    //            if (curHpLoss > pTtLA)
-    //            {
-    //                //AttackThree();
-    //                curHpLoss = 0;
-    //            }
-    //            break;
-    //        case 2:
-    //            if (curHpLoss > pTLA)
-    //            {
-    //                //AttackThree();
-    //                curHpLoss = 0;
-    //            }
-    //            break;
-    //        case 1:
-    //            if (curHpLoss > pOLA)
-    //            {
-    //                //AttackThree();
-    //                curHpLoss = 0;
-    //            }
-    //            break;
-    //    }
-    //
-    //    if (curHp <= 0)
-    //    {
-    //        if (minimapObj != null) minimapObj.SetActive(false);
-    //        if (manager != null) manager.EnemyDied();
-    //        AntaresDeath();
-    //
-    //        Instantiate(deathVFX, transform.position, transform.rotation);
-    //        Invoke("Disable", deathTime);
-    //    }
-    //}
-
 
     void PatternCAttack()
     {
@@ -422,4 +248,60 @@ public class AntaresController : BossControllerBase
             }
         }
     }
+
+    public void Damage(int damageAmount)
+    {
+        curHp -= damageAmount;
+        if (curHp > 0) DamageBlink();
+
+        if (curHp < phase3Thres && !hasSpawnedPhaseThree)
+        {
+            currentPhase = 3;
+            hasSpawnedPhaseThree = true;
+        }
+        else if (curHp < phase2Thres && !hasSpawnedPhaseTwo)
+        {
+            currentPhase = 2;
+            hasSpawnedPhaseTwo = true;
+        }
+        else currentPhase = 1;
+
+        curHpLoss += damageAmount;
+
+        switch (currentPhase)
+        {
+            case 3:
+                if (curHpLoss > pTtLA)
+                {
+                    AttackThree();
+                    curHpLoss = 0;
+                }
+                break;
+            case 2:
+                if (curHpLoss > pTLA)
+                {
+                    AttackThree();
+                    curHpLoss = 0;
+                }
+                break;
+            case 1:
+                if (curHpLoss > pOLA)
+                {
+                    AttackThree();
+                    curHpLoss = 0;
+                }
+                break;
+        }
+
+        if (curHp <= 0)
+        {
+            if (minimapObj != null) minimapObj.SetActive(false);
+            if (manager != null) manager.EnemyDied();
+            BossDeath();
+
+            Instantiate(deathVFX, transform.position, transform.rotation);
+            Invoke("Disable", deathTime);
+        }
+    }
+
 }
