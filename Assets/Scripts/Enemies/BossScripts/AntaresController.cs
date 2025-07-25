@@ -20,12 +20,15 @@ public class AntaresController : BossControllerBase, IDamageable
 
     public Transform[] waypoints; // Array of waypoint transforms
     public float spd;
+    float curSpd;
     private int currentWaypointIndex = 0;
     public float pathChangeDistance = 2f;
     public float rotSpd = 15f;
 
     public float headWeight;
     public float bodyWeight;
+
+    public GameObject snakePrefab;
 
     protected override void Awake()
     {
@@ -53,6 +56,7 @@ public class AntaresController : BossControllerBase, IDamageable
     {
         player = FindObjectOfType<PlayerController>();
         //detection = GetComponentInChildren<BossDetectionController>();
+        curSpd = spd;
 
         base.OnEnable();
     }
@@ -63,16 +67,19 @@ public class AntaresController : BossControllerBase, IDamageable
         {
             //Move along our circular looping path
             // Calculate direction to next waypoint
-            Vector3 direction = (waypoints[currentWaypointIndex].position - transform.position).normalized;
-            //Look in direction of waypoint
-            var lookRotation = Quaternion.LookRotation(waypoints[currentWaypointIndex].position - transform.position);
-            transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * rotSpd);
-            // Move towards the waypoint
-            transform.position += direction * spd * Time.deltaTime;
-            // Check if reached the waypoint
-            if (Vector3.Distance(transform.position, waypoints[currentWaypointIndex].position) < pathChangeDistance)
+            if (waypoints.Length > 0)
             {
-                currentWaypointIndex = (currentWaypointIndex + 1) % waypoints.Length; // Loop back to the beginning
+                Vector3 direction = (waypoints[currentWaypointIndex].position - transform.position).normalized;
+                //Look in direction of waypoint
+                var lookRotation = Quaternion.LookRotation(waypoints[currentWaypointIndex].position - transform.position);
+                transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * rotSpd);
+                // Move towards the waypoint
+                transform.position += direction * curSpd * Time.deltaTime;
+                // Check if reached the waypoint
+                if (Vector3.Distance(transform.position, waypoints[currentWaypointIndex].position) < pathChangeDistance)
+                {
+                    currentWaypointIndex = (currentWaypointIndex + 1) % waypoints.Length; // Loop back to the beginning
+                }
             }
         }
 
@@ -97,16 +104,15 @@ public class AntaresController : BossControllerBase, IDamageable
 
         if (curHp > 0 && player != null && pStats != null && pStats.Curr_hp > 0)
         {
+            isAttacking = true;
             //If the player is close enough
             //We can probably use this to determine if we do a scorpion tail attack or shoot bullets at the player
             if (!playerInRange)
             {
-                isAttacking = true;
                 AttackOne();
             }
             else
             {
-                isAttacking = true;
                 AttackTwo();
             }
         }
@@ -223,32 +229,6 @@ public class AntaresController : BossControllerBase, IDamageable
         Death();
     }
 
-    void PatternCAttack()
-    {
-        if (bulletPool == null) bulletPool = cont.enemyBulPool;
-        float angle = 0;
-        float increment = 360 / numBullets;
-        for (int i = 0; i < numBullets; i++)
-        {
-            //Get pooled bullet
-            GameObject bul = bulletPool.GetPooledObject();
-            if (bul != null)
-            {
-                //Put it where the enemy position is
-                bul.transform.position = transform.position;
-                //Aim it at the player
-                //Activate it at the enemy position
-                bul.SetActive(true);
-                bul.transform.rotation = Quaternion.identity;
-
-                angle += increment;
-
-                bul.transform.rotation = Quaternion.Euler(0, angle, 0);
-                bul.GetComponent<EnemyBullet>().Push();
-            }
-        }
-    }
-
     public void Damage(int damageAmount)
     {
         curHp -= damageAmount;
@@ -304,4 +284,42 @@ public class AntaresController : BossControllerBase, IDamageable
         }
     }
 
+    public void SpawnAngels(int phase)
+    {
+        _notifications[0].SetActive(true);
+        ChangeAnimationState(Cetus_Roar);
+        switch (phase)
+        {
+            case 1:
+                foreach (GameObject g in waveOneSpawns)
+                {
+                    g.SetActive(true);
+                }
+                break;
+            case 2:
+                foreach (GameObject g in waveTwoSpawns)
+                {
+                    g.SetActive(true);
+                }
+                foreach (GameObject g in waveTwoWaterPillars)
+                {
+                    g.SetActive(true);
+                }
+                attackCools = spawnCooldown;
+                break;
+            case 3:
+                foreach (GameObject g in waveThreeSpawns)
+                {
+                    g.SetActive(true);
+                }
+                foreach (GameObject g in waveThreeWaterPillars)
+                {
+                    g.SetActive(true);
+                }
+                attackCools = spawnCooldown;
+                break;
+        }
+
+        AS.PlayOneShot(PlayerSfx[3]);
+    }
 }

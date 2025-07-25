@@ -28,6 +28,8 @@ public class CetusController : BossControllerBase, IDamageable
 
     public GameObject barrierPushObj;
 
+    public BarrierController barrier;
+
     protected override void Awake()
     {
         playerInRange = true;

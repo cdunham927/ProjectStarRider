@@ -109,7 +109,6 @@ public class BossControllerBase : MonoBehaviour
     public float pickupYRange = 1.5f;
     public float pickupZRange = 1.5f;
 
-    public BarrierController barrier;
     bool hasReduced = true;
 
     public int ind = 0;

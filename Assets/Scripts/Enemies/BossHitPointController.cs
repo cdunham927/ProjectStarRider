@@ -6,7 +6,7 @@ public class BossHitPointController : MonoBehaviour
 {
     BossControllerBase boss;
     IDamageable idamage;
-    [Range(1, 3)]
+    [Range(1, 50)]
     public float dmgMult;
     [Range(0, 100)]
     public float breakPercentage;
@@ -36,8 +36,8 @@ public class BossHitPointController : MonoBehaviour
 
     public void Damage(int amt)
     {
-        if (!boss.barrier.gameObject.activeInHierarchy) 
-        { 
+        //if (!boss.barrier.gameObject.activeInHierarchy) 
+        //{ 
             //Calculate Damage
             int totDmg = Mathf.RoundToInt((float)amt * dmgMult);
             idamage.Damage(totDmg);
@@ -50,7 +50,7 @@ public class BossHitPointController : MonoBehaviour
 
                 GetComponent<Collider>().enabled = false;
             }
-        }
+        //}
     }
 
     protected void DamageBlink()
