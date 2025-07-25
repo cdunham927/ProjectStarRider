@@ -22,7 +22,7 @@ public class DialogueController : MonoBehaviour
     //public GameObject[] DialogueTriggers;
 
     public GameObject PLAYER;
-    public string Conversation; // go into dialogue tab >> converstatsion adn copy and paste the coverstation label you want to play at the start of the level
+    public string[] Conversation; // go into dialogue tab >> converstatsion adn copy and paste the coverstation label you want to play at the start of the level
     private void Awake()
     {
 
@@ -90,7 +90,7 @@ public class DialogueController : MonoBehaviour
     {
 
         //DialogueManager.StartConversation("Tutorial 01");
-        DialogueManager.StartConversation(Conversation);
+        DialogueManager.StartConversation(Conversation[0]);
     }
     
     void pickup() 
