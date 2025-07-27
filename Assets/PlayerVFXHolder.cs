@@ -18,8 +18,8 @@ public class PlayerVFXHolder : MonoBehaviour
     public GameObject deathVFX;
     public GameObject healVFX;
     public GameObject SpeedLines_VFX;
-    //public GameObject SpeedLines_L;
-    //public GameObject SpeedLines_R;
+    //public GameObject SpeedLines_LVFX;
+    //public GameObject SpeedLines_RVFX;
     public GameObject Dash_VFX;
     public Transform VfxPositionToSpawn;
 
@@ -56,8 +56,8 @@ public class PlayerVFXHolder : MonoBehaviour
 
     [SerializeField] ParticleSystem Speed;
     [SerializeField] ParticleSystem Dash;
-    [SerializeField] ParticleSystem SpeedLines_L;
-    [SerializeField] ParticleSystem SpeedLines_R;
+    //[SerializeField] ParticleSystem SpeedLines_L;
+    //[SerializeField] ParticleSystem SpeedLines_R;
     private void Awake()
     {
         dVfx = Instantiate(deathVFX);
@@ -67,6 +67,8 @@ public class PlayerVFXHolder : MonoBehaviour
         stats = FindObjectOfType<Player_Stats>();
 
         Speed = SpeedLines_VFX.GetComponent<ParticleSystem>();
+        //SpeedLines_R = SpeedLines_RVFX.GetComponent<ParticleSystem>();
+        //SpeedLines_L = SpeedLines_LVFX.GetComponent<ParticleSystem>();
         Dash = Dash_VFX.GetComponent<ParticleSystem>();
 
         if (!Dash.gameObject.activeSelf) Dash.gameObject.SetActive(true);
@@ -111,7 +113,7 @@ public class PlayerVFXHolder : MonoBehaviour
             {
                 //peedLines_R.SetActive(true);
 
-                SpeedLines_R.Play();
+                //SpeedLines_R.Play();
                 Invoke("ResetSidedash", dashTimeToZero);
                 dashTime = dashTimeToZero;
                 sidedash = true;
@@ -119,7 +121,7 @@ public class PlayerVFXHolder : MonoBehaviour
             else if (Input.GetButtonDown("SideDashLeft") && dashTime <= 0)
             {
                 // SpeedLines_L.SetActive(true);
-                SpeedLines_L.Play();
+                //SpeedLines_L.Play();
 
                 Invoke("ResetSidedash", dashTimeToZero);
                 dashTime = dashTimeToZero;
@@ -302,8 +304,8 @@ public class PlayerVFXHolder : MonoBehaviour
     {
         //SpeedLines_L.SetActive(false);
         //SpeedLines_R.SetActive(false);
-        SpeedLines_L.Play();
-        SpeedLines_R.Play();
+        //SpeedLines_L.Play();
+        //SpeedLines_R.Play();
         sidedash = false;
     }
 

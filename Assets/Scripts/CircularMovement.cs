@@ -6,6 +6,7 @@ public class CircularMovement : MonoBehaviour
 {
     float dir;
     public float startAngle;
+    public bool RandomStartAngle;
     float angle = 0;
     public float radius = 1f;
     public float yStart = 1f;
@@ -31,7 +32,15 @@ public class CircularMovement : MonoBehaviour
         if (Random.value > 0.5f) rotDir = 1;
         else rotDir = -1;
 
-        startAngle = Random.Range(0, 360);
+        if (RandomStartAngle == true)
+        { 
+            startAngle = Random.Range(0, 360); 
+        }
+        else 
+        {
+            angle = startAngle;
+        }
+        //startAngle = Random.Range(0, 360);
         if (target != null) circleCenter = target.transform.position;
         angle = startAngle;
 
