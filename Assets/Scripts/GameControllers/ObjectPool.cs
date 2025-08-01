@@ -1,6 +1,7 @@
 using System.Collections.Generic;
+using Unity.Collections;
 using UnityEngine;
-
+using UnityEngine.Jobs;
 
 public class ObjectPool : MonoBehaviour
 {
@@ -162,6 +163,15 @@ public class ObjectPool : MonoBehaviour
         if(trailRenderer != null) trailRenderer.Clear();
     }
 
+    struct BulletTransformJob : IJobParallelForTransform
+    {
+        [ReadOnly]
+        public NativeArray<Vector3> positions;
 
+        public void Execute(int index, TransformAccess transform)
+        {
+            transform.localPosition = positions[index];
+        }
+    };
 
 }
