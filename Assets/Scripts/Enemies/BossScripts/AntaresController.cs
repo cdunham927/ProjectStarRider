@@ -30,6 +30,11 @@ public class AntaresController : BossControllerBase, IDamageable
 
     public GameObject snakePrefab;
 
+    public bool startMoving = false;
+    public float startMoveCools = 5f;
+    public float meleeAttackTimeFull = 10f;
+    public float lookSpd = 30f;
+
     protected override void Awake()
     {
         //Boss does a special attack after losing a set amount of health per phase
@@ -44,6 +49,13 @@ public class AntaresController : BossControllerBase, IDamageable
         anim = GetComponentInChildren<Animator>();
 
         attackCools = startAttackCools;
+
+        Invoke("StartMoving", startMoveCools);
+    }
+
+    public void StartMoving()
+    {
+        startMoving = true;
     }
 
     private void OnAnimatorIK(int layerIndex)
@@ -63,7 +75,7 @@ public class AntaresController : BossControllerBase, IDamageable
 
     protected override void Update()
     {
-        if (!isAttacking)
+        if (!isAttacking && startMoving)
         {
             //Move along our circular looping path
             // Calculate direction to next waypoint
@@ -81,6 +93,16 @@ public class AntaresController : BossControllerBase, IDamageable
                     currentWaypointIndex = (currentWaypointIndex + 1) % waypoints.Length; // Loop back to the beginning
                 }
             }
+        }
+
+        //Look towards the player when we're attacking
+        if (isAttacking)
+        {
+            Vector3 dir = player.transform.position - transform.position;
+            dir.y = 0; // keep the direction strictly horizontal
+            Quaternion rot = Quaternion.LookRotation(dir);
+            // slerp to the desired rotation over time
+            transform.rotation = Quaternion.Slerp(transform.rotation, rot, lookSpd * Time.deltaTime);
         }
 
         //If the cooldown is at 0 then we can attack
@@ -101,10 +123,10 @@ public class AntaresController : BossControllerBase, IDamageable
     protected override void Attack()
     {
         playerInRange = Vector3.Distance(transform.position, player.transform.position) < meleeRange;
+        isAttacking = true;
 
         if (curHp > 0 && player != null && pStats != null && pStats.Curr_hp > 0)
         {
-            isAttacking = true;
             //If the player is close enough
             //We can probably use this to determine if we do a scorpion tail attack or shoot bullets at the player
             if (!playerInRange)
@@ -130,6 +152,7 @@ public class AntaresController : BossControllerBase, IDamageable
     //Melee Attack
     protected override void AttackTwo()
     {
+        isAttacking = true;
         Invoke("MeleeAttack", 1.15f);
 
         //Reset attack cooldown
@@ -139,6 +162,7 @@ public class AntaresController : BossControllerBase, IDamageable
     void MeleeAttack()
     {
 
+        Invoke("ResetAttacking", meleeAttackTimeFull);
     }
 
     void RangedAttack()
@@ -168,8 +192,13 @@ public class AntaresController : BossControllerBase, IDamageable
             }
 
             Invoke("SpawnBullets", bulSpawnTime);
-            Invoke("CancelAllBullet", 2f);
+            Invoke("CancelAllBullet", allBulStopTime);
         }
+    }
+
+    public void ResetAttacking()
+    {
+        isAttacking = false;
     }
 
     void CancelAllBullet()
@@ -209,6 +238,32 @@ public class AntaresController : BossControllerBase, IDamageable
             {
                 //Put it where the enemy position is
                 bul.transform.position = bulSpawns[2].transform.position;
+                bul.transform.Rotate(Random.Range(-accx, accx), Random.Range(-accy, accy), 0);
+
+                //Activate it at the enemy position
+                bul.SetActive(true);
+                //bul.transform.rotation = Quaternion.Euler(Vector3.forward * (angle + offset));
+                //bul.transform.forward = Vector3.forward * (angle + offset);
+                bul.transform.rotation = Quaternion.Euler(Random.Range(0, 360), Random.Range(0, 360), Random.Range(0, 360));
+                //bul.GetComponent<EnemyBullet>().Push();
+            }
+            //}
+        }
+        AS.PlayOneShot(PlayerSfx[1]);
+    }
+
+    void SpawnBullets()
+    {
+        for (int i = 0; i < numBullets; i++)
+        {
+            //Spawn at every other position(so we dont have 50 bullets spawn)
+            //if (i % 2 == 0)
+            //{
+            GameObject bul = homingBulletPool.GetPooledObject();
+            if (bul != null)
+            {
+                //Put it where the enemy position is
+                bul.transform.position = bulSpawns[0].transform.position;
                 bul.transform.Rotate(Random.Range(-accx, accx), Random.Range(-accy, accy), 0);
 
                 //Activate it at the enemy position
