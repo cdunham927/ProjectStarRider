@@ -93,8 +93,8 @@ GameObject:
   m_Component:
   - component: {fileID: 5290036462192655792}
   - component: {fileID: 5290036462192655793}
-  - component: {fileID: 2200912568623390087}
   - component: {fileID: 8399820079347084656}
+  - component: {fileID: 2200912568623390087}
   m_Layer: 0
   m_Name: StarSentryBullet
   m_TagString: Untagged
@@ -135,30 +135,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 1
---- !u!114 &2200912568623390087
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5290036462192655796}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8ee826ecce4635e4d889e54bc7c4f46d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 50
-  slowSpd: 30
-  fastSpd: 150
-  randSpdMod: 10
-  damage: 3
-  rb: {fileID: 5290036462192655793}
-  disableTime: 5
-  speedUp: 0
-  pushSpd: 0
-  collisonExplosion: {fileID: 0}
-  hitVFXPool: {fileID: 0}
-  minimapObj: {fileID: 0}
 --- !u!135 &8399820079347084656
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -172,6 +148,34 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 1.02
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &2200912568623390087
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5290036462192655796}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ee826ecce4635e4d889e54bc7c4f46d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startVel: {x: 0, y: 0, z: 0}
+  speed: 0
+  slowSpd: 0
+  fastSpd: 0
+  randSpdMod: 10
+  damage: 3
+  rb: {fileID: 5290036462192655793}
+  disableTime: 5
+  speedUp: 1
+  pushSpd: 0
+  pos: {x: 0, y: 0, z: 0}
+  dir: {x: 0, y: 0, z: 0}
+  dist: {x: 0, y: 0, z: 0}
+  collisonExplosion: {fileID: 0}
+  hitVFXPool: {fileID: 0}
+  minimapObj: {fileID: 0}
 --- !u!1001 &1065016165923549603
 PrefabInstance:
   m_ObjectHideFlags: 0

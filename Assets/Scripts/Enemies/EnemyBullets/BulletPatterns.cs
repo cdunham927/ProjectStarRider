@@ -37,7 +37,7 @@ public class BulletPatterns : MonoBehaviour
     }
 
     //Shoots bullets forward at the player like a shotgun
-    void ShotgunPattern(ObjectPool pool, int numBullets = 16)
+   public void ShotgunPattern(ObjectPool pool, int numBullets = 16)
     {
         if (pool == null) return;
 
