@@ -24,10 +24,10 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2126299770173121483}
-  m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 10, y: 10, z: 10}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 2126299770571675826}
   m_RootOrder: 0
@@ -53,7 +53,7 @@ TrailRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a49e29640a2131042808d75025a5b0f5, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -74,30 +74,30 @@ TrailRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Time: 0.37
+  m_Time: 1
   m_Parameters:
     serializedVersion: 3
-    widthMultiplier: 1
+    widthMultiplier: 24.985447
     widthCurve:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0.0018577576
-        value: 0.5124359
+        time: 0
+        value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
         weightedMode: 0
         inWeight: 0.33333334
-        outWeight: 0.33333334
+        outWeight: 0.1327623
       - serializedVersion: 3
         time: 1
         value: 0
-        inSlope: -1.2022222
-        outSlope: -1.2022222
+        inSlope: -2.595098
+        outSlope: -2.595098
         tangentMode: 0
         weightedMode: 0
-        inWeight: 0.083179295
+        inWeight: 0.079229176
         outWeight: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
@@ -105,7 +105,7 @@ TrailRenderer:
     colorGradient:
       serializedVersion: 2
       key0: {r: 1, g: 0, b: 0, a: 1}
-      key1: {r: 1, g: 1, b: 1, a: 0.9137255}
+      key1: {r: 1, g: 0.4292453, b: 0.6391121, a: 1}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
@@ -167,8 +167,8 @@ Transform:
   m_GameObject: {fileID: 2126299770571675827}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1.064496, y: 1.6387199, z: 1.6387199}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 2126299770173121482}
   m_Father: {fileID: 2126299771388923672}
@@ -251,8 +251,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2126299771388923676}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 487.26, y: 68.44, z: -12984.07}
-  m_LocalScale: {x: 21, y: 21, z: 21}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 22.8081, y: 15.508875, z: 15.847611}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2126299770571675826}
@@ -301,6 +301,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ee826ecce4635e4d889e54bc7c4f46d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  startVel: {x: 0, y: 0, z: 0}
   speed: 50
   slowSpd: 30
   fastSpd: 150
@@ -310,9 +311,10 @@ MonoBehaviour:
   disableTime: 5
   speedUp: 0
   pushSpd: 0
+  pos: {x: 0, y: 0, z: 0}
+  dir: {x: 0, y: 0, z: 0}
+  dist: {x: 0, y: 0, z: 0}
   collisonExplosion: {fileID: 0}
-  trail: {fileID: 2126299770173121477}
-  spawnPos: {fileID: 2126299770173121483}
   hitVFXPool: {fileID: 0}
   minimapObj: {fileID: 0}
 --- !u!1001 &6497687991313564427
