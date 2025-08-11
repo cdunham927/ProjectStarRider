@@ -82,6 +82,9 @@ public class ShipController : MonoBehaviour
 
     public float freezeTime = 3f;
 
+    public Quaternion origRot;
+    public float maxRot = 30f;
+
     private void Awake()
     {
         cont = FindObjectOfType<GameManager>();
@@ -90,6 +93,8 @@ public class ShipController : MonoBehaviour
         player = GetComponent<PlayerController>();
         stats = GetComponent<Player_Stats>();
         ability = GetComponent<PlayerAbility>();
+
+        //origRot = rotObj.transform.rotation;
 
         DefaultRegSpd = regSpd;  //stored default vlaues for player speed
         DefaultHighSpd = highSpd; //stored default vlaues for player speed
@@ -299,6 +304,12 @@ public class ShipController : MonoBehaviour
 
             pitch = (aimPos.y - screenCenter.y) / screenCenter.y;
             pitch = (Mathf.Abs(pitch) > deadZoneRadius) ? pitch : 0f;
+
+            float rotX = yaw;
+            float rotY = pitch;
+            rotX = Mathf.Clamp(rotX, 0, maxRot);
+            rotY = Mathf.Clamp(rotY, 0, maxRot);
+            //rotObj.transform.rotation = Quaternion.Euler(rotX + origRot.x, rotY + origRot.y, origRot.z);
         }
 
         ////Get rotation positions
