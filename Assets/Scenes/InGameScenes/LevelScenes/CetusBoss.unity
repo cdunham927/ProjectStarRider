@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.28438216, g: 0.30474532, b: 0.49697664, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3759,7 +3759,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6701348267170450221, guid: b71ce0357910fd04cac24bb158c4ff24, type: 3}
       propertyPath: m_InitialState
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6701348267170450221, guid: b71ce0357910fd04cac24bb158c4ff24, type: 3}
       propertyPath: m_SceneBindings.Array.size
@@ -3988,7 +3988,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302762743768171265, guid: 6b93a3113a51896478068f5d7da39efd, type: 3}
       propertyPath: far clip plane
-      value: 1000000
+      value: 10000
       objectReference: {fileID: 0}
     - target: {fileID: 4302762743768171265, guid: 6b93a3113a51896478068f5d7da39efd, type: 3}
       propertyPath: m_SensorSize.x
@@ -4064,7 +4064,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &735160386
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5004,14 +5004,6 @@ PrefabInstance:
     - target: {fileID: 7262275620497145629, guid: 5af8fa4ddd7d50f4eb3349835e040d18, type: 3}
       propertyPath: m_Lens.FieldOfView
       value: 70
-      objectReference: {fileID: 0}
-    - target: {fileID: 7262275620497145629, guid: 5af8fa4ddd7d50f4eb3349835e040d18, type: 3}
-      propertyPath: m_Lens.ModeOverride
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7262275620497145629, guid: 5af8fa4ddd7d50f4eb3349835e040d18, type: 3}
-      propertyPath: m_Lens.NearClipPlane
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7262275620497145629, guid: 5af8fa4ddd7d50f4eb3349835e040d18, type: 3}
       propertyPath: m_Lens.m_SensorSize.x
@@ -7242,6 +7234,14 @@ PrefabInstance:
     - target: {fileID: 4888726601571092024, guid: b3bdcf6ad6839414db7ff05e34850eda, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: -23.980827
+      objectReference: {fileID: 0}
+    - target: {fileID: 4972103688575974428, guid: b3bdcf6ad6839414db7ff05e34850eda, type: 3}
+      propertyPath: hitMat
+      value: 
+      objectReference: {fileID: 2100000, guid: 09e1bc16eda6b8d44847e20a040b3a1e, type: 2}
+    - target: {fileID: 4972103688575974428, guid: b3bdcf6ad6839414db7ff05e34850eda, type: 3}
+      propertyPath: skinnedMeshRenderer
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 5058150343756957197, guid: b3bdcf6ad6839414db7ff05e34850eda, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -11866,24 +11866,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 7262275620497145628, guid: 5af8fa4ddd7d50f4eb3349835e040d18, type: 3}
   m_PrefabInstance: {fileID: 804350063}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1605822406
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1605822400}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dec137aa2fa05c946851135a7dfd1cfe, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  targetPoint: {fileID: 0}
-  moveSpeed: 8
-  rotateSpeed: 3
-  lookAlpha: 0
-  lookAngle: {x: 0, y: 0}
-  movementAlpha: 0
 --- !u!114 &1605822407
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21236,7 +21218,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4681925533324501004, guid: 335ca9451df25214c936bd64f2490752, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4681925533324501047, guid: 335ca9451df25214c936bd64f2490752, type: 3}
       propertyPath: rotSpd
