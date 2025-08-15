@@ -10,7 +10,7 @@ public class Bullet : MonoBehaviour
     public float fastSpd;
     public float randSpdMod = 0f;
     public int damage;
-    public Rigidbody rb;
+    //public Rigidbody rb;
     public float disableTime = 3f;
    
     public bool speedUp;
@@ -23,9 +23,9 @@ public class Bullet : MonoBehaviour
 
     Vector3 moveDir;
 
-    private void Update()
+    public virtual void Update()
     {
-        transform.Translate(moveDir * Time.deltaTime);
+        transform.Translate(moveDir * Time.deltaTime, Space.World);
     }
 
     public void OnShoot(Vector3 dir)
@@ -36,7 +36,7 @@ public class Bullet : MonoBehaviour
     public virtual void OnEnable() 
     {
         //float step =  (speed  + Random.Range(0, randSpdMod)) * Time.deltaTime;
-        moveDir = transform.forward;
+        moveDir = transform.forward * speed;
         
         Invoke("Disable", disableTime);
     }
@@ -48,7 +48,7 @@ public class Bullet : MonoBehaviour
 
     public virtual void Disable()
     {
-        rb.velocity = Vector2.zero;
+        //rb.velocity = Vector2.zero;
         gameObject.SetActive(false);
     }
 

@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6041128320002356802}
-  - component: {fileID: 8340684082629795594}
   - component: {fileID: 5643789382257507768}
   - component: {fileID: 1710191862893915610}
   m_Layer: 0
@@ -39,22 +38,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!54 &8340684082629795594
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2734962229657977085}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 2
 --- !u!135 &5643789382257507768
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -86,13 +69,16 @@ MonoBehaviour:
   fastSpd: 0
   randSpdMod: 0
   damage: 6
-  rb: {fileID: 8340684082629795594}
   disableTime: 7
   speedUp: 0
   pushSpd: 0
   pos: {x: 0, y: 0, z: 0}
   dir: {x: 0, y: 0, z: 0}
   dist: {x: 0, y: 0, z: 0}
+  enemyMask:
+    serializedVersion: 2
+    m_Bits: 64
+  checkSize: 2
   trail: {fileID: 7929700207395899671}
   spawnPos: {fileID: 2734962229657977085}
   hitVFXPool: {fileID: 3041602849178307350}

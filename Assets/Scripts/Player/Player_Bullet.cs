@@ -6,6 +6,7 @@ public class Player_Bullet : Bullet
 {
     //public GameObject hitPrefab;
     //public GameObject muzzlePrefab;
+    public LayerMask enemyMask;
 
     public TrailRenderer trail;
     public GameObject spawnPos;
@@ -28,9 +29,19 @@ public class Player_Bullet : Bullet
         trail.Clear();
     }
 
+    public override void Update()
+    {
+        base.Update();
+
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, transform.TransformDirection(transform.forward), out hit, 1f, enemyMask)) {
+            HitEnemy(hit.collider.GetComponent<EnemyControllerBase>());
+        }
+    }
+
     public override void OnEnable()
     {
-        startVel = rb.velocity;
+        //startVel = rb.velocity;
         spawned = false;
         base.OnEnable();
         //rb.velocity = startVel + (transform.forward * speed);
@@ -51,6 +62,22 @@ public class Player_Bullet : Bullet
                 }
         base.Disable();
         gameObject.SetActive(false);
+    }
+
+    public void HitEnemy(EnemyControllerBase col) {
+        col.Damage(damage);
+        //ContactPoint cp = col.GetContact(0);
+        if (hitVFXPool == null) hitVFXPool = cont.hitVFXPool;
+        if (!spawned)
+        {
+            GameObject hit = hitVFXPool.GetPooledObject();
+            hit.transform.position = spawnPos.transform.position;
+            hit.transform.rotation = col.transform.rotation;
+            //bul.GetComponent<Rigidbody>().velocity = bod.velocity;
+            hit.SetActive(true);
+            spawned = true;
+        }
+        Invoke("Disable", 0.001f);
     }
 
     private void OnTriggerEnter(Collider col)
