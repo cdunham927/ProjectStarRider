@@ -9,7 +9,7 @@ public class Player_Bullet : Bullet
 
     public TrailRenderer trail;
     public GameObject spawnPos;
-    Rigidbody bod;
+    //Rigidbody bod;
     GameManager cont;
 
     public ObjectPool hitVFXPool;
@@ -22,7 +22,6 @@ public class Player_Bullet : Bullet
 
     private void Awake()
     {
-        bod = GetComponentInParent<Rigidbody>();
         cont = FindObjectOfType<GameManager>();
         hitVFXPool = cont.bulPool;
         trail = GetComponentInChildren<TrailRenderer>();
@@ -31,10 +30,10 @@ public class Player_Bullet : Bullet
 
     public override void OnEnable()
     {
-        startVel = bod.velocity;
+        startVel = rb.velocity;
         spawned = false;
         base.OnEnable();
-        rb.velocity = startVel + (transform.forward * speed);
+        //rb.velocity = startVel + (transform.forward * speed);
 
         //Get minimap object
         if (minimapObj == null) minimapObj = GetComponentInChildren<MinimapObjController>().gameObject;
@@ -192,11 +191,11 @@ public class Player_Bullet : Bullet
         }
     }
 
-    private void Update()
-    {
-        //transform.forward = bod.velocity.normalized;
-        if (speedUp) bod.AddForce(transform.forward * pushSpd);
-    }
+    //private void Update()
+    //{
+    //    //transform.forward = bod.velocity.normalized;
+    //    if (speedUp) bod.AddForce(transform.forward * pushSpd);
+    //}
 
     //void OnCollisionEnter(Collision col)
     //{

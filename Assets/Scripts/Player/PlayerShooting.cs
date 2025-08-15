@@ -227,7 +227,7 @@ public class PlayerShooting : MonoBehaviour
         //bul.transform.rotation = player.transform.rotation;
 
         //Set bullets starting speed to players speed
-        bul.GetComponent<Rigidbody>().velocity = bod.velocity;
+        //bul.GetComponent<Rigidbody>().velocity = bod.velocity;
 
         bul.SetActive(true);
        

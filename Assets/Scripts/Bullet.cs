@@ -14,19 +14,29 @@ public class Bullet : MonoBehaviour
     public float disableTime = 3f;
    
     public bool speedUp;
-    public float pushSpd;
-
-    
+    public float pushSpd;    
 
     //public varaibales to read into the bullet system
     public Vector3 pos;
     public Vector3 dir;
     public Vector3 dist;
 
+    Vector3 moveDir;
+
+    private void Update()
+    {
+        transform.Translate(moveDir * Time.deltaTime);
+    }
+
+    public void OnShoot(Vector3 dir)
+    {
+        dir = moveDir * speed;
+    }
 
     public virtual void OnEnable() 
     {
         //float step =  (speed  + Random.Range(0, randSpdMod)) * Time.deltaTime;
+        moveDir = transform.forward;
         
         Invoke("Disable", disableTime);
     }

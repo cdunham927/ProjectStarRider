@@ -4,10 +4,6 @@ using UnityEngine;
 
 public class EnemyBullet : Bullet
 {
-
-   
-
-
     public GameObject collisonExplosion;
     private TrailRenderer trail;
 
@@ -23,7 +19,6 @@ public class EnemyBullet : Bullet
         cont = FindObjectOfType<GameManager>();
         hitVFXPool = cont.enemyHitVFXPool;
         trail = GetComponentInChildren<TrailRenderer>();
-
     }
 
     public override void OnEnable()
@@ -37,17 +32,6 @@ public class EnemyBullet : Bullet
         {
             trail.Clear();
             trail.emitting = true;
-        }
-    }
-
-    private void Update()
-    {
-        float dt = Time.deltaTime;
-       
-        
-        if (speedUp)
-        {
-            rb.AddForce(transform.forward * (pushSpd * dt));
         }
     }
 
@@ -117,17 +101,17 @@ public class EnemyBullet : Bullet
 
     public void Push()
     {
-        rb.velocity = transform.forward * (speed + Random.Range(0, randSpdMod));
+        //rb.velocity = transform.forward * (speed + Random.Range(0, randSpdMod));
     }
 
     public void PushHard()
     {
-        rb.velocity = transform.forward * (fastSpd + Random.Range(0, randSpdMod));
+        //rb.velocity = transform.forward * (fastSpd + Random.Range(0, randSpdMod));
     }
 
     public void PushSoft()
     {
-        rb.velocity = transform.forward * (slowSpd + Random.Range(0, randSpdMod));
+        //rb.velocity = transform.forward * (slowSpd + Random.Range(0, randSpdMod));
     }
 
     /*public void PushRadial() 
@@ -151,9 +135,5 @@ public class EnemyBullet : Bullet
     public void DelayDestruction(GameObject obj)
     {
         obj.SetActive(false);
-    
-    
     }
-
-   
 }

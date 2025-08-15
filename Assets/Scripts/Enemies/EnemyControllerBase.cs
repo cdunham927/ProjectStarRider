@@ -248,7 +248,6 @@ public class EnemyControllerBase : MonoBehaviour, IDamageable
         pStats.ShakeCamera(amt);
     }
 
-
     protected virtual void Update()
     {
         switch (currentState)
