@@ -1,15 +1,23 @@
 ﻿using UnityEngine;
+#if USE_CINEMACHINE //2
+using Cinemachine;
+using CinemachineCam = Cinemachine.CinemachineVirtualCamera;
+#elif USE_CINEMACHINE_3
+using Unity.Cinemachine;
+using CinemachineCam = Unity.Cinemachine.CinemachineCamera;
+#endif
 
 namespace PixelCrushers.DialogueSystem
 {
 
-#if USE_CINEMACHINE
+#if USE_CINEMACHINE || USE_CINEMACHINE_3
+
     [AddComponentMenu("")] // Use wrapper.
     public class CinemachineCameraPriorityOnDialogueEvent : ActOnDialogueEvent
     {
 
         [Tooltip("The Cinemachine virtual camera whose priority to control.")]
-        public Cinemachine.CinemachineVirtualCamera virtualCamera;
+        public CinemachineCam virtualCamera;
 
         [Tooltip("Set the virtual camera to this priority when the start event occurs.")]
         public int onStart = 99;

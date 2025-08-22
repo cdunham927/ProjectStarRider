@@ -1,6 +1,4 @@
-// Recompile at 4/15/2023 4:47:38 AM
-
-#if USE_TIMELINE
+﻿#if USE_TIMELINE
 #if UNITY_2017_1_OR_NEWER
 // Copyright (c) Pixel Crushers. All rights reserved.
 
@@ -111,7 +109,7 @@ namespace PixelCrushers.DialogueSystem.SequencerCommands
                             if (s.Contains(":"))
                             {
                                 var colonPos = s.IndexOf(":");
-                                var trackIndex = Tools.StringToInt(s.Substring(0, colonPos)) + 1;
+                                var trackIndex = Tools.StringToInt(s.Substring(0, colonPos));
                                 var bindName = s.Substring(colonPos + 1);
                                 var track = timelineAsset.GetOutputTrack(trackIndex);
                                 if (track != null)
@@ -127,7 +125,7 @@ namespace PixelCrushers.DialogueSystem.SequencerCommands
                         case "play":
                             playableDirector.Play();
                             var endTime = nowait ? 0 : DialogueTime.time + playableDirector.playableAsset.duration;
-                            while (DialogueTime.time < endTime)
+                            while (DialogueTime.time < endTime || playableDirector.extrapolationMode == DirectorWrapMode.Loop)
                             {
                                 yield return null;
                             }
@@ -139,7 +137,7 @@ namespace PixelCrushers.DialogueSystem.SequencerCommands
                         case "resume":
                             playableDirector.Resume();
                             var resumedEndTime = nowait ? 0 : DialogueTime.time + playableDirector.playableAsset.duration - playableDirector.time;
-                            while (DialogueTime.time < resumedEndTime)
+                            while (DialogueTime.time < resumedEndTime || playableDirector.extrapolationMode == DirectorWrapMode.Loop)
                             {
                                 yield return null;
                             }

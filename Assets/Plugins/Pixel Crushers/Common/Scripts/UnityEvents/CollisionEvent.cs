@@ -32,26 +32,30 @@ namespace PixelCrushers
 
         protected virtual void OnCollisionEnter(Collision collision)
         {
+            if (!enabled) return;
             if (!IsInTagMask(collision.gameObject.tag)) return;
             onCollisionEnter.Invoke(collision.gameObject);
         }
 
         protected virtual void OnCollisionExit(Collision collision)
         {
+            if (!enabled) return;
             if (!IsInTagMask(collision.gameObject.tag)) return;
             onCollisionExit.Invoke(collision.gameObject);
         }
 
-#if USE_PHYSICS2D || !UNITY_2018_1_OR_NEWER
+#if USE_PHYSICS2D
 
         protected virtual void OnCollisionEnter2D(Collision2D collision)
         {
+            if (!enabled) return;
             if (!IsInTagMask(collision.gameObject.tag)) return;
             onCollisionEnter.Invoke(collision.gameObject);
         }
 
         protected virtual void OnCollisionExit2D(Collision2D collision)
         {
+            if (!enabled) return;
             if (!IsInTagMask(collision.gameObject.tag)) return;
             onCollisionExit.Invoke(collision.gameObject);
         }

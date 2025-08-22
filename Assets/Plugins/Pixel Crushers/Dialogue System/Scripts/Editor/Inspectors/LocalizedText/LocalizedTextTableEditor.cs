@@ -13,7 +13,7 @@ namespace PixelCrushers.DialogueSystem
     /// Custom inspector editor for localized text tables.
     /// </summary>
     [CustomEditor(typeof(LocalizedTextTable), true)]
-    public class LocalizedTextTableEditor : Editor
+    public class LocalizedTextTableEditor : UnityEditor.Editor
     {
 
         #region Variables
@@ -527,9 +527,9 @@ namespace PixelCrushers.DialogueSystem
         private void DrawSearchBar()
         {
             EditorGUILayout.BeginHorizontal();
-            searchString = EditorGUILayout.TextField("Search", searchString, "ToolbarSeachTextField");
+            searchString = EditorGUILayout.TextField("Search", searchString, MoreEditorGuiUtility.ToolbarSearchTextFieldName);
             GUI.SetNextControlName("SearchClearButton");
-            if (GUILayout.Button("Clear", "ToolbarSeachCancelButton"))
+            if (GUILayout.Button("Clear", MoreEditorGuiUtility.ToolbarSearchCancelButtonName))
             {
                 searchString = string.Empty;
                 GUI.FocusControl("SearchClearButton"); // Need to deselect search field to clear text field's display.

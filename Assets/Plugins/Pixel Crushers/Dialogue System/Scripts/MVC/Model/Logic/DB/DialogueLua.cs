@@ -957,6 +957,7 @@ namespace PixelCrushers.DialogueSystem
         /// <param name="element">Element name (e.g., "Player").</param>
         public static bool DoesTableElementExist(string table, string element)
         {
+            if (string.IsNullOrEmpty(element)) return false;
             LuaTable luaTable = Lua.Environment.GetValue(table) as LuaTable;
             return (luaTable != null) ? (luaTable.GetKey(StringToTableIndex(element)) != LuaNil.Nil) : false;
             //--- Was (unoptimized):
@@ -1007,6 +1008,7 @@ namespace PixelCrushers.DialogueSystem
         public static void SetTableField(string table, string element, string field, object value)
         {
             Lua.WasInvoked = true;
+            if (string.IsNullOrEmpty(table) || string.IsNullOrEmpty(element) || string.IsNullOrEmpty(field)) return;
             LuaTable luaTable = Lua.Environment.GetValue(table) as LuaTable;
             if (luaTable == null) throw new System.NullReferenceException("Table not found in Lua environment: " + table);
             LuaTable elementTable = luaTable.GetValue(StringToTableIndex(element)) as LuaTable;
@@ -1152,6 +1154,42 @@ namespace PixelCrushers.DialogueSystem
         }
 
         /// <summary>
+        /// Gets the bool value of a Lua variable, or returns a default value if not defined.
+        /// </summary>
+        public static bool GetVariable(string variable, bool defaultValue)
+        {
+            var result = GetVariable(variable);
+            return result.isBool ? result.asBool : defaultValue;
+        }
+
+        /// <summary>
+        /// Gets the string value of a Lua variable, or returns a default value if not defined.
+        /// </summary>
+        public static string GetVariable(string variable, string defaultValue)
+        {
+            var result = GetVariable(variable);
+            return result.isString ? result.asString: defaultValue;
+        }
+
+        /// <summary>
+        /// Gets the int value of a Lua variable, or returns a default value if not defined.
+        /// </summary>
+        public static int GetVariable(string variable, int defaultValue)
+        {
+            var result = GetVariable(variable);
+            return result.isNumber ? result.asInt : defaultValue;
+        }
+
+        /// <summary>
+        /// Gets the float value of a Lua variable, or returns a default value if not defined.
+        /// </summary>
+        public static float GetVariable(string variable, float defaultValue)
+        {
+            var result = GetVariable(variable);
+            return result.isNumber ? result.asFloat : defaultValue;
+        }
+
+        /// <summary>
         /// Sets the value of a variable in the Lua Variable table.
         /// </summary>
         /// <param name="variable">Variable name.</param>
@@ -1162,7 +1200,9 @@ namespace PixelCrushers.DialogueSystem
             Lua.WasInvoked = true;
             LuaTable luaTable = Lua.Environment.GetValue("Variable") as LuaTable;
             if (luaTable == null) return;
-            luaTable.SetNameValue(StringToTableIndex(variable), LuaInterpreterExtensions.ObjectToLuaValue(value));
+            var tableIndex = StringToTableIndex(variable);
+            luaTable.SetNameValue(tableIndex, LuaInterpreterExtensions.ObjectToLuaValue(value));
+            if (Assignment.MonitoredVariables.Contains(tableIndex)) Assignment.InvokeVariableChanged(tableIndex, value);
         }
 
         /// <summary>
@@ -1297,6 +1337,20 @@ namespace PixelCrushers.DialogueSystem
         public static Lua.Result GetConversationField(int conversationID, string field)
         {
             return Lua.Run(string.Format("return Conversation[{0}].{1}", new System.Object[] { conversationID, StringToTableIndex(field) }), false, true);
+        }
+
+        /// <summary>
+        /// Sets the value of a conversation field.
+        /// </summary>
+        /// <param name="conversationID">Conversation ID.</param>
+        /// <param name="field">Field name.</param>
+        /// <param name="value">Value to set.</param>
+        public static void SetConversationField(int conversationID, string field, object value)
+        {
+            var safeValue = (value == null) ? "nil"
+                : (value.GetType() == typeof(string)) ? $"\"{DoubleQuotesToSingle(value.ToString())}\""
+                : value.ToString();
+            Lua.Run(string.Format("Conversation[{0}].{1} = {2}", new System.Object[] { conversationID, StringToTableIndex(field), safeValue }), false, true);
         }
 
         /// <summary>

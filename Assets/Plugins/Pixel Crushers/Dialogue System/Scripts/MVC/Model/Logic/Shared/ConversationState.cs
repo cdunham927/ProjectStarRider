@@ -1,5 +1,6 @@
 // Copyright (c) Pixel Crushers. All rights reserved.
 
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace PixelCrushers.DialogueSystem
@@ -43,6 +44,14 @@ namespace PixelCrushers.DialogueSystem
         }
 
         /// <summary>
+        /// Returns true if any NPC responses are valid (i.e., enabled).
+        /// </summary>
+        public bool HasValidNPCResponse()
+        {
+            return AreAnyResponsesValid(npcResponses);
+        }
+
+        /// <summary>
         /// Gets the first NPC response.
         /// </summary>
         /// <value>
@@ -62,6 +71,14 @@ namespace PixelCrushers.DialogueSystem
         public bool hasPCResponses
         {
             get { return (pcResponses != null) && (pcResponses.Length > 0); }
+        }
+
+        /// <summary>
+        /// Returns true if any PC responses are valid (i.e., enabled).
+        /// </summary>
+        public bool HasValidPCResponses()
+        {
+            return AreAnyResponsesValid(pcResponses);
         }
 
         /// <summary>
@@ -147,6 +164,16 @@ namespace PixelCrushers.DialogueSystem
         public bool HasAnyResponses { get { return hasAnyResponses; } }
         public bool IsGroup { get { return isGroup; } set { isGroup = value; } }
         /// @endcond
+        
+        private static Dictionary<DialogueEntry, DialogueEntry> s_lastRandomlyChosenEntry = null;
+
+#if UNITY_2019_3_OR_NEWER && UNITY_EDITOR
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+        static void InitStaticVariables()
+        {
+            s_lastRandomlyChosenEntry = null;
+        }
+#endif
 
         /// <summary>
         /// Initializes a new ConversationState.
@@ -168,9 +195,44 @@ namespace PixelCrushers.DialogueSystem
             this.isGroup = isGroup;
         }
 
-        public DialogueEntry GetRandomNPCEntry()
+        private bool AreAnyResponsesValid(Response[] responses)
         {
-            return hasNPCResponse ? npcResponses[UnityEngine.Random.Range((int)0, (int)npcResponses.Length)].destinationEntry : null;
+            if (responses == null) return false;
+            foreach (var response in responses)
+            {
+                if (response != null && response.enabled) return true;
+            }
+            return false;
+        }
+
+        public DialogueEntry GetRandomNPCEntry(bool noDuplicate = false)
+        {
+            if (!hasNPCResponse) return null;
+            if (noDuplicate)
+            {
+                if (s_lastRandomlyChosenEntry == null)
+                {
+                    s_lastRandomlyChosenEntry = new Dictionary<DialogueEntry, DialogueEntry>();
+                }
+                DialogueEntry lastEntry, chosenEntry;
+                if (s_lastRandomlyChosenEntry.TryGetValue(subtitle.dialogueEntry, out lastEntry))
+                {
+                    var responses = new List<Response>(npcResponses);
+                    responses.RemoveAll(x => x.destinationEntry == lastEntry);
+                    if (responses.Count == 0) return lastEntry;
+                    chosenEntry = responses[UnityEngine.Random.Range(0, responses.Count)].destinationEntry;
+                }
+                else
+                {
+                    chosenEntry = npcResponses[UnityEngine.Random.Range((int)0, (int)npcResponses.Length)].destinationEntry;
+                }
+                s_lastRandomlyChosenEntry[subtitle.dialogueEntry] = chosenEntry;
+                return chosenEntry;
+            }
+            else
+            {
+                return npcResponses[UnityEngine.Random.Range((int)0, (int)npcResponses.Length)].destinationEntry;
+            }
 
         }
 

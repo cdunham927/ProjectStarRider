@@ -51,7 +51,7 @@ namespace PixelCrushers
         public static void Shuffle<T>(this List<T> @this)
         {
             if (@this == null || @this.Count < 2) return;
-            for (int i = 0; i < @this.Count - 2; i++)
+            for (int i = 0; i < @this.Count - 1; i++)
             {
                 int j = UnityEngine.Random.Range(i, @this.Count);
                 T tmp = @this[i];
@@ -59,6 +59,16 @@ namespace PixelCrushers
                 @this[j] = tmp;
             }
         }
+
+        /// <summary>
+        /// Returns a random element from a list.
+        /// </summary>
+        public static T GetRandomElement<T>(this List<T> @this)
+        {
+            if (@this == null) return default(T);
+            return @this[UnityEngine.Random.Range(0, @this.Count)];
+        }
+
     }
 
 }

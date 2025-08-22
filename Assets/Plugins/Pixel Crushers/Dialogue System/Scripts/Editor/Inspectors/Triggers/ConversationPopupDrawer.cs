@@ -3,6 +3,7 @@
 using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
+using PixelCrushers.DialogueSystem.DialogueEditor;
 
 namespace PixelCrushers.DialogueSystem
 {
@@ -53,12 +54,25 @@ namespace PixelCrushers.DialogueSystem
             if (showFilter)
             {
                 var filterLabelWidth = 48;
-                EditorGUI.LabelField(new Rect(position.x, position.y, position.width - filterLabelWidth, EditorGUIUtility.singleLineHeight), "Filter:");
+                var openButtonWidth = 48;
+                EditorGUI.LabelField(new Rect(position.x, position.y, filterLabelWidth, EditorGUIUtility.singleLineHeight), "Filter:");
                 EditorGUI.BeginChangeCheck();
-                filter = EditorGUI.TextField(new Rect(position.x + filterLabelWidth, position.y, position.width - filterLabelWidth, EditorGUIUtility.singleLineHeight), filter);
+                filter = EditorGUI.TextField(new Rect(position.x + filterLabelWidth, position.y, position.width - filterLabelWidth - openButtonWidth, EditorGUIUtility.singleLineHeight), filter);
                 if (EditorGUI.EndChangeCheck())
                 {
                     titles = null; // Need to update filtered title list.
+                }
+                if (GUI.Button(new Rect(position.x + position.width - openButtonWidth, position.y, openButtonWidth, EditorGUIUtility.singleLineHeight), "Open"))
+                {
+                    if (EditorTools.selectedDatabase != null)
+                    {
+                        var conversation = EditorTools.selectedDatabase.GetConversation(prop.stringValue);
+                        if (conversation != null)
+                        {
+                            DialogueEditorWindow.OpenDialogueEntry(EditorTools.selectedDatabase, conversation.id, conversation.GetFirstDialogueEntry().id);
+                            GUIUtility.ExitGUI();
+                        }
+                    }
                 }
                 position.y += EditorGUIUtility.singleLineHeight;
                 position.height -= EditorGUIUtility.singleLineHeight;
@@ -115,12 +129,13 @@ namespace PixelCrushers.DialogueSystem
             titlesDatabase = EditorTools.selectedDatabase;
             var foundCurrent = false;
             var list = new List<string>();
+            var lowercaseFilter = string.IsNullOrEmpty(filter) ? string.Empty : filter.ToLower();
             if (titlesDatabase != null && titlesDatabase.conversations != null)
             {
                 for (int i = 0; i < titlesDatabase.conversations.Count; i++)
                 {
                     var title = titlesDatabase.conversations[i].Title;
-                    if (!string.IsNullOrEmpty(filter) && !title.Contains(filter)) continue;
+                    if (!string.IsNullOrEmpty(filter) && !title.ToLower().Contains(filter)) continue;
                     list.Add(title);
                     if (string.Equals(currentConversation, title))
                     {

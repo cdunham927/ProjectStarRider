@@ -11,7 +11,7 @@ namespace PixelCrushers.DialogueSystem
     /// Custom inspector editor for DialogueSystemController (e.g., Dialogue Manager).
     /// </summary>
     [CustomEditor(typeof(DialogueSystemController), true)]
-    public class DialogueSystemControllerEditor : Editor
+    public class DialogueSystemControllerEditor : UnityEditor.Editor
     {
 
         private const string LightSkinIconFilename = "Dialogue System/DialogueManager Inspector Light.png";
@@ -241,6 +241,7 @@ namespace PixelCrushers.DialogueSystem
                     EditorWindowTools.EditorGUILayoutBeginGroup();
                     var subtitleSettings = displaySettingsProperty.FindPropertyRelative("subtitleSettings");
                     EditorGUILayout.PropertyField(subtitleSettings.FindPropertyRelative("richTextEmphases"), new GUIContent("Use Rich Text For [em#] Tags", "Use rich text codes for [em#] markup tags. If unticked, [em#] tag will apply color to entire text."), true);
+                    EditorGUILayout.PropertyField(subtitleSettings.FindPropertyRelative("convertPipesToLineBreaks"), new GUIContent("Convert Pipes To Line Breaks", "Treat '|' characters in text as line breaks."), true);
                     EditorGUILayout.PropertyField(subtitleSettings.FindPropertyRelative("showNPCSubtitlesDuringLine"), true);
                     EditorGUILayout.PropertyField(subtitleSettings.FindPropertyRelative("showNPCSubtitlesWithResponses"), true);
                     EditorGUILayout.PropertyField(subtitleSettings.FindPropertyRelative("showPCSubtitlesDuringLine"), true);
@@ -271,7 +272,9 @@ namespace PixelCrushers.DialogueSystem
                     EditorGUILayout.PropertyField(cameraSettings.FindPropertyRelative("sequencerCamera"), true);
                     EditorGUILayout.PropertyField(cameraSettings.FindPropertyRelative("alternateCameraObject"), true);
                     EditorGUILayout.PropertyField(cameraSettings.FindPropertyRelative("cameraAngles"), true);
+                    EditorGUILayout.PropertyField(cameraSettings.FindPropertyRelative("cameraEasing"), true);
                     EditorGUILayout.PropertyField(cameraSettings.FindPropertyRelative("keepCameraPositionAtConversationEnd"), true);
+                    EditorGUILayout.PropertyField(cameraSettings.FindPropertyRelative("showSubtitleOnEmptyContinue"), true);
                     EditorGUILayout.PropertyField(cameraSettings.FindPropertyRelative("defaultSequence"), true);
                     EditorGUILayout.PropertyField(cameraSettings.FindPropertyRelative("defaultPlayerSequence"), true);
                     EditorGUILayout.PropertyField(cameraSettings.FindPropertyRelative("defaultResponseMenuSequence"), true);
@@ -410,12 +413,21 @@ namespace PixelCrushers.DialogueSystem
                     }
                     EditorGUILayout.PropertyField(serializedObject.FindProperty("preloadResources"), true);
                     EditorGUILayout.PropertyField(serializedObject.FindProperty("warmUpConversationController"), true);
-                    if (serializedObject.FindProperty("warmUpConversationController").enumValueIndex != (int)DialogueSystemController.WarmUpMode.Off)
+                    var warmUpProp = serializedObject.FindProperty("warmUpConversationController");
+                    var instantiateDatabaseProp = serializedObject.FindProperty("instantiateDatabase");
+                    if (warmUpProp.enumValueIndex != (int)DialogueSystemController.WarmUpMode.Off)
                     {
                         EditorGUILayout.PropertyField(serializedObject.FindProperty("dontHideImmediateDuringWarmup"), true);
+                        if (warmUpProp.enumValueIndex != (int)DialogueSystemController.WarmUpMode.Extra)
+                        { 
+                            instantiateDatabaseProp.boolValue = true;
+                        }
                     }
-                    EditorGUILayout.PropertyField(serializedObject.FindProperty("instantiateDatabase"), true);
+                    EditorGUILayout.PropertyField(instantiateDatabaseProp, true);
                     EditorGUILayout.PropertyField(serializedObject.FindProperty("includeSimStatus"), true);
+                    EditorGUILayout.PropertyField(serializedObject.FindProperty("stopEvaluationAtFirstValid"), true);
+                    EditorGUILayout.PropertyField(serializedObject.FindProperty("reevaluateLinksAfterSubtitle"), true);
+                    EditorGUILayout.PropertyField(serializedObject.FindProperty("useLinearGroupMode"), true);
                     EditorGUILayout.PropertyField(serializedObject.FindProperty("allowSimultaneousConversations"), true);
                     EditorGUILayout.PropertyField(serializedObject.FindProperty("onStartTriggerWaitForSaveDataApplied"), true);
                     EditorGUILayout.PropertyField(serializedObject.FindProperty("dialogueTimeMode"), true);

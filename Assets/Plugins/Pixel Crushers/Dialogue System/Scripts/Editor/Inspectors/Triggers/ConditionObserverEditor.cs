@@ -9,7 +9,7 @@ namespace PixelCrushers.DialogueSystem
 {
 
     [CustomEditor(typeof(ConditionObserver), true)]
-    public class ConditionObserverEditor : Editor
+    public class ConditionObserverEditor : UnityEditor.Editor
     {
 
         private const string InspectorEditorPrefsKey = "PixelCrushers.DialogueSystem.ConditionObserverPrefs";
@@ -116,6 +116,7 @@ namespace PixelCrushers.DialogueSystem
                     var newUseQuestNamePicker = questPicker.usePicker;
 
                     var changed = EditorGUI.EndChangeCheck();
+                    UnityEditor.SceneManagement.EditorSceneManager.MarkSceneDirty(trigger.gameObject.scene);
 
                     serializedObject.Update();
 

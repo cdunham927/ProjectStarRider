@@ -68,15 +68,56 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
             EditorGUI.BeginChangeCheck();
             EditorWindowTools.StartIndentedSection();
             DrawTemplate("Actors", template.actorFields, template.actorPrimaryFieldTitles, ref templateFoldouts.actors);
-            DrawTemplate("Items", template.itemFields, null, ref templateFoldouts.items);
+            DrawActorTemplateAIButton();
+            DrawTemplate("Items", template.itemFields, template.itemPrimaryFieldTitles, ref templateFoldouts.items);
             DrawTemplate("Quests", template.questFields, template.questPrimaryFieldTitles, ref templateFoldouts.quests);
-            DrawTemplate("Locations", template.locationFields, null, ref templateFoldouts.locations);
+            DrawTemplate("Locations", template.locationFields, template.locationPrimaryFieldTitles, ref templateFoldouts.locations);
             DrawTemplate("Variables", template.variableFields, null, ref templateFoldouts.variables);
             DrawTemplate("Conversations", template.conversationFields, template.conversationPrimaryFieldTitles, ref templateFoldouts.conversations);
             DrawTemplate("Dialogue Entries", template.dialogueEntryFields, template.dialogueEntryPrimaryFieldTitles, ref templateFoldouts.dialogueEntries);
             DrawDialogueLineColors();
             EditorWindowTools.EndIndentedSection();
-            if (EditorGUI.EndChangeCheck()) SaveTemplate();
+            if (EditorGUI.EndChangeCheck())
+            {
+                SaveTemplate();
+                ResetLastFieldsChecked();
+            }
+        }
+
+        private void DrawActorTemplateAIButton()
+        {
+
+#if USE_OPENAI
+            if (templateFoldouts.actors)
+            {
+                var hasKnowledgeField = template.actorFields.Find(f => f.title == DialogueSystemFields.Knowledge) != null;
+                var hasGoalsField = template.actorFields.Find(f => f.title == DialogueSystemFields.Goals) != null;
+                if (!(hasKnowledgeField && hasGoalsField))
+                {
+                    if (GUILayout.Button(new GUIContent("Add Knowledge & Goals for AI", "Add Knowledge and Goals fields that Addon for OpenAI can use for background context.")))
+                    {
+                        template.actorFields.Add(new Field(DialogueSystemFields.Knowledge, "", FieldType.Text));
+                        template.actorFields.Add(new Field(DialogueSystemFields.Goals, "", FieldType.Text));
+                        template.actorPrimaryFieldTitles.Add(DialogueSystemFields.Knowledge);
+                        template.actorPrimaryFieldTitles.Add(DialogueSystemFields.Goals);
+                        if (database != null)
+                        {
+                            foreach (var actor in database.actors)
+                            {
+                                if (!actor.FieldExists(DialogueSystemFields.Knowledge))
+                                {
+                                    actor.fields.Add(new Field(DialogueSystemFields.Knowledge, "", FieldType.Text));
+                                }
+                                if (!actor.FieldExists(DialogueSystemFields.Goals))
+                                {
+                                    actor.fields.Add(new Field(DialogueSystemFields.Goals, "", FieldType.Text));
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+#endif
         }
 
         private void DrawTemplate(string foldoutName, List<Field> fields, List<string> primaryFieldTitles, ref bool foldout)
@@ -84,7 +125,11 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
             currentTemplateFoldout = foldoutName;
             EditorGUILayout.BeginHorizontal();
             foldout = EditorGUILayout.Foldout(foldout, foldoutName);
-            if (GUILayout.Button(new GUIContent(" ", "Add new field to template."), "OL Plus", GUILayout.Width(16))) fields.Add(new Field());
+            if (GUILayout.Button(new GUIContent(" ", "Add new field to template."), "OL Plus", GUILayout.Width(16)))
+            {
+                foldout = true;
+                fields.Add(new Field());
+            }
             EditorGUILayout.EndHorizontal();
             if (foldout)
             {

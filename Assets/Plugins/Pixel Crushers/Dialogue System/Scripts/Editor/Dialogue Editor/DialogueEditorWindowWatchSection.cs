@@ -58,6 +58,8 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
         [SerializeField]
         private string[] watchableQuestNames = null;
 
+        private bool watchedConversationTitlesFoldout = false;
+
         [SerializeField]
         private string luaCommand = string.Empty;
 
@@ -91,6 +93,7 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
                 EditorWindowTools.StartIndentedSection();
                 DrawGlobalWatchControls();
                 DrawWatches();
+                DrawConversationWatches();
                 EditorWindowTools.EndIndentedSection();
             }
         }
@@ -460,7 +463,7 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
             if (database == null) return;
             if (watchableQuestNames == null || watchableQuestNames.Length == 0)
             {
-                List<string> questNames = new List<string>(QuestLog.GetAllQuests(QuestState.Abandoned | QuestState.Active | QuestState.Failure | QuestState.Success | QuestState.Grantable | QuestState.Unassigned));
+                List<string> questNames = new List<string>(QuestLog.GetAllQuests(QuestState.Abandoned | QuestState.Active | QuestState.Failure | QuestState.Success | QuestState.Grantable | QuestState.ReturnToNPC | QuestState.Unassigned));
                 questNames.Sort();
                 watchableQuestNames = questNames.ToArray();
             }
@@ -476,6 +479,34 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
                 result[i] = QuestLog.GetQuestEntry(questName, i);
             }
             return result;
+        }
+
+        #endregion
+
+        #region Conversation Watches
+
+        private void DrawConversationWatches()
+        {
+            watchedConversationTitlesFoldout = EditorGUILayout.Foldout(watchedConversationTitlesFoldout, "Active Conversations");
+            if (watchedConversationTitlesFoldout)
+            {
+                EditorWindowTools.StartIndentedSection();
+                foreach (var record in DialogueManager.instance.activeConversations)
+                {
+                    EditorGUILayout.BeginHorizontal();
+                    EditorGUI.BeginDisabledGroup(true);
+                    EditorGUILayout.TextField(record.conversationTitle);
+                    EditorGUI.EndDisabledGroup();
+                    if (GUILayout.Button("View", GUILayout.Width(100)))
+                    {
+                        var entry = record.conversationController.currentState.subtitle.dialogueEntry;
+                        SelectDialogueEntry(entry.conversationID, entry.id);
+                        GUIUtility.ExitGUI();
+                    }
+                    EditorGUILayout.EndHorizontal();
+                }
+                EditorWindowTools.EndIndentedSection();
+            }
         }
 
         #endregion
@@ -519,7 +550,7 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
             GUI.SetNextControlName("LuaEmptyLabel");
             EditorGUILayout.LabelField(string.Empty, GUILayout.Width(8));
             luaCommand = EditorGUILayout.TextField(string.Empty, luaCommand);
-            if (GUILayout.Button("Clear", "ToolbarSeachCancelButton"))
+            if (GUILayout.Button("Clear", MoreEditorGuiUtility.ToolbarSearchCancelButtonName))
             {
                 luaCommand = string.Empty;
                 GUI.FocusControl("LuaEmptyLabel"); // Need to deselect field to clear text field's display.

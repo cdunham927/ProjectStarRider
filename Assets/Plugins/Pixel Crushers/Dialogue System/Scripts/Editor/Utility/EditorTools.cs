@@ -1,5 +1,7 @@
 // Copyright (c) Pixel Crushers. All rights reserved.
 
+using System.Collections.Generic;
+using System.IO;
 using UnityEditor;
 using UnityEngine;
 
@@ -53,7 +55,7 @@ namespace PixelCrushers.DialogueSystem
             return GetPopupWidth(new GUIContent(text));
         }
         public static GUILayoutOption GUILayoutPopupWidth(object obj)
-        {            
+        {
             return GUILayout.Width(GetPopupWidth(new GUIContent(obj.ToString())));
         }
 
@@ -92,7 +94,7 @@ namespace PixelCrushers.DialogueSystem
 
         public static DialogueDatabase FindInitialDatabase()
         {
-            var dialogueSystemController = Object.FindObjectOfType<DialogueSystemController>();
+            var dialogueSystemController = PixelCrushers.GameObjectUtility.FindFirstObjectByType<DialogueSystemController>();
             return (dialogueSystemController == null) ? null : dialogueSystemController.initialDatabase;
         }
 
@@ -218,7 +220,84 @@ namespace PixelCrushers.DialogueSystem
 
             if (asset == null || string.IsNullOrEmpty(filter)) return true;
             var assetName = asset.Name;
-            return string.IsNullOrEmpty(assetName) ? false : (assetName.IndexOf(filter, System.StringComparison.OrdinalIgnoreCase) >= 0);
+            return string.IsNullOrEmpty(assetName) ? false :
+                ((assetName.IndexOf(filter, System.StringComparison.OrdinalIgnoreCase) >= 0) ||
+                 IsQuestGroupInFilter(asset, filter));
+        }
+
+        private static bool IsQuestGroupInFilter(Asset asset, string filter)
+        {
+            var quest = asset as Item;
+            if (quest == null) return false;
+            var group = quest.Group;
+            return !string.IsNullOrEmpty(group) &&
+                (group.IndexOf(filter, System.StringComparison.OrdinalIgnoreCase) >= 0);
+        }
+
+        private static string[] imageExtensions = { ".png", ".tga", ".jpg", ".jpeg", ".bmp", ".tif", ".tiff", ".psd", ".psb", ".gif", ".pict" };
+
+        public static Sprite TryLoadSprite(string assetPath)
+        {
+            foreach (var ext in imageExtensions)
+            {
+                Sprite sprite = AssetDatabase.LoadAssetAtPath(assetPath + ext, typeof(Sprite)) as Sprite;
+                if (sprite != null) return sprite;
+            }
+            return null;
+        }
+
+        public static void FindPortraitImages(Actor actor, string portraitFolder)
+        {
+            if (actor == null) return;
+
+            var field = Field.Lookup(actor.fields, DialogueSystemFields.Pictures);
+            if ((field == null) || (field.value == null))
+            {
+                return;
+            }
+            var names = new List<string>(field.value.Split(new char[] { '[', ';', ']' }));
+            names.RemoveAll(s => string.IsNullOrEmpty(s.Trim()));
+            for (int i = 0; i < names.Count; i++)
+            {
+                string textureName = names[i];
+                if (!string.IsNullOrEmpty(textureName.Trim()))
+                {
+                    string filename = Path.GetFileName(textureName).Replace('\\', '/');
+                    string assetPath = string.Format("{0}/{1}", portraitFolder, filename);
+
+                    Sprite sprite = AssetDatabase.LoadAssetAtPath<Sprite>(assetPath);
+                    if (sprite != null)
+                    {
+                        if (i == 0) // First portrait.
+                        {
+                            actor.spritePortrait = sprite;
+                        }
+                        else
+                        {
+                            actor.spritePortraits.Add(sprite);
+                        }
+                    }
+                    else
+                    {
+                        Texture2D texture = AssetDatabase.LoadAssetAtPath<Texture2D>(assetPath);
+                        if (texture != null)
+                        {
+                            if (i == 0) // First portrait.
+                            {
+                                actor.portrait = texture;
+                            }
+                            else
+                            {
+                                actor.alternatePortraits.Add(texture);
+                            }
+                        }
+                        else
+                        {
+                            Debug.LogWarning(string.Format("{0}: Can't find portrait image {1} for {2}.", DialogueDebug.Prefix, assetPath, actor.Name));
+                        }
+                    }
+                }
+            }
         }
 
     }

@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Pixel Crushers. All rights reserved.
 
-#if UNITY_5_3_OR_NEWER
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
@@ -50,6 +49,8 @@ namespace PixelCrushers
         [Tooltip("Transition to play after entering the new scene.")]
         public TransitionInfo enterSceneTransition = new TransitionInfo();
 
+        protected WaitForEndOfFrame endOfFrame = new WaitForEndOfFrame();
+
         public override IEnumerator LeaveScene()
         {
             leaveSceneTransition.onTransitionStart.Invoke();
@@ -78,6 +79,7 @@ namespace PixelCrushers
 
         public override IEnumerator EnterScene()
         {
+            if (string.IsNullOrEmpty(loadingSceneName)) yield return endOfFrame; 
             enterSceneTransition.onTransitionStart.Invoke();
             var startTime = Time.realtimeSinceStartup;
             var minAnimationTime = startTime + enterSceneTransition.animationDuration;
@@ -100,4 +102,3 @@ namespace PixelCrushers
 
     }
 }
-#endif

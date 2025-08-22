@@ -10,7 +10,7 @@ namespace PixelCrushers.DialogueSystem
 {
 
     [CustomEditor(typeof(DialogueSystemTrigger), true)]
-    public class DialogueSystemTriggerEditor : Editor
+    public class DialogueSystemTriggerEditor : UnityEditor.Editor
     {
 
         protected const string InspectorEditorPrefsKey = "PixelCrushers.DialogueSystem.DialogueSystemTriggerPrefs";
@@ -43,6 +43,7 @@ namespace PixelCrushers.DialogueSystem
         protected Rect sequenceRect;
         protected DialogueEntryPicker entryPicker = null;
         protected string[] conversationTitles = null;
+        protected DialogueEntryPicker barkEntryPicker = null;
 
         protected DialogueSystemTrigger trigger;
         protected SerializedProperty triggerProperty;
@@ -60,6 +61,8 @@ namespace PixelCrushers.DialogueSystem
         protected bool showUnityEventAction;
 
         protected SequenceSyntaxState sequenceSyntaxState = SequenceSyntaxState.Unchecked;
+
+        protected Color originalColor = Color.white;
 
         public virtual void OnEnable()
         {
@@ -80,11 +83,11 @@ namespace PixelCrushers.DialogueSystem
 
             showSetQuestStateAction = !string.IsNullOrEmpty(trigger.questName);
             showRunLuaCodeAction = !string.IsNullOrEmpty(trigger.luaCode);
-            showPlaySequenceAction = !string.IsNullOrEmpty(trigger.sequence); // || trigger.sequenceSpeaker != null || trigger.sequenceListener != null;
-            showAlertAction = !string.IsNullOrEmpty(trigger.alertMessage); // || trigger.alertDuration > 0;
+            showPlaySequenceAction = !string.IsNullOrEmpty(trigger.sequence);
+            showAlertAction = !string.IsNullOrEmpty(trigger.alertMessage);
             showSendMessagesAction = trigger.sendMessages.Length > 0;
             showBarkAction = !string.IsNullOrEmpty(trigger.barkConversation) || !string.IsNullOrEmpty(trigger.barkText) || !string.IsNullOrEmpty(trigger.barkTextSequence); // || trigger.barker != null;
-            showConversationAction = !string.IsNullOrEmpty(trigger.conversation); // || trigger.conversationActor != null || trigger.conversationConversant != null;
+            showConversationAction = !string.IsNullOrEmpty(trigger.conversation);
             showSetActiveAction = trigger.setActiveActions.Length > 0;
             showSetEnabledAction = trigger.setEnabledActions.Length > 0;
             showAnimatorStatesAction = trigger.setAnimatorStateActions.Length > 0;
@@ -121,6 +124,7 @@ namespace PixelCrushers.DialogueSystem
             trigger = target as DialogueSystemTrigger;
             if (trigger == null) return;
             serializedObject.Update();
+            originalColor = GUI.color;
             DrawTopInfo();
             DrawConditions();
             DrawActions();
@@ -134,6 +138,14 @@ namespace PixelCrushers.DialogueSystem
             EditorGUILayout.PropertyField(triggerProperty, true);
 
             // HelpBox for OnTrigger/Collision:
+            var isStartTypeEvent =
+                triggerProperty.enumValueIndex == 4 || //DialogueSystemTriggerEvent.OnStart
+                triggerProperty.enumValueIndex == 6 || //DialogueSystemTriggerEvent.OnEnable
+                triggerProperty.enumValueIndex == 16;   //DialogueSystemTriggerEvent.OnSaveDataApplied
+            if (isStartTypeEvent)
+            {
+                EditorGUILayout.PropertyField(serializedObject.FindProperty("delayOneFrame"), true);
+            }
             var isPhysicsEvent =
                 triggerProperty.enumValueIndex == 3 || //DialogueSystemTriggerEvent.OnTriggerEnter
                 triggerProperty.enumValueIndex == 7 || //DialogueSystemTriggerEvent.OnTriggerExit
@@ -319,6 +331,12 @@ namespace PixelCrushers.DialogueSystem
             foldouts.unityEventFoldout = true;
         }
 
+        protected void MarkSceneDirtyIfNotPrefab()
+        {
+            if (PrefabUtility.IsPartOfPrefabAsset(trigger)) return;
+            UnityEditor.SceneManagement.EditorSceneManager.MarkSceneDirty(trigger.gameObject.scene);
+        }
+
         protected virtual void DrawQuestAction()
         {
             foldouts.questFoldout = EditorWindowTools.EditorGUILayoutFoldout("Set Quest State", "Set quest states.", foldouts.questFoldout, false);
@@ -331,14 +349,22 @@ namespace PixelCrushers.DialogueSystem
                     if (questPicker != null)
                     {
                         serializedObject.ApplyModifiedProperties();
+                        var prevQuestName = trigger.questName;
+                        if (string.IsNullOrEmpty(trigger.questName)) GUI.color = Color.red;
                         questPicker.Draw();
+                        GUI.color = originalColor;
                         var hadQuestName = !string.IsNullOrEmpty(trigger.questName);
                         trigger.questName = questPicker.currentQuest;
                         trigger.useQuestNamePicker = questPicker.usePicker;
                         trigger.selectedDatabase = questPicker.database;
                         if (EditorTools.selectedDatabase == null) EditorTools.selectedDatabase = trigger.selectedDatabase;
                         if (hadQuestName && string.IsNullOrEmpty(trigger.questName)) showSetQuestStateAction = false;
-                        serializedObject.Update();
+                        if (trigger.questName != prevQuestName)
+                        {
+                            var questNameProperty = serializedObject.FindProperty(nameof(DialogueSystemTrigger.questName));
+                            questNameProperty.stringValue = trigger.questName;
+                            MarkSceneDirtyIfNotPrefab();
+                        }
                     }
 
                     // Quest state:
@@ -388,8 +414,11 @@ namespace PixelCrushers.DialogueSystem
                     EditorGUI.BeginChangeCheck();
                     var newLuaCode = luaScriptWizard.Draw(new GUIContent("Lua Code", "The Lua code to run when the condition is true."), trigger.luaCode);
                     var changed = EditorGUI.EndChangeCheck();
-                    serializedObject.Update();
-                    if (changed) serializedObject.FindProperty("luaCode").stringValue = newLuaCode;
+                    if (changed)
+                    {
+                        serializedObject.FindProperty("luaCode").stringValue = newLuaCode;
+                        MarkSceneDirtyIfNotPrefab();
+                    }
                     EditorGUILayout.BeginHorizontal();
                     GUILayout.FlexibleSpace();
                     if (GUILayout.Button("x", GUILayout.Width(18), GUILayout.Height(14)))
@@ -431,8 +460,11 @@ namespace PixelCrushers.DialogueSystem
                     EditorGUI.BeginChangeCheck();
                     var newSequence = SequenceEditorTools.DrawLayout(new GUIContent("Sequence"), trigger.sequence, ref sequenceRect, ref sequenceSyntaxState);
                     var changed = EditorGUI.EndChangeCheck();
-                    serializedObject.Update();
-                    if (changed) serializedObject.FindProperty("sequence").stringValue = newSequence;
+                    if (changed)
+                    {
+                        serializedObject.FindProperty("sequence").stringValue = newSequence;
+                        MarkSceneDirtyIfNotPrefab();
+                    }
 
                     EditorGUILayout.PropertyField(serializedObject.FindProperty("sequenceSpeaker"), true);
                     EditorGUILayout.PropertyField(serializedObject.FindProperty("sequenceListener"), true);
@@ -491,7 +523,9 @@ namespace PixelCrushers.DialogueSystem
                     EditorWindowTools.EditorGUILayoutBeginGroup();
                     EditorGUILayout.BeginHorizontal();
                     var barkSourceProperty = serializedObject.FindProperty("barkSource");
+                    if (barkSourceProperty.enumValueIndex < 0) GUI.color = Color.red;                         
                     EditorGUILayout.PropertyField(barkSourceProperty, true);
+                    GUI.color = originalColor;
                     if (GUILayout.Button("x", GUILayout.Width(18), GUILayout.Height(14)))
                     {
                         serializedObject.FindProperty("barkSource").enumValueIndex = 0;
@@ -505,9 +539,37 @@ namespace PixelCrushers.DialogueSystem
                     {
                         case DialogueSystemTrigger.BarkSource.Conversation:
                             var barkConversationProperty = serializedObject.FindProperty("barkConversation");
+                            if (string.IsNullOrEmpty(barkConversationProperty.stringValue)) GUI.color = Color.red;
                             EditorGUILayout.PropertyField(barkConversationProperty, true);
+                            GUI.color = originalColor;
                             if (!string.IsNullOrEmpty(barkConversationProperty.stringValue))
                             {
+                                var entryIDProperty = serializedObject.FindProperty("barkEntryID");
+                                var entryTitleProperty = serializedObject.FindProperty("barkEntryTitle");
+                                var specifyEntryID = EditorGUILayout.Toggle(new GUIContent("Specify Bark Entry", "Bark specific entry ID."), (entryIDProperty.intValue != -1));
+                                if (specifyEntryID)
+                                {
+                                    // Draw entry ID picker:
+                                    if (barkEntryPicker == null)
+                                    {
+                                        barkEntryPicker = new DialogueEntryPicker(barkConversationProperty.stringValue);
+                                    }
+                                    if (barkEntryPicker.isValid)
+                                    {
+                                        entryIDProperty.intValue = Mathf.Max(0, barkEntryPicker.DoLayout("Entry ID", entryIDProperty.intValue));
+                                    }
+                                    else
+                                    {
+                                        entryIDProperty.intValue = Mathf.Max(0, EditorGUILayout.IntField(new GUIContent("Entry ID", "Start at this entry ID."), entryIDProperty.intValue));
+                                    }
+                                    if (entryIDProperty.intValue > 0) entryTitleProperty.stringValue = string.Empty;
+                                }
+                                else
+                                {
+                                    entryIDProperty.intValue = -1;
+                                    entryTitleProperty.stringValue = string.Empty;
+                                }
+
                                 EditorGUILayout.PropertyField(serializedObject.FindProperty("barkOrder"), true);
                                 EditorGUILayout.PropertyField(serializedObject.FindProperty("barker"), true);
                                 EditorGUILayout.PropertyField(serializedObject.FindProperty("barkTarget"), true);
@@ -543,7 +605,9 @@ namespace PixelCrushers.DialogueSystem
                     var hadConversation = !string.IsNullOrEmpty(conversationProperty.stringValue);
                     EditorWindowTools.EditorGUILayoutBeginGroup();
                     EditorGUI.BeginChangeCheck();
+                    if (string.IsNullOrEmpty(conversationProperty.stringValue)) GUI.color = Color.red;
                     EditorGUILayout.PropertyField(conversationProperty, true);
+                    GUI.color = originalColor;
                     if (EditorGUI.EndChangeCheck())
                     {
                         conversationTitles = null;
@@ -600,11 +664,17 @@ namespace PixelCrushers.DialogueSystem
                             entryTitleProperty.stringValue = string.Empty;
                         }
 
+                        EditorGUILayout.PropertyField(serializedObject.FindProperty("overrideDialogueUI"), true);
                         EditorGUILayout.PropertyField(serializedObject.FindProperty("exclusive"), true);
                         EditorGUILayout.PropertyField(serializedObject.FindProperty("replace"), true);
+                        EditorGUILayout.PropertyField(serializedObject.FindProperty("queue"), true);
                         EditorGUILayout.PropertyField(serializedObject.FindProperty("skipIfNoValidEntries"), true);
                         EditorGUILayout.PropertyField(serializedObject.FindProperty("preventRestartOnSameFrameEnded"), true);
                         EditorGUILayout.PropertyField(serializedObject.FindProperty("stopConversationOnTriggerExit"), true);
+                        if (serializedObject.FindProperty("stopConversationOnTriggerExit").boolValue)
+                        {
+                            EditorGUILayout.PropertyField(serializedObject.FindProperty("marginToAllowTriggerExit"), true);
+                        }
                         EditorGUILayout.PropertyField(serializedObject.FindProperty("stopConversationIfTooFar"), true);
                         if (serializedObject.FindProperty("stopConversationIfTooFar").boolValue)
                         {

@@ -12,12 +12,32 @@ namespace PixelCrushers
     public static class MoreEditorUtility
     {
 
+        // These two methods handle API differences:
+
+        public static string GetScriptingDefineSymbolsForGroup(BuildTargetGroup group)
+        {
+#if UNITY_2023_1_OR_NEWER
+            return PlayerSettings.GetScriptingDefineSymbols(UnityEditor.Build.NamedBuildTarget.FromBuildTargetGroup(group));
+#else
+            return PlayerSettings.GetScriptingDefineSymbolsForGroup(group);
+#endif
+        }
+
+        public static void SetScriptingDefineSymbolsForGroup(BuildTargetGroup group, string defines)
+        {
+#if UNITY_2023_1_OR_NEWER
+            PlayerSettings.SetScriptingDefineSymbols(UnityEditor.Build.NamedBuildTarget.FromBuildTargetGroup(group), defines);
+#else
+            PlayerSettings.SetScriptingDefineSymbolsForGroup(group, defines);
+#endif
+        }
+
         /// <summary>
         /// Checks if a symbol exists in the project's Scripting Define Symbols for the current build target.
         /// </summary>
         public static bool DoesScriptingDefineSymbolExist(string symbol)
         {
-            var defines = PlayerSettings.GetScriptingDefineSymbolsForGroup(EditorUserBuildSettings.selectedBuildTargetGroup).Split(';');
+            var defines = GetScriptingDefineSymbolsForGroup(EditorUserBuildSettings.selectedBuildTargetGroup).Split(';');
             for (int i = 0; i < defines.Length; i++)
             {
                 if (string.Equals(symbol, defines[i].Trim())) return true;
@@ -27,16 +47,11 @@ namespace PixelCrushers
 
         public static HashSet<BuildTargetGroup> GetInstalledBuildTargetGroups()
         {
-#if UNITY_2017
-            Debug.Log("Updating all build targets. Please ignore messages about build targets not installed.");
-#endif
             var result = new HashSet<BuildTargetGroup>();
             foreach (BuildTarget target in (BuildTarget[])Enum.GetValues(typeof(BuildTarget)))
             {
                 BuildTargetGroup group = BuildPipeline.GetBuildTargetGroup(target);
-#if UNITY_2018_1_OR_NEWER
                 if (BuildPipeline.IsBuildTargetSupported(group, target))
-#endif
                 {
                     result.Add(group);
                 }
@@ -53,10 +68,10 @@ namespace PixelCrushers
             {
                 try
                 {
-                    var defines = PlayerSettings.GetScriptingDefineSymbolsForGroup(group);
+                    var defines = GetScriptingDefineSymbolsForGroup(group);
                     if (!string.IsNullOrEmpty(defines)) defines += ";";
                     defines += symbol;
-                    PlayerSettings.SetScriptingDefineSymbolsForGroup(group, defines);
+                    SetScriptingDefineSymbolsForGroup(group, defines);
                 }
                 catch (Exception e)
                 {
@@ -76,10 +91,10 @@ namespace PixelCrushers
             {
                 try
                 {
-                    var symbols = new List<string>(PlayerSettings.GetScriptingDefineSymbolsForGroup(group).Split(';'));
+                    var symbols = new List<string>(GetScriptingDefineSymbolsForGroup(group).Split(';'));
                     symbols.Remove(symbol);
                     var defines = string.Join(";", symbols.ToArray());
-                    PlayerSettings.SetScriptingDefineSymbolsForGroup(group, defines);
+                    SetScriptingDefineSymbolsForGroup(group, defines);
                 }
                 catch (Exception e)
                 {
@@ -105,11 +120,7 @@ namespace PixelCrushers
         {
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
-#if UNITY_2019_3_OR_NEWER
             EditorUtility.RequestScriptReload();
-#else
-            UnityEditorInternal.InternalEditorUtility.RequestScriptReload();
-#endif
         }
 
         /// <summary>
@@ -130,7 +141,7 @@ namespace PixelCrushers
                 Debug.Log("It looks like you've moved this Pixel Crushers asset. In the Project view, please right-click on the folder in its new location and select Reimport.");
             }
             else
-            { 
+            {
                 string[] filenames = Directory.GetFiles(path, "*.cs", SearchOption.AllDirectories);
                 var found = string.Empty;
                 var recompileAtText = "// Recompile at " + DateTime.Now + "\r\n";
@@ -196,8 +207,6 @@ namespace PixelCrushers
 
         //=============================================================
 
-#if UNITY_2019_1_OR_NEWER
-
         [MenuItem("Tools/Pixel Crushers/Common/Misc/Use New Input System...", false, 102)]
         static public void AddUSENEWINPUT()
         {
@@ -214,7 +223,23 @@ namespace PixelCrushers
             return !MoreEditorUtility.DoesScriptingDefineSymbolExist("USE_NEW_INPUT");
         }
 
-#endif
+        //=============================================================
+
+        [MenuItem("Tools/Pixel Crushers/Common/Misc/Use NavMesh...", false, 103)]
+        static public void AddUSENAVMESH()
+        {
+            if (EditorUtility.DisplayDialog("Use NavMesh", "If your project uses Unity's NavMesh AI navigation system, this will enable Pixel Crushers support for it.", "OK", "Cancel"))
+            {
+                MoreEditorUtility.TryAddScriptingDefineSymbols("USE_NAVMESH");
+                EditorUtility.DisplayDialog("NavMesh Integration Enabled", "Pixel Crushers asset support for NavMeshes navigation is now enabled.", "OK");
+            }
+        }
+
+        [MenuItem("Tools/Pixel Crushers/Common/Misc/Use NavMesh...", true)]
+        static bool ValidateAddUSENAVMESH()
+        {
+            return !MoreEditorUtility.DoesScriptingDefineSymbolExist("USE_NAVMESH");
+        }
 
     }
 }

@@ -63,39 +63,39 @@ namespace PixelCrushers.DialogueSystem.Articy
 
         #endregion
 
-        #region Private Variables
+        #region Variables
 
-        private const string ArticyIdFieldTitle = "Articy Id";
-        private const string ArticyTechnicalNameFieldTitle = "Technical Name";
-        private const string DestinationArticyIdFieldTitle = "destinationArticyId";
-        private const int StartEntryID = 0;
+        public const string ArticyIdFieldTitle = "Articy Id";
+        public const string ArticyTechnicalNameFieldTitle = "Technical Name";
+        protected const string DestinationArticyIdFieldTitle = "destinationArticyId";
+        protected const int StartEntryID = 0;
 
-        private ArticyData articyData;
-        private ConverterPrefs prefs;
-        private DialogueDatabase database;
-        private Template template;
-        private int conversationID;
-        private int actorID;
-        private int itemID;
-        private int locationID;
-        private static List<string> fullVariableNames = new List<string>(); // Make static to expose ConvertExpression().
+        protected ArticyData articyData;
+        protected ConverterPrefs prefs;
+        protected DialogueDatabase database;
+        protected Template template;
+        protected int conversationID;
+        protected int actorID;
+        protected int itemID;
+        protected int locationID;
+        protected static List<string> fullVariableNames = new List<string>(); // Make static to expose ConvertExpression().
 
-        private HashSet<string> otherScriptFieldTitles = new HashSet<string>();
-        private List<Conversation> documentConversations = new List<Conversation>();
+        protected HashSet<string> otherScriptFieldTitles = new HashSet<string>();
+        protected List<Conversation> documentConversations = new List<Conversation>();
 
         #endregion
 
         #region Stacks
 
-        private List<string> flowFragmentNameStack = new List<string>();
-        private List<Conversation> conversationStack = new List<Conversation>();
-        private Dictionary<Conversation, int> conversationLastEntryID = new Dictionary<DialogueSystem.Conversation, int>();
-        private Dictionary<string, List<DialogueEntry>> entriesByArticyId = new Dictionary<string, List<DialogueEntry>>();
-        private Dictionary<string, DialogueEntry> entriesByPinID = new Dictionary<string, DialogueEntry>();
-        private Dictionary<ArticyData.Jump, DialogueEntry> jumpsToProcess = new Dictionary<ArticyData.Jump, DialogueEntry>();
-        private List<DialogueEntry> unusedOutputEntries = new List<DialogueEntry>();
+        protected List<string> flowFragmentNameStack = new List<string>();
+        protected List<Conversation> conversationStack = new List<Conversation>();
+        protected Dictionary<Conversation, int> conversationLastEntryID = new Dictionary<DialogueSystem.Conversation, int>();
+        protected Dictionary<string, List<DialogueEntry>> entriesByArticyId = new Dictionary<string, List<DialogueEntry>>();
+        protected Dictionary<string, DialogueEntry> entriesByPinID = new Dictionary<string, DialogueEntry>();
+        protected Dictionary<ArticyData.Jump, DialogueEntry> jumpsToProcess = new Dictionary<ArticyData.Jump, DialogueEntry>();
+        protected List<DialogueEntry> unusedOutputEntries = new List<DialogueEntry>();
 
-        private void ResetStacks()
+        protected virtual void ResetStacks()
         {
             flowFragmentNameStack.Clear();
             conversationStack.Clear();
@@ -105,36 +105,36 @@ namespace PixelCrushers.DialogueSystem.Articy
             unusedOutputEntries.Clear();
         }
 
-        private void PushFlowFragment(ArticyData.FlowFragment flowFragment)
+        protected virtual void PushFlowFragment(ArticyData.FlowFragment flowFragment)
         {
             if (flowFragment == null) return;
             flowFragmentNameStack.Add(flowFragment.displayName.DefaultText);
         }
 
-        private void PopFlowFragment()
+        protected virtual void PopFlowFragment()
         {
             if (flowFragmentNameStack.Count < 1) return;
             flowFragmentNameStack.RemoveAt(flowFragmentNameStack.Count - 1);
         }
 
-        private void PushConversation(Conversation conversation)
+        protected virtual void PushConversation(Conversation conversation)
         {
             if (conversation == null) return;
             conversationStack.Add(conversation);
         }
 
-        private void PopConversation()
+        protected virtual void PopConversation()
         {
             if (conversationStack.Count < 1) return;
             conversationStack.RemoveAt(conversationStack.Count - 1);
         }
 
-        private Conversation GetConversationStackTop()
+        protected virtual Conversation GetConversationStackTop()
         {
             return (conversationStack.Count > 0) ? conversationStack[conversationStack.Count - 1] : null;
         }
 
-        private int GetNextConversationEntryID(Conversation conversation)
+        protected virtual int GetNextConversationEntryID(Conversation conversation)
         {
             if (conversation == null) return 0;
             if (!conversationLastEntryID.ContainsKey(conversation))
@@ -149,12 +149,12 @@ namespace PixelCrushers.DialogueSystem.Articy
             }
         }
 
-        private void ResetArticyIdIndex()
+        protected virtual void ResetArticyIdIndex()
         {
             entriesByArticyId.Clear();
         }
 
-        private void IndexDialogueEntryByArticyId(DialogueEntry entry, string articyId)
+        protected virtual void IndexDialogueEntryByArticyId(DialogueEntry entry, string articyId)
         {
             if (entriesByArticyId.ContainsKey(articyId))
             {
@@ -180,7 +180,7 @@ namespace PixelCrushers.DialogueSystem.Articy
         /// <param name='articyData'>Articy data.</param>
         /// <param name='prefs'>Prefs.</param>
         /// <param name='database'>Dialogue database.</param>
-        public void Convert(ArticyData articyData, ConverterPrefs prefs, Template template, DialogueDatabase database)
+        public virtual void Convert(ArticyData articyData, ConverterPrefs prefs, Template template, DialogueDatabase database)
         {
             if (articyData != null)
             {
@@ -204,7 +204,7 @@ namespace PixelCrushers.DialogueSystem.Articy
         /// <param name='articyData'>Articy data.</param>
         /// <param name='prefs'>Prefs.</param>
         /// <param name='database'>Dialogue database.</param>
-        private void Setup(ArticyData articyData, ConverterPrefs prefs, Template template, DialogueDatabase database)
+        protected virtual void Setup(ArticyData articyData, ConverterPrefs prefs, Template template, DialogueDatabase database)
         {
             this.articyData = articyData;
             this.prefs = prefs;
@@ -227,11 +227,12 @@ namespace PixelCrushers.DialogueSystem.Articy
             {
                 otherScriptFieldTitles.Add(otherScriptFieldTitle.Trim());
             }
+            ArticyTools.convertMarkupToRichText = prefs.ConvertMarkupToRichText;
             ResetArticyIdIndex();
             this.template = template;
         }
 
-        private void ConvertProjectAttributes()
+        protected virtual void ConvertProjectAttributes()
         {
             database.version = articyData.ProjectVersion;
             database.author = articyData.ProjectAuthor;
@@ -244,7 +245,7 @@ namespace PixelCrushers.DialogueSystem.Articy
         /// <summary>
         /// Converts articy entities into Dialogue System actors and items/quests.
         /// </summary>
-        private void ConvertEntities()
+        protected virtual void ConvertEntities()
         {
             foreach (ArticyData.Entity articyEntity in articyData.entities.Values)
             {
@@ -274,7 +275,7 @@ namespace PixelCrushers.DialogueSystem.Articy
                                 Field.SetValue(actor.fields, "Name", articyEntity.technicalName, FieldType.Text);
                             }
                             if (prefs.UseTechnicalNames || prefs.SetDisplayName)
-                            { 
+                            {
                                 Field.SetValue(actor.fields, "Display Name", articyEntity.displayName.DefaultText, FieldType.Text);
                             }
                             if (prefs.CustomDisplayName) UseCustomDisplayName(actor.fields);
@@ -296,7 +297,7 @@ namespace PixelCrushers.DialogueSystem.Articy
                                 Field.SetValue(item.fields, "Name", articyEntity.technicalName, FieldType.Text);
                             }
                             if (prefs.UseTechnicalNames || prefs.SetDisplayName)
-                            { 
+                            {
                                 Field.SetValue(item.fields, "Display Name", articyEntity.displayName.DefaultText, FieldType.Text);
                             }
                             if (prefs.CustomDisplayName) UseCustomDisplayName(item.fields);
@@ -317,7 +318,7 @@ namespace PixelCrushers.DialogueSystem.Articy
         /// <summary>
         /// Converts locations.
         /// </summary>
-        private void ConvertLocations()
+        protected virtual void ConvertLocations()
         {
             foreach (ArticyData.Location articyLocation in articyData.locations.Values)
             {
@@ -346,7 +347,7 @@ namespace PixelCrushers.DialogueSystem.Articy
         /// Converts flow fragments into items. (The quest system uses the Item[] table.)
         /// This is only called if the flow fragment mode is set to Quests.
         /// </summary>
-        private void ConvertFlowFragmentsToQuests()
+        protected virtual void ConvertFlowFragmentsToQuests()
         {
             if (prefs.FlowFragmentMode != ConverterPrefs.FlowFragmentModes.Quests) return;
             foreach (ArticyData.FlowFragment articyFlowFragment in articyData.flowFragments.Values)
@@ -369,7 +370,7 @@ namespace PixelCrushers.DialogueSystem.Articy
             }
         }
 
-        private void SetFeatureFields(List<Field> fields, ArticyData.Features features)
+        protected virtual void SetFeatureFields(List<Field> fields, ArticyData.Features features)
         {
             // Note: quest State and Entry_#_State fields are fixed up in the Articy_#_#_Tools class
             // for each schema.
@@ -382,7 +383,11 @@ namespace PixelCrushers.DialogueSystem.Articy
                         if (!string.IsNullOrEmpty(field.title))
                         {
                             var fieldTitle = ConvertSpecialTechnicalNames(field.title);
-                            var fieldValue = IsOtherScriptField(fieldTitle) ? ConvertExpression(field.value) : field.value;
+                            if (prefs.IncludeFeatureNameInFields && !IsSpecialFieldTitle(field.title))
+                            {
+                                fieldTitle = $"{feature.name}.{fieldTitle}";
+                            }
+                            var fieldValue = IsOtherScriptField(fieldTitle) ? ConvertExpression(field.value, false) : field.value;
                             var existingField = Field.Lookup(fields, fieldTitle);
                             if (existingField != null)
                             {
@@ -398,7 +403,7 @@ namespace PixelCrushers.DialogueSystem.Articy
             }
         }
 
-        private void UseCustomDisplayName(List<Field> fields)
+        protected virtual void UseCustomDisplayName(List<Field> fields)
         {
             // Look for a field named 'DisplayName'. If present, replace 'Display Name' field with it.
             var customField = Field.Lookup(fields, "DisplayName");
@@ -409,12 +414,50 @@ namespace PixelCrushers.DialogueSystem.Articy
             }
         }
 
-        private bool IsOtherScriptField(string fieldTitle)
+        protected virtual bool IsOtherScriptField(string fieldTitle)
         {
             return otherScriptFieldTitles.Contains(fieldTitle);
         }
 
-        private string ConvertSpecialTechnicalNames(string technicalName)
+        protected static List<string> SpecialFieldTitles = new List<string>(new string[]
+        {
+            DialogueSystemFields.Name,
+            DialogueSystemFields.DisplayName,
+            DialogueSystemFields.IsPlayer,
+            DialogueSystemFields.CurrentPortrait,
+            DialogueSystemFields.IsItem,
+            DialogueSystemFields.Group,
+            DialogueSystemFields.Description,
+            DialogueSystemFields.SuccessDescription,
+            DialogueSystemFields.FailureDescription,
+            DialogueSystemFields.EntryCount,
+            DialogueSystemFields.Title,
+            DialogueSystemFields.Actor,
+            DialogueSystemFields.Conversant,
+            DialogueSystemFields.Priority,
+            DialogueSystemFields.Sequence,
+            DialogueSystemFields.ResponseMenuSequence,
+            DialogueSystemFields.VoiceOverFile,
+            DialogueSystemFields.DialogueText,
+            DialogueSystemFields.MenuText
+        });
+
+        protected static List<string> SpecialFieldTitleStarters = new List<string>(new string[]
+        {
+            "Entry ",
+        });
+
+        protected virtual bool IsSpecialFieldTitle(string fieldTitle)
+        {
+            if (SpecialFieldTitles.Find(x => x == fieldTitle) != null) return true;
+            foreach (var starter in SpecialFieldTitleStarters)
+            {
+                if (fieldTitle.StartsWith(starter)) return true;
+            }
+            return false;
+        }
+
+        protected virtual string ConvertSpecialTechnicalNames(string technicalName)
         {
             if (string.Equals(technicalName, "Response_Menu_Sequence") ||
                 string.Equals(technicalName, "Success_Description") ||
@@ -453,7 +496,7 @@ namespace PixelCrushers.DialogueSystem.Articy
         /// <summary>
         /// Converts articy variable sets and variables into Dialogue System variables.
         /// </summary>
-        private void ConvertVariables()
+        protected virtual void ConvertVariables()
         {
             int variableID = 0;
             foreach (ArticyData.VariableSet articyVariableSet in articyData.variableSets.Values)
@@ -493,7 +536,7 @@ namespace PixelCrushers.DialogueSystem.Articy
 
         #region Dialogue Conversion
 
-        private void DeleteDocumentConversations()
+        protected virtual void DeleteDocumentConversations()
         {
             database.conversations.RemoveAll(conversation => documentConversations.Contains(conversation));
         }
@@ -501,13 +544,14 @@ namespace PixelCrushers.DialogueSystem.Articy
         /// <summary>
         /// Converts dialogues using the articy project's hierarchy.
         /// </summary>
-        private void ConvertDialogues()
+        protected virtual void ConvertDialogues()
         {
             ResetStacks();
             onProgressCallback("Converting dialogues", 0.2f);
             ConvertDialoguesToConversations();
             onProgressCallback("Processing hierarchy", 0.3f);
             ProcessHierarchy();
+            InsertDelayEvaluationNodesBeforeInputPins();
             onProgressCallback("Sorting links by position", 0.7f);
             SortAllLinksByPosition();
             if (prefs.SplitTextOnPipes) SplitPipesIntoEntries();
@@ -515,13 +559,13 @@ namespace PixelCrushers.DialogueSystem.Articy
             ConvertVoiceOverProperties();
         }
 
-        private bool IncludeDialogue(string dialogueId)
+        protected virtual bool IncludeDialogue(string dialogueId)
         {
             var setting = (prefs == null) ? null : prefs.ConversionSettings.GetConversionSetting(dialogueId);
             return (setting == null) || setting.Include;
         }
 
-        private void ConvertDialoguesToConversations()
+        protected virtual void ConvertDialoguesToConversations()
         {
             foreach (var articyDialogue in articyData.dialogues.Values)
             {
@@ -536,7 +580,7 @@ namespace PixelCrushers.DialogueSystem.Articy
         /// </summary>
         /// <returns>The new conversation.</returns>
         /// <param name='articyDialogue'>Articy dialogue.</param>
-        private Conversation CreateNewConversation(ArticyData.Dialogue articyDialogue)
+        protected virtual Conversation CreateNewConversation(ArticyData.Dialogue articyDialogue)
         {
             if (articyDialogue == null) return null;
             // Create conversation:
@@ -578,29 +622,23 @@ namespace PixelCrushers.DialogueSystem.Articy
             }
             conversation.dialogueEntries.Add(startEntry);
 
-            // Convert dialogue's in and out pins to passthrough group entries:
+            // Convert dialogue's in and out pins to [passthrough group] entries:
             for (int i = 0; i < articyDialogue.pins.Count; i++)
             {
                 var pin = articyDialogue.pins[i];
-                if (pin.semantic == ArticyData.SemanticType.Output && prefs.RecursionMode == ConverterPrefs.RecursionModes.Off) continue;
+                var isInputPin = pin.semantic == ArticyData.SemanticType.Input;
+                var isOutputPin = pin.semantic == ArticyData.SemanticType.Output;
+                if (isOutputPin && prefs.RecursionMode == ConverterPrefs.RecursionModes.Off) continue;
                 var entryID = GetNextConversationEntryID(conversation);
-                var title = (pin.semantic == ArticyData.SemanticType.Input) ? "input" : "output";
+                var title = isInputPin ? "input" : "output";
                 var entry = template.CreateDialogueEntry(entryID, conversationID, title);
                 entry.canvasRect = new Rect(articyDialogue.position.x, articyDialogue.position.y, DialogueEntry.CanvasRectWidth, DialogueEntry.CanvasRectHeight);
                 SetDialogueEntryParticipants(entry, conversation.ConversantID, conversation.ActorID);
-                if (pin.semantic == ArticyData.SemanticType.Input)
-                {
-                    ConvertPinExpressionsToConditionsAndScripts(entry, articyDialogue.pins, true, false);
-                }
-                else
-                {
-                    ConvertPinExpressionsToConditionsAndScripts(entry, articyDialogue.pins, false, true);
-                }
+                ConvertPinExpressionsToConditionsAndScripts(entry, articyDialogue.pins, isInputPin, !isInputPin);
                 entry.isGroup = true;
-                //Field.SetValue(entry.fields, "Sequence", "Continue()", FieldType.Text);
                 Field.SetValue(entry.fields, ArticyIdFieldTitle, pin.id, FieldType.Text);
 
-                if (pin.semantic == ArticyData.SemanticType.Input)
+                if (isInputPin)
                 {
                     var link = new Link();
                     link.originConversationID = conversationID;
@@ -624,7 +662,7 @@ namespace PixelCrushers.DialogueSystem.Articy
         }
 
         // Extract special conversation override features and set conversation override settings:
-        private void SetConversationOverrideProperties(Conversation conversation, ArticyData.Features features)
+        protected virtual void SetConversationOverrideProperties(Conversation conversation, ArticyData.Features features)
         {
             foreach (ArticyData.Feature feature in features.features)
             {
@@ -716,7 +754,7 @@ namespace PixelCrushers.DialogueSystem.Articy
             }
         }
 
-        private DisplaySettings.SubtitleSettings.ContinueButtonMode StringToContinueButtonMode(string value)
+        protected virtual DisplaySettings.SubtitleSettings.ContinueButtonMode StringToContinueButtonMode(string value)
         {
             var enumValues = System.Enum.GetValues(typeof(DisplaySettings.SubtitleSettings.ContinueButtonMode));
             for (int i = 0; i < enumValues.Length; i++)
@@ -730,18 +768,18 @@ namespace PixelCrushers.DialogueSystem.Articy
             return DisplaySettings.SubtitleSettings.ContinueButtonMode.Never;
         }
 
-        private void SetDialogueEntryParticipants(DialogueEntry startEntry, int actorID, int conversantID)
+        protected virtual void SetDialogueEntryParticipants(DialogueEntry startEntry, int actorID, int conversantID)
         {
             startEntry.ActorID = actorID;
             startEntry.ConversantID = conversantID;
         }
 
-        private int GetDefaultActorID(Conversation conversation)
+        protected virtual int GetDefaultActorID(Conversation conversation)
         {
             return (conversation != null) ? conversation.ActorID : (prefs.UseDefaultActorsIfNoneAssignedToDialogue ? 1 : -1);
         }
 
-        private int GetDefaultConversantID(Conversation conversation)
+        protected virtual int GetDefaultConversantID(Conversation conversation)
         {
             return (conversation != null) ? conversation.ConversantID : (prefs.UseDefaultActorsIfNoneAssignedToDialogue ? 2 : -1);
         }
@@ -752,7 +790,7 @@ namespace PixelCrushers.DialogueSystem.Articy
         /// </summary>
         /// <returns>The new conversation.</returns>
         /// <param name='articyFlowFragment'>Articy flow fragment.</param>
-        private Conversation FindOrCreateFlowFragmentConversation(ArticyData.FlowFragment articyFlowFragment, bool isTopLevel)
+        protected virtual Conversation FindOrCreateFlowFragmentConversation(ArticyData.FlowFragment articyFlowFragment, bool isTopLevel)
         {
             if (articyFlowFragment == null) return null;
             // Create conversation:
@@ -772,7 +810,7 @@ namespace PixelCrushers.DialogueSystem.Articy
             SetDialogueEntryParticipants(startEntry, conversation.ActorID, conversation.ConversantID);
             Field.SetValue(startEntry.fields, ArticyIdFieldTitle, articyFlowFragment.id, FieldType.Text);
             IndexDialogueEntryByArticyId(startEntry, articyFlowFragment.id);
-            ConvertPinExpressionsToConditionsAndScripts(startEntry, articyFlowFragment.pins);
+            ConvertPinExpressionsToConditionsAndScripts(startEntry, articyFlowFragment.pins, true, false);
             startEntry.outgoingLinks = new List<Link>();
             var conversationSequenceField = Field.Lookup(conversation.fields, "Sequence");
             if (conversationSequenceField != null && !string.IsNullOrEmpty(conversationSequenceField.value))
@@ -786,17 +824,19 @@ namespace PixelCrushers.DialogueSystem.Articy
             }
             conversation.dialogueEntries.Add(startEntry);
 
-            // Convert dialogue's in and out pins to passthrough group entries:
+            // Convert flow fragment's in and out pins to passthrough group entries:
             for (int i = 0; i < articyFlowFragment.pins.Count; i++)
             {
                 var pin = articyFlowFragment.pins[i];
-                if (pin.semantic == ArticyData.SemanticType.Output && prefs.RecursionMode == ConverterPrefs.RecursionModes.Off) continue;
+                var isInputPin = pin.semantic == ArticyData.SemanticType.Input;
+                var isOutputPin = pin.semantic == ArticyData.SemanticType.Output;
+                if (isOutputPin && prefs.RecursionMode == ConverterPrefs.RecursionModes.Off) continue;
                 var entryID = GetNextConversationEntryID(conversation);
                 var title = (pin.semantic == ArticyData.SemanticType.Input) ? "input" : "output";
                 var entry = template.CreateDialogueEntry(entryID, conversationID, title);
                 SetDialogueEntryParticipants(entry, conversation.ConversantID, conversation.ActorID);
                 entry.isGroup = true;
-                Field.SetValue(entry.fields, "Sequence", "Continue()", FieldType.Text);
+                //---No Sequence needed for group: Field.SetValue(entry.fields, "Sequence", "Continue()", FieldType.Text);
                 Field.SetValue(entry.fields, ArticyIdFieldTitle, pin.id, FieldType.Text);
 
                 if (pin.semantic == ArticyData.SemanticType.Input)
@@ -844,7 +884,7 @@ namespace PixelCrushers.DialogueSystem.Articy
             return conversation;
         }
 
-        private void ProcessHierarchy()
+        protected virtual void ProcessHierarchy()
         {
             onProgressCallback("Processing dialogue nodes", 0.4f);
             BuildDialogueEntriesFromNode(articyData.hierarchy.node, 0);
@@ -854,14 +894,74 @@ namespace PixelCrushers.DialogueSystem.Articy
             CheckJumpsForGroupNodes();
         }
 
-        private const int MaxRecursionDepth = 1000;
+        protected virtual void InsertDelayEvaluationNodesBeforeInputPins()
+        {
+            foreach (var conversation in database.conversations)
+            {
+                var numEntries = conversation.dialogueEntries.Count;
+                for (int i = 1; i < numEntries; i++)
+                {
+                    var parentEntry = conversation.dialogueEntries[i];
+                    if (string.IsNullOrEmpty(parentEntry.userScript)) continue;
+                    foreach (var link in parentEntry.outgoingLinks)
+                    {
+                        var childEntry = database.GetDialogueEntry(link);
+
+                        // If no conditions or reevaluate links is true, no need for buffer entry:
+                        if (string.IsNullOrEmpty(childEntry.conditionsString) || !prefs.DelayEvaluation) continue;
+
+                        // Parent has script and child has conditions, so create a buffer entry between them to delay evaluation:
+                        var childArticyId = Field.LookupValue(childEntry.fields, ArticyIdFieldTitle);
+
+                        // Look for buffer entry or create if necessary:
+                        DialogueEntry bufferEntry = null;
+                        foreach (var linkFromParent in parentEntry.outgoingLinks)
+                        {
+                            var endpoint = database.GetDialogueEntry(linkFromParent);
+                            if (endpoint == null) continue;
+                            if (endpoint.Title == "Delay Evaluation")
+                            {
+                                bufferEntry = endpoint;
+                                break;
+                            }
+                        }
+                        if (bufferEntry == null)
+                        {
+                            bufferEntry = CreateNewDialogueEntry(conversation, "Delay Evaluation", childArticyId + "-1");
+                            conversation.dialogueEntries.Add(bufferEntry);
+                            bufferEntry.isGroup = prefs.ConvertInstructionsAs == ConverterPrefs.CodeNodeMode.GroupEntry;
+                            bufferEntry.ActorID = GetNPCID(conversation);
+                            bufferEntry.Sequence = "Continue()";
+                            bufferEntry.outgoingLinks = new List<Link>() { new Link(link) };
+                        }
+                        else
+                        {
+                            bufferEntry.outgoingLinks.Add(new Link(link));
+                        }
+                        link.destinationDialogueID = bufferEntry.id;
+                    }
+                }
+            }
+        }
+
+        private int GetNPCID(Conversation conversation)
+        {
+            var conversant = database.GetActor(conversation.ConversantID);
+            if (conversant != null && !conversant.IsPlayer) return conversation.id;
+            var actor = database.GetActor(conversation.ActorID);
+            if (actor != null && !actor.IsPlayer) return actor.id;
+            var npc = database.actors.Find(x => !x.IsPlayer);
+            return (npc != null) ? npc.id : conversation.ConversantID;
+        }
+
+        protected const int MaxRecursionDepth = 1000;
 
         /// <summary>
         /// Processes a node in the hierarchy to build dialogue entries,
         /// also recursively processing the node's children.
         /// </summary>
         /// <param name='node'>Node to process.</param>
-        private void BuildDialogueEntriesFromNode(ArticyData.Node node, int recursionDepth)
+        protected virtual void BuildDialogueEntriesFromNode(ArticyData.Node node, int recursionDepth)
         {
             if (recursionDepth > MaxRecursionDepth)
             {
@@ -952,7 +1052,7 @@ namespace PixelCrushers.DialogueSystem.Articy
             }
         }
 
-        private void PrependFlowStackToConversationTitle(Conversation conversation)
+        protected virtual void PrependFlowStackToConversationTitle(Conversation conversation)
         {
             var isFlowFragmentModeConversationGroups = prefs.FlowFragmentMode == ConverterPrefs.FlowFragmentModes.ConversationGroups || prefs.FlowFragmentMode == ConverterPrefs.FlowFragmentModes.NestedConversationGroups;
             if (conversation == null || !isFlowFragmentModeConversationGroups || flowFragmentNameStack.Count <= 0) return;
@@ -964,7 +1064,7 @@ namespace PixelCrushers.DialogueSystem.Articy
             conversation.Title = s + conversation.Title;
         }
 
-        private void RecordPins(List<ArticyData.Pin> pins, DialogueEntry entry)
+        protected virtual void RecordPins(List<ArticyData.Pin> pins, DialogueEntry entry)
         {
             if (pins == null) return;
             for (int i = 0; i < pins.Count; i++)
@@ -973,14 +1073,14 @@ namespace PixelCrushers.DialogueSystem.Articy
             }
         }
 
-        private void RecordPin(ArticyData.Pin pin, DialogueEntry entry)
+        protected virtual void RecordPin(ArticyData.Pin pin, DialogueEntry entry)
         {
             if (pin == null || entry == null || entriesByPinID.ContainsKey(pin.id)) return;
             entriesByPinID.Add(pin.id, entry);
             Field.SetValue(entry.fields, (pin.semantic == ArticyData.SemanticType.Input) ? "InputId" : "OutputId", pin.id);
         }
 
-        private void ProcessConnections()
+        protected virtual void ProcessConnections()
         {
             // Process regular connections:
             foreach (var kvp in articyData.connections)
@@ -994,23 +1094,129 @@ namespace PixelCrushers.DialogueSystem.Articy
                 ProcessJumpConnection(kvp.Key, kvp.Value);
             }
 
+            //--- We've gone back to explicit input & output pins;
+            //--- no need for special dialogue-to-dialogue connections.
+            //// Process dialogue-to-dialogue connections:
+            //foreach (var kvp in articyData.connections)
+            //{
+            //    ProcessDialogueConnection(kvp.Value);
+            //}
+
             // Remove unused output entries:
             RemoveUnusedOutputEntries();
         }
 
-        private void ProcessConnectionNew(ArticyData.Connection connection)
+        protected virtual void ProcessConnectionNew(ArticyData.Connection connection)
         {
             if (connection == null) return;
-            if (!entriesByPinID.ContainsKey(connection.source.pinRef))
+
+            DialogueEntry sourceEntry, targetEntry;
+
+            //// See if source and target are dialogues:
+            //var sourceDialogue = LookupArticyDialogue(connection.source.idRef);
+            //var targetDialogue = LookupArticyDialogue(connection.target.idRef);
+
+            //// If connection is from dialogue to dialogue, wait until other connections are done:
+            //if (sourceDialogue != null && targetDialogue != null) return;
+
+            if (!entriesByPinID.TryGetValue(connection.source.pinRef, out sourceEntry))
             {
+                Debug.LogError($"Can't find output pin {connection.source.pinRef} for connection [{connection.source.idRef}/{connection.source.pinRef}]-->[{connection.target.idRef}/{connection.target.pinRef}]");
                 return;
             }
-            if (!entriesByPinID.ContainsKey(connection.target.pinRef))
+
+            if (!entriesByPinID.TryGetValue(connection.target.pinRef, out targetEntry))
             {
+                Debug.LogError($"Can't find input pin {connection.target.pinRef} for connection [{connection.source.idRef}/{connection.source.pinRef}]-->[{connection.target.idRef}/{connection.target.pinRef}]");
                 return;
             }
-            var sourceEntry = entriesByPinID[connection.source.pinRef];
-            var targetEntry = entriesByPinID[connection.target.pinRef];
+
+            CreateLinkToTarget(sourceEntry, targetEntry, connection);
+
+            //--- With explicit input & output pins entries, no need for this any more:
+            //// If connection is from dialogue, connect from <START> node, or
+            //// from <START> node's linked input node if present:
+            //if (sourceDialogue != null)
+            //{
+            //    var conversation = database.conversations.Find(x => string.Equals(x.LookupValue(ArticyIdFieldTitle), connection.source.idRef));
+            //    if (conversation == null) return;
+            //    var sourceStartEntry = conversation.GetFirstDialogueEntry();
+            //    sourceEntry = sourceStartEntry;
+            //    foreach (var linkFromStart in sourceStartEntry.outgoingLinks)
+            //    {
+            //        var entryFromStart = database.GetDialogueEntry(linkFromStart);
+            //        if (entryFromStart != null && entryFromStart.Title == "input")
+            //        {
+            //            sourceEntry = entryFromStart;
+            //            break;
+            //        }
+            //    }
+            //}
+            //// Otherwise connect from source entry:
+            //else
+            //{
+            //    if (!entriesByPinID.ContainsKey(connection.source.pinRef))
+            //    {
+            //        return;
+            //    }
+            //    sourceEntry = entriesByPinID[connection.source.pinRef];
+
+            //}
+
+            //// Either way, connect to target(s):
+            //if (entriesByPinID.ContainsKey(connection.target.pinRef))
+            //{
+            //    // Linking to a dialogue fragment (dialogue entry):
+            //    targetEntry = entriesByPinID[connection.target.pinRef];
+            //    CreateLinkToTarget(sourceEntry, targetEntry, connection);
+            //}
+            //else
+            //{
+            //    // Look for connection whose source pin id is this connection's target pin id:
+            //    var nextConn = FindConnectionWithSourcePin(connection.target.pinRef);
+            //    if (nextConn != null && entriesByPinID.ContainsKey(nextConn.target.pinRef))
+            //    {
+            //        targetEntry = entriesByPinID[nextConn.target.pinRef];
+            //        CreateLinkToTarget(sourceEntry, targetEntry, connection);
+            //    }
+            //    else if (targetDialogue != null)
+            //    {
+            //        // Linking to a dialogue (conversation):
+            //        var targetConversation = database.conversations.Find(x => string.Equals(x.LookupValue(ArticyIdFieldTitle), connection.target.idRef));
+            //        if (targetConversation == null)
+            //        {
+            //            Debug.LogWarning($"Dialogue System: Can't find target dialogue with Articy ID {connection.target.idRef} to link to it.");
+            //            return;
+            //        }
+            //        if (targetConversation.id == sourceEntry.conversationID)
+            //        {
+            //            // Connects to own dialogue; no link needed because it's already linked.
+            //            return;
+            //        }
+            //        var targetStartEntry = targetConversation.GetFirstDialogueEntry();
+            //        if (targetStartEntry == null) return;
+            //        targetEntry = targetStartEntry;
+            //        foreach (var linkFromStart in targetStartEntry.outgoingLinks)
+            //        {
+            //            var entryFromStart = database.GetDialogueEntry(linkFromStart);
+            //            if (entryFromStart == null) continue;
+            //            CreateLinkToTarget(sourceEntry, entryFromStart, connection);
+            //        }
+            //    }
+            //}
+        }
+
+        protected ArticyData.Connection FindConnectionWithSourcePin(string pinRef)
+        {
+            foreach (var conn in articyData.connections.Values)
+            {
+                if (conn.source.pinRef == pinRef) return conn;
+            }
+            return null;
+        }
+
+        protected virtual void CreateLinkToTarget(DialogueEntry sourceEntry, DialogueEntry targetEntry, ArticyData.Connection connection)
+        {
             var linksToSelf = sourceEntry.conversationID == targetEntry.conversationID && sourceEntry.id == targetEntry.id;
             if (!linksToSelf)
             {
@@ -1026,26 +1232,82 @@ namespace PixelCrushers.DialogueSystem.Articy
             MarkTargetUsed(targetEntry);
         }
 
-        private void ProcessJumpConnection(ArticyData.Jump jump, DialogueEntry jumpEntry)
+        protected virtual void ProcessDialogueConnection(ArticyData.Connection connection)
         {
-            if (jump == null || jumpEntry == null || !entriesByPinID.ContainsKey(jump.target.pinRef)) return;
-            var targetEntry = entriesByPinID[jump.target.pinRef];
-            Link link = new Link();
-            link.originConversationID = jumpEntry.conversationID;
-            link.originDialogueID = jumpEntry.id;
-            link.destinationConversationID = targetEntry.conversationID;
-            link.destinationDialogueID = targetEntry.id;
-            link.isConnector = false;
-            jumpEntry.outgoingLinks.Add(link);
-            MarkTargetUsed(targetEntry);
+            if (connection == null) return;
+
+            // See if source and target are dialogues:
+            var sourceDialogue = LookupArticyDialogue(connection.source.idRef);
+            if (sourceDialogue == null) return;
+            var targetDialogue = LookupArticyDialogue(connection.target.idRef);
+            if (targetDialogue == null) return;
+
+            // Get conversations:
+            var sourceConversation = database.conversations.Find(x => string.Equals(x.LookupValue(ArticyIdFieldTitle), connection.source.idRef));
+            if (sourceConversation == null) return;
+            var targetConversation = database.conversations.Find(x => string.Equals(x.LookupValue(ArticyIdFieldTitle), connection.target.idRef));
+            if (targetConversation == null) return;
+
+            // Connect from source dialogue entries that link to source dialogue to first entry in target dialogue:
+            var targetFirstEntry = targetConversation.GetFirstDialogueEntry();
+            if (targetFirstEntry == null) return;
+            foreach (var innerConnection in articyData.connections.Values)
+            {
+                // Find connections that link to source dialogue:
+                if (innerConnection.target.idRef != connection.source.idRef) continue;
+
+                // Make sure they're in source conversation:
+                var sourceEntry = sourceConversation.dialogueEntries.Find(x => Field.LookupValue(x.fields, ArticyIdFieldTitle) == innerConnection.source.idRef);
+                if (sourceEntry == null) continue; // Not in this conversation, so skip.
+
+                if (sourceEntry.outgoingLinks == null) sourceEntry.outgoingLinks = new List<Link>();
+                sourceEntry.outgoingLinks.Add(new Link(sourceConversation.id, sourceEntry.id, targetConversation.id, targetFirstEntry.id));
+            }
         }
 
-        private void MarkTargetUsed(DialogueEntry targetEntry)
+        protected virtual void ProcessJumpConnection(ArticyData.Jump jump, DialogueEntry jumpEntry)
+        {
+            if (jump == null || jumpEntry == null) return;
+
+            // See if jump connects to a dialogue fragment:
+            if (entriesByPinID.ContainsKey(jump.target.pinRef))
+            {
+                var targetEntry = entriesByPinID[jump.target.pinRef];
+                Link link = new Link();
+                link.originConversationID = jumpEntry.conversationID;
+                link.originDialogueID = jumpEntry.id;
+                link.destinationConversationID = targetEntry.conversationID;
+                link.destinationDialogueID = targetEntry.id;
+                link.isConnector = false;
+                jumpEntry.outgoingLinks.Add(link);
+                MarkTargetUsed(targetEntry);
+            }
+            else
+            {
+                // Otherwise check if jump connects to a dialogue:
+                var targetConversation = database.conversations.Find(x => string.Equals(x.LookupValue(ArticyIdFieldTitle), jump.target.idRef));
+                if (targetConversation != null)
+                {
+                    var firstEntry = targetConversation.GetFirstDialogueEntry();
+                    Link link = new Link();
+                    link.originConversationID = jumpEntry.conversationID;
+                    link.originDialogueID = jumpEntry.id;
+                    link.destinationConversationID = firstEntry.conversationID;
+                    link.destinationDialogueID = firstEntry.id;
+                    link.isConnector = false;
+                    jumpEntry.outgoingLinks.Add(link);
+                    MarkTargetUsed(firstEntry);
+
+                }
+            }
+        }
+
+        protected virtual void MarkTargetUsed(DialogueEntry targetEntry)
         {
             unusedOutputEntries.Remove(targetEntry);
         }
 
-        private void RemoveUnusedOutputEntries()
+        protected virtual void RemoveUnusedOutputEntries()
         {
             for (int i = 0; i < unusedOutputEntries.Count; i++)
             {
@@ -1056,37 +1318,42 @@ namespace PixelCrushers.DialogueSystem.Articy
             }
         }
 
-        private ArticyData.DialogueFragment LookupArticyDialogueFragment(string id)
+        protected virtual ArticyData.Dialogue LookupArticyDialogue(string id)
+        {
+            return articyData.dialogues.ContainsKey(id) ? articyData.dialogues[id] : null;
+        }
+
+        protected virtual ArticyData.DialogueFragment LookupArticyDialogueFragment(string id)
         {
             return articyData.dialogueFragments.ContainsKey(id) ? articyData.dialogueFragments[id] : null;
         }
 
-        private ArticyData.Hub LookupArticyHub(string id)
+        protected virtual ArticyData.Hub LookupArticyHub(string id)
         {
             return articyData.hubs.ContainsKey(id) ? articyData.hubs[id] : null;
         }
 
-        private ArticyData.Jump LookupArticyJump(string id)
+        protected virtual ArticyData.Jump LookupArticyJump(string id)
         {
             return articyData.jumps.ContainsKey(id) ? articyData.jumps[id] : null;
         }
 
-        private ArticyData.Condition LookupArticyCondition(string id)
+        protected virtual ArticyData.Condition LookupArticyCondition(string id)
         {
             return articyData.conditions.ContainsKey(id) ? articyData.conditions[id] : null;
         }
 
-        private ArticyData.Instruction LookupArticyInstruction(string id)
+        protected virtual ArticyData.Instruction LookupArticyInstruction(string id)
         {
             return articyData.instructions.ContainsKey(id) ? articyData.instructions[id] : null;
         }
 
-        private ArticyData.Connection LookupArticyConnection(string id)
+        protected virtual ArticyData.Connection LookupArticyConnection(string id)
         {
             return articyData.connections.ContainsKey(id) ? articyData.connections[id] : null;
         }
 
-        private ArticyData.FlowFragment LookupArticyFlowFragment(string id)
+        protected virtual ArticyData.FlowFragment LookupArticyFlowFragment(string id)
         {
             return articyData.flowFragments.ContainsKey(id) ? articyData.flowFragments[id] : null;
         }
@@ -1097,7 +1364,7 @@ namespace PixelCrushers.DialogueSystem.Articy
         /// </summary>
         /// <param name='conversation'>Conversation.</param>
         /// <param name='fragment'>Fragment.</param>
-        private void BuildDialogueEntryFromDialogueFragment(Conversation conversation, ArticyData.DialogueFragment fragment)
+        protected virtual void BuildDialogueEntryFromDialogueFragment(Conversation conversation, ArticyData.DialogueFragment fragment)
         {
             if (fragment == null || conversation == null) return;
             var entry = CreateNewDialogueEntry(conversation, fragment.displayName.DefaultText, fragment.id);
@@ -1120,8 +1387,14 @@ namespace PixelCrushers.DialogueSystem.Articy
                     Field.SetValue(entry.fields, "Description", description);
                     break;
             }
+            var conditionsField = Field.Lookup(entry.fields, "Conditions");
+            if (conditionsField != null) // Conditions field is handled differently.
+            {
+                entry.conditionsString = AddToUserScript(entry.conditionsString, conditionsField.value);
+                entry.fields.Remove(conditionsField);
+            }
             var scriptField = Field.Lookup(entry.fields, "Script");
-            if (scriptField != null) // Script is handled differently.
+            if (scriptField != null) // Script field is handled differently.
             {
                 entry.userScript = AddToUserScript(entry.userScript, scriptField.value);
                 entry.fields.Remove(scriptField);
@@ -1155,7 +1428,7 @@ namespace PixelCrushers.DialogueSystem.Articy
             //}
         }
 
-        private bool DoesLinkExist(List<Link> outgoingLinks, DialogueEntry destination)
+        protected virtual bool DoesLinkExist(List<Link> outgoingLinks, DialogueEntry destination)
         {
             if (outgoingLinks == null || destination == null) return false;
             for (int i = 0; i < outgoingLinks.Count; i++)
@@ -1169,7 +1442,7 @@ namespace PixelCrushers.DialogueSystem.Articy
             return false;
         }
 
-        private void AddFlowFragmentAsDialogueEntry(Conversation conversation, ArticyData.FlowFragment flowFragment)
+        protected virtual void AddFlowFragmentAsDialogueEntry(Conversation conversation, ArticyData.FlowFragment flowFragment)
         {
             if (flowFragment == null || conversation == null) return;
             var entry = CreateNewDialogueEntry(conversation, flowFragment.displayName.DefaultText, flowFragment.id);
@@ -1191,6 +1464,7 @@ namespace PixelCrushers.DialogueSystem.Articy
             }
             entry.isGroup = true;
             ConvertPinExpressionsToConditionsAndScripts(entry, flowFragment.pins);
+            if (entry.isGroup) entry.ActorID = GetNPCID(conversation);
             RecordPins(flowFragment.pins, entry);
         }
 
@@ -1203,16 +1477,17 @@ namespace PixelCrushers.DialogueSystem.Articy
         /// <param name='hub'>
         /// Hub.
         /// </param>
-        private void BuildDialogueEntryFromHub(Conversation conversation, ArticyData.Hub hub)
+        protected virtual void BuildDialogueEntryFromHub(Conversation conversation, ArticyData.Hub hub)
         {
             if (hub == null || conversation == null) return;
-            DialogueEntry groupEntry = CreateNewDialogueEntry(conversation, hub.displayName.DefaultText, hub.id);
-            groupEntry.canvasRect = new Rect(hub.position.x, hub.position.y, DialogueEntry.CanvasRectWidth, DialogueEntry.CanvasRectHeight);
-            SetFeatureFields(groupEntry.fields, hub.features);
-            ConvertLocalizableText(groupEntry, "Title", hub.displayName);
-            groupEntry.isGroup = true;
-            ConvertPinExpressionsToConditionsAndScripts(groupEntry, hub.pins);
-            RecordPins(hub.pins, groupEntry);
+            DialogueEntry hubEntry = CreateNewDialogueEntry(conversation, hub.displayName.DefaultText, hub.id);
+            hubEntry.canvasRect = new Rect(hub.position.x, hub.position.y, DialogueEntry.CanvasRectWidth, DialogueEntry.CanvasRectHeight);
+            SetFeatureFields(hubEntry.fields, hub.features);
+            ConvertLocalizableText(hubEntry, "Title", hub.displayName);
+            hubEntry.isGroup = true; // May be set false if output pin has code.
+            ConvertPinExpressionsToConditionsAndScripts(hubEntry, hub.pins);
+            if (hubEntry.isGroup) hubEntry.ActorID = GetNPCID(conversation);
+            RecordPins(hub.pins, hubEntry);
         }
 
         /// <summary>
@@ -1224,7 +1499,7 @@ namespace PixelCrushers.DialogueSystem.Articy
         /// <param name='jump'>
         /// Jump.
         /// </param>
-        private void BuildDialogueEntryFromJump(Conversation conversation, ArticyData.Jump jump)
+        protected virtual void BuildDialogueEntryFromJump(Conversation conversation, ArticyData.Jump jump)
         {
             if (jump == null || conversation == null) return;
             DialogueEntry jumpEntry = CreateNewDialogueEntry(conversation, jump.displayName.DefaultText, jump.id);
@@ -1232,8 +1507,8 @@ namespace PixelCrushers.DialogueSystem.Articy
             SetFeatureFields(jumpEntry.fields, jump.features);
             ConvertLocalizableText(jumpEntry, "Title", jump.displayName);
             jumpEntry.isGroup = true; // We'll set isGroup correctly in a final pass in CheckJumpsForGroupNodes.
-            //jumpEntry.currentSequence = "Continue()";
             ConvertPinExpressionsToConditionsAndScripts(jumpEntry, jump.pins);
+            if (jumpEntry.isGroup) jumpEntry.ActorID = GetNPCID(conversation);
             RecordPins(jump.pins, jumpEntry);
             jumpsToProcess.Add(jump, jumpEntry);
 
@@ -1244,8 +1519,8 @@ namespace PixelCrushers.DialogueSystem.Articy
                 flowEntry.canvasRect = new Rect(jump.position.x, jump.position.y + 32f, DialogueEntry.CanvasRectWidth, DialogueEntry.CanvasRectHeight);
                 SetFeatureFields(flowEntry.fields, flowFragment.features);
                 flowEntry.isGroup = true;
-                //flowEntry.currentSequence = "Continue()";
                 ConvertPinExpressionsToConditionsAndScripts(flowEntry, flowFragment.pins);
+                if (flowEntry.isGroup) flowEntry.ActorID = GetNPCID(conversation);
                 RecordPins(flowFragment.pins, flowEntry);
             }
         }
@@ -1258,26 +1533,14 @@ namespace PixelCrushers.DialogueSystem.Articy
         /// scripts are always processed when passing through the group, which we don't want to do
         /// if we don't end up using the jump's destination entries.
         /// </summary>
-        private void CheckJumpsForGroupNodes()
+        protected virtual void CheckJumpsForGroupNodes()
         {
             var jumpEntries = new HashSet<DialogueEntry>(jumpsToProcess.Values);
             foreach (var jumpEntry in jumpEntries)
             {
                 if (jumpEntry == null) continue;
                 jumpEntry.isGroup = string.IsNullOrEmpty(jumpEntry.userScript);
-                //jumpEntry.isGroup = true;
-                //for (int i = 0; i < jumpEntry.outgoingLinks.Count; i++)
-                //{
-                //    var destEntry = database.GetDialogueEntry(jumpEntry.outgoingLinks[i]);
-                //    if (destEntry == null) continue;
-                //    var linksToJump = jumpEntries.Contains(jumpEntry);
-                //    var linksToGroup = destEntry.isGroup;
-                //    if (!(linksToJump || linksToGroup))
-                //    {
-                //        jumpEntry.isGroup = false;
-                //        break;
-                //    }
-                //}
+                if (!jumpEntry.isGroup && string.IsNullOrEmpty(jumpEntry.Sequence)) jumpEntry.Sequence = "Continue()";
             }
         }
 
@@ -1287,7 +1550,7 @@ namespace PixelCrushers.DialogueSystem.Articy
         /// </summary>
         /// <param name='conversation'>Conversation.</param>
         /// <param name='condition'>Condition.</param>
-        private void BuildDialogueEntriesFromCondition(Conversation conversation, ArticyData.Condition condition)
+        protected virtual void BuildDialogueEntriesFromCondition(Conversation conversation, ArticyData.Condition condition)
         {
             if (condition == null || conversation == null) return;
 
@@ -1298,12 +1561,12 @@ namespace PixelCrushers.DialogueSystem.Articy
             conditionEntry.ConversantID = conversation.ActorID;
             conditionEntry.currentDialogueText = string.Empty;
             conditionEntry.currentMenuText = string.Empty;
-            //conditionEntry.currentSequence = "Continue()";
             conditionEntry.isGroup = true;
+            if (conditionEntry.isGroup) conditionEntry.ActorID = GetNPCID(conversation);
 
-            string trueLuaConditions = ConvertExpression(condition.expression);
+            string trueLuaConditions = ConvertExpression(condition.expression, true);
             string falseLuaConditions = string.IsNullOrEmpty(trueLuaConditions)
-                ? "false" : string.Format("({0}) == false", trueLuaConditions);
+                ? "false" : string.Format("({0}) == false", RemoveTrailingSemicolon(trueLuaConditions));
 
             // Separate child nodes for each output pin:
             float y = condition.position.y;
@@ -1312,7 +1575,7 @@ namespace PixelCrushers.DialogueSystem.Articy
                 if (pin.semantic == ArticyData.SemanticType.Input)
                 {
                     RecordPin(pin, conditionEntry);
-                    conditionEntry.conditionsString = AddToConditions(conditionEntry.conditionsString, ConvertExpression(pin.expression));
+                    conditionEntry.conditionsString = AddToConditions(conditionEntry.conditionsString, ConvertExpression(pin.expression, true));
                 }
                 else if (pin.semantic == ArticyData.SemanticType.Output)
                 {
@@ -1321,15 +1584,14 @@ namespace PixelCrushers.DialogueSystem.Articy
                     var entry = CreateNewDialogueEntry(conversation, title, condition.id);
                     entry.canvasRect = new Rect(condition.position.x, y, DialogueEntry.CanvasRectWidth, DialogueEntry.CanvasRectHeight);
                     y += 2f;
-                    entry.ActorID = conversation.ConversantID;
+                    entry.ActorID = GetNPCID(conversation); // conversation.ConversantID;
                     entry.ConversantID = conversation.ActorID;
                     entry.currentDialogueText = string.Empty;
                     entry.currentMenuText = string.Empty;
-                    //entry.currentSequence = "Continue()";
                     entry.isGroup = true;
                     string luaConditions = isTruePath ? trueLuaConditions : falseLuaConditions;
                     entry.conditionsString = AddToConditions(entry.conditionsString, luaConditions);
-                    entry.userScript = AddToUserScript(entry.userScript, ConvertExpression(pin.expression));
+                    entry.userScript = AddToUserScript(entry.userScript, ConvertExpression(pin.expression, false));
 
                     Link link = new Link();
                     link.originConversationID = conditionEntry.conversationID;
@@ -1343,30 +1605,74 @@ namespace PixelCrushers.DialogueSystem.Articy
             }
         }
 
-        private void BuildDialogueEntryFromInstruction(Conversation conversation, ArticyData.Instruction instruction)
+        protected string RemoveTrailingSemicolon(string s)
+        {
+            if (!string.IsNullOrEmpty(s) && s[s.Length - 1] == ';')
+            {
+                return s.Substring(0, s.Length - 1);
+            }
+            else
+            {
+                return s;
+            }
+        }
+
+        protected virtual void BuildDialogueEntryFromInstruction(Conversation conversation, ArticyData.Instruction instruction)
         {
             if (instruction == null || conversation == null) return;
             DialogueEntry entry = CreateNewDialogueEntry(conversation, instruction.expression, instruction.id);
-            entry.ActorID = conversation.ConversantID;
+            entry.canvasRect = new Rect(instruction.position.x, instruction.position.y, DialogueEntry.CanvasRectWidth, DialogueEntry.CanvasRectHeight);
+            entry.ActorID = GetNPCID(conversation);
             entry.ConversantID = conversation.ActorID;
             entry.currentDialogueText = string.Empty;
             entry.currentMenuText = string.Empty;
-            entry.currentSequence = "Continue()"; // Since it's not a group, make sure we continue past it immediately.
-            entry.isGroup = false; // Since groups are processed one level ahead, don't make this a group: entry.isGroup = true;
+            entry.currentSequence = "Continue()"; // If it's not a group, make sure we continue past it immediately.
+            entry.isGroup = prefs.ConvertInstructionsAs == ConverterPrefs.CodeNodeMode.GroupEntry;
             entry.conditionsString = string.Empty;
-            entry.userScript = AddToUserScript(entry.userScript, ConvertExpression(instruction.expression));
+            entry.userScript = AddToUserScript(entry.userScript, ConvertExpression(instruction.expression, false));
             ConvertPinExpressionsToConditionsAndScripts(entry, instruction.pins);
+            if (entry.isGroup) entry.ActorID = GetNPCID(conversation);
             RecordPins(instruction.pins, entry);
         }
 
-        private string AddToConditions(string conditions, string moreConditions)
+        protected virtual string AddToConditions(string conditions, string moreConditions)
         {
-            return string.IsNullOrEmpty(conditions) ? moreConditions : string.Format("({0}) and ({1})", conditions, moreConditions);
+            if (string.IsNullOrEmpty(conditions) && string.IsNullOrEmpty(moreConditions))
+            {
+                return string.Empty;
+            }
+            else if (string.IsNullOrEmpty(conditions))
+            {
+                return moreConditions;
+            }
+            else if (string.IsNullOrEmpty(moreConditions))
+            {
+                return conditions;
+            }
+            else
+            {
+                return string.Format("({0}) and ({1})", conditions, moreConditions);
+            }
         }
 
-        private string AddToUserScript(string script, string moreScript)
+        protected virtual string AddToUserScript(string script, string moreScript)
         {
-            return string.IsNullOrEmpty(script) ? moreScript : string.Format("{0}; {1}", script, moreScript);
+            if (string.IsNullOrEmpty(script) && string.IsNullOrEmpty(moreScript))
+            {
+                return string.Empty;
+            }
+            else if (string.IsNullOrEmpty(script))
+            {
+                return moreScript;
+            }
+            else if (string.IsNullOrEmpty(moreScript))
+            {
+                return script;
+            }
+            else
+            {
+                return string.Format("{0}; {1}", script, moreScript);
+            }
         }
 
         /// <summary>
@@ -1376,7 +1682,7 @@ namespace PixelCrushers.DialogueSystem.Articy
         /// <param name='conversation'>Conversation.</param>
         /// <param name='title'>Title.</param>
         /// <param name='articyId'>Articy identifier.</param>
-        private DialogueEntry CreateNewDialogueEntry(Conversation conversation, string title, string articyId)
+        protected DialogueEntry CreateNewDialogueEntry(Conversation conversation, string title, string articyId)
         {
             if (conversation == null)
             {
@@ -1398,22 +1704,32 @@ namespace PixelCrushers.DialogueSystem.Articy
         /// <param name='pins'>Pins./param>
         /// <param name="convertInput">Apply pin's input conditions to entry.</param>
         /// <param name="convertOutput">Apply pin's output conditions to entry.</param>
-        private void ConvertPinExpressionsToConditionsAndScripts(DialogueEntry entry, List<ArticyData.Pin> pins, bool convertInput = true, bool convertOutput = true)
+        protected virtual void ConvertPinExpressionsToConditionsAndScripts(DialogueEntry entry, List<ArticyData.Pin> pins, bool convertInput = true, bool convertOutput = true)
         {
             foreach (ArticyData.Pin pin in pins)
             {
                 switch (pin.semantic)
                 {
                     case ArticyData.SemanticType.Input:
-                        if (convertInput)
+                        if (convertInput && entry.Title != "output")
                         {
-                            entry.conditionsString = AddToConditions(entry.conditionsString, ConvertExpression(pin.expression));
+                            entry.conditionsString = AddToConditions(entry.conditionsString, ConvertExpression(pin.expression, true));
                         }
                         break;
                     case ArticyData.SemanticType.Output:
-                        if (convertOutput)
+                        if (convertOutput && entry.Title != "input")
                         {
-                            entry.userScript = AddToUserScript(entry.userScript, ConvertExpression(pin.expression));
+                            entry.userScript = AddToUserScript(entry.userScript, ConvertExpression(pin.expression, false));
+                            if (!string.IsNullOrEmpty(entry.userScript) && prefs.ConvertInstructionsAs != ConverterPrefs.CodeNodeMode.GroupEntry)
+                            {
+                                entry.isGroup = false;
+                                if (string.IsNullOrEmpty(entry.Sequence) &&
+                                    string.IsNullOrEmpty(entry.DialogueText) &&
+                                    string.IsNullOrEmpty(entry.MenuText))
+                                {
+                                    entry.Sequence = "Continue()";
+                                }
+                            }
                         }
                         break;
                     default:
@@ -1428,9 +1744,15 @@ namespace PixelCrushers.DialogueSystem.Articy
         /// </summary>
         /// <returns>A Lua version of the expression.</returns>
         /// <param name='expression'>articy expresso expression.</param>
-        public static string ConvertExpression(string expression)
+        public static string ConvertExpression(string expression, bool isCondition = false)
         {
             if (string.IsNullOrEmpty(expression)) return expression;
+
+            // Special "hub" codes defined in Articy:
+            if (expression == "unseen") return "Dialog[thisID].SimStatus ~= \"WasDisplayed\"";
+            if (expression == "fallback()") return string.Empty;
+
+            if (isCondition && expression.Trim().StartsWith("//") && !expression.Contains("\n")) return string.Empty;
 
             // If already Lua, return it:
             if (expression.Contains("Variable[")) return expression;
@@ -1439,10 +1761,11 @@ namespace PixelCrushers.DialogueSystem.Articy
             if (!expression.Contains(";")) return ConvertSingleExpression(expression);
 
             var s = string.Empty;
-            var singleExpressions = expression.Split(';'); // TO DO: Handle semicolons nested inside string literals.
+            var singleExpressions = expression.Split(';'); // [TODO]: Handle semicolons nested inside string literals.
             for (int i = 0; i < singleExpressions.Length; i++)
             {
                 var singleExpression = singleExpressions[i];
+                if (isCondition && singleExpression.Trim().StartsWith("//")) continue;
                 if (string.IsNullOrEmpty(singleExpression)) continue;
                 if (s.Length > 0) s += ";\n";
                 s += ConvertSingleExpression(singleExpression);
@@ -1481,18 +1804,18 @@ namespace PixelCrushers.DialogueSystem.Articy
         /// </summary>
         /// <returns>A Lua version of the expression.</returns>
         /// <param name='expression'>articy expresso expression.</param>
-        private static string ConvertExpressionFragment(string expression)
+        protected static string ConvertExpressionFragment(string expression)
         {
             if (string.IsNullOrEmpty(expression)) return expression;
+
+            // Convert comments:
+            string s = expression.Trim().Replace("///", "").Replace("//", "--");
 
             // If already Lua, return it:
             if (expression.Contains("Variable[")) return expression;
 
-            // Convert comments:
-            string s = expression.Trim().Replace("//", "--");
-
             // Convert random to math.random:
-            s = s.Replace("random(", "math.random(").Replace("random (", "math.random(");
+            s = Regex.Replace(s, @"(?<!math\.)random\(", "math.random(");
 
             // Convert conditionals:
             s = s.Replace("&&", " and ");
@@ -1518,7 +1841,13 @@ namespace PixelCrushers.DialogueSystem.Articy
             }
 
             // Convert negation (!) to "==false":
-            s = s.Replace("!Variable", "false == Variable");
+            s = s.Replace("!Variable", "not Variable");
+            s = s.Replace("!(", "not (");
+            const string negatedFunctionPattern = @"!\b(_\w+|[\w-[0-9_]]\w*)\b";
+            s = Regex.Replace(s, negatedFunctionPattern, (match) =>
+            {
+                return "not " + match.Value.Substring(1);
+            });
 
             // Convert arithmetic assignment operators (e.g., +=):
             if (ContainsArithmeticAssignment(s))
@@ -1546,14 +1875,16 @@ namespace PixelCrushers.DialogueSystem.Articy
             return variableName + " = " + variableName + " " + operation + " 1";
         }
 
-        private static bool ContainsArithmeticAssignment(string s)
+        protected static bool ContainsArithmeticAssignment(string s)
         {
             return (s != null) && (s.Contains("+=") || s.Contains("-="));
         }
 
-        private void ConvertLocalizableText(DialogueEntry entry, string baseFieldTitle, ArticyData.LocalizableText localizableText, bool replaceNewlines = false)
+        protected virtual void ConvertLocalizableText(DialogueEntry entry, string baseFieldTitle, ArticyData.LocalizableText localizableText, bool replaceNewlines = false)
         {
             if (entry == null) return;
+            var defaultText = localizableText.DefaultText;
+            if (!string.IsNullOrEmpty(defaultText)) Field.SetValue(entry.fields, baseFieldTitle, defaultText);
             foreach (KeyValuePair<string, string> kvp in localizableText.localizedString)
             {
                 if (string.IsNullOrEmpty(kvp.Key))
@@ -1568,7 +1899,7 @@ namespace PixelCrushers.DialogueSystem.Articy
             }
         }
 
-        private void ConvertLocalizableText(List<Field> fields, string baseFieldTitle, ArticyData.LocalizableText localizableText)
+        protected virtual void ConvertLocalizableText(List<Field> fields, string baseFieldTitle, ArticyData.LocalizableText localizableText)
         {
             foreach (KeyValuePair<string, string> kvp in localizableText.localizedString)
             {
@@ -1584,7 +1915,7 @@ namespace PixelCrushers.DialogueSystem.Articy
             }
         }
 
-        private string RemoveFormattingTags(string s, bool replaceNewlines = false)
+        protected virtual string RemoveFormattingTags(string s, bool replaceNewlines = false)
         {
             if (string.IsNullOrEmpty(s)) return s;
             if (replaceNewlines && s.Contains(@"\n")) s = s.Replace(@"\n", "\n");
@@ -1603,7 +1934,7 @@ namespace PixelCrushers.DialogueSystem.Articy
         /// Sets a conversation's start cutscene to None() if it's otherwise not set.
         /// </summary>
         /// <param name='conversation'>Conversation.</param>
-        private static void SetConversationStartCutsceneToNone(Conversation conversation)
+        protected static void SetConversationStartCutsceneToNone(Conversation conversation)
         {
             DialogueEntry entry = conversation.GetFirstDialogueEntry();
             if (entry == null)
@@ -1616,7 +1947,7 @@ namespace PixelCrushers.DialogueSystem.Articy
             }
         }
 
-        private Conversation FindConversationByArticyId(string articyId)
+        protected virtual Conversation FindConversationByArticyId(string articyId)
         {
             foreach (var conversation in database.conversations)
             {
@@ -1625,7 +1956,7 @@ namespace PixelCrushers.DialogueSystem.Articy
             return null;
         }
 
-        private DialogueEntry FindDialogueEntryByArticyId(Conversation conversation, string articyId)
+        protected virtual DialogueEntry FindDialogueEntryByArticyId(Conversation conversation, string articyId)
         {
             if (conversation == null) return null;
 
@@ -1647,7 +1978,7 @@ namespace PixelCrushers.DialogueSystem.Articy
             return null;
         }
 
-        private DialogueEntry FindDialogueEntryByArticyId(string articyId)
+        protected virtual DialogueEntry FindDialogueEntryByArticyId(string articyId)
         {
             if (entriesByArticyId.ContainsKey(articyId))
             {
@@ -1657,7 +1988,7 @@ namespace PixelCrushers.DialogueSystem.Articy
             return null;
         }
 
-        private List<DialogueEntry> FindAllDialogueEntriesByArticyId(string articyId)
+        protected virtual List<DialogueEntry> FindAllDialogueEntriesByArticyId(string articyId)
         {
             if (entriesByArticyId.ContainsKey(articyId))
             {
@@ -1666,7 +1997,7 @@ namespace PixelCrushers.DialogueSystem.Articy
             return new List<DialogueEntry>();
         }
 
-        private ArticyData.FlowFragment FindFlowFragment(string articyId)
+        protected virtual ArticyData.FlowFragment FindFlowFragment(string articyId)
         {
             foreach (ArticyData.FlowFragment articyFlowFragment in articyData.flowFragments.Values)
             {
@@ -1677,7 +2008,7 @@ namespace PixelCrushers.DialogueSystem.Articy
             return null;
         }
 
-        private Actor FindActorByArticyId(string articyId)
+        protected virtual Actor FindActorByArticyId(string articyId)
         {
             foreach (Actor actor in database.actors)
             {
@@ -1686,7 +2017,7 @@ namespace PixelCrushers.DialogueSystem.Articy
             return null;
         }
 
-        private Actor FindActorByTechnicalName(string technicalName)
+        protected virtual Actor FindActorByTechnicalName(string technicalName)
         {
             foreach (Actor actor in database.actors)
             {
@@ -1695,7 +2026,7 @@ namespace PixelCrushers.DialogueSystem.Articy
             return null;
         }
 
-        private Actor FindActorByDisplayName(string displayName)
+        protected virtual Actor FindActorByDisplayName(string displayName)
         {
             foreach (Actor actor in database.actors)
             {
@@ -1704,7 +2035,7 @@ namespace PixelCrushers.DialogueSystem.Articy
             return null;
         }
 
-        private int FindActorIdFromArticyDialogue(ArticyData.Dialogue articyDialogue, int index, int defaultActorID)
+        protected virtual int FindActorIdFromArticyDialogue(ArticyData.Dialogue articyDialogue, int index, int defaultActorID)
         {
             Actor actor = null;
             if (0 <= index && index < articyDialogue.references.Count)
@@ -1714,15 +2045,15 @@ namespace PixelCrushers.DialogueSystem.Articy
             return (actor != null) ? actor.id : (prefs.UseDefaultActorsIfNoneAssignedToDialogue ? defaultActorID : -1);
         }
 
-        private void SplitPipesIntoEntries()
+        protected virtual void SplitPipesIntoEntries()
         {
             foreach (var conversation in database.conversations)
             {
-                conversation.SplitPipesIntoEntries();
+                conversation.SplitPipesIntoEntries(true, prefs.TrimWhitespace, ArticyIdFieldTitle);
             }
         }
 
-        private void SortAllLinksByPosition() // articy orders links by Y position.
+        protected virtual void SortAllLinksByPosition() // articy orders links by Y position.
         {
             foreach (var conversation in database.conversations)
             {
@@ -1730,7 +2061,7 @@ namespace PixelCrushers.DialogueSystem.Articy
             }
         }
 
-        private void SortLinksByPosition(Conversation conversation)
+        protected virtual void SortLinksByPosition(Conversation conversation)
         {
             // Sort by each element's Y position:
             foreach (var entry in conversation.dialogueEntries)
@@ -1784,7 +2115,7 @@ namespace PixelCrushers.DialogueSystem.Articy
         /// If a dialogue fragment has an arrow to the dialogue's endpoint, redirect it to the dialogue's first external link.
         /// If the dialogue doesn't have an external link, remove the arrow (link).
         /// </summary>
-        private void RedirectLinkbacksToStartToLinkOutFromStart()
+        protected virtual void RedirectLinkbacksToStartToLinkOutFromStart()
         {
             foreach (var conversation in database.conversations)
             {
@@ -1815,7 +2146,7 @@ namespace PixelCrushers.DialogueSystem.Articy
             }
         }
 
-        private bool DoesEntryLinkOutsideConversation(DialogueEntry entry)
+        protected virtual bool DoesEntryLinkOutsideConversation(DialogueEntry entry)
         {
             if (entry == null) return false;
             foreach (var link in entry.outgoingLinks)
@@ -1825,7 +2156,7 @@ namespace PixelCrushers.DialogueSystem.Articy
             return false;
         }
 
-        private void ConvertVoiceOverProperties()
+        protected virtual void ConvertVoiceOverProperties()
         {
             foreach (var conversation in database.conversations)
             {
@@ -1836,7 +2167,7 @@ namespace PixelCrushers.DialogueSystem.Articy
             }
         }
 
-        private void ConvertVoiceOverProperty(DialogueEntry entry)
+        protected virtual void ConvertVoiceOverProperty(DialogueEntry entry)
         {
             if (entry == null) return;
             var voiceOverPropertyField = Field.Lookup(entry.fields, prefs.VoiceOverProperty);
@@ -1852,7 +2183,7 @@ namespace PixelCrushers.DialogueSystem.Articy
             entry.fields.Add(new Field(DialogueDatabase.VoiceOverFileFieldName, Path.GetFileNameWithoutExtension(asset.assetFilename), FieldType.Text));
         }
 
-        private void FindPortraitTextureInResources(Actor actor)
+        protected virtual void FindPortraitTextureInResources(Actor actor)
         {
             if (actor == null || actor.portrait != null) return;
             string textureName = actor.textureName;
@@ -1877,7 +2208,7 @@ namespace PixelCrushers.DialogueSystem.Articy
             }
         }
 
-        private Texture2D LoadTexture(string originalPath)
+        protected virtual Texture2D LoadTexture(string originalPath)
         {
             string filename = Path.GetFileNameWithoutExtension(originalPath).Replace('\\', '/');
             if (Application.isPlaying)
@@ -1894,7 +2225,7 @@ namespace PixelCrushers.DialogueSystem.Articy
 
         #region Em Var Set
 
-        private void ConvertEmVarSet()
+        protected virtual void ConvertEmVarSet()
         {
             for (int i = 0; i < DialogueDatabase.NumEmphasisSettings; i++)
             {
@@ -1902,7 +2233,7 @@ namespace PixelCrushers.DialogueSystem.Articy
             }
         }
 
-        private void ConvertEmVars(ArticyEmVars emVars, EmphasisSetting emSetting)
+        protected virtual void ConvertEmVars(ArticyEmVars emVars, EmphasisSetting emSetting)
         {
             if (emVars == null || emSetting == null) return;
             var colorVar = GetEmVar(emVars.color);
@@ -1915,7 +2246,7 @@ namespace PixelCrushers.DialogueSystem.Articy
             emSetting.underline = (underlineVar != null) ? underlineVar.InitialBoolValue : false;
         }
 
-        private Variable GetEmVar(string variableName)
+        protected virtual Variable GetEmVar(string variableName)
         {
             return string.IsNullOrEmpty(variableName) ? null : database.GetVariable(variableName);
         }

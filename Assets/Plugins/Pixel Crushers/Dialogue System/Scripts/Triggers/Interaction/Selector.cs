@@ -3,6 +3,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 using PixelCrushers.DialogueSystem.UnityGUI;
+using UnityEngine.Serialization;
 
 namespace PixelCrushers.DialogueSystem
 {
@@ -27,7 +28,7 @@ namespace PixelCrushers.DialogueSystem
     /// enabled or disabled.
     /// </summary>
     [AddComponentMenu("")] // Use wrapper.
-    public class Selector : MonoBehaviour
+    public class Selector : MonoBehaviour, IEventSystemUser
     {
 
         /// <summary>
@@ -101,6 +102,12 @@ namespace PixelCrushers.DialogueSystem
         public bool raycastAll = false;
 
         /// <summary>
+        /// When Select At is set to Mouse Position, allow selection even when mouse is over a UI object. If unticked, don't select when mouse is blocked by a UI object.
+        /// </summary>
+        [Tooltip("When Select At is set to Mouse Position, allow selection even when mouse is over a UI object. If unticked, don't select when mouse is blocked by a UI object.")]
+        public bool selectBehindUIObjects = false;
+
+        /// <summary>
         /// If <c>true</c>, uses a default OnGUI to display a selection message and
         /// targeting reticle.
         /// </summary>
@@ -165,7 +172,10 @@ namespace PixelCrushers.DialogueSystem
         /// The default use message. This can be overridden in the target's Usable component.
         /// </summary>
         [Tooltip("Default use message; can be overridden in the target's Usable component")]
-        public string defaultUseMessage = "(spacebar to interact)";
+        [SerializeField]
+        [FormerlySerializedAs("defaultUseMessage")]
+        private string m_defaultUseMessage = "(spacebar to interact)";
+        public virtual string defaultUseMessage { get => m_defaultUseMessage; set => m_defaultUseMessage = value; }
 
         /// <summary>
         /// If ticked, the OnUse message is broadcast to the usable object's children.
@@ -213,9 +223,9 @@ namespace PixelCrushers.DialogueSystem
         /// Gets the current selection.
         /// </summary>
         /// <value>The selection.</value>
-        public Usable CurrentUsable 
-        { 
-            get { return usable; } 
+        public Usable CurrentUsable
+        {
+            get { return usable; }
             set { SetCurrentUsable(value); }
         }
 
@@ -230,6 +240,17 @@ namespace PixelCrushers.DialogueSystem
         /// </summary>
         /// <value>The GUI style.</value>
         public GUIStyle GuiStyle { get { SetGuiStyle(); return guiStyle; } }
+
+        private UnityEngine.EventSystems.EventSystem m_eventSystem = null;
+        public UnityEngine.EventSystems.EventSystem eventSystem
+        {
+            get
+            {
+                if (m_eventSystem != null) return m_eventSystem;
+                return UnityEngine.EventSystems.EventSystem.current;
+            }
+            set { m_eventSystem = value; }
+        }
 
         /// <summary>
         /// Occurs when the selector has targeted a usable object.
@@ -310,7 +331,13 @@ namespace PixelCrushers.DialogueSystem
 
 #if !USE_NEW_INPUT // (In new Input System, IsPointerOverGameObject returns true for all GameObjects, not just UI objects, so skip this check until Input System is fixed.)
             // Exit if using mouse selection and is over a UI element:
-            if ((selectAt == SelectAt.MousePosition) && (UnityEngine.EventSystems.EventSystem.current != null) && UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject()) return;
+            if ((selectAt == SelectAt.MousePosition) &&
+                !selectBehindUIObjects &&
+                (eventSystem != null) &&
+                eventSystem.IsPointerOverGameObject())
+            {
+                return;
+            }
 #endif
 
             // Raycast 2D or 3D:
@@ -596,7 +623,7 @@ namespace PixelCrushers.DialogueSystem
             if ((useKey != KeyCode.None) && InputDeviceManager.IsKeyDown(useKey)) return true;
             if (!string.IsNullOrEmpty(useButton))
             {
-                if (DialogueManager.instance != null && 
+                if (DialogueManager.instance != null &&
                     DialogueManager.getInputButtonDown == DialogueManager.instance.StandardGetInputButtonDown && IsUsingDefaultInputManager())
                 {
                     return InputDeviceManager.IsButtonUp(useButton) && (selection == clickedDownOn);
@@ -616,7 +643,7 @@ namespace PixelCrushers.DialogueSystem
             {
                 hasCheckedDefaultInputManager = true;
                 var inputDeviceManagerRewiredType = RuntimeTypeUtility.GetTypeFromName("PixelCrushers.RewiredSupport.InputDeviceManagerRewired");
-                var isRewiredPresent = (inputDeviceManagerRewiredType != null) && (FindObjectOfType(inputDeviceManagerRewiredType) != null);
+                var isRewiredPresent = (inputDeviceManagerRewiredType != null) && (PixelCrushers.GameObjectUtility.FindFirstObjectByType(inputDeviceManagerRewiredType) != null);
                 isUsingDefaultInputManager = !isRewiredPresent;
             }
             return isUsingDefaultInputManager;

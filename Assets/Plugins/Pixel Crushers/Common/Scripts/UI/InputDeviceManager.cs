@@ -5,9 +5,12 @@ using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 using System.Collections;
 using System.Collections.Generic;
+using System;
+
 #if USE_NEW_INPUT
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Controls;
+using UnityEngine.InputSystem.LowLevel;
 #endif
 
 namespace PixelCrushers
@@ -34,9 +37,6 @@ namespace PixelCrushers
 
         [Tooltip("If any of these axes are greater than Joystick Axis Threshold, current device is joystick. Must be defined in Input Manager.")]
         public string[] joystickAxesToCheck = new string[0];
-        //--- Changed to prevent errors in new projects if user hasn't clicked "Add Input Definitions" yet.
-        //--- Added "Add Default Joystick Axes Check" button instead.
-        //public string[] joystickAxesToCheck = new string[] { "JoystickAxis1", "JoystickAxis2", "JoystickAxis3", "JoystickAxis4", "JoystickAxis6", "JoystickAxis7" };
 
         [Tooltip("Joystick axis values must be above this threshold to switch to joystick mode.")]
         public float joystickAxisThreshold = 0.5f;
@@ -96,6 +96,7 @@ namespace PixelCrushers
 
         private Vector3 m_lastMousePosition;
         private bool m_ignoreMouse = false;
+        private CursorLockMode m_cursorLockMode = CursorLockMode.Locked;
         private bool m_inputAllowed = true;
 
         private static InputDeviceManager m_instance = null;
@@ -105,6 +106,10 @@ namespace PixelCrushers
             set { m_instance = value; }
         }
 
+        /// <summary>
+        /// Current input device detected by InputDeviceManager. May changed based on
+        /// input from other devices.
+        /// </summary>
         public static InputDevice currentInputDevice
         {
             get
@@ -113,9 +118,21 @@ namespace PixelCrushers
             }
         }
 
+        /// <summary>
+        /// Returns true if current input device uses mouse cursor.
+        /// </summary>
         public static bool deviceUsesCursor
         {
             get { return currentInputDevice == InputDevice.Mouse; }
+        }
+
+        /// <summary>
+        /// Lock mode to use when locking cursor.
+        /// </summary>
+        public static CursorLockMode cursorLockMode
+        {
+            get { return (m_instance != null) ? m_instance.m_cursorLockMode : CursorLockMode.Locked; }
+            set { if (m_instance != null) m_instance.m_cursorLockMode = value; }
         }
 
         /// <summary>
@@ -123,7 +140,7 @@ namespace PixelCrushers
         /// </summary>
         public static bool autoFocus
         {
-            get { return (instance != null && instance.alwaysAutoFocus) || currentInputDevice == InputDevice.Joystick || currentInputDevice == InputDevice.Keyboard; }
+            get { return (m_instance != null && instance.alwaysAutoFocus) || currentInputDevice == InputDevice.Joystick || currentInputDevice == InputDevice.Keyboard; }
         }
 
         public static bool isBackButtonDown
@@ -212,15 +229,14 @@ namespace PixelCrushers
                     DontDestroyOnLoad(gameObject);
                 }
             }
-#if !UNITY_5_3
-            SceneManager.sceneLoaded += OnSceneLoaded;
-#endif
         }
 
         public void OnDestroy()
         {
-#if !UNITY_5_3
             SceneManager.sceneLoaded -= OnSceneLoaded;
+#if USE_NEW_INPUT
+            InputSystem.onDeviceChange -= OnInputSystemDeviceChange;
+            InputSystem.onEvent -= OnInputSystemEvent;
 #endif
         }
 
@@ -229,7 +245,34 @@ namespace PixelCrushers
             m_lastMousePosition = GetMousePosition();
             SetInputDevice(inputDevice);
             BrieflyIgnoreMouseMovement();
+            SceneManager.sceneLoaded += OnSceneLoaded;
+#if USE_NEW_INPUT
+            InputSystem.onDeviceChange += OnInputSystemDeviceChange;
+            InputSystem.onEvent += OnInputSystemEvent;
+#endif
         }
+
+#if USE_NEW_INPUT
+        private void OnInputSystemDeviceChange(UnityEngine.InputSystem.InputDevice device, InputDeviceChange change)
+        {
+            if (change == InputDeviceChange.Added ||
+               (change == InputDeviceChange.UsageChanged && device.lastUpdateTime >= Time.time - 1))
+            {
+                if (device is Joystick || device is Gamepad)
+                {
+                    SetInputDevice(InputDevice.Joystick);
+                }
+                else if (device is Keyboard)
+                {
+                    SetInputDevice((keyInputSwitchesModeTo == KeyInputSwitchesModeTo.Mouse) ? InputDevice.Mouse : InputDevice.Keyboard);
+                }
+                else
+                {
+                    SetInputDevice(InputDevice.Mouse);
+                }
+            }
+        }
+#endif
 
         private void OnSceneLoaded(UnityEngine.SceneManagement.Scene scene, LoadSceneMode mode)
         {
@@ -265,13 +308,86 @@ namespace PixelCrushers
         private void SetGraphicRaycasters(bool deviceUsesCursor)
         {
             if (!controlGraphicRaycasters) return;
-            var raycasters = FindObjectsOfType<UnityEngine.UI.GraphicRaycaster>();
+            var raycasters = GameObjectUtility.FindObjectsByType<UnityEngine.UI.GraphicRaycaster>();
             for (int i = 0; i < raycasters.Length; i++)
             {
                 raycasters[i].enabled = deviceUsesCursor;
             }
         }
 
+#if USE_NEW_INPUT
+        private float prevInputSystemCheckTime = 0f;
+        private const float InputSystemCheckFrequencyInSeconds = 0.5f;
+        private List<UnityEngine.InputSystem.InputDevice> reportedUnknownDevices = new List<UnityEngine.InputSystem.InputDevice>();
+
+        private void OnInputSystemEvent(InputEventPtr eventPtr, UnityEngine.InputSystem.InputDevice device)
+        {
+            if (Time.time < prevInputSystemCheckTime) return;
+            prevInputSystemCheckTime = Time.time + InputSystemCheckFrequencyInSeconds;
+
+            if (!(eventPtr.IsA<StateEvent>() || eventPtr.IsA<DeltaStateEvent>())) return;
+
+            PixelCrushers.InputDevice newDevice = PixelCrushers.InputDevice.Joystick;
+            if (device is UnityEngine.InputSystem.Joystick || device is UnityEngine.InputSystem.Gamepad)
+                newDevice = PixelCrushers.InputDevice.Joystick;
+            else if (device is UnityEngine.InputSystem.Keyboard)
+                newDevice = keyInputSwitchesModeTo == KeyInputSwitchesModeTo.Keyboard ? PixelCrushers.InputDevice.Keyboard : PixelCrushers.InputDevice.Mouse;
+            else if (device is UnityEngine.InputSystem.Mouse)
+                newDevice = PixelCrushers.InputDevice.Mouse;
+            else if (device is UnityEngine.InputSystem.Touchscreen)
+                newDevice = PixelCrushers.InputDevice.Touch;
+            else
+            {
+                if (!reportedUnknownDevices.Contains(device))
+                {
+                    reportedUnknownDevices.Add(device);
+                    Debug.LogWarning($"Pixel Crushers Input Device Manager: Detected an unknown device type: {device.displayName}.");
+                }
+                return;
+            }
+
+            if (inputDevice == newDevice) return;
+
+            if (newDevice == PixelCrushers.InputDevice.Joystick)
+            {
+                if (!eventPtr.HasButtonPress())
+                    if (device is UnityEngine.InputSystem.Joystick)
+                    {
+                        var joystick = device as UnityEngine.InputSystem.Joystick;
+                        var x = joystick.stick.x.ReadValue();
+                        var y = joystick.stick.y.ReadValue();
+                        if (!(Mathf.Abs(x) > joystickAxisThreshold || Mathf.Abs(y) > joystickAxisThreshold)) return;
+                    }
+                    else
+                    {
+                        var gamePad = device as UnityEngine.InputSystem.Gamepad;
+                        var xL = gamePad.leftStick.x.ReadValue();
+                        var yL = gamePad.leftStick.y.ReadValue();
+                        if (!(Mathf.Abs(xL) > joystickAxisThreshold || Mathf.Abs(yL) > joystickAxisThreshold))
+                        {
+                            var xR = gamePad.rightStick.x.ReadValue();
+                            var yR = gamePad.rightStick.y.ReadValue();
+                            if (!(Mathf.Abs(xR) > joystickAxisThreshold || Mathf.Abs(yR) > joystickAxisThreshold)) return;
+                        }
+                    }
+            }
+            else if (newDevice == PixelCrushers.InputDevice.Keyboard)
+            {
+                if (!isInputAllowed) return;
+            }
+            else if (newDevice == PixelCrushers.InputDevice.Mouse)
+            {
+                if (!detectMouseControl) return;
+                var mousePosition = DefaultGetMousePosition();
+                var didMouseMove = !m_ignoreMouse && (Mathf.Abs(mousePosition.x - m_lastMousePosition.x) > mouseMoveThreshold || 
+                    Mathf.Abs(mousePosition.y - m_lastMousePosition.y) > mouseMoveThreshold);
+                m_lastMousePosition = mousePosition;
+            }
+
+            SetInputDevice(newDevice);
+        }
+#else
+        // With input manager/Rewired, poll inputs for device changes:
         public void Update()
         {
             switch (inputDevice)
@@ -294,6 +410,7 @@ namespace PixelCrushers
                     break;
             }
         }
+#endif
 
         public bool IsUsingJoystick()
         {
@@ -416,7 +533,7 @@ namespace PixelCrushers
         public void ForceCursor(bool visible)
         {
             Cursor.visible = visible;
-            Cursor.lockState = visible ? CursorLockMode.None : CursorLockMode.Locked;
+            Cursor.lockState = visible ? CursorLockMode.None : cursorLockMode;
             m_lastMousePosition = GetMousePosition();
             StartCoroutine(ForceCursorAfterOneFrameCoroutine(visible));
         }
@@ -425,7 +542,7 @@ namespace PixelCrushers
         {
             yield return CoroutineUtility.endOfFrame;
             Cursor.visible = visible;
-            Cursor.lockState = visible ? CursorLockMode.None : CursorLockMode.Locked;
+            Cursor.lockState = visible ? CursorLockMode.None : cursorLockMode;
         }
 
 #if USE_NEW_INPUT
@@ -440,6 +557,9 @@ namespace PixelCrushers
         {
             if (inputActionDict.ContainsKey(name)) inputActionDict.Remove(name);
         }
+
+        // Cache key to translations to avoid GC:
+        private static Dictionary<KeyCode, string> m_keyCodeStrings = new Dictionary<KeyCode, string>();
 
         // Number keys translate differently in Input System, so create a quick lookup dictionary:
         protected static Dictionary<KeyCode, KeyControl> m_specialKeyCodeDict = null;
@@ -477,7 +597,20 @@ namespace PixelCrushers
 #if USE_NEW_INPUT
             if (Keyboard.current == null || keyCode == KeyCode.None) return false;
             if (keyCode == KeyCode.Return) return (Keyboard.current["enter"] as KeyControl).wasPressedThisFrame;
-            var s = keyCode.ToString().ToLower();
+            if (!m_keyCodeStrings.TryGetValue(keyCode, out var s))
+            {
+                // Store the Input System's lowercase string equivalent for the keycode.
+                // This is done only once per keycode and stored in a dictionary.
+                s = keyCode.ToString().ToLower();
+                m_keyCodeStrings.Add(keyCode, s);
+
+            }
+            if (s.StartsWith("mouse"))
+            {
+                if (s == "mouse0") return Mouse.current.leftButton.wasPressedThisFrame;
+                else if (s == "mouse1") return Mouse.current.rightButton.wasPressedThisFrame;
+                else if (s == "mouse2") return Mouse.current.middleButton.wasPressedThisFrame;
+            }
             if (s.StartsWith("joystick") || s.StartsWith("mouse")) return false;
             if ((KeyCode.Alpha0 <= keyCode && keyCode <= KeyCode.Alpha9) || 
                 (KeyCode.Keypad0 <= keyCode && keyCode <= KeyCode.Keypad9))
@@ -495,7 +628,7 @@ namespace PixelCrushers
         public static bool DefaultGetAnyKeyDown()
         {
 #if USE_NEW_INPUT
-            return Keyboard.current != null && Keyboard.current.anyKey.isPressed;
+            return Keyboard.current != null && Keyboard.current.anyKey.wasPressedThisFrame;
 #else
             return Input.anyKeyDown;
 #endif
@@ -595,9 +728,9 @@ namespace PixelCrushers
             if (Mouse.current == null) return false;
             switch (buttonNumber)
             {
-                case 0: return Mouse.current.leftButton.isPressed;
-                case 1: return Mouse.current.rightButton.isPressed;
-                case 2: return Mouse.current.middleButton.isPressed;
+                case 0: return Mouse.current.leftButton.wasPressedThisFrame;
+                case 1: return Mouse.current.rightButton.wasPressedThisFrame;
+                case 2: return Mouse.current.middleButton.wasPressedThisFrame;
                 default: return false;
             }
 #else

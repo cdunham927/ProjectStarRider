@@ -9,6 +9,51 @@ namespace PixelCrushers
     public static class MoreEditorGuiUtility
     {
 
+        private static GUIStyle toolbarSearchTextFieldStyle = null;
+        private static GUIStyle toolbarSearchCancelButtonStyle = null;
+        private static GUIStyle toolbarSearchCancelButtonEmptyStyle = null;
+        public static string ToolbarSearchTextFieldName
+        {
+            get
+            {
+                if (toolbarSearchTextFieldStyle == null)
+                {
+                    toolbarSearchTextFieldStyle = FindCustomStyle("ToolbarSearchTextField", "ToolbarSeachTextField");
+                }
+                return toolbarSearchTextFieldStyle.name;
+            }
+        }
+        public static string ToolbarSearchCancelButtonName
+        {
+            get
+            {
+                if (toolbarSearchCancelButtonStyle == null)
+                {
+                    toolbarSearchCancelButtonStyle = FindCustomStyle("ToolbarSearchCancelButton", "ToolbarSeachCancelButton");
+                }
+                return toolbarSearchCancelButtonStyle.name;
+            }
+        }
+        public static string ToolbarSearchCancelButtonEmpty
+        {
+            get
+            {
+                if (toolbarSearchCancelButtonEmptyStyle == null)
+                {
+                    toolbarSearchCancelButtonEmptyStyle = FindCustomStyle("ToolbarSearchCancelButtonEmpty", "ToolbarSeachCancelButtonEmpty");
+                }
+                return toolbarSearchCancelButtonEmptyStyle.name;
+            }
+        }
+        private static GUIStyle FindCustomStyle(string name1, string name2)
+        {
+            foreach (var style in GUI.skin.customStyles)
+            {
+                if ((style.name == name1) || (style.name == name2)) return style;
+            }
+            return GUI.skin.label;
+        }
+
         public const float GearWidth = 15;
         public const float GearHeight = 14;
 

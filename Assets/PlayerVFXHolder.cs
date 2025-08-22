@@ -56,6 +56,8 @@ public class PlayerVFXHolder : MonoBehaviour
 
     [SerializeField] ParticleSystem Speed;
     [SerializeField] ParticleSystem Dash;
+    
+
     //[SerializeField] ParticleSystem SpeedLines_L;
     //[SerializeField] ParticleSystem SpeedLines_R;
     private void Awake()

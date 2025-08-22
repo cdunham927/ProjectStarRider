@@ -2,7 +2,6 @@
 
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.EventSystems;
 
 namespace PixelCrushers.DialogueSystem
 {
@@ -54,6 +53,13 @@ namespace PixelCrushers.DialogueSystem
 
         protected TouchScreenKeyboard m_touchScreenKeyboard = null;
 
+        protected bool m_isQuitting = false;
+
+        protected virtual void OnApplicationQuit()
+        {
+            m_isQuitting = true;
+        }
+
         protected override void Start()
         {
             if (DialogueDebug.logWarnings && (inputField == null)) Debug.LogWarning("Dialogue System: No InputField is assigned to the text field UI " + name + ". TextInput() sequencer commands or [var?=] won't work.");
@@ -87,14 +93,55 @@ namespace PixelCrushers.DialogueSystem
         {
             if (m_isAwaitingInput && !DialogueManager.IsDialogueSystemInputDisabled())
             {
-                if (InputDeviceManager.IsKeyDown(acceptKey) || InputDeviceManager.IsButtonDown(acceptButton))
+                if (InputDeviceManager.IsKeyDown(acceptKey) || InputDeviceManager.IsButtonDown(acceptButton) ||
+                    IsTouchScreenDone())
                 {
                     AcceptTextInput();
                 }
-                else if (InputDeviceManager.IsKeyDown(cancelKey) || InputDeviceManager.IsButtonDown(cancelButton))
+                else if (InputDeviceManager.IsKeyDown(cancelKey) || InputDeviceManager.IsButtonDown(cancelButton) ||
+                    IsTouchScreenCancelled())
                 {
                     CancelTextInput();
                 }
+            }
+        }
+
+        protected virtual bool IsTouchScreenDone()
+        {
+            if (m_touchScreenKeyboard == null) return false;
+            try
+            {
+                return m_touchScreenKeyboard.status == TouchScreenKeyboard.Status.Done;
+            }
+            catch (System.Exception)
+            {
+                return false;
+            }
+        }
+
+        protected virtual bool IsTouchScreenCancelled()
+        {
+            if (m_touchScreenKeyboard == null) return false;
+            try
+            {
+                return m_touchScreenKeyboard.status == TouchScreenKeyboard.Status.Canceled;
+            }
+            catch (System.Exception)
+            {
+                return false;
+            }
+        }
+
+        protected virtual bool IsTouchScreenCanceled()
+        {
+            if (m_touchScreenKeyboard == null) return false;
+            try
+            {
+                return m_touchScreenKeyboard.status == TouchScreenKeyboard.Status.Canceled;
+            }
+            catch (System.Exception)
+            {
+                return false;
             }
         }
 
@@ -113,7 +160,7 @@ namespace PixelCrushers.DialogueSystem
         /// </summary>
         public virtual void AcceptTextInput()
         {
-            if (!allowBlankInput && string.IsNullOrEmpty(inputField.text)) return;
+            if (!CanAcceptInput()) return;
             m_isAwaitingInput = false;
             if (m_acceptedText != null)
             {
@@ -124,6 +171,11 @@ namespace PixelCrushers.DialogueSystem
             onAccept.Invoke();
         }
 
+        protected virtual bool CanAcceptInput()
+        {
+            return allowBlankInput || !string.IsNullOrWhiteSpace(inputField.text);
+        }
+
         protected virtual void Show()
         {
             SetActive(true);
@@ -132,25 +184,30 @@ namespace PixelCrushers.DialogueSystem
             if (inputField != null)
             {
                 inputField.ActivateInputField();
-                if (EventSystem.current != null)
+                if (eventSystem != null)
                 {
-                    EventSystem.current.SetSelectedGameObject(inputField.gameObject);
+                    eventSystem.SetSelectedGameObject(inputField.gameObject);
                 }
             }
         }
 
         protected virtual void ShowTouchScreenKeyboard()
-        { 
-            m_touchScreenKeyboard = TouchScreenKeyboard.Open(inputField.text); 
+        {
+            m_touchScreenKeyboard = TouchScreenKeyboard.Open(inputField.text);
         }
 
         protected virtual void Hide()
         {
+            if (m_isQuitting) return;
             Close();
             SetActive(false);
             if (m_touchScreenKeyboard != null)
             {
-                m_touchScreenKeyboard.active = false;
+                try
+                {
+                    m_touchScreenKeyboard.active = false;
+                }
+                catch (System.Exception) { }
                 m_touchScreenKeyboard = null;
             }
         }

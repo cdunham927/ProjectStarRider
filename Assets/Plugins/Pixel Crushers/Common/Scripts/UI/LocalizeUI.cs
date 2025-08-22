@@ -1,6 +1,3 @@
-// Recompile at 2/17/2023 6:18:11 PM
-
-
 // Copyright (c) Pixel Crushers. All rights reserved.
 
 using UnityEngine;
@@ -51,14 +48,14 @@ namespace PixelCrushers
         }
 
         private List<string> m_fieldNames = new List<string>();
-        protected List<string> fieldNames
+        public List<string> fieldNames
         {
             get { return m_fieldNames; }
             set { m_fieldNames = value; }
         }
 
         private List<string> m_tmpFieldNames = new List<string>();
-        protected List<string> tmpFieldNames
+        public List<string> tmpFieldNames
         {
             get { return m_tmpFieldNames; }
             set { m_tmpFieldNames = value; }
@@ -99,6 +96,16 @@ namespace PixelCrushers
         private bool m_lookedForTMP = false;
 #endif
 
+#if USE_STM
+        private SuperTextMesh m_superTextMesh = null;
+        public SuperTextMesh superTextMesh
+        {
+            get { return m_superTextMesh; }
+            set { m_superTextMesh = value; }
+        }
+        private bool m_lookedForSTM = false;
+#endif
+
         protected virtual void Start()
         {
             started = true;
@@ -107,12 +114,98 @@ namespace PixelCrushers
 
         protected virtual void OnEnable()
         {
-            UpdateText();
+            if (started) UpdateText();
         }
 
+        /// <summary>
+        /// If fieldName(s), tmpFieldName(s) are blank, set them to the UI element's text.
+        /// </summary>
+        public virtual void ValidateFieldNames()
+        {
+            if (!string.IsNullOrEmpty(fieldName)) return;
+            if (fieldNames.Count > 0) return;
+
+            if (text == null && dropdown == null)
+            {
+                text = GetComponent<UnityEngine.UI.Text>();
+                dropdown = GetComponent<UnityEngine.UI.Dropdown>();
+            }
+            var hasLocalizableComponent = text != null || dropdown != null;
+
+#if TMP_PRESENT
+            if (!m_lookedForTMP)
+            {
+                m_lookedForTMP = true;
+                textMeshPro = GetComponent<TMPro.TextMeshPro>();
+                textMeshProUGUI = GetComponent<TMPro.TextMeshProUGUI>();
+                textMeshProDropdown = GetComponent<TMPro.TMP_Dropdown>();
+            }
+            hasLocalizableComponent = hasLocalizableComponent || textMeshPro != null ||
+                textMeshProUGUI != null || textMeshProDropdown != null;
+#endif
+
+#if USE_STM
+            if (!m_lookedForSTM)
+            {
+                m_lookedForSTM = true;
+                superTextMesh = GetComponent<SuperTextMesh>();
+            }
+            hasLocalizableComponent = hasLocalizableComponent || superTextMesh != null;
+#endif
+
+            if (!hasLocalizableComponent) return;
+
+            // Get the original values to use as field lookups:
+            if (string.IsNullOrEmpty(fieldName))
+            {
+                fieldName = (text != null) ? text.text : string.Empty;
+            }
+            if ((dropdown != null) && (fieldNames.Count != dropdown.options.Count))
+            {
+                fieldNames.Clear();
+                dropdown.options.ForEach(opt => fieldNames.Add(opt.text));
+            }
+
+
+#if TMP_PRESENT
+            if (textMeshPro != null)
+            {
+                if (string.IsNullOrEmpty(fieldName))
+                {
+                    fieldName = (textMeshPro != null) ? textMeshPro.text : string.Empty;
+                }
+            }
+            if (textMeshProUGUI != null)
+            {
+                if (string.IsNullOrEmpty(fieldName))
+                {
+                    fieldName = (textMeshProUGUI != null) ? textMeshProUGUI.text : string.Empty;
+                }
+            }
+            if (textMeshProDropdown != null)
+            {
+                if (tmpFieldNames.Count != textMeshProDropdown.options.Count)
+                {
+                    tmpFieldNames.Clear();
+                    textMeshProDropdown.options.ForEach(opt => tmpFieldNames.Add(opt.text));
+                }
+            }
+#endif
+
+#if USE_STM
+            if (superTextMesh != null && string.IsNullOrEmpty(fieldName))
+            {
+                fieldName = superTextMesh.text;
+            }
+#endif
+
+        }
+
+        /// <summary>
+        /// Set UI element's text (and possibly font) according to current language.
+        /// </summary>
         public virtual void UpdateText()
         {
-            if (!started) return;
             var language = (UILocalizationManager.instance != null) ? UILocalizationManager.instance.currentLanguage : string.Empty;
 
             // Skip if no text table or language set:
@@ -139,6 +232,7 @@ namespace PixelCrushers
                 dropdown = GetComponent<UnityEngine.UI.Dropdown>();
             }
             var hasLocalizableComponent = text != null || dropdown != null;
+
 #if TMP_PRESENT
             var localizedTextMeshProFont = (localizedFonts != null) ? localizedFonts.GetTextMeshProFont(language) : null;
             if (!m_lookedForTMP)
@@ -151,6 +245,16 @@ namespace PixelCrushers
             hasLocalizableComponent = hasLocalizableComponent || textMeshPro != null ||
                 textMeshProUGUI != null || textMeshProDropdown != null;
 #endif
+
+#if USE_STM
+            if (!m_lookedForSTM)
+            {
+                m_lookedForSTM = true;
+                superTextMesh = GetComponent<SuperTextMesh>();
+            }
+            hasLocalizableComponent = hasLocalizableComponent || superTextMesh != null;
+#endif
+
             if (!hasLocalizableComponent)
             {
                 Debug.LogWarning("Localize UI didn't find a localizable UI component on " + name + ".", this);
@@ -220,7 +324,12 @@ namespace PixelCrushers
                 else
                 {
                     textMeshPro.text = GetLocalizedText(fieldName);
-                    if (localizedTextMeshProFont != null) textMeshPro.font = localizedTextMeshProFont;
+                    if (localizedTextMeshProFont != null) 
+                    {
+                        textMeshPro.font = localizedTextMeshProFont;
+                        textMeshPro.enabled = false;
+                        textMeshPro.enabled = true;
+                    }
                 }
             }
             if (textMeshProUGUI != null)
@@ -237,6 +346,8 @@ namespace PixelCrushers
                 {
                     textMeshProUGUI.text = GetLocalizedText(fieldName);
                     if (localizedTextMeshProFont != null) textMeshProUGUI.font = localizedTextMeshProFont;
+                    textMeshProUGUI.enabled = false;
+                    textMeshProUGUI.enabled = true;
                 }
             }
             if (textMeshProDropdown != null)
@@ -259,6 +370,14 @@ namespace PixelCrushers
                     textMeshProDropdown.captionText.font = localizedTextMeshProFont;
                     textMeshProDropdown.itemText.font = localizedTextMeshProFont;
                 }
+            }
+#endif
+
+#if USE_STM
+            if (superTextMesh != null)
+            {
+                if (string.IsNullOrEmpty(fieldName)) fieldName = superTextMesh.text;
+                superTextMesh.text = GetLocalizedText(fieldName);
             }
 #endif
 
@@ -300,6 +419,7 @@ namespace PixelCrushers
         public virtual void UpdateDropdownOptions()
         {
             fieldNames.Clear();
+            tmpFieldNames.Clear();
             UpdateText();
         }
     }

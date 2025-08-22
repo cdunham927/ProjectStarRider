@@ -132,7 +132,7 @@ namespace PixelCrushers.DialogueSystem
             EditorWindowTools.StartIndentedSection();
             if (dialogueManager == null)
             {
-                dialogueManager = FindObjectOfType<DialogueSystemController>();
+                dialogueManager = PixelCrushers.GameObjectUtility.FindFirstObjectByType<DialogueSystemController>();
             }
             if (database == null && dialogueManager != null)
             {
@@ -468,7 +468,7 @@ namespace PixelCrushers.DialogueSystem
                         if (rb == null)
                         {
                             rb = npcObject.AddComponent<Rigidbody2D>();
-                            rb.isKinematic = true;
+                            rb.bodyType = RigidbodyType2D.Kinematic;
                         }
                     }
                     else
@@ -503,7 +503,7 @@ namespace PixelCrushers.DialogueSystem
                         if (rb == null)
                         {
                             rb = npcObject.AddComponent<Rigidbody2D>();
-                            rb.isKinematic = true;
+                            rb.bodyType = RigidbodyType2D.Kinematic;
                         }
                     }
                     else

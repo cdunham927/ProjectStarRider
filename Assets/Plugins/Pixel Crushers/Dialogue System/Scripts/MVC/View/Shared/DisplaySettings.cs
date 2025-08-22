@@ -12,6 +12,21 @@ namespace PixelCrushers.DialogueSystem
     public class DisplaySettings
     {
 
+        public DisplaySettings() { }
+
+        public DisplaySettings(DisplaySettings source)
+        {
+            this.conversationOverrideSettings = source.conversationOverrideSettings;
+            this.dialogueUI = source.dialogueUI;
+            this.defaultCanvas = source.defaultCanvas;
+            this.localizationSettings = new LocalizationSettings(source.localizationSettings);
+            this.subtitleSettings = new SubtitleSettings(source.subtitleSettings);
+            this.cameraSettings = new CameraSettings(source.cameraSettings);
+            this.inputSettings = new InputSettings(source.inputSettings);
+            this.barkSettings = new BarkSettings(source.barkSettings);
+            this.alertSettings = new AlertSettings(source.alertSettings);
+        }
+
         [HideInInspector]
         public ConversationOverrideDisplaySettings conversationOverrideSettings = null;
 
@@ -24,6 +39,16 @@ namespace PixelCrushers.DialogueSystem
         [System.Serializable]
         public class LocalizationSettings
         {
+
+            public LocalizationSettings() { }
+
+            public LocalizationSettings(LocalizationSettings source)
+            {
+                this.language = source.language;
+                this.useSystemLanguage = source.useSystemLanguage;
+                this.textTable = source.textTable;
+            }
+
             /// <summary>
             /// The current language, or blank to use the default language.
             /// </summary>
@@ -50,6 +75,24 @@ namespace PixelCrushers.DialogueSystem
         [System.Serializable]
         public class SubtitleSettings
         {
+            public SubtitleSettings() { }
+
+            public SubtitleSettings(SubtitleSettings source)
+            {
+                this.showNPCSubtitlesDuringLine = source.showNPCSubtitlesDuringLine;
+                this.showNPCSubtitlesWithResponses = source.showNPCSubtitlesWithResponses;
+                this.showPCSubtitlesDuringLine = source.showPCSubtitlesDuringLine;
+                this.allowPCSubtitleReminders = source.allowPCSubtitleReminders;
+                this.skipPCSubtitleAfterResponseMenu = source.skipPCSubtitleAfterResponseMenu;
+                this.subtitleCharsPerSecond = source.subtitleCharsPerSecond;
+                this.minSubtitleSeconds = source.minSubtitleSeconds;
+                this.continueButton = source.continueButton;
+                this.requireContinueOnLastLine = source.requireContinueOnLastLine;
+                this.richTextEmphases = source.richTextEmphases;
+                this.convertPipesToLineBreaks = source.convertPipesToLineBreaks;
+                this.informSequenceStartAndEnd = source.informSequenceStartAndEnd;
+            }
+
             /// <summary>
             /// Specifies whether to show NPC subtitles while speaking a line of dialogue.
             /// </summary>
@@ -189,6 +232,12 @@ namespace PixelCrushers.DialogueSystem
             public bool richTextEmphases = true;
 
             /// <summary>
+            /// Treat '|' characters in text as line breaks.
+            /// </summary>
+            [Tooltip("Treat '|' characters in text as line breaks.")]
+            public bool convertPipesToLineBreaks = true;
+
+            /// <summary>
             /// Set <c>true</c> to send OnSequenceStart and OnSequenceEnd messages with 
             /// every dialogue entry's sequence.
             /// </summary>
@@ -204,6 +253,24 @@ namespace PixelCrushers.DialogueSystem
         [System.Serializable]
         public class CameraSettings
         {
+            public CameraSettings() { }
+
+            public CameraSettings(CameraSettings source)
+            {
+                this.sequencerCamera = source.sequencerCamera;
+                this.alternateCameraObject = source.alternateCameraObject;
+                this.cameraAngles = source.cameraAngles;
+                this.keepCameraPositionAtConversationEnd = source.keepCameraPositionAtConversationEnd;
+                this.cameraEasing = Tweener.Easing.Linear;
+                this.showSubtitleOnEmptyContinue = source.showSubtitleOnEmptyContinue;
+                this.defaultSequence = source.defaultSequence;
+                this.defaultPlayerSequence = source.defaultPlayerSequence;
+                this.defaultResponseMenuSequence = source.defaultResponseMenuSequence;
+                this.entrytagFormat = source.entrytagFormat;
+                this.reportMissingAudioFiles = source.reportMissingAudioFiles;
+                this.disableInternalSequencerCommands = source.disableInternalSequencerCommands;
+            }
+
             /// <summary>
             /// The camera (or prefab) to use for sequences. If unassigned, the sequencer will use the
             /// main camera; when the sequence is done, it will restore the main camera's original
@@ -228,10 +295,22 @@ namespace PixelCrushers.DialogueSystem
             public GameObject cameraAngles = null;
 
             /// <summary>
+            /// Specifies how Camera() commands should move the camera.
+            /// </summary>
+            [Tooltip("Specifies how Camera() commands should move the camera.")]
+            public Tweener.Easing cameraEasing = Tweener.Easing.Linear;
+
+            /// <summary>
             /// If conversation's sequences use Main Camera, leave camera in current position at end of conversation instead of restoring pre-conversation position.
             /// </summary>
             [Tooltip("If conversation's sequences use Main Camera, leave camera in current position at end of conversation instead of restoring pre-conversation position.")]
             public bool keepCameraPositionAtConversationEnd = false;
+
+            /// <summary>
+            /// Show subtitle if sequence is only 'Continue()'. Typically only useful in UIs that accumulate text.
+            /// </summary>
+            [Tooltip("Show subtitle if sequence is only 'Continue()'. Typically only useful in UIs that accumulate text.")]
+            public bool showSubtitleOnEmptyContinue = false;
 
             /// <summary>
             /// The default sequence to use if the dialogue entry doesn't have a sequence defined 
@@ -243,10 +322,16 @@ namespace PixelCrushers.DialogueSystem
             [TextArea]
             public string defaultSequence = "Delay({{end}})";
 
+            /// <summary>
+            /// If defined, overrides Default Sequence for player (PC) lines only.
+            /// </summary>
             [Tooltip("If defined, overrides Default Sequence for player (PC) lines only.")]
             [TextArea]
             public string defaultPlayerSequence = string.Empty;
 
+            /// <summary>
+            /// Used when a dialogue entry doesn't define its own Response Menu Sequence.
+            /// </summary>
             [Tooltip("Used when a dialogue entry doesn't define its own Response Menu Sequence.")]
             [TextArea]
             public string defaultResponseMenuSequence = string.Empty;
@@ -281,6 +366,20 @@ namespace PixelCrushers.DialogueSystem
         [System.Serializable]
         public class InputSettings
         {
+            public InputSettings() { }
+
+            public InputSettings(InputSettings source)
+            {
+                this.alwaysForceResponseMenu = source.alwaysForceResponseMenu;
+                this.includeInvalidEntries = source.includeInvalidEntries;
+                this.responseTimeout = source.responseTimeout;
+                this.responseTimeoutAction = source.responseTimeoutAction;
+                this.emTagForOldResponses = source.emTagForOldResponses;
+                this.emTagForInvalidResponses = source.emTagForInvalidResponses;
+                this.qteButtons = source.qteButtons;
+                this.cancel = source.cancel;
+                this.cancelConversation = source.cancelConversation;
+            }
 
             /// <summary>
             /// If <c>true</c>, always forces the response menu even if there's only one response.
@@ -354,6 +453,15 @@ namespace PixelCrushers.DialogueSystem
         [System.Serializable]
         public class BarkSettings
         {
+            public BarkSettings() { }
+
+            public BarkSettings(BarkSettings source)
+            {
+                this.allowBarksDuringConversations = source.allowBarksDuringConversations;
+                this.barkCharsPerSecond = source.barkCharsPerSecond;
+                this.minBarkSeconds = source.minBarkSeconds;
+                this.defaultBarkSequence = source.defaultBarkSequence;
+            }
 
             /// <summary>
             /// Set <c>true</c> to allow barks to play during conversations.
@@ -389,6 +497,15 @@ namespace PixelCrushers.DialogueSystem
         [System.Serializable]
         public class AlertSettings
         {
+            public AlertSettings() { }
+
+            public AlertSettings(AlertSettings source)
+            {
+                this.allowAlertsDuringConversations = source.allowAlertsDuringConversations;
+                this.alertCheckFrequency = source.alertCheckFrequency;
+                this.alertCharsPerSecond = source.alertCharsPerSecond;
+                this.minAlertSeconds = source.minAlertSeconds;
+            }
 
             /// <summary>
             /// Set <c>true</c> to allow the dialogue UI to show alerts during conversations.
@@ -453,7 +570,7 @@ namespace PixelCrushers.DialogueSystem
         public bool GetSkipPCSubtitleAfterResponseMenu()
         {
             return ShouldUseSubtitleOverrides() ? conversationOverrideSettings.skipPCSubtitleAfterResponseMenu :
-                ((subtitleSettings != null) ? subtitleSettings.skipPCSubtitleAfterResponseMenu: true);
+                ((subtitleSettings != null) ? subtitleSettings.skipPCSubtitleAfterResponseMenu : true);
         }
 
         public float GetSubtitleCharsPerSecond()
