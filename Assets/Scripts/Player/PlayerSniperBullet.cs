@@ -32,7 +32,6 @@ public class PlayerSniperBullet : Bullet
         cont = FindObjectOfType<GameManager>();
         hitVFXPool = cont.bulPool;
         trail = GetComponentInChildren<TrailRenderer>();
-        trail.Clear();
     }
 
     public override void Update()
@@ -50,8 +49,102 @@ public class PlayerSniperBullet : Bullet
         {
             if (sphereHit.collider != null)
             {
+                if (hitVFXPool == null) hitVFXPool = cont.hitVFXPool;
+
                 EnemyControllerBase en = sphereHit.collider.GetComponent<EnemyControllerBase>();
                 if (en) HitEnemy(en);
+
+                if (sphereHit.collider.CompareTag("BossHitPoint"))
+                {
+                    //Debug.Log("Hit Enemy");
+                    sphereHit.collider.GetComponent<BossHitPointController>().Damage(damage);
+                    //ContactPoint cp = col.GetContact(0);
+                    if (hitVFXPool == null) hitVFXPool = cont.hitVFXPool;
+                    if (!spawned)
+                    {
+                        GameObject hit = hitVFXPool.GetPooledObject();
+                        hit.transform.position = spawnPos.transform.position;
+                        hit.transform.rotation = spawnPos.transform.rotation;
+                        //bul.GetComponent<Rigidbody>().velocity = bod.velocity;
+                        hit.SetActive(true);
+                        spawned = true;
+                    }
+                    Invoke("Disable", 0.001f);
+                }
+                
+                if (sphereHit.collider.CompareTag("Barrier"))
+                {
+                    //Debug.Log("Hit Enemy");
+                    sphereHit.collider.GetComponent<BarrierController>().Damage(damage);
+                    //ContactPoint cp = col.GetContact(0);
+                    if (hitVFXPool == null) hitVFXPool = cont.hitVFXPool;
+                    if (!spawned)
+                    {
+                        GameObject hit = hitVFXPool.GetPooledObject();
+                        hit.transform.position = spawnPos.transform.position;
+                        hit.transform.rotation = spawnPos.transform.rotation;
+                        //bul.GetComponent<Rigidbody>().velocity = bod.velocity;
+                        hit.SetActive(true);
+                        spawned = true;
+                    }
+                    Invoke("Disable", 0.001f);
+                }
+                
+                if (sphereHit.collider.CompareTag("DestructBullets"))
+                {
+                    //Debug.Log("Hit Enemy");
+                    sphereHit.collider.GetComponent<DestructableBullets>().Damage(damage);
+                    //ContactPoint cp = col.GetContact(0);
+                    if (hitVFXPool == null) hitVFXPool = cont.hitVFXPool;
+                    if (!spawned)
+                    {
+                        GameObject hit = hitVFXPool.GetPooledObject();
+                        hit.transform.position = spawnPos.transform.position;
+                        hit.transform.rotation = spawnPos.transform.rotation;
+                        //bul.GetComponent<Rigidbody>().velocity = bod.velocity;
+                        hit.SetActive(true);
+                        spawned = true;
+                    }
+                    //bul.GetComponent<Rigidbody>().velocity = bod.velocity;
+                    Invoke("Disable", 0.01f);
+                }
+                
+                if (sphereHit.collider.CompareTag("DWall"))
+                {
+                    sphereHit.collider.GetComponent<DestructibleObject>().TakeDamage(damage);
+                    //ContactPoint cp = col.GetContact(0);
+                    if (hitVFXPool == null) hitVFXPool = cont.hitVFXPool;
+                    if (!spawned)
+                    {
+                        GameObject hit = hitVFXPool.GetPooledObject();
+                        hit.transform.position = spawnPos.transform.position;
+                        hit.transform.rotation = spawnPos.transform.rotation;
+                        //bul.GetComponent<Rigidbody>().velocity = bod.velocity;
+                        hit.SetActive(true);
+                        spawned = true;
+                    }
+                    Invoke("Disable", 0.001f);
+                }
+
+                if (sphereHit.collider.CompareTag("Wall"))
+                {
+                    // Find the line from the gun to the point that was clicked.
+                    Vector3 incomingVec = sphereHit.point - transform.position;
+
+                    // Use the point's normal to calculate the reflection vector.
+                    Vector3 reflectVec = Vector3.Reflect(incomingVec, sphereHit.normal);
+                    reflectVec = reflectVec.normalized;
+                    moveDir = reflectVec * speed;
+
+                    // Draw lines to show the incoming "beam" and the reflection.
+                    //Debug.DrawLine(transform.position, sphereHit.point, Color.red);
+                    //Debug.DrawRay(sphereHit.point, reflectVec, Color.green);
+
+                    GameObject hit = hitVFXPool.GetPooledObject();
+                    hit.transform.position = spawnPos.transform.position;
+                    hit.transform.rotation = spawnPos.transform.rotation;
+                    hit.SetActive(true);
+                }
             }
         }
     }
@@ -75,22 +168,18 @@ public class PlayerSniperBullet : Bullet
 
     public override void OnEnable()
     {
-        //startVel = bod.velocity;
+        trail.Clear();
         hp = maxHp;
 
         // Ball direction at start
-        //direction = transform.forward * 0.02f;
         direction = transform.forward;
-        //bod.velocity = startVel + (transform.forward * speed);
 
         spawned = false;
         base.OnEnable();
-        //bod.velocity = transform.forward * speed;
 
         //Get minimap object
         if (minimapObj == null) minimapObj = GetComponentInChildren<MinimapObjController>().gameObject;
         if (minimapObj != null) minimapObj.SetActive(true);
-        trail.Clear();
 
     }
 

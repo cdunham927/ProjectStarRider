@@ -21,7 +21,7 @@ public class Bullet : MonoBehaviour
     public Vector3 dir;
     public Vector3 dist;
 
-    Vector3 moveDir;
+    protected Vector3 moveDir;
 
     public virtual void Update()
     {
