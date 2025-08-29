@@ -59,7 +59,7 @@ public class BulletPatterns : MonoBehaviour
                 angle += increment;
 
                 bul.transform.rotation = Quaternion.Euler(0, angle, 0);
-                bul.GetComponent<EnemyBullet>().Push();
+                //bul.GetComponent<EnemyBullet>().Push();
             }
         }
     }
@@ -87,7 +87,7 @@ public class BulletPatterns : MonoBehaviour
                 angle += increment;
 
                 bul.transform.rotation = Quaternion.Euler(0, angle, 0);
-                bul.GetComponent<EnemyBullet>().Push();
+                //bul.GetComponent<EnemyBullet>().Push();
             }
         }
     }

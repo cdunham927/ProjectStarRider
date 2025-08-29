@@ -30,7 +30,7 @@ public class SentinelSnipe : EnemyControllerBase
             {
                 bul.transform.rotation = Quaternion.Euler(Random.Range(0, 360), Random.Range(0, 360), Random.Range(0, 360));
             }
-            bul.GetComponent<EnemyBullet>().PushHard();
+            //bul.GetComponent<EnemyBullet>().PushHard();
         }
 
         //Reset attack cooldown

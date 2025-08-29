@@ -134,7 +134,7 @@ public class CetusController : BossControllerBase, IDamageable
                 bul.transform.position = retaliatePos;
                 bul.SetActive(true);
                 bul.transform.rotation = Quaternion.Euler(Random.Range(0, 360), Random.Range(0, 360), Random.Range(0, 360));
-                bul.GetComponent<EnemyBullet>().PushHard();
+                //bul.GetComponent<EnemyBullet>().PushHard();
             }
         }
     }
@@ -172,7 +172,7 @@ public class CetusController : BossControllerBase, IDamageable
             sBul.transform.position = sonicSpawnPos.transform.position;
             sBul.transform.rotation = Quaternion.Euler(Random.Range(0, 360), Random.Range(0, 360), Random.Range(0, 360));
             sBul.SetActive(true);
-            sBul.GetComponent<EnemyBullet>().Push();
+            //sBul.GetComponent<EnemyBullet>().Push();
         }
         AS.PlayOneShot(PlayerSfx[0]);
     }
@@ -186,7 +186,7 @@ public class CetusController : BossControllerBase, IDamageable
         sBul.transform.forward = sonicSpawnPos.transform.forward;
         sBul.transform.Rotate(Random.Range(-accx, accx), Random.Range(-accy, accy), 0);
 
-        sBul.GetComponent<EnemyBullet>().Push();
+        //sBul.GetComponent<EnemyBullet>().Push();
     }
 
     public void TailAttack()
@@ -241,7 +241,7 @@ public class CetusController : BossControllerBase, IDamageable
                 bul.SetActive(true);
                 bul.transform.LookAt(player.transform);
                 bul.transform.Rotate(Random.Range(-accx, accx), Random.Range(-accy, accy), 0);
-                bul.GetComponent<EnemyBullet>().PushHard();
+                //bul.GetComponent<EnemyBullet>().PushHard();
             }
         }
 

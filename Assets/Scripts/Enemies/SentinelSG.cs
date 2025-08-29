@@ -36,7 +36,7 @@ public class SentinelSG : EnemyControllerBase
                 {
                     bul.transform.rotation = Quaternion.Euler(Random.Range(0, 360), Random.Range(0, 360), Random.Range(0, 360));
                 }
-                bul.GetComponent<EnemyBullet>().PushSoft();
+                //bul.GetComponent<EnemyBullet>().PushSoft();
             }
         }
         //Reset attack cooldown

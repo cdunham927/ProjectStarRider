@@ -34,7 +34,6 @@ public class Player_Bullet : Bullet
     {
         base.Update();
 
-
         RaycastHit sphereHit;
         if (Physics.SphereCast(transform.position, checkSize, transform.TransformDirection(transform.forward), out sphereHit, enemyMask))
         {
@@ -164,7 +163,6 @@ public class Player_Bullet : Bullet
         if (minimapObj == null) minimapObj = GetComponentInChildren<MinimapObjController>().gameObject;
         if (minimapObj != null) minimapObj.SetActive(true);
         trail.Clear();
-        
     }
 
     public override void Disable()
@@ -173,7 +171,7 @@ public class Player_Bullet : Bullet
         if (trail != null) 
         {
             trail.Clear();
-                }
+        }
         base.Disable();
         gameObject.SetActive(false);
     }

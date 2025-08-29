@@ -13,6 +13,10 @@ public class EnemyBullet : Bullet
 
     public GameObject minimapObj;
 
+    public LayerMask playerMask;
+    public float checkSize = 2f;
+    public bool spawned = false;
+
 
     private void Awake()
     {
@@ -24,6 +28,7 @@ public class EnemyBullet : Bullet
     public override void OnEnable()
     {
         base.OnEnable();
+        spawned = false;
 
         //Get minimap object
         if (minimapObj == null) minimapObj = GetComponentInChildren<MinimapObjController>().gameObject;
@@ -35,57 +40,76 @@ public class EnemyBullet : Bullet
         }
     }
 
-    private void OnTriggerEnter(Collider collision)
+    public override void Update()
     {
-        if (collision.CompareTag("Player"))
-        {
-            collision.gameObject.GetComponent<Player_Stats>().Damage(damage);
-            if (hitVFXPool == null) hitVFXPool = cont.enemyHitVFXPool;
-            GameObject hit = hitVFXPool.GetPooledObject();
-            //hit.transform.position = spawnPos.transform.position;
-            hit.transform.position = collision.transform.position;
-            hit.transform.rotation = collision.transform.rotation;
-            //bul.GetComponent<Rigidbody>().velocity = bod.velocity;
-            hit.SetActive(true);
-            Invoke("Disable", 0.001f);
-        }
-        if (collision.CompareTag("Wall"))
-        {
-            if (hitVFXPool == null) hitVFXPool = cont.enemyHitVFXPool;
-            GameObject hit = hitVFXPool.GetPooledObject();
-            hit.transform.position = collision.transform.position;
-            hit.transform.rotation = collision.transform.rotation;
-            //bul.GetComponent<Rigidbody>().velocity = bod.velocity;
-            hit.SetActive(true);
-            Invoke("Disable", 0.001f);
-        }
-        if (collision.CompareTag("Decoy"))
-        {
-            collision.gameObject.GetComponent<DecoyController>().Damage();
-            if (hitVFXPool == null) hitVFXPool = cont.enemyHitVFXPool;
-            GameObject hit = hitVFXPool.GetPooledObject();
-            //hit.transform.position = spawnPos.transform.position;
-            hit.transform.position = collision.transform.position;
-            hit.transform.rotation = collision.transform.rotation;
-            //bul.GetComponent<Rigidbody>().velocity = bod.velocity;
-            hit.SetActive(true);
-            Invoke("Disable", 0.001f);
-        }  
-        if(collision.CompareTag("PlayerBarrier"))
-        {
-            collision.gameObject.SetActive(false);
-            //Invoke("DelayDestruction" , 0.5f);
-            if (hitVFXPool == null) hitVFXPool = cont.enemyHitVFXPool;
-            GameObject hit = hitVFXPool.GetPooledObject();
-            //hit.transform.position = spawnPos.transform.position;
-            hit.transform.position = collision.transform.position;
-            hit.transform.rotation = collision.transform.rotation;
-            //bul.GetComponent<Rigidbody>().velocity = bod.velocity;
-            hit.SetActive(true);
-            FindObjectOfType<Player_Stats>().invulnerable = false;
-            Invoke("Disable", 0.001f);
+        base.Update();
 
+        RaycastHit sphereHit;
+        if (Physics.SphereCast(transform.position, checkSize, transform.TransformDirection(transform.forward), out sphereHit, playerMask))
+        {
+            if (sphereHit.collider != null)
+            {
+                if (hitVFXPool == null) hitVFXPool = cont.enemyHitVFXPool;
+
+                Player_Stats en = sphereHit.collider.GetComponent<Player_Stats>();
+                if (en) HitPlayer(en);
+
+                if (sphereHit.collider.CompareTag("PlayerBarrier"))
+                {
+                    FindObjectOfType<Player_Stats>().invulnerable = false;
+                    if (!spawned)
+                    {
+                        GameObject hit = hitVFXPool.GetPooledObject();
+                        hit.transform.position = sphereHit.transform.position;
+                        hit.transform.rotation = sphereHit.transform.rotation;
+                        hit.SetActive(true);
+                        spawned = true;
+                    }
+                    Invoke("Disable", 0.001f);
+                }
+
+                if (sphereHit.collider.CompareTag("Decoy"))
+                {
+                    sphereHit.collider.GetComponent<DecoyController>().Damage();
+                    if (!spawned)
+                    {
+                        GameObject hit = hitVFXPool.GetPooledObject();
+                        hit.transform.position = sphereHit.transform.position;
+                        hit.transform.rotation = sphereHit.transform.rotation;
+                        hit.SetActive(true);
+                        spawned = true;
+                    }
+                    Invoke("Disable", 0.01f);
+                }
+
+                if (sphereHit.collider.CompareTag("Wall"))
+                {
+                    if (!spawned)
+                    {
+                        GameObject hit = hitVFXPool.GetPooledObject();
+                        hit.transform.position = sphereHit.transform.position;
+                        hit.transform.rotation = sphereHit.transform.rotation;
+                        hit.SetActive(true);
+                        spawned = true;
+                    }
+                    Invoke("Disable", 0.001f);
+                }
+            }
         }
+    }
+
+    public void HitPlayer(Player_Stats col)
+    {
+        col.Damage(damage);
+        if (!spawned)
+        {
+            GameObject hit = hitVFXPool.GetPooledObject();
+            hit.transform.position = col.transform.position;
+            hit.transform.rotation = col.transform.rotation;
+            hit.SetActive(true);
+            spawned = true;
+        }
+        Invoke("Disable", 0.001f);
     }
 
     public override void Disable()
@@ -97,21 +121,6 @@ public class EnemyBullet : Bullet
             trail.emitting = false;
         }
         base.Disable();
-    }
-
-    public void Push()
-    {
-        //rb.velocity = transform.forward * (speed + Random.Range(0, randSpdMod));
-    }
-
-    public void PushHard()
-    {
-        //rb.velocity = transform.forward * (fastSpd + Random.Range(0, randSpdMod));
-    }
-
-    public void PushSoft()
-    {
-        //rb.velocity = transform.forward * (slowSpd + Random.Range(0, randSpdMod));
     }
 
     /*public void PushRadial() 

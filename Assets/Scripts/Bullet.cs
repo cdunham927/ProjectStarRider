@@ -57,8 +57,4 @@ public class Bullet : MonoBehaviour
         speed = 1.0f;
         damage = 1;
     }
-
-    
-
-
 }

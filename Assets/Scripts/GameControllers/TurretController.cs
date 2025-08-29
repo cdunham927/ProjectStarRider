@@ -82,7 +82,7 @@ public class TurretController : MonoBehaviour
             {
                 bul.transform.rotation = transform.rotation;
             }
-            bul.GetComponent<EnemyBullet>().Push();
+            //bul.GetComponent<EnemyBullet>().Push();
         }
 
         //Reset attack cooldown

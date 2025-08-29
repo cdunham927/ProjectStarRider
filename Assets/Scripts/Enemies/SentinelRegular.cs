@@ -50,7 +50,7 @@ public class SentinelRegular : EnemyControllerBase
             {
                 bul.transform.rotation = Quaternion.Euler(Random.Range(0, 360), Random.Range(0, 360), Random.Range(0, 360));
             }
-            bul.GetComponent<EnemyBullet>().Push();
+            //bul.GetComponent<EnemyBullet>().Push();
         }
         
         //Reset attack cooldown
@@ -81,7 +81,7 @@ public class SentinelRegular : EnemyControllerBase
                 angle += increment;
 
                 bul.transform.rotation = Quaternion.Euler(0, angle, 0);
-                bul.GetComponent<EnemyBullet>().Push();
+                //bul.GetComponent<EnemyBullet>().Push();
             }
 
             //Get pooled bullet
@@ -96,7 +96,7 @@ public class SentinelRegular : EnemyControllerBase
                 bulX.transform.rotation = Quaternion.identity;
 
                 bulX.transform.rotation = Quaternion.Euler(angle, 0, 0);
-                bulX.GetComponent<EnemyBullet>().Push();
+                //bulX.GetComponent<EnemyBullet>().Push();
             }
 
             //Get pooled bullet
@@ -111,7 +111,7 @@ public class SentinelRegular : EnemyControllerBase
                 bulZ.transform.rotation = Quaternion.identity;
 
                 bulZ.transform.rotation = Quaternion.Euler(angle, angle, 0);
-                bulZ.GetComponent<EnemyBullet>().Push();
+                //bulZ.GetComponent<EnemyBullet>().Push();
             }
         }
 
@@ -142,7 +142,7 @@ public class SentinelRegular : EnemyControllerBase
                 angle += increment;
 
                 bul.transform.rotation = Quaternion.Euler(0, angle, 0);
-                bul.GetComponent<EnemyBullet>().Push();
+                //bul.GetComponent<EnemyBullet>().Push();
             }
         }
 
@@ -175,7 +175,7 @@ public class SentinelRegular : EnemyControllerBase
                 angle += increment;
 
                 bul.transform.rotation = Quaternion.Euler(0, angle, 0);
-                bul.GetComponent<EnemyBullet>().Push();
+                //bul.GetComponent<EnemyBullet>().Push();
             }
         }
 
