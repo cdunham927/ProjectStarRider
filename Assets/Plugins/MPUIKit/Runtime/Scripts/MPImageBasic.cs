@@ -33,6 +33,9 @@ namespace MPUIKIT {
         [SerializeField] private float m_CircleRadius;                              // MapTo -> Normal.y
         [SerializeField] private bool m_CircleFitToRect = true;                     // MapTo -> Normal.z
 
+        [SerializeField] private float m_ChamferSize;                               // MapTo -> Normal.y
+        [SerializeField] private float m_ParallelogramSkew;                         // MapTo -> Normal.y
+        [SerializeField] private float m_ParallelogramCornerRadius;                 // MapTo -> Normal.y
         [SerializeField] private int m_NStarPolygonSideCount = 3;                   // MapTo -> Normal.y compressed
         [SerializeField] private float m_NStarPolygonInset = 2f;                    // MapTo -> Normal.y compressed
         [SerializeField] private float m_NStarPolygonCornerRadius;                  // MapTo -> Normal.z
@@ -172,6 +175,31 @@ namespace MPUIKIT {
                 base.SetVerticesDirty();
             }
         }
+        
+        public float ChamferSize {
+            get => m_ChamferSize;
+            set {
+                m_ChamferSize = Mathf.Clamp(value, 0, GetMinSizeHalf());
+                base.SetVerticesDirty();
+            }
+        }
+        
+        public float ParallelogramSkew {
+            get => m_ParallelogramSkew;
+            set {
+                m_ParallelogramSkew = Mathf.Clamp(value, -GetMinWidthHalf(), GetMinWidthHalf());
+                base.SetVerticesDirty();
+            }
+        }
+        
+        public float ParallelogramCornerRadius {
+            get => m_ParallelogramCornerRadius;
+            set {
+                m_ParallelogramCornerRadius = Mathf.Clamp(value, 0, GetMinSizeHalf());
+                base.SetVerticesDirty();
+            }
+        }
+        
         public bool CircleFitToRect {
             get => m_CircleFitToRect;
             set {
@@ -214,6 +242,8 @@ namespace MPUIKIT {
                     case DrawShape.Circle:
                     case DrawShape.Triangle:
                     case DrawShape.Rectangle:
+                    case DrawShape.ChamferBox:
+                    case DrawShape.Parallelogram:
                         return MPMaterials.GetMaterial((int)m_DrawShape - 1, m_StrokeWidth > 0f, m_OutlineWidth > 0f);
                     case DrawShape.Pentagon:
                     case DrawShape.Hexagon:
@@ -225,6 +255,10 @@ namespace MPUIKIT {
             }
             set => Debug.LogWarning("Setting Material of MPImageBasic has no effect.");
         }
+
+        public override float preferredWidth => sprite == MPImageUtility.EmptySprite ? 0 : base.preferredWidth;
+        public override float preferredHeight => sprite == MPImageUtility.EmptySprite ? 0 : base.preferredHeight;
+
 
         protected override void OnEnable() {
             base.OnEnable();
@@ -259,6 +293,12 @@ namespace MPUIKIT {
             return Mathf.Min(size.x, size.y);
         }
 
+        private float GetMinWidthHalf()
+        {
+            Vector2 size = GetPixelAdjustedRect().size;
+            return size.x * 0.5f;
+        }
+
         private void ConstrainRotationValue() {
             if (!m_ConstrainRotation) return;
             float finalRotation =  m_ShapeRotation - (m_ShapeRotation % 90);
@@ -278,15 +318,16 @@ namespace MPUIKIT {
             stream.RectTransform = rectT;
             Rect r = GetPixelAdjustedRect();
             stream.Uv1 = new Vector2(r.width + m_FalloffDistance, r.height + m_FalloffDistance);
-            stream.Uv2 = new Vector2(m_StrokeWidth, m_FalloffDistance);
             float packedRotData =
                 PackRotationData(m_ShapeRotation, m_ConstrainRotation, m_FlipHorizontal, m_FlipVertical);
             stream.Uv3 = new Vector2(packedRotData, (float)m_CornerStyle);
 
-            stream.Tangent = m_OutlineColor;
+            stream.Tangent = QualitySettings.activeColorSpace == ColorSpace.Linear? m_OutlineColor.linear : m_OutlineColor;
             Vector3 normal = new Vector3();
             normal.x = m_OutlineWidth;
-
+            normal.y = m_StrokeWidth;
+            normal.z = m_FalloffDistance;
+            
             Vector4 data;
             Vector2 shapeProps;
             switch (m_DrawShape) {
@@ -308,13 +349,19 @@ namespace MPUIKIT {
                     data = data / Mathf.Min(r.width, r.height);
                     shapeProps = MPImageUtility.Encode_0_1_16(data);
                     break;
+                case DrawShape.ChamferBox:
+                    shapeProps = new Vector2(m_ChamferSize, 0);
+                    break;
+                case DrawShape.Parallelogram:
+                    shapeProps = new Vector2(m_ParallelogramSkew, m_ParallelogramCornerRadius);
+                    break;
                 default:
                     shapeProps = Vector2.zero;
                     break;
             }
 
-            normal.y = shapeProps.x;
-            normal.z = shapeProps.y;
+            stream.Uv2 = shapeProps;
+            
             stream.Normal = normal;
             return stream;
         }
@@ -353,7 +400,13 @@ namespace MPUIKIT {
                 return ret;
             }
         }
-        
+
+        protected override void OnRectTransformDimensionsChange()
+        {
+            base.OnRectTransformDimensionsChange();
+            base.SetVerticesDirty();
+        }
+
         private Vector4 FixRadius(Vector4 radius)
         {
             Rect rect = rectTransform.rect;

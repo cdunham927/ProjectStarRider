@@ -12,7 +12,7 @@ namespace MPUIKIT.Editor
         private SerializedProperty _spSoftMaskCgincLocation;
 
         private bool _softMAskSupport;
-        private string _softMaskCgincLocation;
+        private string _softMaskCgincLocation = "Packages/com.olegknyazev.softmask/Assets/Shaders/Resources/SoftMask.cginc";
 
         private GUIStyle boxStyle = null;
         private bool _error;
@@ -24,7 +24,8 @@ namespace MPUIKIT.Editor
             _spSoftMaskCgincLocation = serializedObject.FindProperty("m_SoftMaskCgincLocation");
             
             _softMAskSupport = _spInstallSoftMaskSupport.boolValue;
-            _softMaskCgincLocation = _spSoftMaskCgincLocation.stringValue;
+            if(!string.IsNullOrEmpty(_spSoftMaskCgincLocation.stringValue)) 
+                _softMaskCgincLocation = _spSoftMaskCgincLocation.stringValue;
         }
 
         public override void OnInspectorGUI()

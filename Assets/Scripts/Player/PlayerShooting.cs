@@ -238,6 +238,7 @@ public class PlayerShooting : MonoBehaviour
        
         curShootCools = shootCooldown;
         PlayMuzzle();
+        
         //Player Recoil
         bod.AddForce(-bod.transform.forward * recoilForce * Time.deltaTime, ForceMode.Impulse);
         PlayerIsShooting = newShooting;

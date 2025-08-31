@@ -67,26 +67,26 @@ namespace MPUIKIT {
             set {
                 m_Gradient = value;
                 if (ShouldModifySharedMat) {
-                    List<Vector4> Colors = new List<Vector4>(8);
-                    List<Vector4> Alphas = new List<Vector4>(8);
+                    List<Color> Colors = new List<Color>(8);
+                    List<Color> Alphas = new List<Color>(8);
                     for (int i = 0; i < 8; i++) {
                         if (i < m_Gradient.colorKeys.Length) {
                             Color col = m_Gradient.colorKeys[i].color;
-                            Vector4 data = new Vector4(col.r, col.g, col.b, 
+                            Color colorData = new Vector4(col.r, col.g, col.b, 
                                 m_Gradient.colorKeys[i].time);
-                            Colors.Add(data);
-                            SharedMat.SetVector("_GradientColor"+i, data);
+                            Colors.Add(colorData);
+                            SharedMat.SetColor("_GradientColor"+i, colorData);
                         }
                         else {
-                            SharedMat.SetVector("_GradientColor"+i, Vector4.zero);
+                            SharedMat.SetColor("_GradientColor"+i, Vector4.zero);
                         }
                         if (i < m_Gradient.alphaKeys.Length) {
-                            Vector4 data = new Vector4(m_Gradient.alphaKeys[i].alpha, m_Gradient.alphaKeys[i].time);
-                            Alphas.Add(data);
-                            SharedMat.SetVector("_GradientAlpha"+i, data);
+                            Color colorData = new Vector4(m_Gradient.alphaKeys[i].alpha, m_Gradient.alphaKeys[i].time);
+                            Alphas.Add(colorData);
+                            SharedMat.SetColor("_GradientAlpha"+i, colorData);
                         }
                         else {
-                            SharedMat.SetVector("_GradientAlpha"+i, Vector4.zero);
+                            SharedMat.SetColor("_GradientAlpha"+i, Color.black);
                         }
                     }
                     
@@ -103,8 +103,8 @@ namespace MPUIKIT {
                         Alphas.Add(Vector4.zero);
                     }
                     
-                    SharedMat.SetVectorArray(SpGradientColors, Colors);
-                    SharedMat.SetVectorArray(SpGradientAlphas, Alphas);
+                    SharedMat.SetColorArray(SpGradientColors, Colors);
+                    SharedMat.GetColorArray(SpGradientAlphas, Alphas);
                     SharedMat.SetInt(SpGradientInterpolationType, (int) m_Gradient.mode);
                 }
                 OnComponentSettingsChanged?.Invoke(this, EventArgs.Empty);
@@ -184,16 +184,16 @@ namespace MPUIKIT {
             GradientColorKey[] colorKeys = new GradientColorKey[colorLength];
             GradientAlphaKey[] alphaKeys = new GradientAlphaKey[alphaLength];
             for (int i = 0; i < colorLength; i++) {
-                Vector4 colorValue = material.GetVector("_GradientColor" + i);
-                colorKeys[i].color = new Color(colorValue.x, colorValue.y, colorValue.z);
-                colorKeys[i].time = colorValue.w;
+                Color colorValue = material.GetColor("_GradientColor" + i);
+                colorKeys[i].color = new Color(colorValue.r, colorValue.g, colorValue.b);
+                colorKeys[i].time = colorValue.a;
             }
 
             gradient.colorKeys = colorKeys;
             for (int i = 0; i < alphaLength; i++) {
-                Vector4 alphaValue = material.GetVector("_GradientAlpha" + i);
-                alphaKeys[i].alpha = alphaValue.x;
-                alphaKeys[i].time = alphaValue.y;
+                Color alphaValue = material.GetColor("_GradientAlpha" + i);
+                alphaKeys[i].alpha = alphaValue.r;
+                alphaKeys[i].time = alphaValue.g;
             }
 
             gradient.alphaKeys = alphaKeys;
@@ -236,14 +236,14 @@ namespace MPUIKIT {
                 }
             }
             else {
-                Vector4[] colors = new Vector4[8];
-                Vector4[] alphas = new Vector4[8];
+                Color[] colors = new Color[8];
+                Color[] alphas = new Color[8];
                 for (int i = 0; i < m_Gradient.colorKeys.Length; i++) {
                     Color col = m_Gradient.colorKeys[i].color;
-                    colors[i] = new Vector4(col.r, col.g, col.b, m_Gradient.colorKeys[i].time);
+                    colors[i] = new Color(col.r, col.g, col.b, m_Gradient.colorKeys[i].time);
                 }
                 for (int i = 0; i < m_Gradient.alphaKeys.Length; i++) {
-                    alphas[i] = new Vector4(m_Gradient.alphaKeys[i].alpha, m_Gradient.alphaKeys[i].time);
+                    alphas[i] = new Color(m_Gradient.alphaKeys[i].alpha, m_Gradient.alphaKeys[i].time, 0, 0);
                 }
                 
                 material.SetFloat(SpGradientColorsLength, m_Gradient.colorKeys.Length);
@@ -252,11 +252,11 @@ namespace MPUIKIT {
                 material.SetFloat(SpGradientRotation, m_Rotation);
                 
                 for (int i = 0; i < colors.Length; i++) {
-                    material.SetVector("_GradientColor"+i, colors[i]);
+                    material.SetColor("_GradientColor"+i, colors[i]);
                 }
                 
                 for (int i = 0; i < alphas.Length; i++) {
-                    material.SetVector("_GradientAlpha"+i, alphas[i]);
+                    material.SetColor("_GradientAlpha"+i, alphas[i]);
                 }
             }
         }
