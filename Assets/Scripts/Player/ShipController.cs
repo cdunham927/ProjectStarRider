@@ -45,6 +45,7 @@ public class ShipController : MonoBehaviour
     float lerpToSpd;
     public float dashCooldown;
     public float dashTime;
+    //This is for the boost powerup
     [HideInInspector]
     public float curDashTime;
 
@@ -78,7 +79,6 @@ public class ShipController : MonoBehaviour
 
     //Aniamtion State  make sure string match name of animations
     const string BarrelRoll = "StarRiderShip|BarrelRoll";
-    const string DamageSpin = "StarRiderShip|Spin";
 
     public float freezeTime = 3f;
 
@@ -93,6 +93,9 @@ public class ShipController : MonoBehaviour
         player = GetComponent<PlayerController>();
         stats = GetComponent<Player_Stats>();
         ability = GetComponent<PlayerAbility>();
+        
+        anim.Rebind();
+        anim.Update(0f);
 
         //origRot = rotObj.transform.rotation;
 
@@ -191,6 +194,7 @@ public class ShipController : MonoBehaviour
 
                 if (vert > 0)
                 {
+                    //This is for the speed boost powerup
                     if (curDashTime > 0)
                     {
                         lerpToSpd = superSpd;
@@ -362,20 +366,33 @@ public class ShipController : MonoBehaviour
 
             bod.AddForce(transform.forward * (speed * Time.fixedDeltaTime));
 
-            if (dashing && !sideDashing)
+            if (curDashCools > dashTime && dashing && !sideDashing)
             {
-                stats.ShakeCamera(12f);
-                bod.AddForce(transform.forward * (explosiveForce * Time.fixedDeltaTime), ForceMode.Impulse);
-                dashing = false;
+                //Debug.Log("Dashing");
+                stats.ShakeCamera(3f);
+                bod.AddForce(transform.forward * (explosiveForce * Time.fixedDeltaTime), ForceMode.Force);
+                //bod.AddForce(transform.forward * (explosiveForce * Time.fixedDeltaTime), ForceMode.Impulse);
+                
+                //dashing = false;
                 ChangeAnimationState(BarrelRoll);
             }
 
-            if (sideDashing && !dashing)
+            if (curDashCools > dashTime && sideDashing && !dashing)
             {
-                stats.ShakeCamera(12f);
-                bod.AddForce(transform.right * dashDir * (explosiveForce * Time.fixedDeltaTime), ForceMode.Impulse);
-                sideDashing = false;
+                //Debug.Log("SideDashing");
+                stats.ShakeCamera(3f);
+                bod.AddForce(transform.right * dashDir * (explosiveForce * Time.fixedDeltaTime), ForceMode.Force);
+                //bod.AddForce(transform.right * dashDir * (explosiveForce * Time.fixedDeltaTime), ForceMode.Impulse);
+                
+                //sideDashing = false;
                 ChangeAnimationState(BarrelRoll);
+            }
+
+            //NEW DASH CHECK
+            if (curDashCools <= 0)
+            {
+                dashing = false;
+                sideDashing = false;
             }
 
             Vector3 playerRotation = transform.rotation.eulerAngles;

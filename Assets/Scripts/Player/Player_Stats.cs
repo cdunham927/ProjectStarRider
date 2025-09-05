@@ -10,6 +10,8 @@ using MPUIKIT;
 
 public class Player_Stats : MonoBehaviour
 {
+    ShipController ship;
+    const string spin = "StarRiderShip|Spin";
     [Header(" Player Hp : ")]
     public int Curr_hp;
     public int Max_hp;
@@ -109,6 +111,7 @@ public class Player_Stats : MonoBehaviour
     private void Awake()
     {
         gm = FindObjectOfType<GameManager>();
+        ship = GetComponent<ShipController>();
 
         //Get variables for ui
         healthImage = gm.healthImage;
@@ -283,7 +286,7 @@ public class Player_Stats : MonoBehaviour
         {
             if (!invulnerable && !invisible)
             {
-                if (anim != null) anim.SetTrigger("Hit");
+                ship.ChangeAnimationState(spin);
 
                 //If we have 1/3rd hp left, flash the healthbar
                 //if (Curr_hp < (Mathf.RoundToInt(Max_hp / 3))) healthImageFlash.SetActive(true);
