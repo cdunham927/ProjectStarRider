@@ -22,7 +22,7 @@ public class BulletMissileTest : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update(float DeltaTime)
+    public void FixedUpdate(float DeltaTime)
     {
         float CurrentTime = Time.time;
         float Elapsed = CurrentTime - StartTime;
