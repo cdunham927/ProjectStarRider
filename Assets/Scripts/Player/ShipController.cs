@@ -85,6 +85,10 @@ public class ShipController : MonoBehaviour
     public Quaternion origRot;
     public float maxRot = 30f;
 
+    public Transform shipLocalTransform;
+    public float mouseRotForce;
+    public float contRotForce;
+
     private void Awake()
     {
         cont = FindObjectOfType<GameManager>();
@@ -239,6 +243,10 @@ public class ShipController : MonoBehaviour
             //{
             //    rotObj.transform.LookAt(new Vector3(raycastHit.point.x, rotObj.transform.position.y, raycastHit.point.z));
             //}
+
+
+
+            //shipLocalTransform.localRotation = Quaternion.Euler(pitch, yaw, );
         }
     }
     //float AngleBetweenTwoPoints(Vector3 a, Vector3 b)
@@ -363,6 +371,8 @@ public class ShipController : MonoBehaviour
                 bod.AddTorque(transform.up * (yawForce * yaw * Time.fixedDeltaTime));
             }
 
+            if (player.joystick) shipLocalTransform.localEulerAngles = new Vector3(-pitch * contRotForce, yaw * contRotForce, 0f);
+            else shipLocalTransform.localEulerAngles = new Vector3(-pitch * mouseRotForce, yaw * mouseRotForce, 0f);
 
             bod.AddForce(transform.forward * (speed * Time.fixedDeltaTime));
 

@@ -29,6 +29,7 @@ public class CetusController : BossControllerBase, IDamageable
     public GameObject barrierPushObj;
 
     public BarrierController barrier;
+    public GameObject[] weakpoints;
 
     protected override void Awake()
     {
@@ -215,12 +216,20 @@ public class CetusController : BossControllerBase, IDamageable
 
         //Reset attack cooldown
         attackCools = atkCooldowns[0];
-       
+
     }
 
     void ActivateBarrierPushObj()
     {
         barrierPushObj.SetActive(true);
+    }
+
+    public void DeactivateBarrier()
+    {
+        for (int i = 0; i < weakpoints.Length; i++)
+        {
+            weakpoints[i].tag = "BossHitPoint";
+        }
     }
 
     void DeactivateBarrierPushObj()
@@ -380,6 +389,12 @@ public class CetusController : BossControllerBase, IDamageable
             case 1:
                 //barrier.gameObject.SetActive(true);
                 barrier.SetEnemies(waveOneSpawns.Length);
+
+                for (int i = 0; i < weakpoints.Length; i++)
+                {
+                    weakpoints[i].tag = "Barrier";
+                }
+
                 //ChangeAnimationState(Cetus_Reflect);
                 foreach (GameObject g in waveOneSpawns)
                 {
@@ -388,6 +403,12 @@ public class CetusController : BossControllerBase, IDamageable
                 }
                 break;
             case 2:
+
+                for (int i = 0; i < weakpoints.Length; i++)
+                {
+                    weakpoints[i].tag = "Barrier";
+                }
+
                 //FindObjectOfType<CombatDialogueController>().StartDialogue(barrierDialogue);
                 barrier.gameObject.SetActive(true);
                 //ChangeAnimationState(Cetus_Reflect);
@@ -404,6 +425,12 @@ public class CetusController : BossControllerBase, IDamageable
                 attackCools = spawnCooldown;
                 break;
             case 3:
+
+                for (int i = 0; i < weakpoints.Length; i++)
+                {
+                    weakpoints[i].tag = "Barrier";
+                }
+
                 //FindObjectOfType<CombatDialogueController>().StartDialogue(barrierDialogue);
                 barrier.gameObject.SetActive(true);
                 //ChangeAnimationState(Cetus_Reflect);

@@ -64,20 +64,22 @@ public class Player_Bullet : Bullet
 
                 if (sphereHit.collider.CompareTag("Barrier"))
                 {
-                    //Debug.Log("Hit Enemy");
-                    sphereHit.collider.GetComponent<BarrierController>().Damage(damage);
-                    //ContactPoint cp = col.GetContact(0);
-                    if (hitVFXPool == null) hitVFXPool = cont.hitVFXPool;
-                    if (!spawned)
-                    {
-                        GameObject hit = hitVFXPool.GetPooledObject();
-                        hit.transform.position = spawnPos.transform.position;
-                        hit.transform.rotation = spawnPos.transform.rotation;
-                        //bul.GetComponent<Rigidbody>().velocity = bod.velocity;
-                        hit.SetActive(true);
-                        spawned = true;
-                    }
-                    Invoke("Disable", 0.001f);
+                    // Find the line from the gun to the point that was clicked.
+                    Vector3 incomingVec = sphereHit.point - transform.position;
+
+                    // Use the point's normal to calculate the reflection vector.
+                    Vector3 reflectVec = Vector3.Reflect(incomingVec, sphereHit.normal);
+                    reflectVec = reflectVec.normalized;
+                    moveDir = reflectVec * speed;
+
+                    // Draw lines to show the incoming "beam" and the reflection.
+                    //Debug.DrawLine(transform.position, sphereHit.point, Color.red);
+                    //Debug.DrawRay(sphereHit.point, reflectVec, Color.green);
+
+                    GameObject hit = hitVFXPool.GetPooledObject();
+                    hit.transform.position = spawnPos.transform.position;
+                    hit.transform.rotation = spawnPos.transform.rotation;
+                    hit.SetActive(true);
                 }
 
                 if (sphereHit.collider.CompareTag("DestructBullets"))
