@@ -165,7 +165,7 @@ public class PlayerController : MonoBehaviour
     protected float htAxis;
     protected float vtAxis;
 
-    void Update()
+    void FixedUpdate()
     {
         //Update controller or keyboard input
         if (Input.anyKeyDown) joystick = false;

@@ -34,9 +34,9 @@ public class PlayerSniperBullet : Bullet
         trail = GetComponentInChildren<TrailRenderer>();
     }
 
-    public override void Update()
+    public override void FixedUpdate()
     {
-        base.Update();
+        base.FixedUpdate();
 
         //RaycastHit hit;
         //if (Physics.Raycast(transform.position, transform.TransformDirection(transform.forward), out hit, 1f, enemyMask))

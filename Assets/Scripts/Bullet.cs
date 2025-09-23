@@ -23,7 +23,7 @@ public class Bullet : MonoBehaviour
 
     protected Vector3 moveDir;
 
-    public virtual void Update()
+    public virtual void FixedUpdate()
     {
         transform.Translate(moveDir * Time.deltaTime, Space.World);
     }

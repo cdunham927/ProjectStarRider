@@ -57,9 +57,9 @@ public class PlayerBomb : Bullet
         base.Disable();
     }
 
-    public override void Update()
+    public override void FixedUpdate()
     {
-        base.Update();
+        base.FixedUpdate();
 
         RaycastHit sphereHit;
         if (Physics.SphereCast(transform.position, checkSize, transform.TransformDirection(transform.forward), out sphereHit, enemyMask))

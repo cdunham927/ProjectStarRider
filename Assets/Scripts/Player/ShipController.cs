@@ -49,6 +49,7 @@ public class ShipController : MonoBehaviour
     [HideInInspector]
     public float curDashTime;
 
+    [Tooltip("Bool statemtents for player dashing vfx / physics.")]
     bool dashing = false;
     bool sideDashing = false;
     float curDashCools;
@@ -376,6 +377,7 @@ public class ShipController : MonoBehaviour
 
             bod.AddForce(transform.forward * (speed * Time.fixedDeltaTime));
 
+            //Dash code
             if (curDashCools > dashTime && dashing && !sideDashing)
             {
                 //Debug.Log("Dashing");

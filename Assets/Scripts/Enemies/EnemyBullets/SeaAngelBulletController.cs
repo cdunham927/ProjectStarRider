@@ -33,9 +33,9 @@ public class SeaAngelBulletController : Bullet
         if (minimapObj != null) minimapObj.SetActive(true);
     }
 
-    public override void Update()
+    public override void FixedUpdate()
     {
-        base.Update();
+        base.FixedUpdate();
 
         RaycastHit sphereHit;
         if (Physics.SphereCast(transform.position, checkSize, transform.TransformDirection(transform.forward), out sphereHit, playerMask))

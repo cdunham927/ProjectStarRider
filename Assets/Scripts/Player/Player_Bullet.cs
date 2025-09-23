@@ -30,9 +30,9 @@ public class Player_Bullet : Bullet
         trail.Clear();
     }
 
-    public override void Update()
+    public override void FixedUpdate()
     {
-        base.Update();
+        base.FixedUpdate();
 
         RaycastHit sphereHit;
         if (Physics.SphereCast(transform.position, checkSize, transform.TransformDirection(transform.forward), out sphereHit, enemyMask))
