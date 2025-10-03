@@ -68,14 +68,7 @@ public class HomingBulletController : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-
-
-      
         bod.velocity = (transform.forward * (1.0f + Time.fixedDeltaTime))  * startSpd; //velcoity algorthim for the porjectile
-        
-
-
-
 
         if (player != null && player.gameObject.activeInHierarchy)
         {
@@ -86,6 +79,7 @@ public class HomingBulletController : MonoBehaviour
             transform.rotation = Quaternion.LookRotation(newDir);
         }
     }
+
     private void OnTriggerEnter(Collider collision)
     {
         if (collision.CompareTag("Player")) // // trigger on Player  tag object

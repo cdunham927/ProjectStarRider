@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyBullet : Bullet
+public class NewHomingBulletController : Bullet
 {
     public GameObject collisonExplosion;
     private TrailRenderer trail;
@@ -16,6 +16,13 @@ public class EnemyBullet : Bullet
     public LayerMask playerMask;
     public float checkSize = 2f;
     public bool spawned = false;
+
+    PlayerController player;
+    public float lerpSpd;
+    public GameObject spawnPos;
+
+    public float rotSpd = 0.7f;
+    public int atk;
 
     private void Awake()
     {
@@ -39,10 +46,49 @@ public class EnemyBullet : Bullet
         }
     }
 
+    //private TrailRenderer trail;
+    [SerializeField] private float randomness = 5f;
+    void OnDisable()
+    {
+        CancelInvoke();
+    }
+
+    // Update is called once per frame
+    private void Update()
+    {
+        if (elapsedTime < maxSpdTime)
+        {
+            // Increment the elapsed time
+            elapsedTime += Time.deltaTime;
+        }
+
+        float timePercent = elapsedTime / maxSpdTime;
+
+        // Evaluate the animation curve at that time percentage.
+        // This returns a value (typically between 0 and 1) based on the curve's shape.
+        float curveValue = accelerationCurve.Evaluate(timePercent);
+
+        // Use Mathf.Lerp to interpolate between the base and max speed.
+        // The third parameter (the curve value) determines our position in the interpolation.
+        speed = Mathf.Lerp(startSpd, maxSpd, curveValue);
+        
+        if (player != null && player.gameObject.activeInHierarchy)
+        {
+            //bod.AddForce(transform.forward * spd * Time.deltaTime);
+
+            Vector3 targDir = player.transform.position - transform.position;
+            Vector3 newDir = Vector3.RotateTowards(transform.forward, targDir, lerpSpd * Time.deltaTime, 0.0f);
+            moveDir = Vector3.Lerp(moveDir, newDir, rotSpd * Time.deltaTime);
+            //transform.rotation = Quaternion.LookRotation(newDir);
+        }
+    }
+
     public override void FixedUpdate()
     {
-        base.FixedUpdate();
+        //Check if player or decoy is in range, then home in on it
+        transform.Translate(moveDir * speed * Time.deltaTime, Space.World);
 
+        //Check if bullet actually hits anything
         RaycastHit sphereHit;
         if (Physics.SphereCast(transform.position, checkSize, transform.TransformDirection(transform.forward), out sphereHit, playerMask))
         {

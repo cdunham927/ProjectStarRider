@@ -11,7 +11,7 @@ public class PlayerHomingBullet : Bullet
     public GameObject spawnPos;
     public ObjectPool hitVFXPool;
     GameManager cont;
-    public float startSpd;
+    //public float startSpd;
 
     public GameObject minimapObj;
 
