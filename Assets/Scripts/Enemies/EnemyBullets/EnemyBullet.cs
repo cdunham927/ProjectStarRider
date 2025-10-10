@@ -39,10 +39,8 @@ public class EnemyBullet : Bullet
         }
     }
 
-    public override void FixedUpdate()
+    private void Update()
     {
-        base.FixedUpdate();
-
         RaycastHit sphereHit;
         if (Physics.SphereCast(transform.position, checkSize, transform.TransformDirection(transform.forward), out sphereHit, playerMask))
         {
@@ -95,6 +93,11 @@ public class EnemyBullet : Bullet
                 }
             }
         }
+    }
+
+    public override void FixedUpdate()
+    {
+        base.FixedUpdate();
     }
 
     public void HitPlayer(Player_Stats col)

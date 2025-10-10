@@ -34,16 +34,8 @@ public class PlayerSniperBullet : Bullet
         trail = GetComponentInChildren<TrailRenderer>();
     }
 
-    public override void FixedUpdate()
+    private void Update()
     {
-        base.FixedUpdate();
-
-        //RaycastHit hit;
-        //if (Physics.Raycast(transform.position, transform.TransformDirection(transform.forward), out hit, 1f, enemyMask))
-        //{
-        //    HitEnemy(hit.collider.GetComponent<EnemyControllerBase>());
-        //}
-
         RaycastHit sphereHit;
         if (Physics.SphereCast(transform.position, checkSize, transform.TransformDirection(transform.forward), out sphereHit, enemyMask))
         {
@@ -71,7 +63,7 @@ public class PlayerSniperBullet : Bullet
                     }
                     Invoke("Disable", 0.001f);
                 }
-                
+
                 if (sphereHit.collider.CompareTag("Barrier"))
                 {
                     // Find the line from the gun to the point that was clicked.
@@ -91,7 +83,7 @@ public class PlayerSniperBullet : Bullet
                     hit.transform.rotation = spawnPos.transform.rotation;
                     hit.SetActive(true);
                 }
-                
+
                 if (sphereHit.collider.CompareTag("DestructBullets"))
                 {
                     //Debug.Log("Hit Enemy");
@@ -110,7 +102,7 @@ public class PlayerSniperBullet : Bullet
                     //bul.GetComponent<Rigidbody>().velocity = bod.velocity;
                     Invoke("Disable", 0.01f);
                 }
-                
+
                 if (sphereHit.collider.CompareTag("DWall"))
                 {
                     sphereHit.collider.GetComponent<DestructibleObject>().TakeDamage(damage);
@@ -130,25 +122,26 @@ public class PlayerSniperBullet : Bullet
 
                 if (sphereHit.collider.CompareTag("Wall"))
                 {
-                    // Find the line from the gun to the point that was clicked.
-                    Vector3 incomingVec = sphereHit.point - transform.position;
-
-                    // Use the point's normal to calculate the reflection vector.
-                    Vector3 reflectVec = Vector3.Reflect(incomingVec, sphereHit.normal);
-                    reflectVec = reflectVec.normalized;
-                    moveDir = reflectVec * speed;
-
-                    // Draw lines to show the incoming "beam" and the reflection.
-                    //Debug.DrawLine(transform.position, sphereHit.point, Color.red);
-                    //Debug.DrawRay(sphereHit.point, reflectVec, Color.green);
-
-                    GameObject hit = hitVFXPool.GetPooledObject();
-                    hit.transform.position = spawnPos.transform.position;
-                    hit.transform.rotation = spawnPos.transform.rotation;
-                    hit.SetActive(true);
+                    //ContactPoint cp = col.GetContact(0);
+                    if (hitVFXPool == null) hitVFXPool = cont.hitVFXPool;
+                    if (!spawned)
+                    {
+                        GameObject hit = hitVFXPool.GetPooledObject();
+                        hit.transform.position = spawnPos.transform.position;
+                        hit.transform.rotation = spawnPos.transform.rotation;
+                        //bul.GetComponent<Rigidbody>().velocity = bod.velocity;
+                        hit.SetActive(true);
+                        spawned = true;
+                    }
+                    Invoke("Disable", 0.001f);
                 }
             }
         }
+    }
+
+    public override void FixedUpdate()
+    {
+        base.FixedUpdate();
     }
 
     public void HitEnemy(EnemyControllerBase col)

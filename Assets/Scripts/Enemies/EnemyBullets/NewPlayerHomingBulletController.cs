@@ -2,63 +2,90 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerBomb : Bullet
+public class NewPlayerHomingBulletController : Bullet
 {
-    public Transform target;
-    public float lerpSpd;
-    public GameObject spawnPos;
-    //public ObjectPool hitVFXPool;
+    public GameObject collisonExplosion;
+    private TrailRenderer trail;
+
+    //public GameObject spawnPos;
+    public ObjectPool hitVFXPool;
     GameManager cont;
 
     public GameObject minimapObj;
 
-    bool spawned = false;
-
-    public float castSize;
-    //public GameObject castPos;
-
-    public ObjectPool hitVFXPool;
+    public Transform castPos;
     public LayerMask enemyMask;
     public float checkSize = 2f;
+    public bool spawned = false;
 
-    public ObjectPool playerExplosionPool;
+    public float castSize = 10f;
+    Transform target;
+    public float lerpSpd;
+    public GameObject spawnPos;
+
+    public float rotSpd = 0.7f;
+    public int atk;
 
     private void Awake()
     {
         cont = FindObjectOfType<GameManager>();
-        //hitVFXPool = cont.enemyHitVFXPool;
-
-        playerExplosionPool = cont.playerExplosionPool;
+        hitVFXPool = cont.enemyHitVFXPool;
+        trail = GetComponentInChildren<TrailRenderer>();
     }
 
     public override void OnEnable()
     {
         base.OnEnable();
-
         spawned = false;
 
         //Get minimap object
         if (minimapObj == null) minimapObj = GetComponentInChildren<MinimapObjController>().gameObject;
         if (minimapObj != null) minimapObj.SetActive(true);
+        if (trail != null)
+        {
+            trail.Clear();
+            trail.emitting = true;
+        }
+
+        InvokeRepeating("FindTarget", 0.01f, 0.5f);
     }
 
+    //private TrailRenderer trail;
+    [SerializeField] private float randomness = 5f;
     void OnDisable()
     {
         CancelInvoke();
     }
 
-    public override void Disable()
-    {
-        if (minimapObj != null) minimapObj.SetActive(false);
-        target = null;
-
-        SpawnExplosion();
-
-        base.Disable();
-    }
-
+    // Update is called once per frame
     private void Update()
     {
+        if (elapsedTime < maxSpdTime)
+        {
+            // Increment the elapsed time
+            elapsedTime += Time.deltaTime;
+        }
+
+        float timePercent = elapsedTime / maxSpdTime;
+
+        // Evaluate the animation curve at that time percentage.
+        // This returns a value (typically between 0 and 1) based on the curve's shape.
+        float curveValue = accelerationCurve.Evaluate(timePercent);
+
+        // Use Mathf.Lerp to interpolate between the base and max speed.
+        // The third parameter (the curve value) determines our position in the interpolation.
+        speed = Mathf.Lerp(startSpd, maxSpd, curveValue);
+
+        if (target != null && target.gameObject.activeInHierarchy)
+        {
+            //bod.AddForce(transform.forward * spd * Time.deltaTime);
+
+            Vector3 targDir = target.transform.position - transform.position;
+            Vector3 newDir = Vector3.RotateTowards(transform.forward, targDir, lerpSpd * Time.deltaTime, 0.0f);
+            moveDir = Vector3.Lerp(moveDir, newDir, rotSpd * Time.deltaTime);
+            //transform.rotation = Quaternion.LookRotation(newDir);
+        }
+
         RaycastHit sphereHit;
         if (Physics.SphereCast(transform.position, checkSize, transform.TransformDirection(transform.forward), out sphereHit, enemyMask))
         {
@@ -162,6 +189,19 @@ public class PlayerBomb : Bullet
         }
     }
 
+    public void FindTarget()
+    {
+        if (target == null || (target != null && !target.gameObject.activeInHierarchy))
+        {
+            Collider[] cols = Physics.OverlapSphere(castPos.transform.position, castSize, enemyMask);
+            if (cols.Length > 0 && cols != null)
+            {
+                target = cols[0].transform;
+            }
+        }
+    }
+    
+
     public override void FixedUpdate()
     {
         base.FixedUpdate();
@@ -169,37 +209,36 @@ public class PlayerBomb : Bullet
 
     public void HitEnemy(EnemyControllerBase col)
     {
-        //col.Damage(damage);
-        ////ContactPoint cp = col.GetContact(0);
-        //if (hitVFXPool == null) hitVFXPool = cont.hitVFXPool;
-        //if (!spawned)
-        //{
-        //    GameObject hit = hitVFXPool.GetPooledObject();
-        //    hit.transform.position = spawnPos.transform.position;
-        //    hit.transform.rotation = col.transform.rotation;
-        //    //bul.GetComponent<Rigidbody>().velocity = bod.velocity;
-        //    hit.SetActive(true);
-        //    spawned = true;
-        //}
+        col.Damage(damage);
+        //ContactPoint cp = col.GetContact(0);
+        if (hitVFXPool == null) hitVFXPool = cont.hitVFXPool;
+        if (!spawned)
+        {
+            GameObject hit = hitVFXPool.GetPooledObject();
+            hit.transform.position = spawnPos.transform.position;
+            hit.transform.rotation = col.transform.rotation;
+            //bul.GetComponent<Rigidbody>().velocity = bod.velocity;
+            hit.SetActive(true);
+            spawned = true;
+        }
         Invoke("Disable", 0.001f);
     }
 
-    private void OnDrawGizmosSelected()
+    public override void Disable()
     {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, castSize);
+        if (minimapObj != null) minimapObj.SetActive(false);
+        if (trail != null)
+        {
+            trail.Clear();
+            trail.emitting = false;
+        }
+        base.Disable();
+
+        target = null;
     }
 
-    public void SpawnExplosion()
+    public void DelayDestruction(GameObject obj)
     {
-        if (playerExplosionPool == null) playerExplosionPool = cont.playerExplosionPool;
-        if (!spawned)
-        {
-            GameObject hit = playerExplosionPool.GetPooledObject();
-            hit.transform.position = transform.position;
-            //bul.GetComponent<Rigidbody>().velocity = bod.velocity;
-            hit.gameObject.SetActive(true);
-            spawned = true;
-        }
+        obj.SetActive(false);
     }
 }
