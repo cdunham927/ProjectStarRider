@@ -9,11 +9,11 @@ public class ShipController : MonoBehaviour
     [Range(20000f, 75000f)]
     float explosiveForce = 50000f;
 
+    [Header("Flight Physics : ")]
     [SerializeField]
     [Range(75f, 1000f)]
-    float pitchForce = 500f,
-        rollForce = 500f,
-        yawForce = 500f;
+    float pitchForce = 500f, rollForce = 500f, yawForce = 500f;
+    public Vector3 turnTorque = new Vector3(40f, 25f, 45f);
 
     public Animator anim;
     Rigidbody bod;
@@ -27,7 +27,7 @@ public class ShipController : MonoBehaviour
     private Vector2 mouseDistance;
 
     //Speed values
-    [Header("Speed values")]
+    [Header(" Speed values: ")]
     public float spdLerpAmt;
     float speed;
     [Range(0f, 25000f)]
@@ -42,18 +42,27 @@ public class ShipController : MonoBehaviour
     public float DefaultRegSpd;  //stored default vlaues for player speed
     [HideInInspector]
     public float DefaultHighSpd; //stored default vlaues for player speed
-    float lerpToSpd;
+    float lerpToSpd;   
+    
+    [Header(" Player Dash settings : ")]
     public float dashCooldown;
     public float dashTime;
     //This is for the boost powerup
     [HideInInspector]
     public float curDashTime;
 
+ 
     [Tooltip("Bool statemtents for player dashing vfx / physics.")]
     bool dashing = false;
     bool sideDashing = false;
     float curDashCools;
     public int dashDir = 1;
+
+    [Header(" Player Invicible settings : ")]
+    bool isInvincible = false;
+    [SerializeField]
+    private float invincibilityDurationSeconds = 1.5f;
+    private float delayBetweenInvincibilityFlashes = 0.15f;
 
     //Input
     float vert, hor, vert2, hor2;
@@ -93,7 +102,7 @@ public class ShipController : MonoBehaviour
     private void Awake()
     {
         cont = FindObjectOfType<GameManager>();
-        //anim = GetComponentInChildren<Animator>();
+       
         bod = GetComponent<Rigidbody>();
         player = GetComponent<PlayerController>();
         stats = GetComponent<Player_Stats>();
@@ -102,7 +111,8 @@ public class ShipController : MonoBehaviour
         anim.Rebind();
         anim.Update(0f);
 
-        //origRot = rotObj.transform.rotation;
+        //origRot = rotObj.tra 
+        //anim = GetComponentInChildren<Animator>();nsform.rotation;
 
         DefaultRegSpd = regSpd;  //stored default vlaues for player speed
         DefaultHighSpd = highSpd; //stored default vlaues for player speed
@@ -387,6 +397,10 @@ public class ShipController : MonoBehaviour
                 
                 //dashing = false;
                 ChangeAnimationState(BarrelRoll);
+                if (!isInvincible)
+                {
+                    StartCoroutine(invincible());
+                }
             }
 
             if (curDashCools > dashTime && sideDashing && !dashing)
@@ -410,6 +424,10 @@ public class ShipController : MonoBehaviour
             Vector3 playerRotation = transform.rotation.eulerAngles;
             playerRotation.z = 0;
             transform.rotation = Quaternion.Euler(playerRotation);
+            /*bod.AddRelativeTorque(new Vector3(turnTorque.x * pitch,
+                                              turnTorque.y * yaw,
+                                              -turnTorque.z * roll) ,
+                                  ForceMode.Force);*/
         }
     }
 
@@ -421,6 +439,25 @@ public class ShipController : MonoBehaviour
 
         //plays the animation
         anim.Play(newState);
+    }
+
+    private IEnumerator invincible()
+    {
+        Debug.Log("Player turned invincible!");
+        isInvincible = true;
+
+        // Flash on and off for roughly invincibilityDurationSeconds seconds
+        for (float i = 0; i < invincibilityDurationSeconds; i += delayBetweenInvincibilityFlashes)
+        {
+            // TODO: add flashing logic here
+
+            yield return new WaitForSeconds(delayBetweenInvincibilityFlashes);
+        }
+
+        Debug.Log("Player is no longer invincible!");
+        isInvincible = false;
+        //yield return null;
+
     }
 }
 

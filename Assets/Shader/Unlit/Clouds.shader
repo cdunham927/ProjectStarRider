@@ -14,6 +14,7 @@ Shader "Unlit/Clouds"
             CGPROGRAM
             #pragma vertex vert
             #pragma fragment frag
+            
             // make fog work
             #pragma multi_compile_fog
 
@@ -31,9 +32,11 @@ Shader "Unlit/Clouds"
 
             struct v2f
             {
+                float4 pos : SV_POSITION;
                 float2 uv : TEXCOORD0;
                 UNITY_FOG_COORDS(1)
                 float4 vertex : SV_POSITION;
+                float3 viewVector : TEXCOORD1;
             };
 
             v2f vert(appdata v) 
@@ -285,7 +288,7 @@ Shader "Unlit/Clouds"
             }
 
 
-            float4 frag(v2f i) : SV_Target
+            float4 frag(v2f input) : SV_Target
             {
                 #if DEBUG_MODE == 1
                 if (debugViewMode != 0) 
@@ -366,6 +369,7 @@ Shader "Unlit/Clouds"
 
             }
 
+            
             ENDCG
         }
     }
