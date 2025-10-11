@@ -13,11 +13,13 @@ public class NewHomingBulletController : Bullet
 
     public GameObject minimapObj;
 
+    public Transform castPos;
     public LayerMask playerMask;
     public float checkSize = 2f;
     public bool spawned = false;
 
-    PlayerController player;
+    public float castSize = 10f;
+    Transform target;
     public float lerpSpd;
     public GameObject spawnPos;
 
@@ -44,6 +46,8 @@ public class NewHomingBulletController : Bullet
             trail.Clear();
             trail.emitting = true;
         }
+
+        InvokeRepeating("FindTarget", 0.01f, 0.5f);
     }
 
     //private TrailRenderer trail;
@@ -72,14 +76,28 @@ public class NewHomingBulletController : Bullet
         // The third parameter (the curve value) determines our position in the interpolation.
         speed = Mathf.Lerp(startSpd, maxSpd, curveValue);
         
-        if (player != null && player.gameObject.activeInHierarchy)
+        if (target != null && target.gameObject.activeInHierarchy)
         {
             //bod.AddForce(transform.forward * spd * Time.deltaTime);
 
-            Vector3 targDir = player.transform.position - transform.position;
+            Vector3 targDir = target.transform.position - transform.position;
             Vector3 newDir = Vector3.RotateTowards(transform.forward, targDir, lerpSpd * Time.deltaTime, 0.0f);
             moveDir = Vector3.Lerp(moveDir, newDir, rotSpd * Time.deltaTime);
             //transform.rotation = Quaternion.LookRotation(newDir);
+        }
+    }
+
+    public void FindTarget()
+    {
+        if (target == null || (target != null && !target.gameObject.activeInHierarchy))
+        {
+            Debug.Log("Looking for target");
+            Collider[] cols = Physics.OverlapSphere(castPos.transform.position, castSize, playerMask);
+            if (cols.Length > 0 && cols != null)
+            {
+                Debug.Log("Found target!");
+                target = cols[0].transform;
+            }
         }
     }
 
@@ -166,6 +184,8 @@ public class NewHomingBulletController : Bullet
             trail.emitting = false;
         }
         base.Disable();
+
+        target = null;
     }
 
     public void DelayDestruction(GameObject obj)

@@ -16,7 +16,6 @@ public class Bullet : MonoBehaviour
     //public Rigidbody rb;
     public float disableTime = 3f;
 
-    public bool speedUp;
     public float pushSpd;
 
     //public varaibales to read into the bullet system
