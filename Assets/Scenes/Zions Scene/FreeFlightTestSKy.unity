@@ -839,7 +839,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62923bd1aeeb47b4ab29cee1c2074a43, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  perlin: {fileID: 0}
+  cine: {fileID: 1670484178}
+  perlin: {fileID: 646578297}
   shakeTimer: 0.2
   shakeAmt: 1
   bigShakeAmt: 5
@@ -2357,6 +2358,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 250900065691136054, guid: 6b93a3113a51896478068f5d7da39efd, type: 3}
+      propertyPath: m_NoiseProfile
+      value: 
+      objectReference: {fileID: 11400000, guid: e9ce97b7a206dc64d90931ea044e0c72, type: 2}
     - target: {fileID: 3490135104266017033, guid: 6b93a3113a51896478068f5d7da39efd, type: 3}
       propertyPath: m_CustomBlends
       value: 
@@ -2469,6 +2474,17 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1901736365}
   m_SourcePrefab: {fileID: 100100000, guid: 6b93a3113a51896478068f5d7da39efd, type: 3}
+--- !u!114 &646578297 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 250900065691136054, guid: 6b93a3113a51896478068f5d7da39efd, type: 3}
+  m_PrefabInstance: {fileID: 646578296}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68bb026fafb42b14791938953eaace77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &671090377
 GameObject:
   m_ObjectHideFlags: 0
@@ -10322,6 +10338,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1384209861}
+  - component: {fileID: 1384209862}
   m_Layer: 0
   m_Name: Weather Map
   m_TagString: Untagged
@@ -10344,6 +10361,28 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1139564345}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1384209862
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1384209860}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 873d91b1bc4211d48b2696f8c3315841, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  logTime: 0
+  noiseCompute: {fileID: 0}
+  noiseSettings: {fileID: 0}
+  resolution: 512
+  weatherMap: {fileID: 0}
+  testParams: {x: 0, y: 0, z: 0, w: 0}
+  container: {fileID: 0}
+  viewerEnabled: 0
+  showSettingsEditor: 1
+  minMax: {x: 0, y: 1}
 --- !u!1 &1416255221 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2618125796073928557, guid: 44e7115f02c47ce4684585ffc882ebd4, type: 3}
@@ -10540,6 +10579,17 @@ Transform:
   - {fileID: 874366141}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1670484178 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6974129906388013147, guid: 8de7aee6f13c8764a9c4ffc2e6624be1, type: 3}
+  m_PrefabInstance: {fileID: 437741883}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45e653bab7fb20e499bda25e1b646fea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1794914552
 PrefabInstance:
   m_ObjectHideFlags: 0

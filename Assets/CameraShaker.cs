@@ -12,12 +12,15 @@ public class CameraShaker : MonoBehaviour
 
     [Header("Camera Shake Settings: ")]
     //Camera shake on take damage
-    CinemachineVirtualCamera cine;
+    public CinemachineVirtualCamera cine;
     public CinemachineBasicMultiChannelPerlin perlin;
     public float shakeTimer = 0.2f;
     public float shakeAmt = 1f;
     public float bigShakeAmt = 5f;
     float curTime;
+
+
+
 
     [Header(" Player Ref : ")]
     Player_Stats stats;
@@ -26,6 +29,8 @@ public class CameraShaker : MonoBehaviour
 
     private void Start()
     {
+        cine = FindObjectOfType<CinemachineVirtualCamera>();
+        perlin = cine.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
         StopShakeCamera();
         stats = GetComponent<Player_Stats>();
     }
@@ -70,5 +75,20 @@ public class CameraShaker : MonoBehaviour
 
     }
 
-    
+    #region Basic Shake
+    public void BasicShake(float intensity, float duration)
+    {
+        StopAllCoroutines();
+        StartCoroutine(DoBasicShake(intensity, duration));
+    }
+
+
+    private IEnumerator DoBasicShake(float intensity, float duration)
+    {
+        perlin.m_AmplitudeGain = intensity * shakeAmt;
+        yield return new WaitForSeconds(duration);
+        perlin.m_AmplitudeGain = 0;
+    }
+    #endregion
+
 }
