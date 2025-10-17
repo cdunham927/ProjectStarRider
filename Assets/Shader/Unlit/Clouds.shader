@@ -34,9 +34,10 @@ Shader "Unlit/Clouds"
             {
                 float4 pos : SV_POSITION;
                 float2 uv : TEXCOORD0;
-                UNITY_FOG_COORDS(1)
-                float4 vertex : SV_POSITION;
                 float3 viewVector : TEXCOORD1;
+                UNITY_FOG_COORDS(1)
+                //float4 vertex : SV_POSITION;
+                
             };
 
             v2f vert(appdata v) 
@@ -174,8 +175,8 @@ Shader "Unlit/Clouds"
                 return (v - low) / (high - low);
             }
 
-            sampler2D _MainTex;
-            float4 _MainTex_ST;
+            //sampler2D _MainTex;
+            //float4 _MainTex_ST;
 
             float sampleDensity(float3 rayPos) 
             {
@@ -198,10 +199,12 @@ Shader "Unlit/Clouds"
                 float edgeWeight = min(dstFromEdgeZ, dstFromEdgeX) / containerEdgeFadeDst;
 
                 // Calculate height gradient from weather map
-                //float2 weatherUV = (size.xz * .5 + (rayPos.xz-boundsCentre.xz)) / max(size.x,size.z);
-                //float weatherMap = WeatherMap.SampleLevel(samplerWeatherMap, weatherUV, mipLevel).x;
-                float gMin = .2;
-                float gMax = .7;
+                float2 weatherUV = (size.xz * .5 + (rayPos.xz-boundsCentre.xz)) / max(size.x,size.z);
+                float weatherMap = WeatherMap.SampleLevel(samplerWeatherMap, weatherUV, mipLevel).x;
+                //float gMin = .2;
+                float gMin = remap(weatherMap.x, 0, 1, 0.1, 0.5); 
+                //float gMax = .7;
+                float gMax = remap(weatherMap.x, 0, 1, gMin, 0.9);
                 float heightPercent = (rayPos.y - boundsMin.y) / size.y;
                 float heightGradient = saturate(remap(heightPercent, 0.0, gMin, 0, 1)) * saturate(remap(heightPercent, 1, gMax, 0, 1));
                 heightGradient *= edgeWeight;
@@ -237,17 +240,25 @@ Shader "Unlit/Clouds"
                 float3 dirToLight = _WorldSpaceLightPos0.xyz;
                 float dstInsideBox = rayBoxDst(boundsMin, boundsMax, position, 1 / dirToLight).y;
 
+                float transmittance = 1;
                 float stepSize = dstInsideBox / numStepsLight;
+                position += dirToLight * stepSize * .5;
                 float totalDensity = 0;
 
                 for (int step = 0; step < numStepsLight; step++) 
                 {
+                    float density = sampleDensity(position);
                     position += dirToLight * stepSize;
                     totalDensity += max(0, sampleDensity(position) * stepSize);
                 }
 
-                float transmittance = exp(-totalDensity * lightAbsorptionTowardSun);
-                return darknessThreshold + transmittance * (1 - darknessThreshold);
+                //float transmittance = exp(-totalDensity * lightAbsorptionTowardSun);
+                //return darknessThreshold + transmittance * (1 - darknessThreshold);
+
+                transmittance = beer(totalDensity * lightAbsorptionTowardSun);
+
+                float clampedTransmittance = darknessThreshold + transmittance * (1 - darknessThreshold);
+                return clampedTransmittance;
             }
 
             float4 debugDrawNoise(float2 uv) 
@@ -296,8 +307,8 @@ Shader "Unlit/Clouds"
                     float width = _ScreenParams.x;
                     float height = _ScreenParams.y;
                     float minDim = min(width, height);
-                    float x = i.uv.x * width;
-                    float y = (1 - i.uv.y) * height;
+                    float x = input.uv.x * width;
+                    float y = (1 - input.uv.y) * height;
 
                     if (x < minDim * viewerSize && y < minDim * viewerSize) 
                     {
@@ -308,11 +319,11 @@ Shader "Unlit/Clouds"
 
             // Create ray
             float3 rayPos = _WorldSpaceCameraPos;
-            float viewLength = length(i.viewVector);
-            float3 rayDir = i.viewVector / viewLength;
+            float viewLength = length(input.viewVector);
+            float3 rayDir = input.viewVector / viewLength;
 
             // Depth and cloud container intersection info:
-            float nonlin_depth = SAMPLE_DEPTH_TEXTURE(_CameraDepthTexture, i.uv);
+            float nonlin_depth = SAMPLE_DEPTH_TEXTURE(_CameraDepthTexture, input.uv);
             float depth = LinearEyeDepth(nonlin_depth) * viewLength;
             float2 rayToContainerInfo = rayBoxDst(boundsMin, boundsMax, rayPos, 1 / rayDir);
             float dstToBox = rayToContainerInfo.x;
@@ -322,7 +333,7 @@ Shader "Unlit/Clouds"
             float3 entryPoint = rayPos + rayDir * dstToBox;
 
             // random starting offset (makes low-res results noisy rather than jagged/glitchy, which is nicer)
-            float randomOffset = BlueNoise.SampleLevel(samplerBlueNoise, squareUV(i.uv * 3), 0);
+            float randomOffset = BlueNoise.SampleLevel(samplerBlueNoise, squareUV(input.uv * 3), 0);
             randomOffset *= rayOffsetStrength;
 
             // Phase function makes clouds brighter around sun
@@ -361,10 +372,22 @@ Shader "Unlit/Clouds"
                 dstTravelled += stepSize;
             }
 
+            // Composite sky + background
+            float3 skyColBase = lerp(colA, colB, sqrt(abs(saturate(rayDir.y))));
+            float3 backgroundCol = tex2D(_MainTex, input.uv);
+            float dstFog = 1 - exp(-max(0, depth) * 8 * .0001);
+            float3 sky = dstFog * skyColBase;
+            backgroundCol = backgroundCol * (1 - dstFog) + sky;
+
+            // Sun
+            float focusedEyeCos = pow(saturate(cosAngle), params.x);
+            float sun = saturate(hg(focusedEyeCos, .9995)) * transmittance;
+
             // Add clouds to background
-            float3 backgroundCol = tex2D(_MainTex,i.uv);
+           // float3 backgroundCol = tex2D(_MainTex,input.uv);
             float3 cloudCol = lightEnergy * _LightColor0;
             float3 col = backgroundCol * transmittance + cloudCol;
+            col = saturate(col) * (1 - sun) + _LightColor0 * sun;
             return float4(col,0);
 
             }
