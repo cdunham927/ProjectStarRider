@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class BulletPatterns : MonoBehaviour
 {
+    public GameObject rotObj;
+
     //Shoots bullets in all directions around the enemy
     public void SpiralPattern(ObjectPool pool, int numBullets = 16)
     {
@@ -17,6 +19,33 @@ public class BulletPatterns : MonoBehaviour
             pool.ActivateAtPosition(transform.position, Quaternion.Euler(0, angle, 0));
             pool.ActivateAtPosition(transform.position, Quaternion.Euler(angle, 0, 0));
             pool.ActivateAtPosition(transform.position, Quaternion.Euler(0, 0, angle));
+
+            angle += increment;
+        }
+    }
+
+    //  /_\
+    public void TrianglePattern(ObjectPool pool)
+    {
+        if (pool == null) return;
+        Vector3 startPos = new Vector3(0, 25, 0);
+        //Vector3 rot = player.transform.position - transform.position;
+
+        float angle = 12;
+        for (int i = 0; i < 6; i++)
+        {
+            //Get pooled bullet
+            pool.ActivateAtPosition(transform.position + startPos + new Vector3(-i * angle, -i * angle, 0), rotObj.transform.rotation);
+        }
+        for (int i = 1; i < 6; i++)
+        {
+            //Get pooled bullet
+            pool.ActivateAtPosition(transform.position + startPos + new Vector3(i * angle, -i * angle, 0), rotObj.transform.rotation);
+        }
+        for (int i = -6; i < 6; i++)
+        {
+            //Get pooled bullet
+            pool.ActivateAtPosition(transform.position + startPos + new Vector3(i * angle, -6 * angle, 0), rotObj.transform.rotation);
         }
     }
 

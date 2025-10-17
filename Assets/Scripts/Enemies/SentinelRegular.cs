@@ -13,17 +13,26 @@ public class SentinelRegular : EnemyControllerBase
         //if (attackCools <= 0) Attack();
         if (attackCools <= 0)
         {
-            if (patternB)
+            if (pattern != null)
             {
-                PatternBAttack();
+                UseBulletPattern();
+
+                //Reset attack cooldown
+                attackCools = timeBetweenAttacks;
             }
-            else if (patternC)
-            {
-                PatternCAttack();
-            }
-            else
-            {
-                RadialAttack();
+            else {
+                if (patternB)
+                {
+                    PatternBAttack();
+                }
+                else if (patternC)
+                {
+                    PatternCAttack();
+                }
+                else
+                {
+                    RadialAttack();
+                }
             }
         }
     }

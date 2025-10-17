@@ -139,7 +139,7 @@ public class EnemyControllerBase : MonoBehaviour, IDamageable
     public float iframeTime = 0.2f;
 
     public bool hasCircularMovement;
-    BulletPatterns pattern;
+    protected BulletPatterns pattern;
     public int patternBulNum = 16;
 
     protected virtual void Awake()
@@ -222,7 +222,9 @@ public class EnemyControllerBase : MonoBehaviour, IDamageable
         if (pattern != null)
         {
             //Call which pattern you want to use in here and pass in the bullet pool and how many bullets you want spawned(if the pattern allows it)
-            pattern.SpiralPattern(bulletPool, patternBulNum);
+            //pattern.SpiralPattern(bulletPool, patternBulNum);
+
+            pattern.TrianglePattern(bulletPool);
         }
     }
 
