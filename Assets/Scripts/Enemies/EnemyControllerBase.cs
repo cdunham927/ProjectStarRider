@@ -141,7 +141,7 @@ public class EnemyControllerBase : MonoBehaviour, IDamageable
     public bool hasCircularMovement;
     protected BulletPatterns pattern;
     public int patternBulNum = 16;
-    public enum patterntypes { triangle, spiral };
+    public enum patterntypes { triangle, spiral, square, circle };
     public patterntypes bulPatType = patterntypes.triangle;
 
     protected virtual void Awake()
@@ -228,6 +228,12 @@ public class EnemyControllerBase : MonoBehaviour, IDamageable
                 break;
             case patterntypes.spiral:
                 pattern.SpiralPattern(bulletPool, patternBulNum);
+                break;
+            case patterntypes.square:
+                pattern.SquarePattern(bulletPool);
+                break;
+            case patterntypes.circle:
+                pattern.CirclePattern(bulletPool);
                 break;
         }
     }
