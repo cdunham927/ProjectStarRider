@@ -16,29 +16,37 @@ public class SentinelSG : EnemyControllerBase
 
     protected override void Attack()
     {
-        src.Play();
-        if (bulletPool == null) bulletPool = cont.enemySGPool;
-        //Get pooled bullet
-        for (int i = 0; i < bulletShot; i++)
+        if (pattern != null)
         {
-            GameObject bul = bulletPool.GetPooledObject();
-            if (bul != null)
+            base.Attack();
+        }
+        else
+        {
+            src.Play();
+            if (bulletPool == null) bulletPool = cont.enemySGPool;
+            //Get pooled bullet
+            for (int i = 0; i < bulletShot; i++)
             {
-                //Put it where the enemy position is
-                bul.transform.position = transform.position;
-                //Aim it at the player
-                //bul.transform.rotation = transform.rotation;
-                //Activate it at the enemy position
-                bul.SetActive(true);
-                bul.transform.LookAt(player.transform);
-                bul.transform.Rotate(Random.Range(-accx, accx), Random.Range(-accy, accy), 0);
-                if (isRandom == true)
+                GameObject bul = bulletPool.GetPooledObject();
+                if (bul != null)
                 {
-                    bul.transform.rotation = Quaternion.Euler(Random.Range(0, 360), Random.Range(0, 360), Random.Range(0, 360));
+                    //Put it where the enemy position is
+                    bul.transform.position = transform.position;
+                    //Aim it at the player
+                    //bul.transform.rotation = transform.rotation;
+                    //Activate it at the enemy position
+                    bul.SetActive(true);
+                    bul.transform.LookAt(player.transform);
+                    bul.transform.Rotate(Random.Range(-accx, accx), Random.Range(-accy, accy), 0);
+                    if (isRandom == true)
+                    {
+                        bul.transform.rotation = Quaternion.Euler(Random.Range(0, 360), Random.Range(0, 360), Random.Range(0, 360));
+                    }
+                    //bul.GetComponent<EnemyBullet>().PushSoft();
                 }
-                //bul.GetComponent<EnemyBullet>().PushSoft();
             }
         }
+
         //Reset attack cooldown
         attackCools = timeBetweenAttacks;
         ChangeState(enemystates.alert);

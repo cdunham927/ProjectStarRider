@@ -76,6 +76,10 @@ public class HomingEnemyController : EnemyControllerBase
 
     protected override void Alert()
     {
+        if (attackCools <= 0)
+        {
+            Attack();
+        }
         //Aim at player and move towards them
         //if (player != null && player.gameObject.activeInHierarchy)
         //{
@@ -94,6 +98,18 @@ public class HomingEnemyController : EnemyControllerBase
         //        bod.velocity = (transform.forward * (1.0f + Time.fixedDeltaTime)) * curSpd; //velcoity algorthim for the porjectile
         //    }
         //}
+    }
+
+    protected override void Attack()
+    {
+        if (pattern != null)
+        {
+            base.Attack();
+        }
+        else
+        {
+
+        }
     }
 
     private void OnTriggerEnter(Collider collision)

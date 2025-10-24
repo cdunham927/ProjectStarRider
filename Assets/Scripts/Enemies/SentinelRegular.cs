@@ -13,58 +13,32 @@ public class SentinelRegular : EnemyControllerBase
         //if (attackCools <= 0) Attack();
         if (attackCools <= 0)
         {
-            if (pattern != null)
-            {
-                UseBulletPattern();
-
-                //Reset attack cooldown
-                attackCools = timeBetweenAttacks;
-            }
-            else {
-                if (patternB)
-                {
-                    PatternBAttack();
-                }
-                else if (patternC)
-                {
-                    PatternCAttack();
-                }
-                else
-                {
-                    RadialAttack();
-                }
-            }
+            Attack();
         }
     }
 
     protected override void Attack()
     {
-        //RadialAttack();
-
-        src.Play();
-        if (bulletPool == null) bulletPool = cont.enemyBulPool;
-        //Get pooled bullet
-        GameObject bul = bulletPool.GetPooledObject();
-        if (bul != null)
+        if (pattern != null)
         {
-            //Put it where the enemy position is
-            bul.transform.position = transform.position;
-            //Aim it at the player
-            //bul.transform.rotation = transform.rotation;
-            //Activate it at the enemy position
-            bul.SetActive(true);
-            bul.transform.LookAt(player.transform);
-            bul.transform.Rotate(Random.Range(-accx, accx), Random.Range(-accy, accy), 0);
-            if (isRandom == true)
-            {
-                bul.transform.rotation = Quaternion.Euler(Random.Range(0, 360), Random.Range(0, 360), Random.Range(0, 360));
-            }
-            //bul.GetComponent<EnemyBullet>().Push();
+            base.Attack();
         }
-        
-        //Reset attack cooldown
-        attackCools = timeBetweenAttacks;
-        
+        else
+        {
+            if (patternB)
+            {
+                PatternBAttack();
+            }
+            else if (patternC)
+            {
+                PatternCAttack();
+            }
+            else
+            {
+                RadialAttack();
+            }
+        }
+
         ChangeState(enemystates.alert);
     }
 

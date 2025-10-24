@@ -14,7 +14,7 @@ public class EnemyControllerBase : MonoBehaviour, IDamageable
     [Header(" Enemy Base Stats : ")]
     public float maxHp;
     public float curHp;
-   
+
     [Header(" Enemy Score Rating : ")]
     public float killScore = 100;
     protected bool hasAdded = false;
@@ -30,11 +30,11 @@ public class EnemyControllerBase : MonoBehaviour, IDamageable
     public ObjectPool bulletPool;
     //Checks if the player is in range
     public bool playerInRange = false;
-    
+
     //Set the radius for the detection collider
     [Header(" Enemy site field : ")]
     public SphereCollider detectionCollider;
-    
+
     [Header(" Enemy Hitbox : ")]
     public Collider col;
 
@@ -89,7 +89,7 @@ public class EnemyControllerBase : MonoBehaviour, IDamageable
     [Header(" HealthBar Icon: ")]
     public Healthbar hpBar;
     public Healthbar healthScript;
-    
+
     //Enemy Manager for trap rooms
     [HideInInspector]
     public EnemyManager manager;
@@ -141,6 +141,8 @@ public class EnemyControllerBase : MonoBehaviour, IDamageable
     public bool hasCircularMovement;
     protected BulletPatterns pattern;
     public int patternBulNum = 16;
+    public enum patterntypes { triangle, spiral };
+    public patterntypes bulPatType = patterntypes.triangle;
 
     protected virtual void Awake()
     {
@@ -219,19 +221,35 @@ public class EnemyControllerBase : MonoBehaviour, IDamageable
 
     public void UseBulletPattern()
     {
-        if (pattern != null)
+        switch(bulPatType)
         {
-            //Call which pattern you want to use in here and pass in the bullet pool and how many bullets you want spawned(if the pattern allows it)
-            //pattern.SpiralPattern(bulletPool, patternBulNum);
-
-            pattern.TrianglePattern(bulletPool);
+            case patterntypes.triangle:
+                pattern.TrianglePattern(bulletPool);
+                break;
+            case patterntypes.spiral:
+                pattern.SpiralPattern(bulletPool, patternBulNum);
+                break;
         }
     }
 
     protected virtual void Idle() { }
     protected virtual void Patrol() { }
     protected virtual void Alert() { }
-    protected virtual void Attack() { }
+
+    protected virtual void Attack()
+    {
+        if (attackCools <= 0)
+        {
+            if (pattern != null)
+            {
+                UseBulletPattern();
+
+                //Reset attack cooldown
+                attackCools = timeBetweenAttacks;
+            }
+        }
+    }
+
     protected virtual void Retreat() { }
     protected virtual void Death()
     {

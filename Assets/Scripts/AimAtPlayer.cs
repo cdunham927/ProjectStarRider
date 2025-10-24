@@ -18,4 +18,11 @@ public class AimAtPlayer : MonoBehaviour
 
         transform.rotation = Quaternion.LookRotation(rot, transform.up);
     }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawLine(transform.position, transform.position + (transform.forward * 200f));
+        Gizmos.color = Color.white;
+    }
 }

@@ -35,47 +35,54 @@ public class SeaAngelController : EnemyControllerBase
 
     protected override void Attack()
     {
-        PlaySound();
-        //if (bulletPool == null) bulletPool = cont.seaAngelBulPool;
-
-        float angleStep = 360f / bulletShot;
-        //float angle = 0f;
-        
-        //Get pooled bullet
-        for (int i = 0; i < bulletShot; i++)
+        if (pattern != null)
         {
-            //if (bulletPool == null) 
-                bul = cont.seaAngelBulPool.GetPooledObject();
-            /*if (bul != null) //base bullet controller
-            {
-                //Put it where the enemy position is
-                bul.transform.position = transform.position;
-                //Aim it at the player
-                //bul.transform.rotation = transform.rotation;
-                //Activate it at the enemy position
-                bul.SetActive(true);
-                bul.transform.LookAt(player.transform);
-                bul.transform.Rotate(Random.Range(-accx, accx), Random.Range(-accy, accy), 0);
-                if (isRandom == true)
-                {
-                    bul.transform.rotation = Quaternion.Euler(Random.Range(0, 360), Random.Range(0, 360), Random.Range(0, 360));
-                }
-                bul.GetComponent<EnemyBullet>().Push();
-            }*/
+            base.Attack();
+        }
+        else
+        {
+            PlaySound();
+            //if (bulletPool == null) bulletPool = cont.seaAngelBulPool;
 
-            if( bul != null) 
+            float angleStep = 360f / bulletShot;
+            //float angle = 0f;
+
+            //Get pooled bullet
+            for (int i = 0; i < bulletShot; i++)
             {
-                bul.transform.position = transform.position;
-                bul.SetActive(true);
-                bul.transform.LookAt(player.transform);
-                bul.transform.Rotate(Random.Range(-accx, accx), Random.Range(-accy, accy), 0);
-                if (isRandom == true)
+                //if (bulletPool == null) 
+                bul = cont.seaAngelBulPool.GetPooledObject();
+                /*if (bul != null) //base bullet controller
                 {
-                    bul.transform.rotation = Quaternion.Euler(Random.Range(0, 360), Random.Range(0, 360), Random.Range(0, 360));
+                    //Put it where the enemy position is
+                    bul.transform.position = transform.position;
+                    //Aim it at the player
+                    //bul.transform.rotation = transform.rotation;
+                    //Activate it at the enemy position
+                    bul.SetActive(true);
+                    bul.transform.LookAt(player.transform);
+                    bul.transform.Rotate(Random.Range(-accx, accx), Random.Range(-accy, accy), 0);
+                    if (isRandom == true)
+                    {
+                        bul.transform.rotation = Quaternion.Euler(Random.Range(0, 360), Random.Range(0, 360), Random.Range(0, 360));
+                    }
+                    bul.GetComponent<EnemyBullet>().Push();
+                }*/
+
+                if (bul != null)
+                {
+                    bul.transform.position = transform.position;
+                    bul.SetActive(true);
+                    bul.transform.LookAt(player.transform);
+                    bul.transform.Rotate(Random.Range(-accx, accx), Random.Range(-accy, accy), 0);
+                    if (isRandom == true)
+                    {
+                        bul.transform.rotation = Quaternion.Euler(Random.Range(0, 360), Random.Range(0, 360), Random.Range(0, 360));
+                    }
+
+                    //bul.GetComponent<EnemyBullet>().Push();
                 }
-                
-                //bul.GetComponent<EnemyBullet>().Push();
-            } 
+            }
         }
         //Reset attack cooldown
         attackCools = timeBetweenAttacks;

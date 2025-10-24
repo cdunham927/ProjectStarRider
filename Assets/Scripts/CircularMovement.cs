@@ -73,4 +73,11 @@ public class CircularMovement : MonoBehaviour
             transform.Rotate(rotDir * xRot * Time.deltaTime * rotSpd, rotDir * yRot * Time.deltaTime * rotSpd, rotDir * zRot * Time.deltaTime * rotSpd);
         }
     }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, radius);
+        Gizmos.color = Color.white;
+    }
 }
