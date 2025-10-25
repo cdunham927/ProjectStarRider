@@ -168,6 +168,7 @@ public class PlayerShooting : MonoBehaviour
             {
                 Shoot(true);
                 PlaySound();
+               
             }
 
             if (charging)
@@ -263,13 +264,8 @@ public class PlayerShooting : MonoBehaviour
             muzzle.SetActive(true);
         }
 
-        /*
-        if (muzzle != null)
-        {
-            var muzzleVFX = Instantiate(muzzle, transform.position, Quaternion.identity);
-            muzzleVFX.transform.forward = gameObject.transform.forward;
-            muzzle.Play();
-        }
-        */
+        
     }
+
+    
 }

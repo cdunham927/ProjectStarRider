@@ -314,7 +314,7 @@ public class PlayerVFXHolder : MonoBehaviour
     public void SetInvunerable()
     {
         stats.invulnerable = true;
-        Invoke("SetDamageable", stats.invunerableTime);
+        Invoke("SetDamageable", blinkIntensity);
     }
 
     public void SetDamageable()

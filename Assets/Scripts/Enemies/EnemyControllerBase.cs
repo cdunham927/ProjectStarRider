@@ -332,7 +332,7 @@ public class EnemyControllerBase : MonoBehaviour, IDamageable
 
     public void ResetTarget()
     {
-        target = player.transform;
+        target = player.transform ;
     }
 
     public void SetCollider(bool cl = true)

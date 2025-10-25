@@ -5,13 +5,18 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     public Vector3 startVel;
+    
+    [Header("Speed Settings")]
     public float speed;
     public float startSpd;
     public float maxSpd;
-    public float maxSpdTime;
+    public float maxSpdTime;  // The time it takes to reach maximum speed
+
     public float randSpdMod = 0f;
     protected float elapsedTime = 0f;
-    public AnimationCurve accelerationCurve;
+
+    [Header("Acceleration Curve")]
+    public AnimationCurve accelerationCurve; // The curve that defines the acceleration (ease)
     public int damage;
     //public Rigidbody rb;
     public float disableTime = 3f;
@@ -34,23 +39,33 @@ public class Bullet : MonoBehaviour
             {
                 // Increment the elapsed time
                 elapsedTime += Time.deltaTime;
+                
+                float timePercent = elapsedTime / maxSpdTime;
+                
+                // Evaluate the animation curve at that time percentage.
+                // This returns a value (typically between 0 and 1) based on the curve's shape.
+                float curveValue = accelerationCurve.Evaluate(timePercent);
+
+             
+                
+                
+                // Use Mathf.Lerp to interpolate between the base and max speed.
+                // The third parameter (the curve value) determines our position in the interpolation.
+                 speed = Mathf.Lerp(startSpd, maxSpd, curveValue);
+
             }
 
-            float timePercent = elapsedTime / maxSpdTime;
 
-            // Evaluate the animation curve at that time percentage.
-            // This returns a value (typically between 0 and 1) based on the curve's shape.
-            float curveValue = accelerationCurve.Evaluate(timePercent);
 
-            // Use Mathf.Lerp to interpolate between the base and max speed.
-            // The third parameter (the curve value) determines our position in the interpolation.
-            speed = Mathf.Lerp(startSpd, maxSpd, curveValue);
+
+
+           
         }
     }
 
     public virtual void FixedUpdate()
     {
-        transform.Translate(moveDir * speed * Time.deltaTime, Space.World);
+      transform.Translate(moveDir * (speed + 1) * Time.deltaTime, Space.World);
     }
 
     public void OnShoot(Vector3 dir)

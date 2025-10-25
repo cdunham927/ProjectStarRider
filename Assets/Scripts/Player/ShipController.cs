@@ -399,7 +399,7 @@ public class ShipController : MonoBehaviour
                 ChangeAnimationState(BarrelRoll);
                 if (!isInvincible)
                 {
-                    StartCoroutine(invincible());
+                    StartCoroutine(stats.invincible(0));
                 }
             }
 
@@ -441,24 +441,10 @@ public class ShipController : MonoBehaviour
         anim.Play(newState);
     }
 
-    private IEnumerator invincible()
-    {
-        Debug.Log("Player turned invincible!");
-        isInvincible = true;
+   
 
-        // Flash on and off for roughly invincibilityDurationSeconds seconds
-        for (float i = 0; i < invincibilityDurationSeconds; i += delayBetweenInvincibilityFlashes)
-        {
-            // TODO: add flashing logic here
 
-            yield return new WaitForSeconds(delayBetweenInvincibilityFlashes);
-        }
-
-        Debug.Log("Player is no longer invincible!");
-        isInvincible = false;
-        //yield return null;
-
-    }
+    
 }
 
   

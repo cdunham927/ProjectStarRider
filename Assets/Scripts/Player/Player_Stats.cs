@@ -71,6 +71,12 @@ public class Player_Stats : MonoBehaviour
     public float blinkDuration = 0.3f;
     public float blinkIntensity = 2.0f;
 
+    [Header(" Player Invicible settings : ")]
+    public bool isInvincible = false;
+    [SerializeField]
+    private float invincibilityDurationSeconds = 1.5f;
+    private float delayBetweenInvincibilityFlashes = 0.5f;
+
     MeshRenderer meshRenderer;
 
     public Text scoreText;
@@ -80,7 +86,7 @@ public class Player_Stats : MonoBehaviour
     public float scoreMultiplier = 1f;
     public float score = 0;
     public float hurtDecAmt = -9999;
-    public float invunerableTime = 3.0f;
+    
 
     PlayerController pCont;
     GameManager gm;
@@ -102,6 +108,9 @@ public class Player_Stats : MonoBehaviour
 
     //Stealth variables
     public bool invisible = false;
+
+    [SerializeField]
+    private GameObject model;
 
     private void OnEnable()
     {
@@ -268,12 +277,15 @@ public class Player_Stats : MonoBehaviour
     public void SetInvunerable()
     {
         invulnerable = true;
-        Invoke("SetDamageable", invunerableTime);
+
+
+        Invoke("SetDamageable", invincibilityDurationSeconds);
     }
     public void SetDamageable()
     {
         invulnerable = false;
     }
+   
     public void ResetGradient()
     {
         //healthImage.color = regColor;
@@ -282,6 +294,11 @@ public class Player_Stats : MonoBehaviour
 
     public void Damage(int damageAmount)
     {
+        //if (invulnerable) return;  // If the player is already invulnerable, return immediately
+
+       
+        //invulnerable = true; // Set the invulnerable flag to true
+
         if (!gm.gameIsOver)
         {
             if (!invulnerable && !invisible)
@@ -300,6 +317,7 @@ public class Player_Stats : MonoBehaviour
                 //healthImage.color = hitColor;
                 reactionImage.color = hitColor;
                 Invoke("ResetGradient", flashTime);
+                Invoke("invincible", delayBetweenInvincibilityFlashes);
 
                 if (Curr_hp > 0) ShakeCamera(shakeAmt);
                 else ShakeCamera(bigShakeAmt);
@@ -370,4 +388,109 @@ public class Player_Stats : MonoBehaviour
    {
         meshRenderer.material.color = Color.white;
    }
+
+
+    public IEnumerator invincible(int damageAmount)
+    {
+
+        yield return new WaitForSeconds(invincibilityDurationSeconds);
+
+       
+
+        if (!invulnerable && !invisible)
+        {
+            ship.ChangeAnimationState(spin);
+
+            //If we have 1/3rd hp left, flash the healthbar
+            //if (Curr_hp < (Mathf.RoundToInt(Max_hp / 3))) healthImageFlash.SetActive(true);
+            if (Curr_hp <= flashThreshold) healthImageFlash.SetActive(true);
+            //anything that takes place when the hp is zero should go here
+            Curr_hp -= damageAmount;
+            //DamageBlink();
+            //Play damage sound
+            AddScore(0, true);
+
+            //healthImage.color = hitColor;
+            reactionImage.color = hitColor;
+            Invoke("ResetGradient", flashTime);
+            Invoke("invincible", delayBetweenInvincibilityFlashes);
+
+            if (Curr_hp > 0) ShakeCamera(shakeAmt);
+            else ShakeCamera(bigShakeAmt);
+
+            if (Curr_hp > 0)
+            {
+                if (curTime > 0)
+                {
+                    curTime -= Time.deltaTime;
+                    if (curTime <= 0)
+                    {
+                        StopShakeCamera();
+
+                    }
+                }
+                src.PlayOneShot(takeDamageClip, hitVolume);
+            }
+
+            if (Curr_hp <= 0)
+            {
+                cine.gameObject.transform.SetParent(null);
+                //Play explosion sound
+                src.PlayOneShot(explodeClip, explodeVolume);
+                //Stop player movement
+                GetComponent<Rigidbody>().velocity = Vector3.zero;
+                //Spawn death vfx
+                dVfx.transform.position = transform.position;
+                foreach (Transform t in dVfx.GetComponentsInChildren<Transform>())
+                    dVfx.transform.rotation = transform.rotation;
+                dVfx.SetActive(true);
+                //o.transform.SetParent(this.transform);
+                //Debug.Log("Player dying");
+                if (!PlayerDead)
+                {
+                    Invoke("Death", 1f);
+                    PlayerDead = true;
+                }
+            }
+
+            //Reaction UI animations
+            if (reactionAnim != null)
+            {
+
+                reactionAnim.SetTrigger("Hurt");
+                reactionAnim.SetInteger("Hp", Curr_hp);
+            }
+
+
+            //pCont.FreezeRotation();
+            //pCont.UnfreezeRotation();
+
+            //Fix camera fucking up when colliding with stuff
+            //Time.timeScale = 0f;
+            //Time.timeScale = 1f;
+        }
+
+        invulnerable = false;
+
+    }
 }
+ 
+//old ref code : Leave alone
+/*
+        Debug.Log("Player turned invincible!");
+        isInvincible = true;
+
+        // Flash on and off for roughly invincibilityDurationSeconds seconds
+        for (float i = 0; i < invincibilityDurationSeconds; i += delayBetweenInvincibilityFlashes)
+        {
+            // TODO: add flashing logic here
+            Invoke("ResetGradient", flashTime);
+            yield return new WaitForSeconds(delayBetweenInvincibilityFlashes);
+        }
+
+        Debug.Log("Player is no longer invincible!");
+        isInvincible = false;
+
+        Invoke("SetDamageable", invincibilityDurationSeconds);
+        //yield return null;
+*/

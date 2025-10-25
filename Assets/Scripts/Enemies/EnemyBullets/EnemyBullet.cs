@@ -91,6 +91,19 @@ public class EnemyBullet : Bullet
                     }
                     Invoke("Disable", 0.001f);
                 }
+
+                if (sphereHit.collider.CompareTag("Player"))
+                {
+                    if (!spawned)
+                    {
+                        GameObject hit = hitVFXPool.GetPooledObject();
+                        hit.transform.position = sphereHit.transform.position;
+                        hit.transform.rotation = sphereHit.transform.rotation;
+                        hit.SetActive(true);
+                        spawned = true;
+                    }
+                    Invoke("Disable", 0.001f);
+                }
             }
         }
     }
