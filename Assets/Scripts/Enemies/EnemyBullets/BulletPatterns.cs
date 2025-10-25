@@ -81,7 +81,9 @@ public class BulletPatterns : MonoBehaviour
 
     public void FlamethrowerPattern(ObjectPool pool)
     {
-
+        if (pool == null) return;
+        Vector3 startPos = (rotObj.transform.forward * 2f) + (rotObj.transform.up * 25f);
+        pool.ActivateAtPosition((transform.position + startPos), rotObj.transform.rotation);
     }
 
         public void SquarePattern(ObjectPool pool)
