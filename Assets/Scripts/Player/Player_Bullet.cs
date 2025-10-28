@@ -32,6 +32,7 @@ public class Player_Bullet : Bullet
 
     private void Update()
     {
+        //Physics.IgnoreCollision();
         RaycastHit sphereHit;
         if (Physics.SphereCast(transform.position, checkSize, transform.TransformDirection(transform.forward), out sphereHit, enemyMask))
         {
@@ -138,6 +139,7 @@ public class Player_Bullet : Bullet
     public override void FixedUpdate()
     {
         base.FixedUpdate();
+
     }
 
     public void HitEnemy(EnemyControllerBase col)

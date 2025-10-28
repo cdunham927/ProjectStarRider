@@ -23,13 +23,45 @@ public class CetusController : BossControllerBase, IDamageable
     public int sonicBulletCount;
     public GameObject sonicSpawnPos;
 
-    public Dialogue thirdPhaseDialogue;
-    public Dialogue barrierDialogue;
+    //public Dialogue thirdPhaseDialogue;
+    //public Dialogue barrierDialogue;
 
-    public GameObject barrierPushObj;
-
-    public BarrierController barrier;
+    
     public GameObject[] weakpoints;
+
+    //Aniamtion State  make sure string match name of animations
+    protected const string Cetus_Reflect = "Armature|Reflect";
+    protected const string Cetus_Idle = "Armature|Idle";
+    protected const string Cetus_Attack_1 = "Armature|Attack1";
+    protected const string Cetus_Attack_2 = "Armature|Attack2";
+    protected const string Cetus_Wings_R = "Armature|Idle";
+    protected const string Cetus_Wings_L = "Armature|Idle";
+    protected const string Cetus_Wings_All = "CetusArmature|WingSlaps_All";
+    protected const string Cetus_Bite = "CetusArmature|BiteBack";
+    protected const string Cetus_Tail_Swipe = "Armature|TailWhip";
+    protected const string Cetus_Dive = "Armature|Idle";
+    protected const string Cetus_Flustered = "Armature|Idle";   
+    protected const string Cetus_Roar = "CetusArmature|Roaring";
+    protected const string Cetus_Charge_Laser = "Charge Attack Edit";
+    protected const string Cetus_Charging = "Charge Attack Edit";
+    protected const string Cetus_Whirlwind = "CetusArmature|Whirlwind";
+
+    /* list of states (declared in source, no header) */
+    enum State
+    {
+        STATE_UNDEFINED = 0,
+        STATE_STANDING_STILL,
+        STATE_ATTACK1,
+    }
+
+    // list of state-events
+    enum Event
+    {
+        EVENT_UNDEFINED = 0,
+        EVENT_STATE_ENTER,
+        EVENT_STATE_UPDATE,
+        EVENT_STATE_EXIT,
+    }
 
     protected override void Awake()
     {
@@ -219,10 +251,7 @@ public class CetusController : BossControllerBase, IDamageable
 
     }
 
-    void ActivateBarrierPushObj()
-    {
-        barrierPushObj.SetActive(true);
-    }
+    
 
     public void DeactivateBarrier()
     {
@@ -232,10 +261,7 @@ public class CetusController : BossControllerBase, IDamageable
         }
     }
 
-    void DeactivateBarrierPushObj()
-    {
-        barrierPushObj.SetActive(false);
-    }
+    
 
     public void SpawnBunchaBullets()
     {
@@ -388,7 +414,7 @@ public class CetusController : BossControllerBase, IDamageable
         {
             case 1:
                 //barrier.gameObject.SetActive(true);
-                barrier.SetEnemies(waveOneSpawns.Length);
+                //barrier.SetEnemies(waveOneSpawns.Length);
 
                 for (int i = 0; i < weakpoints.Length; i++)
                 {
@@ -398,7 +424,7 @@ public class CetusController : BossControllerBase, IDamageable
                 //ChangeAnimationState(Cetus_Reflect);
                 foreach (GameObject g in waveOneSpawns)
                 {
-                    g.GetComponent<EnemyControllerBase>().barrier = barrier;
+                    //g.GetComponent<EnemyControllerBase>().barrier = barrier;
                     g.SetActive(true);
                 }
                 break;
@@ -410,12 +436,12 @@ public class CetusController : BossControllerBase, IDamageable
                 }
 
                 //FindObjectOfType<CombatDialogueController>().StartDialogue(barrierDialogue);
-                barrier.gameObject.SetActive(true);
+                //barrier.gameObject.SetActive(true);
                 //ChangeAnimationState(Cetus_Reflect);
-                barrier.SetEnemies(waveTwoSpawns.Length);
+                //barrier.SetEnemies(waveTwoSpawns.Length);
                 foreach (GameObject g in waveTwoSpawns)
                 {
-                    g.GetComponent<EnemyControllerBase>().barrier = barrier;
+                    //g.GetComponent<EnemyControllerBase>().barrier = barrier;
                     g.SetActive(true);
                 }
                 foreach (GameObject g in waveTwoWaterPillars)
@@ -432,12 +458,12 @@ public class CetusController : BossControllerBase, IDamageable
                 }
 
                 //FindObjectOfType<CombatDialogueController>().StartDialogue(barrierDialogue);
-                barrier.gameObject.SetActive(true);
+                //barrier.gameObject.SetActive(true);
                 //ChangeAnimationState(Cetus_Reflect);
-                barrier.SetEnemies(waveThreeSpawns.Length);
+                //barrier.SetEnemies(waveThreeSpawns.Length);
                 foreach (GameObject g in waveThreeSpawns)
                 {
-                    g.GetComponent<EnemyControllerBase>().barrier = barrier;
+                    //g.GetComponent<EnemyControllerBase>().barrier = barrier;
                     g.SetActive(true);
                 }
                 foreach (GameObject g in waveThreeWaterPillars)

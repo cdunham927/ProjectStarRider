@@ -1,6 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Jobs;
+
+
 
 public class Bullet : MonoBehaviour
 {
@@ -30,6 +33,17 @@ public class Bullet : MonoBehaviour
 
     protected Vector3 moveDir;
     public bool increaseSpd = false;
+
+
+
+    void Awake()
+    {
+        /*
+		Allocate all the buffer memory we'll need up-front
+		*/
+
+    }
+
 
     private void Update()
     {
@@ -65,7 +79,8 @@ public class Bullet : MonoBehaviour
 
     public virtual void FixedUpdate()
     {
-      transform.Translate(moveDir * (speed + 1) * Time.deltaTime, Space.World);
+        float dt = Time.deltaTime;
+        transform.Translate(moveDir * (speed + 1) * dt, Space.World);
     }
 
     public void OnShoot(Vector3 dir)
@@ -100,5 +115,13 @@ public class Bullet : MonoBehaviour
     {
         speed = 1.0f;
         damage = 1;
+    }
+
+    void OnDestroy()
+    {
+        /*
+		Clean up after ourselves.
+		*/
+       
     }
 }

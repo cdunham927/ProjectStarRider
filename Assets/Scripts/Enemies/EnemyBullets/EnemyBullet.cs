@@ -129,6 +129,18 @@ public class EnemyBullet : Bullet
 
     public override void Disable()
     {
+        RaycastHit sphereHit ; // use raycast 
+        if (Physics.SphereCast(transform.position, checkSize, transform.TransformDirection(transform.forward), out sphereHit, playerMask)) 
+        { 
+        
+            GameObject hit = hitVFXPool.GetPooledObject();
+            hit.transform.position = sphereHit.transform.position; // spawn vfx on bullet geetting disabled
+
+            hit.transform.rotation = sphereHit.transform.rotation;
+            hit.SetActive(true);
+        
+        }
+
         if (minimapObj != null) minimapObj.SetActive(false);
         if (trail != null)
         {
@@ -136,6 +148,9 @@ public class EnemyBullet : Bullet
             trail.emitting = false;
         }
         base.Disable();
+       
+        spawned = true;
+
     }
 
     public void DelayDestruction(GameObject obj)

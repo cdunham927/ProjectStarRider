@@ -342,7 +342,7 @@ public class AntaresController : BossControllerBase, IDamageable
     public void SpawnAngels(int phase)
     {
         _notifications[0].SetActive(true);
-        ChangeAnimationState(Cetus_Roar);
+        //ChangeAnimationState();
         switch (phase)
         {
             case 1:

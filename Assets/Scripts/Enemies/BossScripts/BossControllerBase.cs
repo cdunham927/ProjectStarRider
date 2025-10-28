@@ -127,23 +127,7 @@ public class BossControllerBase : MonoBehaviour
     float iframes;
     public float iframeTime = 0.2f;
 
-    //Aniamtion State  make sure string match name of animations
-    protected const string Cetus_Reflect = "Armature|Reflect";
-    protected const string Cetus_Idle = "Armature|Idle";
-    protected const string Cetus_Attack_1 = "Armature|Attack1";
-    protected const string Cetus_Attack_2 = "Armature|Attack2";
-    protected const string Cetus_Wings_R = "Armature|Idle";
-    protected const string Cetus_Wings_L = "Armature|Idle";
-    protected const string Cetus_Wings_All = "CetusArmature|WingSlaps_All";
-    protected const string Cetus_Bite = "CetusArmature|BiteBack";
-    protected const string Cetus_Tail_Swipe = "Armature|TailWhip";
-    protected const string Cetus_Dive = "Armature|Idle";
-    protected const string Cetus_Flustered = "Armature|Idle";
-    protected const string Boss_Death = "Armature|Death";
-    protected const string Cetus_Roar = "CetusArmature|Roaring";
-    protected const string Cetus_Charge_Laser = "Charge Attack Edit";
-    protected const string Cetus_Charging = "Charge Attack Edit";
-    protected const string Cetus_Whirlwind = "CetusArmature|Whirlwind";
+
 
     protected float curHpLoss = 0;
 
@@ -190,7 +174,7 @@ public class BossControllerBase : MonoBehaviour
     //
     //
     //End paste from enemycontrollerbase and cetuscontroller
-
+    protected const string Boss_Death = "Armature|Death";
 
 
 

@@ -99,6 +99,11 @@ public class DialogueController : MonoBehaviour
         DialogueManager.StartConversation("Pick Up");
     }
 
+    void BarrierHit() 
+    {
+
+        DialogueManager.StartConversation("Barrier Hit");
+    }
 
 
 }
