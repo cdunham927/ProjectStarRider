@@ -22,11 +22,28 @@ public class BoidsEnemy : EnemyControllerBase
     [HideInInspector]
     public Vector3 boidVel;
 
+    public float changeSpd = 20f;
+    Vector3 startVel;
+    Vector3 desVel;
+
     protected override void Awake()
     {
         base.Awake();
         bod = GetComponent<Rigidbody>();
-        bod.velocity = Random.insideUnitSphere * startSpd;
+        //bod.velocity = Random.insideUnitSphere * startSpd;
+        //desVel = Random.insideUnitSphere.normalized;
+
+        // Generate random values for x, y, and z velocity components
+        float randomX = Random.Range(-1f, 1f); // Random direction
+        float randomY = Random.Range(-1f, 1f); // Random direction
+        float randomZ = Random.Range(-1f, 1f); // Random direction
+
+        // Create a random direction vector
+        Vector3 randomDirection = new Vector3(randomX, randomY, randomZ).normalized;
+
+        // Apply the initial velocity
+        //bod.velocity = randomDirection * startSpd;
+        startVel = randomDirection * startSpd;
     }
 
     protected override void Update()
@@ -37,11 +54,22 @@ public class BoidsEnemy : EnemyControllerBase
         //
         //if (checkCools <= 0)
         //{
-        Vector3 desVel = player.transform.position - transform.position;
         Vector3 desLoc = Vector3.zero;
         Vector3 desPos = Vector3.zero;
 
         Vector3 neighborsForward = Vector3.zero;
+
+        startVel = Vector3.Lerp(startVel, Vector3.zero, Time.deltaTime * changeSpd);
+
+        if (playerInRange)
+        {
+            //desVel = Vector3.Lerp(desVel, (player.transform.position - transform.position).normalized , Time.deltaTime * changeSpd);
+        }
+        else
+        {
+            //desVel = Vector3.Lerp(desVel, transform.forward, Time.deltaTime * changeSpd);
+        }
+        desVel = player.transform.position - transform.position;
 
         Collider[] col = GetNeighbors();
         if (col.Length > 0)
@@ -62,7 +90,7 @@ public class BoidsEnemy : EnemyControllerBase
         }
 
         //bod.AddForce((desVel + desLoc + desPos) * spd * Time.deltaTime);
-        bod.velocity = ((desVel + desLoc + desPos) * accSpd * Time.deltaTime);
+        bod.velocity = startVel + (((desVel + desLoc + desPos) * accSpd) * Time.deltaTime);
         //bod.velocity = ((desVel + desLoc) * accSpd * Time.deltaTime);
         //bod.velocity = ((desPos) * accSpd * Time.deltaTime);
     }
