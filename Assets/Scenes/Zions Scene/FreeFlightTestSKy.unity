@@ -15,8 +15,8 @@ RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 9
   m_Fog: 0
-  m_FogColor: {r: 0, g: 0, b: 0, a: 1}
-  m_FogMode: 1
+  m_FogColor: {r: 1, g: 1, b: 1, a: 1}
+  m_FogMode: 3
   m_FogDensity: 1
   m_LinearFogStart: 0
   m_LinearFogEnd: 0.01
@@ -1166,6 +1166,10 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2169516795957426653, guid: 8de7aee6f13c8764a9c4ffc2e6624be1, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 62b633276d572c943b7106285721a0d5, type: 2}
     - target: {fileID: 2239790766123432577, guid: 8de7aee6f13c8764a9c4ffc2e6624be1, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -1566,6 +1570,14 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: -0.6154221
       objectReference: {fileID: 0}
+    - target: {fileID: 6974129906388013141, guid: 8de7aee6f13c8764a9c4ffc2e6624be1, type: 3}
+      propertyPath: m_FocusTracking
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6974129906388013146, guid: 8de7aee6f13c8764a9c4ffc2e6624be1, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6974129906388013147, guid: 8de7aee6f13c8764a9c4ffc2e6624be1, type: 3}
       propertyPath: m_Follow
       value: 
@@ -1833,8 +1845,15 @@ MonoBehaviour:
   logComputeTime: 1
   shapeResolution: 132
   detailResolution: 32
-  shapeSettings: []
-  detailSettings: []
+  shapeSettings:
+  - {fileID: 11400000, guid: ea6a376fd76944d779a16ea384ced6ff, type: 2}
+  - {fileID: 11400000, guid: b1f27073f15ec4c87a59802da437d317, type: 2}
+  - {fileID: 11400000, guid: d584944c9f0e04ac9a2cf9677f6a6c1f, type: 2}
+  - {fileID: 11400000, guid: d73535d63d15d48988817d9c18e604f6, type: 2}
+  detailSettings:
+  - {fileID: 11400000, guid: f37860370682c4203ae320b113e775a1, type: 2}
+  - {fileID: 11400000, guid: 3399ea3804e6046ba9c660e6f956c0d4, type: 2}
+  - {fileID: 11400000, guid: e4ab2474bf9394bc9ae7bba77e2c35f9, type: 2}
   noiseCompute: {fileID: 7200000, guid: cbe89bcc08a72cb42859a372b245da50, type: 3}
   copy: {fileID: 7200000, guid: 2c9c258627c5e0b43b7fb1f2f11bfe57, type: 3}
   viewerEnabled: 0
@@ -2628,6 +2647,10 @@ PrefabInstance:
       propertyPath: m_NoiseProfile
       value: 
       objectReference: {fileID: 11400000, guid: e9ce97b7a206dc64d90931ea044e0c72, type: 2}
+    - target: {fileID: 1196418597608173439, guid: 6b93a3113a51896478068f5d7da39efd, type: 3}
+      propertyPath: m_CameraType
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3490135104266017033, guid: 6b93a3113a51896478068f5d7da39efd, type: 3}
       propertyPath: m_CustomBlends
       value: 
@@ -2679,6 +2702,14 @@ PrefabInstance:
     - target: {fileID: 3490135104266017039, guid: 6b93a3113a51896478068f5d7da39efd, type: 3}
       propertyPath: m_Name
       value: MainCamera
+      objectReference: {fileID: 0}
+    - target: {fileID: 3490135104266017039, guid: 6b93a3113a51896478068f5d7da39efd, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4302762743768171265, guid: 6b93a3113a51896478068f5d7da39efd, type: 3}
+      propertyPath: m_HDR
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4302762743768171265, guid: 6b93a3113a51896478068f5d7da39efd, type: 3}
       propertyPath: orthographic
@@ -14817,7 +14848,7 @@ Transform:
   m_GameObject: {fileID: 1139564344}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5059.0464, y: -912.23193, z: 939.56995}
+  m_LocalPosition: {x: 5059.0464, y: -912.23193, z: 2543}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -15562,14 +15593,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   logTime: 0
   noiseCompute: {fileID: 7200000, guid: af9083e2261691d4a9100b08a5f4ed22, type: 3}
-  noiseSettings: {fileID: 0}
+  noiseSettings: {fileID: 11400000, guid: 509d54ed5f587459d99d1fc47b5d1459, type: 2}
   resolution: 512
   weatherMap: {fileID: 453067254}
-  testParams: {x: 0, y: 0, z: 0, w: 0}
+  testParams: {x: 0, y: 1, z: 1, w: 0}
   container: {fileID: 596256569}
   viewerEnabled: 0
   showSettingsEditor: 1
-  minMax: {x: 0, y: 1}
+  minMax: {x: -0.01, y: 0.47}
 --- !u!1 &1416255221 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2618125796073928557, guid: 44e7115f02c47ce4684585ffc882ebd4, type: 3}
@@ -17208,26 +17239,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shader: {fileID: 4800000, guid: bf6f3ea4ee309334fa48e22f6c80d6b4, type: 3}
   container: {fileID: 596256569}
-  cloudTestParams: {x: 0, y: 0, z: 0}
+  cloudTestParams: {x: 0.9, y: 7.29, z: 0.64}
   numStepsLight: 8
-  rayOffsetStrength: 0
-  blueNoise: {fileID: 0}
+  rayOffsetStrength: 9.19
+  blueNoise: {fileID: 2800000, guid: ea73d7822d78efc4bb33e6ac9a984852, type: 3}
   cloudScale: 1
   densityMultiplier: 1
-  densityOffset: 0
-  shapeOffset: {x: 0, y: 0, z: 0}
+  densityOffset: -3.64
+  shapeOffset: {x: 29.4, y: -47.87, z: 1.11}
   heightOffset: {x: 0, y: 0}
-  shapeNoiseWeights: {x: 0, y: 0, z: 0, w: 0}
+  shapeNoiseWeights: {x: 2.51, y: 0.89, z: 1.37, w: 0.57}
   detailNoiseScale: 10
   detailNoiseWeight: 0.1
-  detailNoiseWeights: {x: 0, y: 0, z: 0}
-  detailOffset: {x: 0, y: 0, z: 0}
+  detailNoiseWeights: {x: 2.57, y: 0.89, z: 1.37}
+  detailOffset: {x: 130.23, y: 0, z: 0}
   lightAbsorptionThroughCloud: 1
-  lightAbsorptionTowardSun: 1
+  lightAbsorptionTowardSun: 1.6
   darknessThreshold: 0.2
   forwardScattering: 0.83
   backScattering: 0.3
-  baseBrightness: 0.8
+  baseBrightness: 1
   phaseFactor: 0.15
   timeScale: 1
   baseSpeed: 1
