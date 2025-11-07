@@ -26,9 +26,20 @@ public class BoidsEnemy : EnemyControllerBase
     Vector3 startVel;
     Vector3 desVel;
 
+    [Space]
+    [Header("Wander Variables")]
+    public Vector3 randPos;
+    public Vector3 startPos;
+    public float wanderSpd;
+    public GameObject centerWanderObj;
+    public float wanderMaxRadius = 75f;
+    public float distToNextWander = 5f;
+
     protected override void Awake()
     {
         base.Awake();
+        startPos = transform.position;
+        randPos = GetRandomWander();
         bod = GetComponent<Rigidbody>();
         //bod.velocity = Random.insideUnitSphere * startSpd;
         //desVel = Random.insideUnitSphere.normalized;
@@ -44,6 +55,20 @@ public class BoidsEnemy : EnemyControllerBase
         // Apply the initial velocity
         //bod.velocity = randomDirection * startSpd;
         startVel = randomDirection * startSpd;
+    }
+
+    public Vector3 GetRandomWander()
+    {
+        Vector3 p;
+        if (centerWanderObj != null)
+        {
+            p = centerWanderObj.transform.position + Random.insideUnitSphere * Random.Range(-wanderMaxRadius, wanderMaxRadius);
+        }
+        else
+        {
+            p = startPos + Random.insideUnitSphere * Random.Range(-wanderMaxRadius, wanderMaxRadius);
+        }
+        return p;
     }
 
     protected override void Update()
@@ -63,13 +88,21 @@ public class BoidsEnemy : EnemyControllerBase
 
         if (playerInRange)
         {
-            //desVel = Vector3.Lerp(desVel, (player.transform.position - transform.position).normalized , Time.deltaTime * changeSpd);
+            desVel = (player.transform.position - transform.position);
+            spd = accSpd;
         }
         else
         {
-            //desVel = Vector3.Lerp(desVel, transform.forward, Time.deltaTime * changeSpd);
+            float dist = Vector3.Distance(transform.position, randPos);
+            if (dist <= distToNextWander)
+            {
+                randPos = GetRandomWander();
+            }
+
+            desVel = (randPos - transform.position);
+            spd = wanderSpd;
         }
-        desVel = player.transform.position - transform.position;
+        //desVel = player.transform.position - transform.position;
 
         Collider[] col = GetNeighbors();
         if (col.Length > 0)
@@ -90,7 +123,7 @@ public class BoidsEnemy : EnemyControllerBase
         }
 
         //bod.AddForce((desVel + desLoc + desPos) * spd * Time.deltaTime);
-        bod.velocity = startVel + (((desVel + desLoc + desPos) * accSpd) * Time.deltaTime);
+        bod.velocity = startVel + (((desVel + desLoc + desPos) * spd) * Time.deltaTime);
         //bod.velocity = ((desVel + desLoc) * accSpd * Time.deltaTime);
         //bod.velocity = ((desPos) * accSpd * Time.deltaTime);
     }
@@ -157,5 +190,12 @@ public class BoidsEnemy : EnemyControllerBase
 
         //steeringForce = desiredVel(avgVector) - currentVelocity
         return avgVector - bod.velocity;
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawSphere(randPos, 5f);
+        Gizmos.color = Color.white;
     }
 }
