@@ -1752,44 +1752,6 @@ MonoBehaviour:
   m_MaximumFOV: 60
   m_MinimumOrthoSize: 1
   m_MaximumOrthoSize: 5000
---- !u!84 &453067254
-RenderTexture:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: Weather Map
-  m_ImageContentsHash:
-    serializedVersion: 2
-    Hash: 00000000000000000000000000000000
-  m_ForcedFallbackFormat: 4
-  m_DownscaleFallback: 0
-  m_IsAlphaChannelOptional: 0
-  serializedVersion: 5
-  m_Width: 512
-  m_Height: 512
-  m_AntiAliasing: 1
-  m_MipCount: -1
-  m_DepthStencilFormat: 0
-  m_ColorFormat: 24
-  m_MipMap: 0
-  m_GenerateMips: 1
-  m_SRGB: 1
-  m_UseDynamicScale: 0
-  m_BindMS: 0
-  m_EnableCompatibleFormat: 1
-  m_EnableRandomWrite: 1
-  m_TextureSettings:
-    serializedVersion: 2
-    m_FilterMode: 1
-    m_Aniso: 1
-    m_MipBias: 0
-    m_WrapU: 1
-    m_WrapV: 1
-    m_WrapW: 1
-  m_Dimension: 2
-  m_VolumeDepth: 512
-  m_ShadowSamplingMode: 2
 --- !u!1 &454504696 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 161885371858097795, guid: 44e7115f02c47ce4684585ffc882ebd4, type: 3}
@@ -1836,7 +1798,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 478315394}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 93a19b1876a823f4e8b9f5fc2c1c0415, type: 3}
+  m_Script: {fileID: 11500000, guid: 4b8bb4e65490943448fc3aa5e4a3cc0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   activeTextureType: 0
@@ -1844,18 +1806,18 @@ MonoBehaviour:
   autoUpdate: 1
   logComputeTime: 1
   shapeResolution: 132
-  detailResolution: 32
+  detailResolution: 64
   shapeSettings:
-  - {fileID: 11400000, guid: ea6a376fd76944d779a16ea384ced6ff, type: 2}
-  - {fileID: 11400000, guid: b1f27073f15ec4c87a59802da437d317, type: 2}
-  - {fileID: 11400000, guid: d584944c9f0e04ac9a2cf9677f6a6c1f, type: 2}
-  - {fileID: 11400000, guid: d73535d63d15d48988817d9c18e604f6, type: 2}
+  - {fileID: 11400000, guid: d653e2bbe866d4e9aa9b1bbd07454980, type: 2}
+  - {fileID: 11400000, guid: 4d2ef644e3c6c4ca988ccc10cfc5c671, type: 2}
+  - {fileID: 11400000, guid: c910554bf997e4a0fa5370096be73195, type: 2}
+  - {fileID: 11400000, guid: beeb26b90db3b4e98a3b27bbe02b67ce, type: 2}
   detailSettings:
-  - {fileID: 11400000, guid: f37860370682c4203ae320b113e775a1, type: 2}
+  - {fileID: 11400000, guid: 98e54db9120444e2ca93bc9725ccd4d8, type: 2}
   - {fileID: 11400000, guid: 3399ea3804e6046ba9c660e6f956c0d4, type: 2}
-  - {fileID: 11400000, guid: e4ab2474bf9394bc9ae7bba77e2c35f9, type: 2}
-  noiseCompute: {fileID: 7200000, guid: cbe89bcc08a72cb42859a372b245da50, type: 3}
-  copy: {fileID: 7200000, guid: 2c9c258627c5e0b43b7fb1f2f11bfe57, type: 3}
+  - {fileID: 11400000, guid: 9e78351d564184af196537837873c257, type: 2}
+  noiseCompute: {fileID: 7200000, guid: 18d71ea19186c49d9b17692355749824, type: 3}
+  copy: {fileID: 7200000, guid: 7abd06564e4244f60857856659a3809f, type: 3}
   viewerEnabled: 0
   viewerGreyscale: 1
   viewerShowAllChannels: 0
@@ -1863,8 +1825,8 @@ MonoBehaviour:
   viewerTileAmount: 1
   viewerSize: 1
   showSettingsEditor: 1
-  shapeTexture: {fileID: 737864509}
-  detailTexture: {fileID: 731394496}
+  shapeTexture: {fileID: 0}
+  detailTexture: {fileID: 0}
 --- !u!1 &488758642 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8061048260714710531, guid: 3f5851e1fd0de364b93a372b508d8750, type: 3}
@@ -2307,7 +2269,7 @@ Transform:
   m_GameObject: {fileID: 596256568}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -5411.0464, y: 1391.9319, z: 651.43005}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 5000, y: 1938.6593, z: 3525.4436}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -2823,10 +2785,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 671090377}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bde91d239b549a44fbb459736bff2d1a, type: 3}
+  m_Script: {fileID: 11500000, guid: 9c2db19fe17414199ba6159361e16237, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slicer: {fileID: 7200000, guid: b4641ccfaea70d64b9e3cd263596376a, type: 3}
+  slicer: {fileID: 7200000, guid: 21b2f0659c6bd434f81825e14415969a, type: 3}
 --- !u!1 &671308378
 GameObject:
   m_ObjectHideFlags: 0
@@ -7793,44 +7755,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 6325183658321932241, guid: 3d5faf881387c0d43b6699d9fa453349, type: 3}
   m_PrefabInstance: {fileID: 699654377}
   m_PrefabAsset: {fileID: 0}
---- !u!84 &731394496
-RenderTexture:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: DetailNoise
-  m_ImageContentsHash:
-    serializedVersion: 2
-    Hash: 00000000000000000000000000000000
-  m_ForcedFallbackFormat: 4
-  m_DownscaleFallback: 0
-  m_IsAlphaChannelOptional: 0
-  serializedVersion: 5
-  m_Width: 32
-  m_Height: 32
-  m_AntiAliasing: 1
-  m_MipCount: -1
-  m_DepthStencilFormat: 0
-  m_ColorFormat: 24
-  m_MipMap: 0
-  m_GenerateMips: 1
-  m_SRGB: 1
-  m_UseDynamicScale: 0
-  m_BindMS: 0
-  m_EnableCompatibleFormat: 1
-  m_EnableRandomWrite: 1
-  m_TextureSettings:
-    serializedVersion: 2
-    m_FilterMode: 1
-    m_Aniso: 1
-    m_MipBias: 0
-    m_WrapU: 0
-    m_WrapV: 0
-    m_WrapW: 0
-  m_Dimension: 3
-  m_VolumeDepth: 32
-  m_ShadowSamplingMode: 2
 --- !u!1001 &733966656
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7921,44 +7845,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 32ea74ec2403930428bc19c72b664f46, type: 3}
   m_PrefabInstance: {fileID: 733966656}
   m_PrefabAsset: {fileID: 0}
---- !u!84 &737864509
-RenderTexture:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: ShapeNoise
-  m_ImageContentsHash:
-    serializedVersion: 2
-    Hash: 00000000000000000000000000000000
-  m_ForcedFallbackFormat: 4
-  m_DownscaleFallback: 0
-  m_IsAlphaChannelOptional: 0
-  serializedVersion: 5
-  m_Width: 132
-  m_Height: 132
-  m_AntiAliasing: 1
-  m_MipCount: -1
-  m_DepthStencilFormat: 0
-  m_ColorFormat: 24
-  m_MipMap: 0
-  m_GenerateMips: 1
-  m_SRGB: 1
-  m_UseDynamicScale: 0
-  m_BindMS: 0
-  m_EnableCompatibleFormat: 1
-  m_EnableRandomWrite: 1
-  m_TextureSettings:
-    serializedVersion: 2
-    m_FilterMode: 1
-    m_Aniso: 1
-    m_MipBias: 0
-    m_WrapU: 0
-    m_WrapV: 0
-    m_WrapW: 0
-  m_Dimension: 3
-  m_VolumeDepth: 132
-  m_ShadowSamplingMode: 2
 --- !u!1001 &804350063
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14848,7 +14734,7 @@ Transform:
   m_GameObject: {fileID: 1139564344}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5059.0464, y: -912.23193, z: 2543}
+  m_LocalPosition: {x: 1763.7, y: 279.9, z: 3161.87}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -15588,19 +15474,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 1384209860}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 873d91b1bc4211d48b2696f8c3315841, type: 3}
+  m_Script: {fileID: 11500000, guid: 92ecf6ccd15cb4979a163de7b4b76d1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   logTime: 0
-  noiseCompute: {fileID: 7200000, guid: af9083e2261691d4a9100b08a5f4ed22, type: 3}
+  noiseCompute: {fileID: 7200000, guid: 610906fb135f245baaa76a04f34d7c24, type: 3}
   noiseSettings: {fileID: 11400000, guid: 509d54ed5f587459d99d1fc47b5d1459, type: 2}
   resolution: 512
-  weatherMap: {fileID: 453067254}
-  testParams: {x: 0, y: 1, z: 1, w: 0}
+  weatherMap: {fileID: 0}
+  testParams: {x: 0, y: 0, z: 0, w: 0}
   container: {fileID: 596256569}
   viewerEnabled: 0
   showSettingsEditor: 1
-  minMax: {x: -0.01, y: 0.47}
+  minMax: {x: 0, y: 1}
 --- !u!1 &1416255221 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2618125796073928557, guid: 44e7115f02c47ce4684585ffc882ebd4, type: 3}
@@ -18668,6 +18554,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8397241127610980207, guid: 23d9f1debf751b74b9a2d83f2b47a3ba, type: 3}
       propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8397241127653663018, guid: 23d9f1debf751b74b9a2d83f2b47a3ba, type: 3}
+      propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
