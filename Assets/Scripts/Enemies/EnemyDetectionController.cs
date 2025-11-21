@@ -5,6 +5,7 @@ using UnityEngine;
 public class EnemyDetectionController : MonoBehaviour
 {
     public EnemyControllerBase parent;
+    FlockEnemy flock;
     public Animator anim;
     public Healthbar hpBar;
 
@@ -12,7 +13,9 @@ public class EnemyDetectionController : MonoBehaviour
     {
         parent = GetComponentInParent<EnemyControllerBase>();
         //hpBar = GetComponent<Healthbar>();
-        anim = parent.anim;
+        if (parent != null) anim = parent.anim;
+
+        if (parent == null) flock = GetComponentInParent<FlockEnemy>();
     }
 
     private void OnEnable()
@@ -32,6 +35,8 @@ public class EnemyDetectionController : MonoBehaviour
                 parent.playerInRange = true;
                 parent.SetCollider(true);
             }
+
+            if (flock != null) FlockManager.FM.inRange = true;
         }
     }
 
@@ -60,6 +65,8 @@ public class EnemyDetectionController : MonoBehaviour
                 parent.playerInRange = true;
                 parent.SetCollider(true);
             }
+
+            if (flock != null) FlockManager.FM.inRange = true;
         }
     }
 }

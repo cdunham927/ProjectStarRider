@@ -26,8 +26,12 @@ public class FlockManager : MonoBehaviour
     [Header("Draw Gizmos")]
     public float sphereSize = 50f;
 
+    public bool inRange = false;
+    PlayerController player;
+
     private void Awake()
     {
+        player = FindObjectOfType<PlayerController>();
         allFish = new GameObject[numFish];
         for (int i = 0; i < numFish; i++)
         {
@@ -43,11 +47,18 @@ public class FlockManager : MonoBehaviour
 
     private void Update()
     {
-        if (Random.Range(0, 100) < wanderChance)
+        if (!inRange)
         {
-            goalPos = this.transform.position + new Vector3(Random.Range(-swimLimits.x, swimLimits.x),
-                                                            Random.Range(-swimLimits.y, swimLimits.y),
-                                                            Random.Range(-swimLimits.z, swimLimits.z));
+            if (Random.Range(0, 100) < wanderChance)
+            {
+                goalPos = this.transform.position + new Vector3(Random.Range(-swimLimits.x, swimLimits.x),
+                                                                Random.Range(-swimLimits.y, swimLimits.y),
+                                                                Random.Range(-swimLimits.z, swimLimits.z));
+            }
+        }
+        else
+        {
+            goalPos = player.transform.position;
         }
     }
 

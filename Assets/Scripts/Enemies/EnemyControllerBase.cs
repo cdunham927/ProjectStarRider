@@ -221,7 +221,9 @@ public class EnemyControllerBase : MonoBehaviour, IDamageable
 
     public void UseBulletPattern()
     {
-        switch(bulPatType)
+        if (bulletPool == null) bulletPool = cont.enemyBulPool;
+
+        switch (bulPatType)
         {
             case patterntypes.triangle:
                 pattern.TrianglePattern(bulletPool);
