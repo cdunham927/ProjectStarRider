@@ -185,6 +185,12 @@ public class EnemyControllerBase : MonoBehaviour, IDamageable
         //{
         //    originalColors[i] = tempMats[i].color;
         //}
+        
+        //Disable healthbars if they have less than 3 max hp
+        if (maxHp < 3)
+        {
+            hpBar.gameObject.SetActive(false);
+        }
 
         ResetMaterial();
         hasAdded = false;

@@ -7,6 +7,11 @@ using Cinemachine;
 
 public class BossControllerBase : MonoBehaviour
 {
+    public enum cetusStateMachine { attack, death, retaliate,  };
+    [Space]
+    [Header("State machine shi")]
+    public cetusStateMachine cetusState;
+
     //Start paste from enemycontrollerbase and cetuscontroller
     //
     //
@@ -127,8 +132,6 @@ public class BossControllerBase : MonoBehaviour
     float iframes;
     public float iframeTime = 0.2f;
 
-
-
     protected float curHpLoss = 0;
 
     //In the 1st phase, every 20% hp lost will do sonic laser attack
@@ -174,12 +177,8 @@ public class BossControllerBase : MonoBehaviour
     //
     //
     //End paste from enemycontrollerbase and cetuscontroller
+
     protected const string Boss_Death = "Armature|Death";
-
-
-
-
-
     public TMP_Text nameText;
     public string bossName;
 
