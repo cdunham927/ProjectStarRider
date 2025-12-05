@@ -46,36 +46,48 @@ Shader "Unlit/VolumetricFog"
             float4 _LightContribution;
             float _LightScattering;
 
-            float get_density()
+            float get_density(float3 worldPos)
             {
             
-                return _DensityMultiplier
+                return _DensityMultiplier;
             }
 
 
 
             half4 frag(Varyings IN) : SV_Target
             {
-
+                float4 col = SAMPLE_TEXTURE2D(_BlitTexture, sampler_LinearClamp, IN.texcoord);
                 float depth = SampleSceneDepth(IN.texcoord);
                 float3 worldPos = ComputeWorldSpacePosition(IN.texcoord, depth, UNITY_MATRIX_I_VP);
 
                 //start out of array
                 float3 entryPoint = _WorldSpaceCameraPos;
                 float3 viewDir = worldPos - _WorldSpaceCameraPos;
-                float viewLength = length(ViewDir);
+                float viewLength = length(viewDir);
                 float3 rayDir = normalize(viewDir);
                
-                
+                //float2 pixelCoords = IN.texcoord * _BlitTexture_TexelSize.zw;
                 float distLimit = min(viewLength, _MaxDistance);
                 float disTravelled = 0; // how long the player has traveled along the array already.
                 float transmittance = 0;
+                float4 fogCol = _Color;
 
                 //Ray marching stuff
+                while (disTravelled < distLimit)
+                {
+                    float3 rayPos = entryPoint + rayDir * disTravelled;
+                    float density = get_density(rayPos);
+                    if (density > 0)
+                    {
+                        //Light mainLight = GetMainLight(TransformWorldToShadowCoord(rayPos));
+                        //fogCol.rgb += mainLight.color.rgb * _LightContribution.rgb * henyey_greenstein(dot(rayDir, mainLight.direction), _LightScattering) * density * mainLight.shadowAttenuation * _StepSize;
+                        transmittance *= exp(-density * _StepSize);
+                    }
+                    //distTravelled += _StepSize;
+                }
 
 
-
-                return  float4(frac(worldPos), 1);
+                return  transmittance;
             }
 
             
