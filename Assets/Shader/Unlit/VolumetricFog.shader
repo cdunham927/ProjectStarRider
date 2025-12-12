@@ -26,7 +26,7 @@ Shader "Unlit/VolumetricFog"
             HLSLPROGRAM
             #pragma vertex Vert
             #pragma fragment frag
-            #pragma multi_compile _ _MAIN_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS_CASCADE _MAIN_LIGHT_SHADOWS_SCREEN
+            //#pragma multi_compile _ _MAIN_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS_CASCADE _MAIN_LIGHT_SHADOWS_SCREEN
 
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
@@ -46,7 +46,7 @@ Shader "Unlit/VolumetricFog"
             float4 _LightContribution;
             float _LightScattering;
 
-            float get_density(float3 worldPos)
+            float get_density()
             {
             
                 return _DensityMultiplier;
@@ -69,25 +69,22 @@ Shader "Unlit/VolumetricFog"
                 //float2 pixelCoords = IN.texcoord * _BlitTexture_TexelSize.zw;
                 float distLimit = min(viewLength, _MaxDistance);
                 float disTravelled = 0; // how long the player has traveled along the array already.
-                float transmittance = 0;
+                float transmittance = 1;
                 float4 fogCol = _Color;
 
                 //Ray marching stuff
                 while (disTravelled < distLimit)
                 {
-                    float3 rayPos = entryPoint + rayDir * disTravelled;
-                    float density = get_density(rayPos);
+                    float density = get_density();
                     if (density > 0)
                     {
-                        //Light mainLight = GetMainLight(TransformWorldToShadowCoord(rayPos));
-                        //fogCol.rgb += mainLight.color.rgb * _LightContribution.rgb * henyey_greenstein(dot(rayDir, mainLight.direction), _LightScattering) * density * mainLight.shadowAttenuation * _StepSize;
-                        transmittance *= exp(-density * _StepSize);
+                       transmittance *= exp(-density * _StepSize);
                     }
-                    //distTravelled += _StepSize;
+                    disTravelled += _StepSize;
                 }
 
 
-                return  transmittance;
+                return lerp(col, _Color, 1.0 - saturate(transmittance));
             }
 
             
