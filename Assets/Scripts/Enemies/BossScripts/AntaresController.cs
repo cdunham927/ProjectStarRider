@@ -131,17 +131,17 @@ public class AntaresController : BossControllerBase, IDamageable
             //We can probably use this to determine if we do a scorpion tail attack or shoot bullets at the player
             if (!playerInRange)
             {
-                AttackOne();
+                //AttackOne();
             }
             else
             {
-                AttackTwo();
+                //AttackTwo();
             }
         }
     }
 
     //Ranged Attack
-    protected override void AttackOne()
+    protected void AttackOne()
     {
         Invoke("RangedAttack", 0.85f);
 
@@ -150,7 +150,7 @@ public class AntaresController : BossControllerBase, IDamageable
     }
 
     //Melee Attack
-    protected override void AttackTwo()
+    protected void AttackTwo()
     {
         isAttacking = true;
         Invoke("MeleeAttack", 1.15f);
@@ -308,21 +308,21 @@ public class AntaresController : BossControllerBase, IDamageable
             case 3:
                 if (curHpLoss > pTtLA)
                 {
-                    AttackThree();
+                    //AttackThree();
                     curHpLoss = 0;
                 }
                 break;
             case 2:
                 if (curHpLoss > pTLA)
                 {
-                    AttackThree();
+                    //AttackThree();
                     curHpLoss = 0;
                 }
                 break;
             case 1:
                 if (curHpLoss > pOLA)
                 {
-                    AttackThree();
+                    //AttackThree();
                     curHpLoss = 0;
                 }
                 break;
@@ -343,37 +343,37 @@ public class AntaresController : BossControllerBase, IDamageable
     {
         _notifications[0].SetActive(true);
         //ChangeAnimationState();
-        switch (phase)
-        {
-            case 1:
-                foreach (GameObject g in waveOneSpawns)
-                {
-                    g.SetActive(true);
-                }
-                break;
-            case 2:
-                foreach (GameObject g in waveTwoSpawns)
-                {
-                    g.SetActive(true);
-                }
-                foreach (GameObject g in waveTwoWaterPillars)
-                {
-                    g.SetActive(true);
-                }
-                attackCools = spawnCooldown;
-                break;
-            case 3:
-                foreach (GameObject g in waveThreeSpawns)
-                {
-                    g.SetActive(true);
-                }
-                foreach (GameObject g in waveThreeWaterPillars)
-                {
-                    g.SetActive(true);
-                }
-                attackCools = spawnCooldown;
-                break;
-        }
+        //switch (phase)
+        //{
+        //    case 1:
+        //        foreach (GameObject g in waveOneSpawns)
+        //        {
+        //            g.SetActive(true);
+        //        }
+        //        break;
+        //    case 2:
+        //        foreach (GameObject g in waveTwoSpawns)
+        //        {
+        //            g.SetActive(true);
+        //        }
+        //        foreach (GameObject g in waveTwoWaterPillars)
+        //        {
+        //            g.SetActive(true);
+        //        }
+        //        attackCools = spawnCooldown;
+        //        break;
+        //    case 3:
+        //        foreach (GameObject g in waveThreeSpawns)
+        //        {
+        //            g.SetActive(true);
+        //        }
+        //        foreach (GameObject g in waveThreeWaterPillars)
+        //        {
+        //            g.SetActive(true);
+        //        }
+        //        attackCools = spawnCooldown;
+        //        break;
+        //}
 
         AS.PlayOneShot(PlayerSfx[3]);
     }

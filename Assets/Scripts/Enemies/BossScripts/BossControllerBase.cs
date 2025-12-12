@@ -7,10 +7,9 @@ using Cinemachine;
 
 public class BossControllerBase : MonoBehaviour
 {
-    public enum cetusStateMachine { attack, death, retaliate,  };
-    [Space]
-    [Header("State machine shi")]
-    public cetusStateMachine cetusState;
+    public enum bossStates { idle, movement, attack, death };
+    bossStates currentState = bossStates.idle;
+    public int phase = 1;
 
     //Start paste from enemycontrollerbase and cetuscontroller
     //
@@ -158,12 +157,6 @@ public class BossControllerBase : MonoBehaviour
     public bool hasSpawnedPhaseTwo = false;
     public bool hasSpawnedPhaseThree = false;
 
-    public GameObject[] waveOneSpawns;
-    public GameObject[] waveTwoSpawns;
-    public GameObject[] waveTwoWaterPillars;
-    public GameObject[] waveThreeSpawns;
-    public GameObject[] waveThreeWaterPillars;
-
     [Header("Audio Clips: ")]
     public AudioClip[] PlayerSfx;
     protected AudioSource AS;
@@ -269,6 +262,52 @@ public class BossControllerBase : MonoBehaviour
         }
     }
 
+    protected virtual void Idle()
+    {
+
+    }
+    protected virtual void Movement()
+    {
+
+    }
+    protected virtual void Attack()
+    {
+        //Choose an attack based on the current phase
+
+        //if (attackCools <= 0)
+        //{
+        //    float v = Random.value;
+        //
+        //    switch (currentPhase)
+        //    {
+        //        case 3:
+        //            if (v < chanceForAtkFour) AttackFour();
+        //            else if (v < chanceForAtkThree) AttackThree();
+        //            else if (v < chanceForAtkTwo) AttackTwo();
+        //            else AttackOne();
+        //            break;
+        //        case 2:
+        //            if (v < chanceForAtkThree) AttackThree();
+        //            else if (v < chanceForAtkTwo) AttackTwo();
+        //            else AttackOne();
+        //            break;
+        //        case 1:
+        //            if (v < chanceForAtkTwo) AttackTwo();
+        //            else AttackOne();
+        //            break;
+        //    }
+        //}
+    }
+    protected virtual void Death()
+    {
+        GameManager cont = FindObjectOfType<GameManager>();
+        cont.SlowTime();
+    }
+    protected void SwitchState(bossStates newState)
+    {
+        currentState = newState;
+    }
+
     protected virtual void Update()
     {
         if (hasIframes & iframes > 0) iframes -= Time.deltaTime;
@@ -286,50 +325,11 @@ public class BossControllerBase : MonoBehaviour
         }
     }
 
-    protected virtual void Attack()
-    {
-        //Choose an attack based on the current phase
-
-        if (attackCools <= 0)
-        {
-            float v = Random.value;
-
-            switch (currentPhase)
-            {
-                case 3:
-                    if (v < chanceForAtkFour) AttackFour();
-                    else if (v < chanceForAtkThree) AttackThree();
-                    else if (v < chanceForAtkTwo) AttackTwo();
-                    else AttackOne();
-                    break;
-                case 2:
-                    if (v < chanceForAtkThree) AttackThree();
-                    else if (v < chanceForAtkTwo) AttackTwo();
-                    else AttackOne();
-                    break;
-                case 1:
-                    if (v < chanceForAtkTwo) AttackTwo();
-                    else AttackOne();
-                    break;
-            }
-        }
-    }
-
-    protected virtual void Death()
-    {
-        GameManager cont = FindObjectOfType<GameManager>();
-        cont.SlowTime();
-    }
-
     public void ShakeCamera(float amt = 0.5f)
     {
         pStats.ShakeCamera(amt);
     }
 
-    protected virtual void AttackOne() { }
-    protected virtual void AttackTwo() { }
-    protected virtual void AttackThree() { }
-    protected virtual void AttackFour() { }
     //When weak points get hit, retaliate
     public virtual void Retaliate() { }
 
@@ -361,5 +361,4 @@ public class BossControllerBase : MonoBehaviour
         //plays the animation
         anim.Play(newState);
     }
-
 }

@@ -1,9 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Playables;
 
 public class CetusControllerNew : BossControllerBase, IDamageable
 {
+    [Space]
+    [Header("Timelines")]
+    public PlayableDirector phase2Cutscene;
+    public PlayableDirector phase3Cutscene;
+
     public GameObject[] bulSpawn;
     public GameObject[] bulSpawnsTwo;
     public float lerpSpd;
@@ -26,7 +32,6 @@ public class CetusControllerNew : BossControllerBase, IDamageable
     //public Dialogue thirdPhaseDialogue;
     //public Dialogue barrierDialogue;
 
-
     public GameObject[] weakpoints;
 
     //Aniamtion State  make sure string match name of animations
@@ -45,23 +50,6 @@ public class CetusControllerNew : BossControllerBase, IDamageable
     protected const string Cetus_Charge_Laser = "Charge Attack Edit";
     protected const string Cetus_Charging = "Charge Attack Edit";
     protected const string Cetus_Whirlwind = "CetusArmature|Whirlwind";
-
-    /* list of states (declared in source, no header) */
-    enum State
-    {
-        STATE_UNDEFINED = 0,
-        STATE_STANDING_STILL,
-        STATE_ATTACK1,
-    }
-
-    // list of state-events
-    enum Event
-    {
-        EVENT_UNDEFINED = 0,
-        EVENT_STATE_ENTER,
-        EVENT_STATE_UPDATE,
-        EVENT_STATE_EXIT,
-    }
 
     protected override void Awake()
     {
@@ -148,9 +136,9 @@ public class CetusControllerNew : BossControllerBase, IDamageable
             if (currentPhase < 3)
             {
                 if (Random.value < 0.65f)
-                    AttackOne();
+                    FanBullets();
 
-                else AttackTwo();
+                else FrontBullets();
             }
         }
     }
@@ -173,7 +161,7 @@ public class CetusControllerNew : BossControllerBase, IDamageable
     }
 
     //This attack shoots bullets out of all the fins
-    protected override void AttackOne()
+    protected void FanBullets()
     {
         ChangeAnimationState(Cetus_Attack_1);
 
@@ -185,8 +173,8 @@ public class CetusControllerNew : BossControllerBase, IDamageable
         attackCools = atkCooldowns[0];
     }
 
-    //This attack 
-    protected override void AttackTwo()
+    //This attack shoots bullets out of Cetus' mouth
+    protected void FrontBullets()
     {
         //anim.SetTrigger("AttackTwo");
         ChangeAnimationState(Cetus_Attack_2);
@@ -251,8 +239,6 @@ public class CetusControllerNew : BossControllerBase, IDamageable
 
     }
 
-
-
     public void DeactivateBarrier()
     {
         for (int i = 0; i < weakpoints.Length; i++)
@@ -260,8 +246,6 @@ public class CetusControllerNew : BossControllerBase, IDamageable
             weakpoints[i].tag = "BossHitPoint";
         }
     }
-
-
 
     public void SpawnBunchaBullets()
     {
@@ -285,7 +269,7 @@ public class CetusControllerNew : BossControllerBase, IDamageable
     }
 
     //Laser attack
-    protected override void AttackThree()
+    protected void LaserAttack()
     {
         //anim.SetTrigger("AttackThree");
         ChangeAnimationState(Cetus_Charge_Laser);
@@ -305,7 +289,7 @@ public class CetusControllerNew : BossControllerBase, IDamageable
         AS.PlayOneShot(PlayerSfx[2]);
     }
 
-    protected override void AttackFour()
+    protected void Whirlwind()
     {
         ChangeAnimationState(Cetus_Whirlwind);
     }
@@ -344,12 +328,14 @@ public class CetusControllerNew : BossControllerBase, IDamageable
             currentPhase = 3;
             SpawnAngels(currentPhase);
             hasSpawnedPhaseThree = true;
+            phase3Cutscene.Play();
         }
         else if (curHp < phase2Thres && !hasSpawnedPhaseTwo)
         {
             currentPhase = 2;
             SpawnAngels(currentPhase);
             hasSpawnedPhaseTwo = true;
+            phase2Cutscene.Play();
         }
         else currentPhase = 1;
 
@@ -362,7 +348,7 @@ public class CetusControllerNew : BossControllerBase, IDamageable
                 {
                     //Do laser attack here then reset cooldown
                     //Debug.Log("Lost 10% hp");
-                    AttackThree();
+                    LaserAttack();
                     curHpLoss = 0;
                 }
                 break;
@@ -371,7 +357,7 @@ public class CetusControllerNew : BossControllerBase, IDamageable
                 {
                     //Do laser attack here then reset cooldown
                     //Debug.Log("Lost 15% hp");
-                    AttackThree();
+                    LaserAttack();
                     curHpLoss = 0;
                 }
                 break;
@@ -380,7 +366,7 @@ public class CetusControllerNew : BossControllerBase, IDamageable
                 {
                     //Do laser attack here then reset cooldown
                     //Debug.Log("Lost 20% hp");
-                    AttackThree();
+                    LaserAttack();
                     curHpLoss = 0;
                 }
                 break;
@@ -410,72 +396,72 @@ public class CetusControllerNew : BossControllerBase, IDamageable
     {
         _notifications[0].SetActive(true);
         ChangeAnimationState(Cetus_Roar);
-        switch (phase)
-        {
-            case 1:
-                //barrier.gameObject.SetActive(true);
-                //barrier.SetEnemies(waveOneSpawns.Length);
+        //switch (phase)
+        //{
+        //    case 1:
+        //        //barrier.gameObject.SetActive(true);
+        //        //barrier.SetEnemies(waveOneSpawns.Length);
+        //
+        //        for (int i = 0; i < weakpoints.Length; i++)
+        //        {
+        //            weakpoints[i].tag = "Barrier";
+        //        }
+        //
+        //        //ChangeAnimationState(Cetus_Reflect);
+        //        foreach (GameObject g in waveOneSpawns)
+        //        {
+        //            //g.GetComponent<EnemyControllerBase>().barrier = barrier;
+        //            g.SetActive(true);
+        //        }
+        //        break;
+        //    case 2:
+        //
+        //        for (int i = 0; i < weakpoints.Length; i++)
+        //        {
+        //            weakpoints[i].tag = "Barrier";
+        //        }
+        //
+        //        //FindObjectOfType<CombatDialogueController>().StartDialogue(barrierDialogue);
+        //        //barrier.gameObject.SetActive(true);
+        //        //ChangeAnimationState(Cetus_Reflect);
+        //        //barrier.SetEnemies(waveTwoSpawns.Length);
+        //        foreach (GameObject g in waveTwoSpawns)
+        //        {
+        //            //g.GetComponent<EnemyControllerBase>().barrier = barrier;
+        //            g.SetActive(true);
+        //        }
+        //        foreach (GameObject g in waveTwoWaterPillars)
+        //        {
+        //            g.SetActive(true);
+        //        }
+        //        attackCools = spawnCooldown;
+        //        break;
+        //    case 3:
+        //
+        //        for (int i = 0; i < weakpoints.Length; i++)
+        //        {
+        //            weakpoints[i].tag = "Barrier";
+        //        }
+        //
+        //        //FindObjectOfType<CombatDialogueController>().StartDialogue(barrierDialogue);
+        //        //barrier.gameObject.SetActive(true);
+        //        //ChangeAnimationState(Cetus_Reflect);
+        //        //barrier.SetEnemies(waveThreeSpawns.Length);
+        //        foreach (GameObject g in waveThreeSpawns)
+        //        {
+        //            //g.GetComponent<EnemyControllerBase>().barrier = barrier;
+        //            g.SetActive(true);
+        //        }
+        //        foreach (GameObject g in waveThreeWaterPillars)
+        //        {
+        //            g.SetActive(true);
+        //        }
+        //        attackCools = spawnCooldown;
+        //        break;
+        //}
 
-                for (int i = 0; i < weakpoints.Length; i++)
-                {
-                    weakpoints[i].tag = "Barrier";
-                }
-
-                //ChangeAnimationState(Cetus_Reflect);
-                foreach (GameObject g in waveOneSpawns)
-                {
-                    //g.GetComponent<EnemyControllerBase>().barrier = barrier;
-                    g.SetActive(true);
-                }
-                break;
-            case 2:
-
-                for (int i = 0; i < weakpoints.Length; i++)
-                {
-                    weakpoints[i].tag = "Barrier";
-                }
-
-                //FindObjectOfType<CombatDialogueController>().StartDialogue(barrierDialogue);
-                //barrier.gameObject.SetActive(true);
-                //ChangeAnimationState(Cetus_Reflect);
-                //barrier.SetEnemies(waveTwoSpawns.Length);
-                foreach (GameObject g in waveTwoSpawns)
-                {
-                    //g.GetComponent<EnemyControllerBase>().barrier = barrier;
-                    g.SetActive(true);
-                }
-                foreach (GameObject g in waveTwoWaterPillars)
-                {
-                    g.SetActive(true);
-                }
-                attackCools = spawnCooldown;
-                break;
-            case 3:
-
-                for (int i = 0; i < weakpoints.Length; i++)
-                {
-                    weakpoints[i].tag = "Barrier";
-                }
-
-                //FindObjectOfType<CombatDialogueController>().StartDialogue(barrierDialogue);
-                //barrier.gameObject.SetActive(true);
-                //ChangeAnimationState(Cetus_Reflect);
-                //barrier.SetEnemies(waveThreeSpawns.Length);
-                foreach (GameObject g in waveThreeSpawns)
-                {
-                    //g.GetComponent<EnemyControllerBase>().barrier = barrier;
-                    g.SetActive(true);
-                }
-                foreach (GameObject g in waveThreeWaterPillars)
-                {
-                    g.SetActive(true);
-                }
-                attackCools = spawnCooldown;
-                break;
-        }
-
-        Invoke("ActivateBarrierPushObj", 0.75f);
-        Invoke("DeactivateBarrierPushObj", 2f);
+        //Invoke("ActivateBarrierPushObj", 0.75f);
+        //Invoke("DeactivateBarrierPushObj", 2f);
         AS.PlayOneShot(PlayerSfx[3]);
     }
 }
