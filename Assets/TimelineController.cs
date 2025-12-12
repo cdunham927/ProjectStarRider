@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Playables;
 using Cinemachine;
 
@@ -17,6 +18,7 @@ public class TimelineController : MonoBehaviour
     /// </summary>
 
     public PlayableDirector[] timeline;
+    
     public GameObject Boss;
     private bool startTrigger = false;
    
