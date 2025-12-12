@@ -86,8 +86,7 @@ public class CetusController : BossControllerBase, IDamageable
 
     protected override void OnEnable()
     {
-        SpawnAngels(currentPhase);
-        hasSpawnedPhaseOne = true;
+        //SpawnAngels(currentPhase);
         player = FindObjectOfType<PlayerController>();
         //detection = GetComponentInChildren<BossDetectionController>();
 
@@ -145,7 +144,7 @@ public class CetusController : BossControllerBase, IDamageable
         if (!laserOn)
         {
             //After phase 2 we stop shooting off at all the fins
-            if (currentPhase < 3)
+            if (phase < 3)
             {
                 if (Random.value < 0.65f)
                     FanBullets();
@@ -333,149 +332,147 @@ public class CetusController : BossControllerBase, IDamageable
     }
     public void Damage(int damageAmount)
     {
-        //if (anim != null) anim.SetTrigger("Hit");
-        hpBar.SwitchUIActive(true);
-        curHp -= damageAmount;
-        //healthScript.SetHealth((int)curHp);
-        if (curHp > 0) DamageBlink();
-
-        if (curHp < phase3Thres && !hasSpawnedPhaseThree)
-        {
-            currentPhase = 3;
-            SpawnAngels(currentPhase);
-            hasSpawnedPhaseThree = true;
-        }
-        else if (curHp < phase2Thres && !hasSpawnedPhaseTwo)
-        {
-            currentPhase = 2;
-            SpawnAngels(currentPhase);
-            hasSpawnedPhaseTwo = true;
-        }
-        else currentPhase = 1;
-
-        curHpLoss += damageAmount;
-
-        switch (currentPhase)
-        {
-            case 3:
-                if (curHpLoss > pTtLA)
-                {
-                    //Do laser attack here then reset cooldown
-                    //Debug.Log("Lost 10% hp");
-                    LaserAttack();
-                    curHpLoss = 0;
-                }
-                break;
-            case 2:
-                if (curHpLoss > pTLA)
-                {
-                    //Do laser attack here then reset cooldown
-                    //Debug.Log("Lost 15% hp");
-                    LaserAttack();
-                    curHpLoss = 0;
-                }
-                break;
-            case 1:
-                if (curHpLoss > pOLA)
-                {
-                    //Do laser attack here then reset cooldown
-                    //Debug.Log("Lost 20% hp");
-                    LaserAttack();
-                    curHpLoss = 0;
-                }
-                break;
-        }
-
-        if (curHp <= 0)
-        {
-            if (minimapObj != null) minimapObj.SetActive(false);
-            if (manager != null) manager.EnemyDied();
-            //FindObjectOfType<GameManager>().EnemyDiedEvent();
-            //if (anim != null) anim.SetTrigger("Death");
-            //Invoke("Disable", deathClip.length);
-
-            //if (!hasAdded)
-            //{
-            //    hasAdded = true;
-            //    pStats.AddScore(killScore);
-            //}
-            BossDeath();
-
-            Instantiate(deathVFX, transform.position, transform.rotation);
-            Invoke("Disable", deathTime);
-        }
-    }
-
-    public void SpawnAngels(int phase)
-    {
-        _notifications[0].SetActive(true);
-        ChangeAnimationState(Cetus_Roar);
-        //switch (phase)
+        ////if (anim != null) anim.SetTrigger("Hit");
+        //hpBar.SwitchUIActive(true);
+        //curHp -= damageAmount;
+        ////healthScript.SetHealth((int)curHp);
+        //if (curHp > 0) DamageBlink();
+        //
+        //if (curHp < phase3Thres && !hasSpawnedPhaseThree)
         //{
-        //    case 1:
-        //        //barrier.gameObject.SetActive(true);
-        //        //barrier.SetEnemies(waveOneSpawns.Length);
+        //    currentPhase = 3;
+        //    hasSpawnedPhaseThree = true;
+        //}
+        //else if (curHp < phase2Thres && !hasSpawnedPhaseTwo)
+        //{
+        //    currentPhase = 2;
+        //    hasSpawnedPhaseTwo = true;
+        //}
+        //else currentPhase = 1;
         //
-        //        for (int i = 0; i < weakpoints.Length; i++)
-        //        {
-        //            weakpoints[i].tag = "Barrier";
-        //        }
+        //curHpLoss += damageAmount;
         //
-        //        //ChangeAnimationState(Cetus_Reflect);
-        //        foreach (GameObject g in waveOneSpawns)
+        //switch (currentPhase)
+        //{
+        //    case 3:
+        //        if (curHpLoss > pTtLA)
         //        {
-        //            //g.GetComponent<EnemyControllerBase>().barrier = barrier;
-        //            g.SetActive(true);
+        //            //Do laser attack here then reset cooldown
+        //            //Debug.Log("Lost 10% hp");
+        //            LaserAttack();
+        //            curHpLoss = 0;
         //        }
         //        break;
         //    case 2:
-        //
-        //        for (int i = 0; i < weakpoints.Length; i++)
+        //        if (curHpLoss > pTLA)
         //        {
-        //            weakpoints[i].tag = "Barrier";
+        //            //Do laser attack here then reset cooldown
+        //            //Debug.Log("Lost 15% hp");
+        //            LaserAttack();
+        //            curHpLoss = 0;
         //        }
-        //
-        //        //FindObjectOfType<CombatDialogueController>().StartDialogue(barrierDialogue);
-        //        //barrier.gameObject.SetActive(true);
-        //        //ChangeAnimationState(Cetus_Reflect);
-        //        //barrier.SetEnemies(waveTwoSpawns.Length);
-        //        foreach (GameObject g in waveTwoSpawns)
-        //        {
-        //            //g.GetComponent<EnemyControllerBase>().barrier = barrier;
-        //            g.SetActive(true);
-        //        }
-        //        foreach (GameObject g in waveTwoWaterPillars)
-        //        {
-        //            g.SetActive(true);
-        //        }
-        //        attackCools = spawnCooldown;
         //        break;
-        //    case 3:
-        //
-        //        for (int i = 0; i < weakpoints.Length; i++)
+        //    case 1:
+        //        if (curHpLoss > pOLA)
         //        {
-        //            weakpoints[i].tag = "Barrier";
+        //            //Do laser attack here then reset cooldown
+        //            //Debug.Log("Lost 20% hp");
+        //            LaserAttack();
+        //            curHpLoss = 0;
         //        }
-        //
-        //        //FindObjectOfType<CombatDialogueController>().StartDialogue(barrierDialogue);
-        //        //barrier.gameObject.SetActive(true);
-        //        //ChangeAnimationState(Cetus_Reflect);
-        //        //barrier.SetEnemies(waveThreeSpawns.Length);
-        //        foreach (GameObject g in waveThreeSpawns)
-        //        {
-        //            //g.GetComponent<EnemyControllerBase>().barrier = barrier;
-        //            g.SetActive(true);
-        //        }
-        //        foreach (GameObject g in waveThreeWaterPillars)
-        //        {
-        //            g.SetActive(true);
-        //        }
-        //        attackCools = spawnCooldown;
         //        break;
         //}
         //
-        //Invoke("ActivateBarrierPushObj", 0.75f);
-        //Invoke("DeactivateBarrierPushObj", 2f);
-        AS.PlayOneShot(PlayerSfx[3]);
+        //if (curHp <= 0)
+        //{
+        //    if (minimapObj != null) minimapObj.SetActive(false);
+        //    if (manager != null) manager.EnemyDied();
+        //    //FindObjectOfType<GameManager>().EnemyDiedEvent();
+        //    //if (anim != null) anim.SetTrigger("Death");
+        //    //Invoke("Disable", deathClip.length);
+        //
+        //    //if (!hasAdded)
+        //    //{
+        //    //    hasAdded = true;
+        //    //    pStats.AddScore(killScore);
+        //    //}
+        //    Death();
+        //
+        //    Instantiate(deathVFX, transform.position, transform.rotation);
+        //    Invoke("Disable", deathTime);
+        //}
     }
+
+    //public void SpawnAngels(int phase)
+    //{
+    //    _notifications[0].SetActive(true);
+    //    ChangeAnimationState(Cetus_Roar);
+    //    //switch (phase)
+    //    //{
+    //    //    case 1:
+    //    //        //barrier.gameObject.SetActive(true);
+    //    //        //barrier.SetEnemies(waveOneSpawns.Length);
+    //    //
+    //    //        for (int i = 0; i < weakpoints.Length; i++)
+    //    //        {
+    //    //            weakpoints[i].tag = "Barrier";
+    //    //        }
+    //    //
+    //    //        //ChangeAnimationState(Cetus_Reflect);
+    //    //        foreach (GameObject g in waveOneSpawns)
+    //    //        {
+    //    //            //g.GetComponent<EnemyControllerBase>().barrier = barrier;
+    //    //            g.SetActive(true);
+    //    //        }
+    //    //        break;
+    //    //    case 2:
+    //    //
+    //    //        for (int i = 0; i < weakpoints.Length; i++)
+    //    //        {
+    //    //            weakpoints[i].tag = "Barrier";
+    //    //        }
+    //    //
+    //    //        //FindObjectOfType<CombatDialogueController>().StartDialogue(barrierDialogue);
+    //    //        //barrier.gameObject.SetActive(true);
+    //    //        //ChangeAnimationState(Cetus_Reflect);
+    //    //        //barrier.SetEnemies(waveTwoSpawns.Length);
+    //    //        foreach (GameObject g in waveTwoSpawns)
+    //    //        {
+    //    //            //g.GetComponent<EnemyControllerBase>().barrier = barrier;
+    //    //            g.SetActive(true);
+    //    //        }
+    //    //        foreach (GameObject g in waveTwoWaterPillars)
+    //    //        {
+    //    //            g.SetActive(true);
+    //    //        }
+    //    //        attackCools = spawnCooldown;
+    //    //        break;
+    //    //    case 3:
+    //    //
+    //    //        for (int i = 0; i < weakpoints.Length; i++)
+    //    //        {
+    //    //            weakpoints[i].tag = "Barrier";
+    //    //        }
+    //    //
+    //    //        //FindObjectOfType<CombatDialogueController>().StartDialogue(barrierDialogue);
+    //    //        //barrier.gameObject.SetActive(true);
+    //    //        //ChangeAnimationState(Cetus_Reflect);
+    //    //        //barrier.SetEnemies(waveThreeSpawns.Length);
+    //    //        foreach (GameObject g in waveThreeSpawns)
+    //    //        {
+    //    //            //g.GetComponent<EnemyControllerBase>().barrier = barrier;
+    //    //            g.SetActive(true);
+    //    //        }
+    //    //        foreach (GameObject g in waveThreeWaterPillars)
+    //    //        {
+    //    //            g.SetActive(true);
+    //    //        }
+    //    //        attackCools = spawnCooldown;
+    //    //        break;
+    //    //}
+    //    //
+    //    //Invoke("ActivateBarrierPushObj", 0.75f);
+    //    //Invoke("DeactivateBarrierPushObj", 2f);
+    //    AS.PlayOneShot(PlayerSfx[3]);
+    //}
 }

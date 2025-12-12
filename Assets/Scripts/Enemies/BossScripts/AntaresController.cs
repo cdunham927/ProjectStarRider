@@ -289,21 +289,19 @@ public class AntaresController : BossControllerBase, IDamageable
         curHp -= damageAmount;
         if (curHp > 0) DamageBlink();
 
-        if (curHp < phase3Thres && !hasSpawnedPhaseThree)
+        if (curHp < phase3Thres)
         {
-            currentPhase = 3;
-            hasSpawnedPhaseThree = true;
+            phase = 3;
         }
-        else if (curHp < phase2Thres && !hasSpawnedPhaseTwo)
+        else if (curHp < phase2Thres)
         {
-            currentPhase = 2;
-            hasSpawnedPhaseTwo = true;
+            phase = 2;
         }
-        else currentPhase = 1;
+        else phase = 1;
 
         curHpLoss += damageAmount;
 
-        switch (currentPhase)
+        switch (phase)
         {
             case 3:
                 if (curHpLoss > pTtLA)
@@ -332,7 +330,7 @@ public class AntaresController : BossControllerBase, IDamageable
         {
             if (minimapObj != null) minimapObj.SetActive(false);
             if (manager != null) manager.EnemyDied();
-            BossDeath();
+            AntaresDeath();
 
             Instantiate(deathVFX, transform.position, transform.rotation);
             Invoke("Disable", deathTime);

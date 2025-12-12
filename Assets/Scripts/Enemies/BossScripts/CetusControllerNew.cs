@@ -10,11 +10,15 @@ public class CetusControllerNew : BossControllerBase, IDamageable
     public PlayableDirector phase2Cutscene;
     public PlayableDirector phase3Cutscene;
 
+    [Space]
+    [Header("Bullet spawn positions")]
     public GameObject[] bulSpawn;
     public GameObject[] bulSpawnsTwo;
     public float lerpSpd;
 
     //Charge attack stuff
+    [Space]
+    [Header("Laser attack stuff")]
     public CapsuleCollider laserCollider;
     public float laserStartSize;
     public float laserStartHeight;
@@ -23,6 +27,8 @@ public class CetusControllerNew : BossControllerBase, IDamageable
     public LineRenderer laserRend;
     public GameObject laserObj;
 
+    [Space]
+    [Header("Some bullet references")]
     public ObjectPool homingBulletPool;
 
     public ObjectPool sonicBulletPool;
@@ -50,6 +56,7 @@ public class CetusControllerNew : BossControllerBase, IDamageable
     protected const string Cetus_Charge_Laser = "Charge Attack Edit";
     protected const string Cetus_Charging = "Charge Attack Edit";
     protected const string Cetus_Whirlwind = "CetusArmature|Whirlwind";
+    protected const string Boss_Death = "Armature|Death";
 
     protected override void Awake()
     {
@@ -74,11 +81,7 @@ public class CetusControllerNew : BossControllerBase, IDamageable
 
     protected override void OnEnable()
     {
-        SpawnAngels(currentPhase);
-        hasSpawnedPhaseOne = true;
         player = FindObjectOfType<PlayerController>();
-        //detection = GetComponentInChildren<BossDetectionController>();
-
         base.OnEnable();
     }
 
@@ -91,7 +94,6 @@ public class CetusControllerNew : BossControllerBase, IDamageable
         //If the player is close enough
         if (curHp > 0 & player != null && pStats != null && pStats.Curr_hp > 0)
         {
-
             //Probably have to rotate the boss towards the player
             //transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, 0, 0), lerpSpd * Time.deltaTime);
             //transform.LookAt(player.transform.position);
@@ -112,7 +114,7 @@ public class CetusControllerNew : BossControllerBase, IDamageable
         if (laserCollider.radius <= 0.15f)
         {
             laserObj.SetActive(false);
-            laserRend.enabled = false;
+            //laserRend.enabled = false;
             laserCollider.enabled = false;
             laserOn = false;
         }
@@ -125,6 +127,10 @@ public class CetusControllerNew : BossControllerBase, IDamageable
             {
                 Damage((int)maxHp / 2);
             }
+
+            if (Input.GetKeyDown(KeyCode.J)) {
+                Damage(5);
+            }
         }
     }
 
@@ -133,7 +139,7 @@ public class CetusControllerNew : BossControllerBase, IDamageable
         if (!laserOn)
         {
             //After phase 2 we stop shooting off at all the fins
-            if (currentPhase < 3)
+            if (phase < 3)
             {
                 if (Random.value < 0.65f)
                     FanBullets();
@@ -285,7 +291,7 @@ public class CetusControllerNew : BossControllerBase, IDamageable
         laserCollider.height = laserStartHeight;
         laserCollider.enabled = true;
         laserOn = true;
-        laserRend.enabled = true;
+        //laserRend.enabled = true;
         AS.PlayOneShot(PlayerSfx[2]);
     }
 
@@ -315,6 +321,13 @@ public class CetusControllerNew : BossControllerBase, IDamageable
         }
         AS.PlayOneShot(PlayerSfx[1]);
     }
+
+    protected override void Death()
+    {
+        base.Death();
+        ChangeAnimationState(Boss_Death);
+    }
+
     public void Damage(int damageAmount)
     {
         //if (anim != null) anim.SetTrigger("Hit");
@@ -323,25 +336,20 @@ public class CetusControllerNew : BossControllerBase, IDamageable
         //healthScript.SetHealth((int)curHp);
         if (curHp > 0) DamageBlink();
 
-        if (curHp < phase3Thres && !hasSpawnedPhaseThree)
+        if (curHp < phase3Thres && phase == 2)
         {
-            currentPhase = 3;
-            SpawnAngels(currentPhase);
-            hasSpawnedPhaseThree = true;
+            phase = 3;
             phase3Cutscene.Play();
         }
-        else if (curHp < phase2Thres && !hasSpawnedPhaseTwo)
+        else if (curHp < phase2Thres && phase == 1)
         {
-            currentPhase = 2;
-            SpawnAngels(currentPhase);
-            hasSpawnedPhaseTwo = true;
+            phase = 2;
             phase2Cutscene.Play();
         }
-        else currentPhase = 1;
 
         curHpLoss += damageAmount;
 
-        switch (currentPhase)
+        switch (phase)
         {
             case 3:
                 if (curHpLoss > pTtLA)
@@ -385,83 +393,10 @@ public class CetusControllerNew : BossControllerBase, IDamageable
             //    hasAdded = true;
             //    pStats.AddScore(killScore);
             //}
-            BossDeath();
+            Death();
 
             Instantiate(deathVFX, transform.position, transform.rotation);
             Invoke("Disable", deathTime);
         }
-    }
-
-    public void SpawnAngels(int phase)
-    {
-        _notifications[0].SetActive(true);
-        ChangeAnimationState(Cetus_Roar);
-        //switch (phase)
-        //{
-        //    case 1:
-        //        //barrier.gameObject.SetActive(true);
-        //        //barrier.SetEnemies(waveOneSpawns.Length);
-        //
-        //        for (int i = 0; i < weakpoints.Length; i++)
-        //        {
-        //            weakpoints[i].tag = "Barrier";
-        //        }
-        //
-        //        //ChangeAnimationState(Cetus_Reflect);
-        //        foreach (GameObject g in waveOneSpawns)
-        //        {
-        //            //g.GetComponent<EnemyControllerBase>().barrier = barrier;
-        //            g.SetActive(true);
-        //        }
-        //        break;
-        //    case 2:
-        //
-        //        for (int i = 0; i < weakpoints.Length; i++)
-        //        {
-        //            weakpoints[i].tag = "Barrier";
-        //        }
-        //
-        //        //FindObjectOfType<CombatDialogueController>().StartDialogue(barrierDialogue);
-        //        //barrier.gameObject.SetActive(true);
-        //        //ChangeAnimationState(Cetus_Reflect);
-        //        //barrier.SetEnemies(waveTwoSpawns.Length);
-        //        foreach (GameObject g in waveTwoSpawns)
-        //        {
-        //            //g.GetComponent<EnemyControllerBase>().barrier = barrier;
-        //            g.SetActive(true);
-        //        }
-        //        foreach (GameObject g in waveTwoWaterPillars)
-        //        {
-        //            g.SetActive(true);
-        //        }
-        //        attackCools = spawnCooldown;
-        //        break;
-        //    case 3:
-        //
-        //        for (int i = 0; i < weakpoints.Length; i++)
-        //        {
-        //            weakpoints[i].tag = "Barrier";
-        //        }
-        //
-        //        //FindObjectOfType<CombatDialogueController>().StartDialogue(barrierDialogue);
-        //        //barrier.gameObject.SetActive(true);
-        //        //ChangeAnimationState(Cetus_Reflect);
-        //        //barrier.SetEnemies(waveThreeSpawns.Length);
-        //        foreach (GameObject g in waveThreeSpawns)
-        //        {
-        //            //g.GetComponent<EnemyControllerBase>().barrier = barrier;
-        //            g.SetActive(true);
-        //        }
-        //        foreach (GameObject g in waveThreeWaterPillars)
-        //        {
-        //            g.SetActive(true);
-        //        }
-        //        attackCools = spawnCooldown;
-        //        break;
-        //}
-
-        //Invoke("ActivateBarrierPushObj", 0.75f);
-        //Invoke("DeactivateBarrierPushObj", 2f);
-        AS.PlayOneShot(PlayerSfx[3]);
     }
 }

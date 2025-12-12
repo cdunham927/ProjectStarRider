@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class WaterPillarController : MonoBehaviour
 {
+    public bool moves = false;
     public GameObject centerPos;
     float startYPos;
 
@@ -30,20 +31,28 @@ public class WaterPillarController : MonoBehaviour
         radius = Vector3.Distance(transform.position, centerPos.transform.position);
     }
 
+    public void MovePillars()
+    {
+        moves = true;
+    }
+
     private void Update()
     {
-        if (dir == 1) angle += rotSpd * Time.deltaTime;
-        else angle -= rotSpd * Time.deltaTime;
-        //angle = Mathf.Deg2Rad;
+        if (moves)
+        {
+            if (dir == 1) angle += rotSpd * Time.deltaTime;
+            else angle -= rotSpd * Time.deltaTime;
+            //angle = Mathf.Deg2Rad;
 
-        var offset = new Vector3(Mathf.Sin(angle), 0, Mathf.Cos(angle)) * radius;
+            var offset = new Vector3(Mathf.Sin(angle), 0, Mathf.Cos(angle)) * radius;
 
-        transform.position = centerPos.transform.position + new Vector3(offset.x, startYPos, offset.z);
+            transform.position = centerPos.transform.position + new Vector3(offset.x, startYPos, offset.z);
 
-        //How far away are we from the center position
-        //Debug.Log(Vector3.Distance(transform.position, centerPos.transform.position));
+            //How far away are we from the center position
+            //Debug.Log(Vector3.Distance(transform.position, centerPos.transform.position));
 
-        if (curFrames > 0) curFrames -= Time.deltaTime;
+            if (curFrames > 0) curFrames -= Time.deltaTime;
+        }
     }
 
     private void OnTriggerEnter(Collider other)

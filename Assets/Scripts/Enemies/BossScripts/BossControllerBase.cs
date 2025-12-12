@@ -16,14 +16,17 @@ public class BossControllerBase : MonoBehaviour
     //
     //
     //Stats
+    [Space]
     [Header(" Enemy Base Stats : ")]
     public float maxHp;
     public float curHp;
 
+    [Space]
     [Header(" Enemy Score Rating : ")]
     public float killScore = 100;
     protected bool hasAdded = false;
 
+    [Space]
     [Header(" Enemy Attack Settings : ")]
     //Range for when the enemy starts attacking
     public float attackRange;
@@ -37,6 +40,7 @@ public class BossControllerBase : MonoBehaviour
 
     public float startAttackCools = 15f;
 
+    [Space]
     [Header(" Bullet accuracy Settingss : ")]
     //is random is the variations for shots being produced
     public bool isRandom;
@@ -46,6 +50,7 @@ public class BossControllerBase : MonoBehaviour
     public int bulletShot;
     //public float bulletSpeed;
 
+    [Space]
     [Header("Private Variables : ")]
     private Vector3 startPoint;
     private const float radius = 1f;
@@ -60,6 +65,7 @@ public class BossControllerBase : MonoBehaviour
     [Header(" Attached Particle Systems : ")]
     public GameObject deathVFX;
 
+    [Space]
     [Header(" Pickups Spawn Chance : ")]
     [Range(0, 1)]
     public float hpSpawnChance = 0.3f;
@@ -67,12 +73,14 @@ public class BossControllerBase : MonoBehaviour
     public float bombSpawnChance = 0.3f;
 
     //Object pool for hp pickups
+    [Space]
     [Header("Item Drops: ")]
     public ObjectPool hpPool;
     public ObjectPool bombPool;
     bool spawned = false;
     bool spawnedPickup = false;
 
+    [Space]
     [Header("Camera Shake Settings: ")]
     //Camera shake on take damage
     CinemachineVirtualCamera cine;
@@ -83,9 +91,11 @@ public class BossControllerBase : MonoBehaviour
     public float shakeAmt = .5f;
     public float deathShake = 5f;
 
+    [Space]
     [Header(" Icon for minimap : ")]
     public GameObject minimapObj;
 
+    [Space]
     [Header(" HealthBar Icon: ")]
     public Healthbar hpBar;
     public Healthbar healthScript;
@@ -94,6 +104,7 @@ public class BossControllerBase : MonoBehaviour
     [HideInInspector]
     public EnemyManager manager;
 
+    [Space]
     [Header("Damage Blink Settings : ")]
     public float blinkDuration = 0.2f;
     public float blinkBrightness = 2.0f;
@@ -101,6 +112,7 @@ public class BossControllerBase : MonoBehaviour
     public SkinnedMeshRenderer skinnedMeshRenderer;
     Material origMat;
 
+    [Space]
     [Header(" Animation controller : ")]
     public Animator anim;
 
@@ -108,6 +120,7 @@ public class BossControllerBase : MonoBehaviour
 
     Color origCol;
 
+    [Space]
     [Header(" Pickup Items Range : ")]
     public float pickupXRange = 1.5f;
     public float pickupYRange = 1.5f;
@@ -134,18 +147,21 @@ public class BossControllerBase : MonoBehaviour
     protected float curHpLoss = 0;
 
     //In the 1st phase, every 20% hp lost will do sonic laser attack
+    [Space]
     [Header(" Phase 1 Settings : ")]
     public bool phaseOneLossAttack = false;
     public float phaseOneLossPerc = 0.20f;
     protected float pOLA;
 
     //In the 2nd phase, every 15% hp lost will do sonic laser attack
+    [Space]
     [Header(" Phase 2 Settings : ")]
     public bool phaseTwoLossAttack = false;
     public float phaseTwoLossPerc = 0.15f;
     protected float pTLA;
 
     //In the 3rd phase, every 10% hp lost will do sonic laser attack
+    [Space]
     [Header(" Phase 3 Settings : ")]
     public bool phaseThreeLossAttack = false;
     public float phaseThreeLossPerc = 0.10f;
@@ -153,15 +169,13 @@ public class BossControllerBase : MonoBehaviour
 
     public float spawnCooldown = 2f;
 
-    public bool hasSpawnedPhaseOne = false;
-    public bool hasSpawnedPhaseTwo = false;
-    public bool hasSpawnedPhaseThree = false;
-
+    [Space]
     [Header("Audio Clips: ")]
     public AudioClip[] PlayerSfx;
     protected AudioSource AS;
 
     //notifications
+    [Space]
     [Header("Player Objective notifactions: ")]
     public GameObject[] _notifications;
 
@@ -171,7 +185,6 @@ public class BossControllerBase : MonoBehaviour
     //
     //End paste from enemycontrollerbase and cetuscontroller
 
-    protected const string Boss_Death = "Armature|Death";
     public TMP_Text nameText;
     public string bossName;
 
@@ -189,8 +202,6 @@ public class BossControllerBase : MonoBehaviour
     public float chanceForAtkTwo = 0.3f;
 
     public float deathTime;
-
-    public int currentPhase = 1;
 
     public Vector3 retaliatePos;
     public int retaliateShots;
@@ -302,6 +313,7 @@ public class BossControllerBase : MonoBehaviour
     {
         GameManager cont = FindObjectOfType<GameManager>();
         cont.SlowTime();
+        skinnedMeshRenderer.material.color = Color.white;
     }
     protected void SwitchState(bossStates newState)
     {
@@ -344,12 +356,12 @@ public class BossControllerBase : MonoBehaviour
         Invoke("ResetMaterial", blinkDuration);
     }
 
-    public void BossDeath()
-    {
-        skinnedMeshRenderer.material.color = Color.white;
-        ChangeAnimationState(Boss_Death);
-        Death();
-    }
+    //public void BossDeath()
+    //{
+    //    skinnedMeshRenderer.material.color = Color.white;
+    //    ChangeAnimationState(Boss_Death);
+    //    Death();
+    //}
 
     public void Disable()
     {

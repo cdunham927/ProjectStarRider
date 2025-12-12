@@ -24,6 +24,12 @@ public class ShipController : MonoBehaviour
 
     public float deadZoneRadius = 0.1f;
     Vector2 screenCenter => new Vector2(Screen.width * 0.5f, Screen.height * 0.5f);
+
+    public Vector3 startPos;
+    public Quaternion startRot;
+
+    public bool canMove = true;
+
     private Vector2 mouseDistance;
 
     //Speed values
@@ -116,22 +122,14 @@ public class ShipController : MonoBehaviour
 
         DefaultRegSpd = regSpd;  //stored default vlaues for player speed
         DefaultHighSpd = highSpd; //stored default vlaues for player speed
-
-        bod.velocity = Vector3.zero;
-        bod.freezeRotation = true;
-
-        Invoke("Unfreeze", freezeTime);
-    }
-
-    void Unfreeze()
-    {
-        bod.freezeRotation = false;
+        startPos = transform.position;
+        startRot = transform.rotation;
     }
 
     private void Update()
     {
         //new stuff testing
-        if (!cont.gameIsPaused)
+        if (!cont.gameIsPaused && canMove)
         {
             //Get inputs
             vert = Input.GetAxis("Vertical");
@@ -306,7 +304,7 @@ public class ShipController : MonoBehaviour
             turning = false;
         }
 
-        if (bod.freezeRotation == false)
+        if (bod.freezeRotation == false && canMove)
         {
             if (player.joystick)
             {
