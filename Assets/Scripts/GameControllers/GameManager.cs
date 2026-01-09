@@ -232,7 +232,7 @@ public class GameManager : MonoBehaviour
 
         if (PlayerPrefs.HasKey("CharacterSelect"))
         {
-            Debug.Log("Character: " + PlayerPrefs.GetInt("CharacterSelect"));
+            //Debug.Log("Character: " + PlayerPrefs.GetInt("CharacterSelect"));
             bulPool = Instantiate(playerBulletPrefabList[PlayerPrefs.GetInt("CharacterSelect")]).GetComponent<ObjectPool>();
         }
         else

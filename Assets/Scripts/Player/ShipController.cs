@@ -64,12 +64,6 @@ public class ShipController : MonoBehaviour
     float curDashCools;
     public int dashDir = 1;
 
-    [Header(" Player Invicible settings : ")]
-    bool isInvincible = false;
-    [SerializeField]
-    private float invincibilityDurationSeconds = 1.5f;
-    private float delayBetweenInvincibilityFlashes = 0.15f;
-
     //Input
     float vert, hor, vert2, hor2;
 
@@ -151,7 +145,9 @@ public class ShipController : MonoBehaviour
                 {
                     ability.DodgeAbility();
                 }
-
+            
+                stats.iframes = dashCooldown;
+            
                 anim.SetTrigger("Dash");
                 curDashCools = dashCooldown;
                 dashing = true;
@@ -163,8 +159,9 @@ public class ShipController : MonoBehaviour
                 {
                     ability.DodgeAbility();
                 }
-
+            
                 //Replace with side dash animation
+                //
                 dashDir = -1;
                 anim.SetTrigger("Dash");
                 curDashCools = dashCooldown;
@@ -177,8 +174,9 @@ public class ShipController : MonoBehaviour
                 {
                     ability.DodgeAbility();
                 }
-
+            
                 //Replace with side dash animation
+                //
                 dashDir = 1;
                 anim.SetTrigger("Dash");
                 curDashCools = dashCooldown;
@@ -386,19 +384,16 @@ public class ShipController : MonoBehaviour
             bod.AddForce(transform.forward * (speed * Time.fixedDeltaTime));
 
             //Dash code
-            if (curDashCools > dashTime && dashing && !sideDashing)
+            if (curDashCools > dashTime && dashing)
             {
-                //Debug.Log("Dashing");
+                Debug.Log("Dashing");
                 stats.ShakeCamera(3f);
+                //bod.AddExplosionForce(explosiveForce, transform.position, 1f);
                 bod.AddForce(transform.forward * (explosiveForce * Time.fixedDeltaTime), ForceMode.Force);
-                //bod.AddForce(transform.forward * (explosiveForce * Time.fixedDeltaTime), ForceMode.Impulse);
-                
+            
                 //dashing = false;
-                ChangeAnimationState(BarrelRoll);
-                if (!isInvincible)
-                {
-                    StartCoroutine(stats.invincible(0));
-                }
+                //ChangeAnimationState(BarrelRoll);
+                //stats.iframes = dashCooldown;
             }
 
             if (curDashCools > dashTime && sideDashing && !dashing)
@@ -406,10 +401,10 @@ public class ShipController : MonoBehaviour
                 //Debug.Log("SideDashing");
                 stats.ShakeCamera(3f);
                 bod.AddForce(transform.right * dashDir * (explosiveForce * Time.fixedDeltaTime), ForceMode.Force);
-                //bod.AddForce(transform.right * dashDir * (explosiveForce * Time.fixedDeltaTime), ForceMode.Impulse);
+                //bod.AddForce(transform.right * dashDir * (explosiveForce * Time.fixedDeltaTime), ForceMode.Force);
                 
                 //sideDashing = false;
-                ChangeAnimationState(BarrelRoll);
+                //ChangeAnimationState(BarrelRoll);
             }
 
             //NEW DASH CHECK

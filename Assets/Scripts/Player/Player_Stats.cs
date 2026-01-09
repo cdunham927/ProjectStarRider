@@ -112,6 +112,10 @@ public class Player_Stats : MonoBehaviour
     [SerializeField]
     private GameObject model;
 
+    [HideInInspector]
+    public float iframes;
+    public float iframeTime = 0.5f;
+
     private void OnEnable()
     {
         Curr_hp = Max_hp;
@@ -192,6 +196,13 @@ public class Player_Stats : MonoBehaviour
 
     private void Update()
     {
+        if (iframes > 0)
+        {
+            invulnerable = true;
+            iframes -= Time.deltaTime;
+        }
+        else invulnerable = false;
+
         if (curTime > 0)
         {
             curTime -= Time.deltaTime;
@@ -294,7 +305,7 @@ public class Player_Stats : MonoBehaviour
 
     public void Damage(int damageAmount)
     {
-        //if (invulnerable) return;  // If the player is already invulnerable, return immediately
+        if (invulnerable) return;
 
        
         //invulnerable = true; // Set the invulnerable flag to true
@@ -317,7 +328,10 @@ public class Player_Stats : MonoBehaviour
                 //healthImage.color = hitColor;
                 reactionImage.color = hitColor;
                 Invoke("ResetGradient", flashTime);
-                Invoke("invincible", delayBetweenInvincibilityFlashes);
+                //CancelInvoke("invincible");
+                //StartCoroutine("invincible", delayBetweenInvincibilityFlashes);
+
+                iframes = iframeTime;
 
                 if (Curr_hp > 0) ShakeCamera(shakeAmt);
                 else ShakeCamera(bigShakeAmt);
@@ -382,97 +396,94 @@ public class Player_Stats : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-
-
     void ResetMaterial()
-   {
-        meshRenderer.material.color = Color.white;
-   }
-
-
-    public IEnumerator invincible(int damageAmount)
     {
-
-        yield return new WaitForSeconds(invincibilityDurationSeconds);
-
-       
-
-        if (!invulnerable && !invisible)
-        {
-            ship.ChangeAnimationState(spin);
-
-            //If we have 1/3rd hp left, flash the healthbar
-            //if (Curr_hp < (Mathf.RoundToInt(Max_hp / 3))) healthImageFlash.SetActive(true);
-            if (Curr_hp <= flashThreshold) healthImageFlash.SetActive(true);
-            //anything that takes place when the hp is zero should go here
-            Curr_hp -= damageAmount;
-            //DamageBlink();
-            //Play damage sound
-            AddScore(0, true);
-
-            //healthImage.color = hitColor;
-            reactionImage.color = hitColor;
-            Invoke("ResetGradient", flashTime);
-            Invoke("invincible", delayBetweenInvincibilityFlashes);
-
-            if (Curr_hp > 0) ShakeCamera(shakeAmt);
-            else ShakeCamera(bigShakeAmt);
-
-            if (Curr_hp > 0)
-            {
-                if (curTime > 0)
-                {
-                    curTime -= Time.deltaTime;
-                    if (curTime <= 0)
-                    {
-                        StopShakeCamera();
-
-                    }
-                }
-                src.PlayOneShot(takeDamageClip, hitVolume);
-            }
-
-            if (Curr_hp <= 0)
-            {
-                cine.gameObject.transform.SetParent(null);
-                //Play explosion sound
-                src.PlayOneShot(explodeClip, explodeVolume);
-                //Stop player movement
-                GetComponent<Rigidbody>().velocity = Vector3.zero;
-                //Spawn death vfx
-                dVfx.transform.position = transform.position;
-                foreach (Transform t in dVfx.GetComponentsInChildren<Transform>())
-                    dVfx.transform.rotation = transform.rotation;
-                dVfx.SetActive(true);
-                //o.transform.SetParent(this.transform);
-                //Debug.Log("Player dying");
-                if (!PlayerDead)
-                {
-                    Invoke("Death", 1f);
-                    PlayerDead = true;
-                }
-            }
-
-            //Reaction UI animations
-            if (reactionAnim != null)
-            {
-
-                reactionAnim.SetTrigger("Hurt");
-                reactionAnim.SetInteger("Hp", Curr_hp);
-            }
-
-
-            //pCont.FreezeRotation();
-            //pCont.UnfreezeRotation();
-
-            //Fix camera fucking up when colliding with stuff
-            //Time.timeScale = 0f;
-            //Time.timeScale = 1f;
-        }
-
-        invulnerable = false;
-
+        meshRenderer.material.color = Color.white;
     }
+
+    //public IEnumerator invincible(int damageAmount)
+    //{
+    //
+    //    yield return new WaitForSeconds(invincibilityDurationSeconds);
+    //
+    //   
+    //
+    //    if (!invulnerable && !invisible)
+    //    {
+    //        ship.ChangeAnimationState(spin);
+    //
+    //        //If we have 1/3rd hp left, flash the healthbar
+    //        //if (Curr_hp < (Mathf.RoundToInt(Max_hp / 3))) healthImageFlash.SetActive(true);
+    //        if (Curr_hp <= flashThreshold) healthImageFlash.SetActive(true);
+    //        //anything that takes place when the hp is zero should go here
+    //        Curr_hp -= damageAmount;
+    //        //DamageBlink();
+    //        //Play damage sound
+    //        AddScore(0, true);
+    //
+    //        //healthImage.color = hitColor;
+    //        reactionImage.color = hitColor;
+    //        Invoke("ResetGradient", flashTime);
+    //        Invoke("invincible", delayBetweenInvincibilityFlashes);
+    //
+    //        if (Curr_hp > 0) ShakeCamera(shakeAmt);
+    //        else ShakeCamera(bigShakeAmt);
+    //
+    //        if (Curr_hp > 0)
+    //        {
+    //            if (curTime > 0)
+    //            {
+    //                curTime -= Time.deltaTime;
+    //                if (curTime <= 0)
+    //                {
+    //                    StopShakeCamera();
+    //
+    //                }
+    //            }
+    //            src.PlayOneShot(takeDamageClip, hitVolume);
+    //        }
+    //
+    //        if (Curr_hp <= 0)
+    //        {
+    //            cine.gameObject.transform.SetParent(null);
+    //            //Play explosion sound
+    //            src.PlayOneShot(explodeClip, explodeVolume);
+    //            //Stop player movement
+    //            GetComponent<Rigidbody>().velocity = Vector3.zero;
+    //            //Spawn death vfx
+    //            dVfx.transform.position = transform.position;
+    //            foreach (Transform t in dVfx.GetComponentsInChildren<Transform>())
+    //                dVfx.transform.rotation = transform.rotation;
+    //            dVfx.SetActive(true);
+    //            //o.transform.SetParent(this.transform);
+    //            //Debug.Log("Player dying");
+    //            if (!PlayerDead)
+    //            {
+    //                Invoke("Death", 1f);
+    //                PlayerDead = true;
+    //            }
+    //        }
+    //
+    //        //Reaction UI animations
+    //        if (reactionAnim != null)
+    //        {
+    //
+    //            reactionAnim.SetTrigger("Hurt");
+    //            reactionAnim.SetInteger("Hp", Curr_hp);
+    //        }
+    //
+    //
+    //        //pCont.FreezeRotation();
+    //        //pCont.UnfreezeRotation();
+    //
+    //        //Fix camera fucking up when colliding with stuff
+    //        //Time.timeScale = 0f;
+    //        //Time.timeScale = 1f;
+    //    }
+    //
+    //    invulnerable = false;
+    //
+    //}
 }
  
 //old ref code : Leave alone
