@@ -12,8 +12,18 @@ public class SignalTester : MonoBehaviour
 
     private void Awake()
     {
+<<<<<<< Updated upstream
         ship = GetComponent<ShipController>();
         bod = GetComponent<Rigidbody>();
+=======
+
+        ship = GetComponent<ShipController>();
+        bod = GetComponent<Rigidbody>();
+
+
+
+
+>>>>>>> Stashed changes
     }
 
     public void StopMovement()

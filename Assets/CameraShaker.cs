@@ -9,6 +9,8 @@ using System;
 
 public class CameraShaker : MonoBehaviour
 {
+    public static CameraShaker Instance;
+    static Dictionary<string, CameraShaker> instanceList = new Dictionary<string, CameraShaker>();
 
     [Header("Camera Shake Settings: ")]
     //Camera shake on take damage
@@ -26,6 +28,11 @@ public class CameraShaker : MonoBehaviour
     Player_Stats stats;
 
 
+    void Awake()
+    {
+        Instance = this;
+        instanceList.Add(gameObject.name, this);
+    }
 
     private void Start()
     {
@@ -88,6 +95,11 @@ public class CameraShaker : MonoBehaviour
         perlin.m_AmplitudeGain = intensity * shakeAmt;
         yield return new WaitForSeconds(duration);
         perlin.m_AmplitudeGain = 0;
+    }
+
+    void OnDestroy()
+    {
+        instanceList.Remove(gameObject.name);
     }
     #endregion
 
