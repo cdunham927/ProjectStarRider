@@ -1,4 +1,7 @@
-void GetCrossSampleUvs_float(float4 UV, float2 TexelSize, float OffsetMultiplier, out float2 UVOriginal, out float2 UVTopRight, out float2 UVBottomLeft, out float2 UVTopLeft, out float2 UVBottomRight , )
+#ifndef MYHLSLINCLUDE_INCLUDED
+#define MYHLSLINCLUDE_INCLUDED
+
+void GetCrossSampleUvs_float(float4 UV, float2 TexelSize, float OffsetMultiplier, out float2 UVOriginal, out float2 UVTopRight, out float2 UVBottomLeft, out float2 UVTopLeft, out float2 UVBottomRight)
 {
 	UVOriginal = UV;
 	UVTopRight = UV.xy + float2(TexelSize.x, TexelSize.y) * OffsetMultiplier;
@@ -9,3 +12,4 @@ void GetCrossSampleUvs_float(float4 UV, float2 TexelSize, float OffsetMultiplier
 
 
 }
+#endif //MYHLSLINCLUDE_INCLUDED
