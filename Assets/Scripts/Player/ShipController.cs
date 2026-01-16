@@ -365,7 +365,7 @@ public class ShipController : MonoBehaviour
             //Movement
             if (!Mathf.Approximately(0f, pitch))
             {
-                bod.AddTorque(-transform.right * (pitchForce * pitch * Time.fixedDeltaTime));
+               bod.AddTorque(-transform.right * (pitchForce * pitch * Time.fixedDeltaTime));
             }
 
             //if (!Mathf.Approximately(0f, roll))
