@@ -41,64 +41,64 @@ public class EnemyBullet : Bullet
 
     private void Update()
     {
-        RaycastHit sphereHit;
-        if (Physics.SphereCast(transform.position, checkSize, transform.TransformDirection(transform.forward), out sphereHit, playerMask))
+        Collider[] overlapSphere = Physics.OverlapSphere(transform.position, checkSize, playerMask);
+        if (overlapSphere.Length > 0)
         {
-            if (sphereHit.collider != null)
+            foreach (var hitCollider in overlapSphere)
             {
                 if (hitVFXPool == null) hitVFXPool = cont.enemyHitVFXPool;
 
-                Player_Stats en = sphereHit.collider.GetComponent<Player_Stats>();
+                Player_Stats en = hitCollider.GetComponent<Player_Stats>();
                 if (en) HitPlayer(en);
 
-                if (sphereHit.collider.CompareTag("PlayerBarrier"))
+                if (hitCollider.CompareTag("PlayerBarrier"))
                 {
                     FindObjectOfType<Player_Stats>().invulnerable = false;
                     if (!spawned)
                     {
                         GameObject hit = hitVFXPool.GetPooledObject();
-                        hit.transform.position = sphereHit.transform.position;
-                        hit.transform.rotation = sphereHit.transform.rotation;
+                        hit.transform.position = hitCollider.transform.position;
+                        hit.transform.rotation = hitCollider.transform.rotation;
                         hit.SetActive(true);
                         spawned = true;
                     }
-                    Invoke("Disable", 0.001f);
+                    Invoke("Disable", 0.0001f);
                 }
 
-                if (sphereHit.collider.CompareTag("Decoy"))
+                if (hitCollider.CompareTag("Decoy"))
                 {
-                    sphereHit.collider.GetComponent<DecoyController>().Damage();
+                    hitCollider.GetComponent<DecoyController>().Damage();
                     if (!spawned)
                     {
                         GameObject hit = hitVFXPool.GetPooledObject();
-                        hit.transform.position = sphereHit.transform.position;
-                        hit.transform.rotation = sphereHit.transform.rotation;
+                        hit.transform.position = hitCollider.transform.position;
+                        hit.transform.rotation = hitCollider.transform.rotation;
                         hit.SetActive(true);
                         spawned = true;
                     }
                     Invoke("Disable", 0.01f);
                 }
 
-                if (sphereHit.collider.CompareTag("Wall"))
+                if (hitCollider.CompareTag("Wall"))
                 {
                     if (!spawned)
                     {
                         GameObject hit = hitVFXPool.GetPooledObject();
-                        hit.transform.position = sphereHit.transform.position;
-                        hit.transform.rotation = sphereHit.transform.rotation;
+                        hit.transform.position = hitCollider.transform.position;
+                        hit.transform.rotation = hitCollider.transform.rotation;
                         hit.SetActive(true);
                         spawned = true;
                     }
                     Invoke("Disable", 0.001f);
                 }
 
-                if (sphereHit.collider.CompareTag("Player"))
+                if (hitCollider.CompareTag("Player"))
                 {
                     if (!spawned)
                     {
                         GameObject hit = hitVFXPool.GetPooledObject();
-                        hit.transform.position = sphereHit.transform.position;
-                        hit.transform.rotation = sphereHit.transform.rotation;
+                        hit.transform.position = hitCollider.transform.position;
+                        hit.transform.rotation = hitCollider.transform.rotation;
                         hit.SetActive(true);
                         spawned = true;
                     }

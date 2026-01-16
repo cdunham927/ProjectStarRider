@@ -139,7 +139,6 @@ public class Player_Bullet : Bullet
     public override void FixedUpdate()
     {
         base.FixedUpdate();
-
     }
 
     public void HitEnemy(EnemyControllerBase col)

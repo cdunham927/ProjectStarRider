@@ -79,13 +79,14 @@ public class Bullet : MonoBehaviour
 
     public virtual void FixedUpdate()
     {
-        float dt = Time.deltaTime;
+        float dt = Time.fixedDeltaTime;
         transform.Translate(moveDir * (speed + 1) * dt, Space.World);
     }
 
     public void OnShoot(Vector3 dir)
     {
-        moveDir = dir;
+        //moveDir = dir;
+
         //dir = moveDir * speed;
     }
 
@@ -95,6 +96,7 @@ public class Bullet : MonoBehaviour
         if (increaseSpd) speed = startSpd;
 
         //float step =  (speed  + Random.Range(0, randSpdMod)) * Time.deltaTime;
+        
         moveDir = transform.forward;
         
         Invoke("Disable", disableTime);
@@ -107,7 +109,8 @@ public class Bullet : MonoBehaviour
 
     public virtual void Disable()
     {
-        //rb.velocity = Vector2.zero;
+        //bod.velocity = Vector2.zero;
+        speed = 0;
         gameObject.SetActive(false);
     }
 

@@ -263,9 +263,10 @@ public class CetusControllerNew : BossControllerBase, IDamageable
             {
                 //Put it where the enemy position is
                 bul.transform.position = t.transform.position;
-                bul.SetActive(true);
-                bul.transform.LookAt(player.transform);
+                if (!playerInRange) bul.transform.rotation = transform.rotation;
+                else bul.transform.LookAt(player.transform);
                 bul.transform.Rotate(Random.Range(-accx, accx), Random.Range(-accy, accy), 0);
+                bul.SetActive(true);
                 //bul.GetComponent<EnemyBullet>().PushHard();
             }
         }

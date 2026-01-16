@@ -277,17 +277,51 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startVel: {x: 0, y: 0, z: 0}
-  speed: 50
-  slowSpd: 30
-  fastSpd: 150
-  randSpdMod: 10
+  speed: 0
+  startSpd: 450
+  maxSpd: 800
+  maxSpdTime: 0.3
+  randSpdMod: 50
+  accelerationCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.057906732
+      value: 0.62236553
+      inSlope: 1.2415826
+      outSlope: 0.3629099
+      tangentMode: 1
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.660118
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   damage: 2
   disableTime: 5
-  speedUp: 0
   pushSpd: 0
   pos: {x: 0, y: 0, z: 0}
   dir: {x: 0, y: 0, z: 0}
   dist: {x: 0, y: 0, z: 0}
+  increaseSpd: 1
   collisonExplosion: {fileID: 0}
   hitVFXPool: {fileID: 0}
   minimapObj: {fileID: 0}
