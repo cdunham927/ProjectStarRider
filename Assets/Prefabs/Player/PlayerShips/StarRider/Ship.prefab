@@ -15120,7 +15120,6 @@ MonoBehaviour:
   dashTime: 1.5
   curDashTime: 0
   dashDir: 1
-  invincibilityDurationSeconds: 1.5
   controllerSensitivity: 200
   mouseSensitivity: 30
   invertControls: 0
@@ -15246,6 +15245,8 @@ MonoBehaviour:
   redBulletImpact: {fileID: 6108864283411289591, guid: 85fa723b1f3435f4fa8556c64a65d15b, type: 3}
   invisible: 0
   model: {fileID: 0}
+  iframes: 0
+  iframeTime: 0.5
 --- !u!114 &4638639762591759978
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -31111,6 +31112,9 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7262275620497145628, guid: 5af8fa4ddd7d50f4eb3349835e040d18, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1686069952194774025}
     - targetCorrespondingSourceObject: {fileID: 7262275620619033619, guid: 5af8fa4ddd7d50f4eb3349835e040d18, type: 3}
       insertIndex: -1
       addedObject: {fileID: 3189724728691074636}
@@ -31123,7 +31127,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4400582474091118264, guid: 5af8fa4ddd7d50f4eb3349835e040d18, type: 3}
   m_PrefabInstance: {fileID: 288757042676084550}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 6974129906388013146}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4700f9f03ad19f94baf0367cb7a9c988, type: 3}
@@ -31134,12 +31138,34 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7262275620497145618, guid: 5af8fa4ddd7d50f4eb3349835e040d18, type: 3}
   m_PrefabInstance: {fileID: 288757042676084550}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &6974129906388013146 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7262275620497145628, guid: 5af8fa4ddd7d50f4eb3349835e040d18, type: 3}
+  m_PrefabInstance: {fileID: 288757042676084550}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1686069952194774025
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6974129906388013146}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62923bd1aeeb47b4ab29cee1c2074a43, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cine: {fileID: 0}
+  perlin: {fileID: 0}
+  shakeTimer: 0.2
+  shakeAmt: 10
+  bigShakeAmt: 25
 --- !u!114 &6974129906388013147 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7262275620497145629, guid: 5af8fa4ddd7d50f4eb3349835e040d18, type: 3}
   m_PrefabInstance: {fileID: 288757042676084550}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 6974129906388013146}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 45e653bab7fb20e499bda25e1b646fea, type: 3}

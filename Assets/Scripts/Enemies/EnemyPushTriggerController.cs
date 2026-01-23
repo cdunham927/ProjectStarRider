@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyPushTriggerController : MonoBehaviour
 {
-    public int dmg;
+    public int tailDamage;
     [Range(0, 2)]
     public float timeBetweenIframes = 0.3f;
     float iframes;
@@ -17,23 +17,32 @@ public class EnemyPushTriggerController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player") && iframes <= 0)
+        if (other.CompareTag("Player"))
         {
             Debug.Log("Player getting hit with tail");
             iframes = timeBetweenIframes;
             other.GetComponent<PlayerController>().KnockBack(pushForce, -transform.forward, other.attachedRigidbody);
-            other.GetComponent<Player_Stats>().Damage(dmg);
+
+            if (iframes <= 0)
+            {
+                iframes = timeBetweenIframes;
+                other.GetComponent<Player_Stats>().Damage(tailDamage);
+            }
         }
     }
     
     private void OnTriggerStay(Collider other)
     {
-        if (other.CompareTag("Player") && iframes <= 0)
+        if (other.CompareTag("Player"))
         {
             Debug.Log("Player in tail vicinity");
-            iframes = timeBetweenIframes;
             other.GetComponent<PlayerController>().KnockBack(pushForce, -transform.forward, other.attachedRigidbody);
-            other.GetComponent<Player_Stats>().Damage(dmg);
+
+            if (iframes <= 0)
+            {
+                iframes = timeBetweenIframes;
+                other.GetComponent<Player_Stats>().Damage(tailDamage);
+            }
         }
     }
 

@@ -343,7 +343,7 @@ public class BossControllerBase : MonoBehaviour
     }
 
     //When weak points get hit, retaliate
-    public virtual void Retaliate() { }
+    public virtual void Retaliate(Vector3 pos) { }
 
     void ResetMaterial()
     {

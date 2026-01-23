@@ -168,6 +168,38 @@ public class SentinelRegular : EnemyControllerBase
         ChangeState(enemystates.alert);
     }
 
+    void RadialAttackYAxis()
+    {
+        src.Play();
+        if (bulletPool == null) bulletPool = cont.enemyBulPool;
+        float angle = 0;
+        float increment = 360 / numBullets;
+        for (int i = 0; i < numBullets; i++)
+        {
+            //Get pooled bullet
+            GameObject bul = bulletPool.GetPooledObject();
+            if (bul != null)
+            {
+                //Put it where the enemy position is
+                bul.transform.position = transform.position;
+                //Aim it at the player
+                //Activate it at the enemy position
+                bul.SetActive(true);
+                bul.transform.rotation = Quaternion.identity;
+
+                angle += increment;
+
+                bul.transform.rotation = Quaternion.Euler(angle, 0, angle);
+                //bul.GetComponent<EnemyBullet>().Push();
+            }
+        }
+
+        //Reset attack cooldown
+        attackCools = timeBetweenAttacks;
+
+        ChangeState(enemystates.alert);
+    }
+
     protected override void Death()
     {
         base.Death();

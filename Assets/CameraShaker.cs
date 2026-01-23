@@ -21,9 +21,6 @@ public class CameraShaker : MonoBehaviour
     public float bigShakeAmt = 5f;
     float curTime;
 
-
-
-
     [Header(" Player Ref : ")]
     Player_Stats stats;
 
@@ -42,12 +39,13 @@ public class CameraShaker : MonoBehaviour
         stats = GetComponent<Player_Stats>();
     }
 
-    public void ShakeCamera(float shake = 1f)
+    public void ShakeCamera(float shake = 1f, float timer = 0.2f)
     {
         if (perlin != null)
         {
             perlin.m_AmplitudeGain = shake;
-            curTime = shakeTimer;
+            //curTime = shakeTimer;
+            BasicShake(shake, timer);
         }
     }
 
@@ -58,28 +56,6 @@ public class CameraShaker : MonoBehaviour
             perlin.m_AmplitudeGain = 0f;
             curTime = 0f;
         }
-    }
-
-    public void FixedUpdate()
-    {
-        /*
-         if (Curr_hp > 0) ShakeCamera(shakeAmt);
-                else ShakeCamera(bigShakeAmt);
-
-                if (Curr_hp > 0)
-                {
-                    if(curTime > 0) 
-                    {
-                        curTime -= Time.deltaTime;
-                        if(curTime <= 0) 
-                        {
-                            StopShakeCamera();
-
-}
-                    }
-                    src.PlayOneShot(takeDamageClip, hitVolume);
-                }*/
-
     }
 
     #region Basic Shake
