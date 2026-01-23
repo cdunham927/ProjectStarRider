@@ -116,6 +116,8 @@ public class Player_Stats : MonoBehaviour
     public float iframes;
     public float iframeTime = 0.5f;
 
+    public CameraShaker shakeCam;
+
     private void OnEnable()
     {
         Curr_hp = Max_hp;
@@ -123,6 +125,7 @@ public class Player_Stats : MonoBehaviour
 
     private void Awake()
     {
+        shakeCam = FindObjectOfType<CameraShaker>();
         gm = FindObjectOfType<GameManager>();
         ship = GetComponent<ShipController>();
 
@@ -176,22 +179,24 @@ public class Player_Stats : MonoBehaviour
         if (amt > 0 && scoreMultiplier < maxMultiplier) scoreMultiplier += multiplierIncrements;
     }
 
-    public void ShakeCamera(float shake = 1f)
+    public void ShakeCamera(float shake = 1f, float t = 0.2f)
     {
-        if (perlin != null)
-        {
-            perlin.m_AmplitudeGain = shake;
-            curTime = shakeTimer;
-        }
+        shakeCam.ShakeCamera(shake, t);
+        //if (perlin != null)
+        //{
+        //    perlin.m_AmplitudeGain = shake;
+        //    curTime = shakeTimer;
+        //}
     }
 
     public void StopShakeCamera()
     {
-        if (perlin != null)
-        {
-            perlin.m_AmplitudeGain = 0f;
-            curTime = 0f;
-        }
+        shakeCam.StopShakeCamera();
+        //if (perlin != null)
+        //{
+        //    perlin.m_AmplitudeGain = 0f;
+        //    curTime = 0f;
+        //}
     }
 
     private void Update()
@@ -199,6 +204,7 @@ public class Player_Stats : MonoBehaviour
         if (iframes > 0)
         {
             invulnerable = true;
+            ShakeCamera(1f);
             iframes -= Time.deltaTime;
         }
         else invulnerable = false;

@@ -210,11 +210,11 @@ public class ShipController : MonoBehaviour
                     {
                         lerpToSpd = superSpd;
 
-                        stats.ShakeCamera(0.325f);
+                        stats.ShakeCamera(0.215f, 0.01f);
                     }
                     else
                     {
-                        stats.ShakeCamera(0.325f);
+                        stats.ShakeCamera(0.215f, 0.01f);
                         lerpToSpd = highSpd;
                     }
                 }
@@ -224,7 +224,7 @@ public class ShipController : MonoBehaviour
                 }
                 else
                 {
-                    stats.ShakeCamera(0.0f);
+                    //stats.StopShakeCamera();
                     lerpToSpd = regSpd;
                 }
 
@@ -387,7 +387,7 @@ public class ShipController : MonoBehaviour
             if (curDashCools > dashTime && dashing)
             {
                 Debug.Log("Dashing");
-                stats.ShakeCamera(3f);
+                stats.ShakeCamera(1.5f);
                 //bod.AddExplosionForce(explosiveForce, transform.position, 1f);
                 bod.AddForce(transform.forward * (explosiveForce * Time.fixedDeltaTime), ForceMode.Force);
             

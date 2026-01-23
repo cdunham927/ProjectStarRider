@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CetusTailController : MonoBehaviour
 {
-    public CetusController cetus;
+    public CetusControllerNew cetus;
     public float cooldown = 3f;
     float curCools;
     public Collider[] otherCollider;
@@ -15,6 +15,7 @@ public class CetusTailController : MonoBehaviour
 
     private void Awake()
     {
+        cetus = GetComponentInParent<CetusControllerNew>();
         curActivationAmt = 0;
         curCools = 0;
     }
@@ -62,10 +63,10 @@ public class CetusTailController : MonoBehaviour
 
     void TailAttack()
     {
-        Invoke("ActivateIndicator", 0.01f);
+        //Invoke("ActivateIndicator", 0.01f);
         Invoke("ActivateCollider", activateTime);
         curCools = cooldown;
-        Invoke("DeactivateIndicator", deactivateTime);
+        //Invoke("DeactivateIndicator", deactivateTime);
         Invoke("DeactivateCollider", deactivateTime);
         curActivationAmt = 0;
     }

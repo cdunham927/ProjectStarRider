@@ -38,18 +38,19 @@ public class BossHitPointController : MonoBehaviour
     {
         //if (!boss.barrier.gameObject.activeInHierarchy) 
         //{ 
-            //Calculate Damage
-            int totDmg = Mathf.RoundToInt((float)amt * dmgMult);
-            idamage.Damage(totDmg);
+        Retaliate();
+        //Calculate Damage
+        int totDmg = Mathf.RoundToInt((float)amt * dmgMult);
+        idamage.Damage(totDmg);
 
-            //Blow up the weakpoint if it takes too much damage;
-            curDmg += totDmg;
-            if (curDmg >= breakHp)
-            {
-                deadWeakPoint.SetActive(true);
+        //Blow up the weakpoint if it takes too much damage;
+        curDmg += totDmg;
+        if (curDmg >= breakHp)
+        {
+            deadWeakPoint.SetActive(true);
 
-                GetComponent<Collider>().enabled = false;
-            }
+            GetComponent<Collider>().enabled = false;
+        }
         //}
     }
 
@@ -71,7 +72,7 @@ public class BossHitPointController : MonoBehaviour
     public void Retaliate()
     {
         //Retaliate against attack
-        boss.retaliatePos = transform.position;
-        boss.Retaliate();
+        //boss.retaliatePos = transform.position;
+        boss.Retaliate(transform.position);
     }
 }

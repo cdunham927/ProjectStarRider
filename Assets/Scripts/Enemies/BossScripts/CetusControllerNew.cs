@@ -150,15 +150,16 @@ public class CetusControllerNew : BossControllerBase, IDamageable
     }
 
     //Retaliate by shooting in a shotgun-like pattern
-    public override void Retaliate()
+    public override void Retaliate(Vector3 pos)
     {
+        Debug.Log("Retalilating");
         _notifications[1].SetActive(true);
         for (int i = 0; i < retaliateShots; i++)
         {
             GameObject bul = bulletPool.GetPooledObject();
             if (bul != null)
             {
-                bul.transform.position = retaliatePos;
+                bul.transform.position = pos;
                 bul.SetActive(true);
                 bul.transform.rotation = Quaternion.Euler(Random.Range(0, 360), Random.Range(0, 360), Random.Range(0, 360));
                 //bul.GetComponent<EnemyBullet>().PushHard();

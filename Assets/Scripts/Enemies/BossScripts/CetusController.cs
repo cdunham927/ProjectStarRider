@@ -155,7 +155,7 @@ public class CetusController : BossControllerBase, IDamageable
     }
 
     //Retaliate by shooting in a shotgun-like pattern
-    public override void Retaliate()
+    public override void Retaliate(Vector3 pos)
     {
         _notifications[1].SetActive(true);
         for (int i = 0; i < retaliateShots; i++)
