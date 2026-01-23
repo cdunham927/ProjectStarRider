@@ -30,6 +30,8 @@ public class PlayerCamera : MonoBehaviour
 
     private void Awake()
     {
+  
+        
         //playercamera.m_Lens.FieldOfView = defFov;
         CinemachineBrain brain = Camera.main.GetComponent<CinemachineBrain>();
         if (brain == null)

@@ -15,6 +15,8 @@ public class HUDComponent : MonoBehaviour
     protected Camera hudCamera;
     public Camera HUDCamera
     {
+
+
         get { return hudCamera; }
         set
         {
@@ -24,6 +26,12 @@ public class HUDComponent : MonoBehaviour
                 canvas.worldCamera = hudCamera;
             }
         }
+    }
+
+    Vector3 TransformToHUDSpace(Vector3 worldSpace)
+    {
+        var screenSpace = hudCamera.WorldToScreenPoint(worldSpace);
+        return screenSpace - new Vector3(hudCamera.pixelWidth / 2, hudCamera.pixelHeight / 2);
     }
 
     protected List<Canvas> canvases = new List<Canvas>();
