@@ -21,7 +21,7 @@ public class EnemyPushTriggerController : MonoBehaviour
         {
             Debug.Log("Player getting hit with tail");
             iframes = timeBetweenIframes;
-            other.GetComponent<PlayerController>().KnockBack(pushForce, -transform.forward, other.attachedRigidbody);
+            other.GetComponent<PlayerController>().KnockBack();
 
             if (iframes <= 0)
             {
@@ -36,7 +36,7 @@ public class EnemyPushTriggerController : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             Debug.Log("Player in tail vicinity");
-            other.GetComponent<PlayerController>().KnockBack(pushForce, -transform.forward, other.attachedRigidbody);
+            other.GetComponent<PlayerController>().KnockBack();
 
             if (iframes <= 0)
             {
