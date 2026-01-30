@@ -147,7 +147,8 @@ public class ShipController : MonoBehaviour
                 }
             
                 stats.iframes = dashCooldown;
-            
+
+                stats.ShakeCamera(0.35f);
                 anim.SetTrigger("Dash");
                 curDashCools = dashCooldown;
                 dashing = true;
@@ -163,6 +164,7 @@ public class ShipController : MonoBehaviour
                 //Replace with side dash animation
                 //
                 dashDir = -1;
+                stats.ShakeCamera(0.35f);
                 anim.SetTrigger("Dash");
                 curDashCools = dashCooldown;
                 sideDashing = true;
@@ -178,6 +180,7 @@ public class ShipController : MonoBehaviour
                 //Replace with side dash animation
                 //
                 dashDir = 1;
+                stats.ShakeCamera(0.35f);
                 anim.SetTrigger("Dash");
                 curDashCools = dashCooldown;
                 sideDashing = true;
@@ -210,11 +213,11 @@ public class ShipController : MonoBehaviour
                     {
                         lerpToSpd = superSpd;
 
-                        stats.ShakeCamera(0.215f, 0.01f);
+                        //stats.ShakeCamera(0.215f, 0.01f);
                     }
                     else
                     {
-                        stats.ShakeCamera(0.215f, 0.01f);
+                        stats.shakeCam.SmallShakeCamera(1f);
                         lerpToSpd = highSpd;
                     }
                 }
@@ -387,7 +390,6 @@ public class ShipController : MonoBehaviour
             if (curDashCools > dashTime && dashing)
             {
                 Debug.Log("Dashing");
-                stats.ShakeCamera(1.5f);
                 //bod.AddExplosionForce(explosiveForce, transform.position, 1f);
                 bod.AddForce(transform.forward * (explosiveForce * Time.fixedDeltaTime), ForceMode.Force);
             
@@ -399,7 +401,6 @@ public class ShipController : MonoBehaviour
             if (curDashCools > dashTime && sideDashing && !dashing)
             {
                 //Debug.Log("SideDashing");
-                stats.ShakeCamera(3f);
                 bod.AddForce(transform.right * dashDir * (explosiveForce * Time.fixedDeltaTime), ForceMode.Force);
                 //bod.AddForce(transform.right * dashDir * (explosiveForce * Time.fixedDeltaTime), ForceMode.Force);
                 
@@ -417,10 +418,6 @@ public class ShipController : MonoBehaviour
             Vector3 playerRotation = transform.rotation.eulerAngles;
             playerRotation.z = 0;
             transform.rotation = Quaternion.Euler(playerRotation);
-            /*bod.AddRelativeTorque(new Vector3(turnTorque.x * pitch,
-                                              turnTorque.y * yaw,
-                                              -turnTorque.z * roll) ,
-                                  ForceMode.Force);*/
         }
     }
 
@@ -433,11 +430,6 @@ public class ShipController : MonoBehaviour
         //plays the animation
         anim.Play(newState);
     }
-
-   
-
-
-    
 }
 
   

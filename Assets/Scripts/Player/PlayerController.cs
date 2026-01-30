@@ -51,7 +51,7 @@ public class PlayerController : MonoBehaviour
     public int spikeDamage = 0;
     
     [SerializeField]
-    private float KnockBackForce  = 2f;
+    private float knockBackForce  = 2f;
 
     //For aiming with the mouse
     //Vector3 newVelZ;
@@ -353,7 +353,9 @@ public class PlayerController : MonoBehaviour
             //Debug.Log("Hit wall");
             //bod.velocity = Vector3.Reflect(bod.velocity, collision.contacts[0].normal);
             hitWall = true;
+            stats.ShakeCamera();
             Invoke("ResetHitWall", timeToMove);
+            KnockBack();
             //float mag = bod.velocity.magnitude;
             //bod.velocity = transform.forward * mag;
             //bod.velocity = transform.forward * pushBack;
@@ -374,7 +376,7 @@ public class PlayerController : MonoBehaviour
             hitWall = true;
             Invoke("ResetHitWall", timeToMove);
             stats.Damage(spikeDamage);
-            Invoke("KnockBack", 0.5f);
+            //Invoke("KnockBack", 0.5f);
             //Invoke("ResetCam", 0.12f);
 
         }
@@ -484,13 +486,14 @@ public class PlayerController : MonoBehaviour
         bod.AddForce(dir * force);
     }
 
-    public void KnockBack(float KnockBackForce, Vector3 dir , Rigidbody rb)
+    public void KnockBack()
     {
         hitWall = true;
         Invoke("ResetHitWall", timeToMove);
         Vector3 playerPosition = new Vector3(transform.position.x, 0, transform.position.z);
         Vector3 knockbackDirection = (playerPosition - transform.forward).normalized;
-        rb.AddForce(knockbackDirection * KnockBackForce, ForceMode.Impulse);
+        //bod.AddForce(knockbackDirection * knockBackForce, ForceMode.Impulse);
+        bod.AddForce(-bod.velocity.normalized * knockBackForce, ForceMode.Impulse);
         //ChangeAnimationState(StarRiderShip_Spin);
     }
 

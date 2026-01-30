@@ -61,7 +61,6 @@ public class Player_Stats : MonoBehaviour
     //Camera shake on take damage
     CinemachineVirtualCamera cine;
     public CinemachineBasicMultiChannelPerlin perlin;
-    public float shakeTimer = 0.2f;
     public float shakeAmt = 1f;
     public float bigShakeAmt = 5f;
     float curTime;
@@ -168,10 +167,6 @@ public class Player_Stats : MonoBehaviour
         }
     }
 
-    private void Start()
-    {
-        StopShakeCamera();
-    }
     public void AddScore(float amt = 0, bool resetMultiplier = false)
     {
         score += amt * scoreMultiplier;
@@ -179,24 +174,9 @@ public class Player_Stats : MonoBehaviour
         if (amt > 0 && scoreMultiplier < maxMultiplier) scoreMultiplier += multiplierIncrements;
     }
 
-    public void ShakeCamera(float shake = 1f, float t = 0.2f)
+    public void ShakeCamera(float shake = 1f)
     {
-        shakeCam.ShakeCamera(shake, t);
-        //if (perlin != null)
-        //{
-        //    perlin.m_AmplitudeGain = shake;
-        //    curTime = shakeTimer;
-        //}
-    }
-
-    public void StopShakeCamera()
-    {
-        shakeCam.StopShakeCamera();
-        //if (perlin != null)
-        //{
-        //    perlin.m_AmplitudeGain = 0f;
-        //    curTime = 0f;
-        //}
+        shakeCam.ShakeCamera(shakeAmt);
     }
 
     private void Update()
@@ -204,20 +184,9 @@ public class Player_Stats : MonoBehaviour
         if (iframes > 0)
         {
             invulnerable = true;
-            ShakeCamera(1f);
             iframes -= Time.deltaTime;
         }
         else invulnerable = false;
-
-        if (curTime > 0)
-        {
-            curTime -= Time.deltaTime;
-        }
-
-        if (curTime <= 0 && perlin != null)
-        {
-            perlin.m_AmplitudeGain = 0f;
-        }
 
         if (Application.isEditor)
         {
@@ -340,19 +309,10 @@ public class Player_Stats : MonoBehaviour
                 iframes = iframeTime;
 
                 if (Curr_hp > 0) ShakeCamera(shakeAmt);
-                else ShakeCamera(bigShakeAmt);
+                else shakeCam.BigShakeCamera();
 
                 if (Curr_hp > 0)
                 {
-                    if(curTime > 0) 
-                    {
-                        curTime -= Time.deltaTime;
-                        if(curTime <= 0) 
-                        {
-                            StopShakeCamera();
-                            
-                        }
-                    }
                     src.PlayOneShot(takeDamageClip, hitVolume);
                 }
 
