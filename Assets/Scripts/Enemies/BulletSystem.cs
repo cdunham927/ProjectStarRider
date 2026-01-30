@@ -5,6 +5,17 @@ using UnityEngine;
 using UnityEngine.Jobs;
 using UnityEngine.Pool;
 
+struct BulletTransformJob : IJobParallelForTransform
+{
+	[ReadOnly]
+	public NativeArray<Vector3> positions;
+
+	public void Execute(int index, TransformAccess transform)
+	{
+		transform.localPosition = positions[index];
+	}
+};
+
 public class BulletSystem : MonoBehaviour
 {
 	
@@ -64,23 +75,7 @@ public class BulletSystem : MonoBehaviour
 			prefab.next = this;
 		}
 	}
-}
 
-
-
-struct BulletTransformJob : IJobParallelForTransform
-{
-	[ReadOnly]
-	public NativeArray<Vector3> positions;
-
-	public void Execute(int index, TransformAccess transform)
-	{
-		transform.localPosition = positions[index];
-	}
-};
-
-class BulletSystems
-{
 	const int CAPACITY = 4096;
 	
 	Bullet[] bullets;
@@ -95,7 +90,7 @@ class BulletSystems
 	JobHandle physJob;
 
 
-	void Awake()
+	public void Awake()
 	{
         /*
 		Allocate all the buffer memory we'll need up-front
@@ -108,7 +103,8 @@ class BulletSystems
 		positionsToWrite = new NativeArray<Vector3>(CAPACITY, Allocator.Persistent, NativeArrayOptions.UninitializedMemory);
 	}
 
-	void Update()
+    [System.Obsolete]
+    void Update()
 	{
 
 		if (bulletCount == 0)
