@@ -8,7 +8,7 @@ using UnityEngine.Jobs;
 
 
 
-
+[System.Serializable] // Make it visible in the Inspector if needed
 public class Bullet : MonoBehaviour
 {
     public Vector3 startVel;

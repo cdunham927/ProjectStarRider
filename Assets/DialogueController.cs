@@ -16,11 +16,11 @@ public class DialogueController : MonoBehaviour
     protected Player_Stats stats;
     public bool halfHealth = false;
     public bool lowHealth = false;
-    
-    
+
+
     //Array for Dialgue triigers to spawn
     //public GameObject[] DialogueTriggers;
-
+    public GameObject BOSS;
     public GameObject PLAYER;
     public string[] Conversation; // go into dialogue tab >> converstatsion adn copy and paste the coverstation label you want to play at the start of the level
     private void Awake()

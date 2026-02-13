@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: SpaceSkybos
-  m_Shader: {fileID: -6465566751694194690, guid: 06ee344dec3c6b64495837863489a833, type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: 0db5e25e427122740a9d3924f6c8eb13, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -16,7 +16,7 @@ Material:
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 2000
+  m_CustomRenderQueue: -1
   stringTagMap:
     RenderType: Opaque
   disabledShaderPasses: []
@@ -42,6 +42,10 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _CloudNoise:
         m_Texture: {fileID: 2800000, guid: 17aac2a6e792a7345a5f66a17a9f5c68, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _CloudNoisePrimary:
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _CloudNoise_1:
@@ -84,6 +88,10 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _StarTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -107,9 +115,12 @@ Material:
     - _CastShadows: 1
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0
+    - _CloudMoveSpeed: 0
     - _CloudNoiseScale: 0
+    - _CloudScale: 0
     - _Cloud_Edge: 0
     - _Cloud_Height: 0
+    - _Cloud_NoiseScale_Layer: 1.27
     - _Cull: 0
     - _Cutoff: 0.5
     - _DetailAlbedoMapScale: 1
@@ -120,6 +131,7 @@ Material:
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
+    - _Horizion_Height: 0.86
     - _Metallic: 0
     - _NoiseScale: 0
     - _NoiseScale_Layer: 1.27
@@ -133,6 +145,7 @@ Material:
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _StarDensity: 6.1
+    - _StarFadeout: 0.8
     - _StarSize: 755.94
     - _Star_Fadeout: 0.19
     - _SunMaskSize: 0.009
@@ -150,7 +163,7 @@ Material:
     - _HorizonColor: {r: 0.01886791, g: 0.017532917, b: 0.017532917, a: 1}
     - _SkyColor: {r: 0.2874409, g: 0.16826946, b: 0.9734455, a: 0.57254905}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
-    - _StarBrightness: {r: 1909.3074, g: 1652.4259, b: 39.985485, a: 0.9921569}
+    - _StarBrightness: {r: 0, g: 0, b: 0, a: 0.9921569}
     - _StarColor: {r: 0.3789291, g: 0.3789291, b: 0.3789291, a: 0.9921569}
     - _SunDirection: {r: -1, g: -1, b: 0, a: 0}
   m_BuildTextureStacks: []

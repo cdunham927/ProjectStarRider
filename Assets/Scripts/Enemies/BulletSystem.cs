@@ -16,71 +16,13 @@ struct BulletTransformJob : IJobParallelForTransform
 	}
 };
 
-public class BulletSystem : MonoBehaviour
+class BulletSystem : MonoBehaviour
 {
-	
-	/*
-	For the prefab, next points at the head of the freelist.
-	For inactive instances, next points at the next inactive instance.
-	For active instances, next points back at the source prefab.
-	*/
-
-
-	[System.NonSerialized] BulletSystem next;
-
-
-	public static T Create<T>(T prefab, Vector3 pos, Quaternion rot) where T : BulletSystem
-	{
-		T result = null;
-		if (prefab.next != null)
-		{
-			/*
-			We have a free instance ready to recycle.
-			*/
-			result = (T)prefab.next;
-			prefab.next = result.next;
-			result.transform.SetPositionAndRotation(pos, rot);
-		}
-		else
-		{
-			/*
-			There are no free instances, lets allocate a new one.
-			*/
-			result = Instantiate<T>(prefab, pos, rot);
-			result.gameObject.hideFlags = HideFlags.HideInHierarchy;
-		}
-		result.next = prefab;
-		result.gameObject.SetActive(true);
-		return result;
-	}
-
-	public void Release()
-	{
-		if (next == null)
-		{
-			/*
-			This instance wasn't made with Create(), so let's just destroy it.
-			*/
-			Destroy(gameObject);
-		}
-		else
-		{
-			/*
-			Retrieve the prefab we were cloned from and add ourselves to its
-			free list.
-			*/
-			var prefab = next;
-			gameObject.SetActive(false);
-			next = prefab.next;
-			prefab.next = this;
-		}
-	}
-
 	const int CAPACITY = 4096;
-	
+
 	Bullet[] bullets;
 	int bulletCount = 0;
-
+	
 	TransformAccessArray transforms;
 	NativeArray<Vector3> positionsToWrite;
 	JobHandle txJob;
@@ -90,7 +32,7 @@ public class BulletSystem : MonoBehaviour
 	JobHandle physJob;
 
 
-	public void Awake()
+	void Awake()
 	{
         /*
 		Allocate all the buffer memory we'll need up-front
@@ -102,8 +44,8 @@ public class BulletSystem : MonoBehaviour
 		commands = new NativeArray<RaycastCommand>(CAPACITY, Allocator.Persistent, NativeArrayOptions.UninitializedMemory);
 		positionsToWrite = new NativeArray<Vector3>(CAPACITY, Allocator.Persistent, NativeArrayOptions.UninitializedMemory);
 	}
-
-    [System.Obsolete]
+    
+	[System.Obsolete]
     void Update()
 	{
 
@@ -156,8 +98,7 @@ public class BulletSystem : MonoBehaviour
 		*/
 		physJob = RaycastCommand.ScheduleBatch(commands.GetSubArray(0, bulletCount), results.GetSubArray(0, bulletCount), 1);
 	}
-
-
+	
 	void LateUpdate()
 	{
 		if (bulletCount == 0)
@@ -201,8 +142,13 @@ public class BulletSystem : MonoBehaviour
 
 		
 	}
-		void OnDestroy()
-		{
+	/*
+	For the prefab, next points at the head of the freelist.
+	For inactive instances, next points at the next inactive instance.
+	For active instances, next points back at the source prefab.
+	*/
+	void OnDestroy()
+	{
 			/*
 			Clean up after ourselves.
 			*/
@@ -210,8 +156,15 @@ public class BulletSystem : MonoBehaviour
 			results.Dispose();
 			commands.Dispose();
 			positionsToWrite.Dispose();
-		}
+	}
 
+
+	[System.NonSerialized] BulletSystem next;
+
+
+	
+
+	
 
 }
 

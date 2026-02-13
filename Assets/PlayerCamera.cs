@@ -60,7 +60,7 @@ public class PlayerCamera : MonoBehaviour
             desMaxFov = maxSlowFov;
         }
 
-        specificCamera.m_MinFOV = Mathf.Lerp(specificCamera.m_MinFOV, desMinFov, Time.deltaTime * fovLerp);
-        specificCamera.m_MaxFOV = Mathf.Lerp(specificCamera.m_MaxFOV, desMaxFov, Time.deltaTime * fovLerp);
+        specificCamera.m_MinFOV = Mathf.Lerp(specificCamera.m_MinFOV, desMinFov, (Time.deltaTime * fovLerp));
+        specificCamera.m_MaxFOV = Mathf.Lerp(specificCamera.m_MaxFOV, desMaxFov, (Time.deltaTime * fovLerp));
     }
 }
