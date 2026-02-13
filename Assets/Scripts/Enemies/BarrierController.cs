@@ -14,7 +14,7 @@ public class BarrierController : MonoBehaviour
     private void OnEnable()
     {
         hp = maxHp;
-
+        SetEnemies(FindObjectsOfType<EnemyControllerBase>().Length);
     }
 
     public void SetEnemies(int cnt)

@@ -71,7 +71,7 @@ public class EnemyControllerBase : MonoBehaviour, IDamageable
     [Header("Item Drops: ")]
     public ObjectPool hpPool;
     public ObjectPool bombPool;
-    bool spawned = false;
+    protected bool spawned = false;
     bool spawnedPickup = false;
 
     [Header("Camera Shake Settings: ")]
@@ -189,7 +189,8 @@ public class EnemyControllerBase : MonoBehaviour, IDamageable
         //Disable healthbars if they have less than 3 max hp
         if (maxHp < 3)
         {
-            hpBar.gameObject.SetActive(false);
+            //hpBar.gameObject.SetActive(false);
+            hpBar.canv.SetActive(false);
         }
 
         ResetMaterial();
@@ -459,7 +460,7 @@ public class EnemyControllerBase : MonoBehaviour, IDamageable
 
     private void OnDisable()
     {
-        Debug.Log("Enemy dead in enemycontrollerbase");
+        Debug.Log("Enemy dead in enemycontrollerbase", gameObject);
         if (cont != null) cont.DeadEnemy();
         if (player != null) player.RestoreCharge();
         CancelInvoke();

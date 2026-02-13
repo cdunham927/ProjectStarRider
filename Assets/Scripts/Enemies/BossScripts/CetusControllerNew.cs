@@ -294,7 +294,13 @@ public class CetusControllerNew : BossControllerBase, IDamageable
         laserCollider.enabled = true;
         laserOn = true;
         //laserRend.enabled = true;
+        Invoke("ResetLaser", 2f);
         AS.PlayOneShot(PlayerSfx[2]);
+    }
+
+    void ResetLaser()
+    {
+        laserOn = false;
     }
 
     protected void Whirlwind()

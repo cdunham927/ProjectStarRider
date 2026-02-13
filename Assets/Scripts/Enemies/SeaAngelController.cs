@@ -20,9 +20,11 @@ public class SeaAngelController : EnemyControllerBase
 
     protected override void OnEnable()
     {
-        seaAngelMesh.SetActive(false);
-        seaAngelMesh.SetActive(true);
+        curHp = maxHp;
+        spawned = false;
         base.OnEnable();
+        //seaAngelMesh.SetActive(false);
+        seaAngelMesh.SetActive(true);
     }
 
     protected override void Alert()
