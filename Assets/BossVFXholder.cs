@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
 
+
 public class BossVFXholder : MonoBehaviour
 {
     // Start is called before the first frame update
@@ -25,6 +26,7 @@ public class BossVFXholder : MonoBehaviour
     public GameObject WindRingVFX;
     public GameObject BarrierVFX;
     public GameObject deathVFX;
+    public GameObject[] Trail;
 
 
     //refercnce to player stats
@@ -34,19 +36,27 @@ public class BossVFXholder : MonoBehaviour
     GameManager gm;
     GameObject dVfx;
 
-    void awake()
+    public void awake()
     {
         meshRenderer = GetComponentInChildren<MeshRenderer>();
         dVfx = Instantiate(deathVFX);
         dVfx.SetActive(false);
+       
+        
+        for (int  i = 0;  i <= Trail.Length; i++) 
+        {
+            Trail[i].SetActive(false);
+        }
+        
+      
     }
 
     // Update is called once per frame
-    void Update()
+
+    private void Start()
     {
         
     }
-
 
     public void Damage(int damageAmount)
     {
