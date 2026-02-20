@@ -9,26 +9,20 @@ public class SignalTester : MonoBehaviour
 {
     ShipController ship;
     Rigidbody bod;
+    Quaternion origRot;
 
     private void Awake()
     {
-
         ship = GetComponent<ShipController>();
         bod = GetComponent<Rigidbody>();
-
-
-        
-
-
-
-
-
+        origRot = transform.rotation;
     }
 
     public void StopMovement()
     {
         bod.velocity = Vector3.zero;
-        bod.freezeRotation = true;
+        transform.rotation = origRot;
+        //bod.freezeRotation = true;
         ship.transform.position = ship.startPos;
         ship.transform.rotation = ship.startRot;
         ship.canMove = false;
@@ -36,7 +30,8 @@ public class SignalTester : MonoBehaviour
 
     public void ResumeMovement()
     {
-        bod.freezeRotation = false;
+        //bod.freezeRotation = false;
+        transform.rotation = origRot;
         ship.canMove = true;
     }
 }

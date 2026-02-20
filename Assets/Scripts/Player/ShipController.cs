@@ -288,7 +288,7 @@ public class ShipController : MonoBehaviour
         //
         //
 
-        if (turning && curDegrees < desDegrees)
+        if (turning && curDegrees < desDegrees && canMove)
         {
             curDegrees += halfTurnRotSpd * Time.fixedDeltaTime;
             transform.RotateAround(transform.position, Vector3.up, halfTurnRotSpd * Time.fixedDeltaTime);
@@ -300,7 +300,7 @@ public class ShipController : MonoBehaviour
         //    transform.RotateAround(transform.position, Vector3.up, curDegrees * Time.fixedDeltaTime);
         //}
 
-        if (turning && curDegrees >= halfTurnDegrees)
+        if (turning && curDegrees >= halfTurnDegrees && canMove)
         {
             turning = false;
         }
@@ -363,7 +363,7 @@ public class ShipController : MonoBehaviour
         //    //rotObj.transform.localRotation = Quaternion.Lerp(rotObj.transform.localRotation, Quaternion.identity, rotSpd * Time.fixedDeltaTime);
         //}
 
-        if (!bod.freezeRotation)
+        if (!bod.freezeRotation && canMove)
         {
             //Movement
             if (!Mathf.Approximately(0f, pitch))
@@ -380,7 +380,7 @@ public class ShipController : MonoBehaviour
             {
                 bod.AddTorque(transform.up * (yawForce * yaw * Time.fixedDeltaTime));
             }
-
+                
             if (player.joystick) shipLocalTransform.localEulerAngles = new Vector3(-pitch * contRotForce, yaw * contRotForce, 0f);
             else shipLocalTransform.localEulerAngles = new Vector3(-pitch * mouseRotForce, yaw * mouseRotForce, 0f);
 
@@ -415,9 +415,12 @@ public class ShipController : MonoBehaviour
                 sideDashing = false;
             }
 
-            Vector3 playerRotation = transform.rotation.eulerAngles;
-            playerRotation.z = 0;
-            transform.rotation = Quaternion.Euler(playerRotation);
+            if (canMove)
+            {
+                Vector3 playerRotation = transform.rotation.eulerAngles;
+                playerRotation.z = 0;
+                transform.rotation = Quaternion.Euler(playerRotation);
+            }
         }
     }
 

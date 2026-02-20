@@ -58,9 +58,12 @@ public class CetusControllerNew : BossControllerBase, IDamageable
     protected const string Cetus_Whirlwind = "CetusArmature|Whirlwind";
     protected const string Boss_Death = "Armature|Death";
 
+    Quaternion origRot;
+
     protected override void Awake()
     {
         playerInRange = true;
+        origRot = transform.rotation;
         //Boss does a special attack after losing a set amount of health per phase
         pOLA = maxHp * phaseOneLossPerc;
         pTLA = maxHp * phaseTwoLossPerc;
@@ -217,9 +220,29 @@ public class CetusControllerNew : BossControllerBase, IDamageable
         //sBul.GetComponent<EnemyBullet>().Push();
     }
 
+    public int tailBulletCount = 15;
+    public float tailAttackCools = 2.75f;
     public void TailAttack()
     {
+        Invoke("TailBullets", 0.75f);
+        attackCools = tailAttackCools;
         ChangeAnimationState(Cetus_Tail_Swipe);
+    }
+
+    void TailBullets()
+    {
+        for (int i = 0; i < tailBulletCount; i++)
+        {
+            GameObject sBul = sonicBulletPool.GetPooledObject();
+            sBul.transform.position = transform.position;
+            sBul.transform.rotation = Quaternion.Euler(Random.Range(0, 360), Random.Range(0, 360), Random.Range(0, 360));
+            sBul.SetActive(true);
+        }
+    }
+
+    public void CetusResetRotation()
+    {
+        transform.rotation = origRot;
     }
 
     public void BiteAttack()

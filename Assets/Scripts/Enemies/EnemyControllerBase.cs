@@ -432,7 +432,7 @@ public class EnemyControllerBase : MonoBehaviour, IDamageable
                 hasAdded = true;
                 pStats.AddScore(killScore);
             }
-            //BarrierController barrier = FindObjectOfType<BarrierController>();
+            BarrierController barrier = FindObjectOfType<BarrierController>();
             if (barrier != null && !hasReduced)
             {
                 hasReduced = true;
