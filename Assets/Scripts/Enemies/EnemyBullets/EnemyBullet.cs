@@ -134,11 +134,13 @@ public class EnemyBullet : Bullet
         { 
         
             GameObject hit = hitVFXPool.GetPooledObject();
-            hit.transform.position = sphereHit.transform.position; // spawn vfx on bullet geetting disabled
+            if (hit != null)
+            {
+                hit.transform.position = sphereHit.transform.position; // spawn vfx on bullet geetting disabled
 
-            hit.transform.rotation = sphereHit.transform.rotation;
-            hit.SetActive(true);
-        
+                hit.transform.rotation = sphereHit.transform.rotation;
+                hit.SetActive(true);
+            }
         }
 
         if (minimapObj != null) minimapObj.SetActive(false);

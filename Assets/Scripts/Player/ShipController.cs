@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static Cinemachine.CinemachineTargetGroup;
+using Cinemachine;
 
 public class ShipController : MonoBehaviour
 {
@@ -258,6 +259,8 @@ public class ShipController : MonoBehaviour
 
             //shipLocalTransform.localRotation = Quaternion.Euler(pitch, yaw, );
         }
+
+        //RotateRig();
     }
     //float AngleBetweenTwoPoints(Vector3 a, Vector3 b)
     //{
@@ -329,8 +332,8 @@ public class ShipController : MonoBehaviour
 
             float rotX = yaw;
             float rotY = pitch;
-            rotX = Mathf.Clamp(rotX, 0, maxRot);
-            rotY = Mathf.Clamp(rotY, 0, maxRot);
+            //rotX = Mathf.Clamp(rotX, 0, maxRot);
+            //rotY = Mathf.Clamp(rotY, 0, maxRot);
             //rotObj.transform.rotation = Quaternion.Euler(rotX + origRot.x, rotY + origRot.y, origRot.z);
         }
 
@@ -418,10 +421,54 @@ public class ShipController : MonoBehaviour
             if (canMove)
             {
                 Vector3 playerRotation = transform.rotation.eulerAngles;
-                playerRotation.z = 0;
+                //playerRotation.z = 0;
                 transform.rotation = Quaternion.Euler(playerRotation);
             }
+
+            if (Input.GetMouseButton(1))
+            {
+                Quaternion targetRotation = Quaternion.FromToRotation(transform.up, Vector3.up) * transform.rotation;
+                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 5f);
+            }
         }
+    }
+
+    [Header("Components")]
+    [SerializeField]
+    [Tooltip("Transform of the object the mouse rotates to generate MouseAim position")]
+    private Transform mouseAim = null;
+    [SerializeField]
+    [Tooltip("Transform of the object on the rig which the camera is attached to")]
+    private Transform cameraRig = null;
+    [SerializeField]
+    [Tooltip("Transform of the camera itself")]
+    private Transform cam = null;
+    public float camSmoothSpeed = 5f;
+
+
+    void RotateRig()
+    {
+        if (mouseAim == null || cam == null || cameraRig == null)
+            return;
+
+        // Mouse input.
+        float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity;
+        float mouseY = -Input.GetAxis("Mouse Y") * mouseSensitivity;
+
+        // Rotate the aim target that the plane is meant to fly towards.
+        // Use the camera's axes in world space so that mouse motion is intuitive.
+        mouseAim.Rotate(cam.right, mouseY, Space.World);
+        mouseAim.Rotate(cam.up, mouseX, Space.World);
+
+        // The up vector of the camera normally is aligned to the horizon. However, when
+        // looking straight up/down this can feel a bit weird. At those extremes, the camera
+        // stops aligning to the horizon and instead aligns to itself.
+        Vector3 upVec = (Mathf.Abs(mouseAim.forward.y) > 0.9f) ? cameraRig.up : Vector3.up;
+
+        // Smoothly rotate the camera to face the mouse aim.
+        //cameraRig.rotation = Quaternion.Slerp(cameraRig.rotation,
+        //                          Quaternion.LookRotation(mouseAim.forward, upVec),
+        //                          camSmoothSpeed * Time.deltaTime);
     }
 
     public void ChangeAnimationState(string newState)

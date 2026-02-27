@@ -91,7 +91,7 @@ public class NewHomingBulletController : Bullet
     {
         if (target == null || (target != null && !target.gameObject.activeInHierarchy))
         {
-            Debug.Log("Looking for target");
+            //Debug.Log("Looking for target");
             Collider[] cols = Physics.OverlapSphere(castPos.transform.position, castSize, playerMask);
             if (cols.Length > 0 && cols != null)
             {

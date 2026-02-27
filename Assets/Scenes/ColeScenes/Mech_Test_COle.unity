@@ -492,6 +492,13 @@ MonoBehaviour:
   spd: 25
   accSpd: 5
   boidVel: {x: 0, y: 0, z: 0}
+  changeSpd: 20
+  randPos: {x: 0, y: 0, z: 0}
+  startPos: {x: 0, y: 0, z: 0}
+  wanderSpd: 0
+  centerWanderObj: {fileID: 0}
+  wanderMaxRadius: 75
+  distToNextWander: 5
 --- !u!114 &10452837
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3800,6 +3807,13 @@ MonoBehaviour:
   spd: 25
   accSpd: 5
   boidVel: {x: 0, y: 0, z: 0}
+  changeSpd: 20
+  randPos: {x: 0, y: 0, z: 0}
+  startPos: {x: 0, y: 0, z: 0}
+  wanderSpd: 0
+  centerWanderObj: {fileID: 0}
+  wanderMaxRadius: 75
+  distToNextWander: 5
 --- !u!114 &205557046
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5657,6 +5671,13 @@ MonoBehaviour:
   spd: 25
   accSpd: 5
   boidVel: {x: 0, y: 0, z: 0}
+  changeSpd: 20
+  randPos: {x: 0, y: 0, z: 0}
+  startPos: {x: 0, y: 0, z: 0}
+  wanderSpd: 0
+  centerWanderObj: {fileID: 0}
+  wanderMaxRadius: 75
+  distToNextWander: 5
 --- !u!114 &332181523
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7434,6 +7455,11 @@ Transform:
   - {fileID: 1246214748}
   m_Father: {fileID: 1831199344}
   m_LocalEulerAnglesHint: {x: -0.0000033508582, y: 179.99844, z: -90.00092}
+--- !u!4 &398906714 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4638639762954251639, guid: 8de7aee6f13c8764a9c4ffc2e6624be1, type: 3}
+  m_PrefabInstance: {fileID: 831929101}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &400926907
 GameObject:
   m_ObjectHideFlags: 0
@@ -8230,6 +8256,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3f9fe06242a0ec645a63d832426e643d, type: 3}
+--- !u!114 &451255416 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6974129906388013147, guid: 8de7aee6f13c8764a9c4ffc2e6624be1, type: 3}
+  m_PrefabInstance: {fileID: 831929101}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45e653bab7fb20e499bda25e1b646fea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &451387882
 GameObject:
   m_ObjectHideFlags: 0
@@ -8384,6 +8421,13 @@ MonoBehaviour:
   spd: 25
   accSpd: 5
   boidVel: {x: 0, y: 0, z: 0}
+  changeSpd: 20
+  randPos: {x: 0, y: 0, z: 0}
+  startPos: {x: 0, y: 0, z: 0}
+  wanderSpd: 0
+  centerWanderObj: {fileID: 0}
+  wanderMaxRadius: 75
+  distToNextWander: 5
 --- !u!114 &456109035
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12856,6 +12900,14 @@ PrefabInstance:
       propertyPath: m_ComponentOwner
       value: 
       objectReference: {fileID: 1180757863}
+    - target: {fileID: 6552960229630905155, guid: 2cf00199145a38c40b56227496c98b4f, type: 3}
+      propertyPath: m_DeadZoneHeight
+      value: 0.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 6552960229630905155, guid: 2cf00199145a38c40b56227496c98b4f, type: 3}
+      propertyPath: m_SoftZoneHeight
+      value: 1.76
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -14203,6 +14255,13 @@ MonoBehaviour:
   spd: 25
   accSpd: 5
   boidVel: {x: 0, y: 0, z: 0}
+  changeSpd: 20
+  randPos: {x: 0, y: 0, z: 0}
+  startPos: {x: 0, y: 0, z: 0}
+  wanderSpd: 0
+  centerWanderObj: {fileID: 0}
+  wanderMaxRadius: 75
+  distToNextWander: 5
 --- !u!114 &637991244
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14558,7 +14617,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302762743768171265, guid: 6b93a3113a51896478068f5d7da39efd, type: 3}
       propertyPath: field of view
-      value: 83.32766
+      value: 103.115
       objectReference: {fileID: 0}
     - target: {fileID: 4302762743768171265, guid: 6b93a3113a51896478068f5d7da39efd, type: 3}
       propertyPath: m_FocalLength
@@ -14566,7 +14625,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302762743768171265, guid: 6b93a3113a51896478068f5d7da39efd, type: 3}
       propertyPath: far clip plane
-      value: 10000
+      value: 20000
       objectReference: {fileID: 0}
     - target: {fileID: 4302762743768171265, guid: 6b93a3113a51896478068f5d7da39efd, type: 3}
       propertyPath: m_SensorSize.x
@@ -14578,7 +14637,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4302762743768171265, guid: 6b93a3113a51896478068f5d7da39efd, type: 3}
       propertyPath: near clip plane
-      value: 0.01
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 4302762743768171265, guid: 6b93a3113a51896478068f5d7da39efd, type: 3}
       propertyPath: orthographic size
@@ -15545,6 +15604,13 @@ MonoBehaviour:
   spd: 25
   accSpd: 5
   boidVel: {x: 0, y: 0, z: 0}
+  changeSpd: 20
+  randPos: {x: 0, y: 0, z: 0}
+  startPos: {x: 0, y: 0, z: 0}
+  wanderSpd: 0
+  centerWanderObj: {fileID: 0}
+  wanderMaxRadius: 75
+  distToNextWander: 5
 --- !u!114 &692357425
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18780,6 +18846,14 @@ PrefabInstance:
       value: 0.8
       objectReference: {fileID: 0}
     - target: {fileID: 2073276983, guid: 5af8fa4ddd7d50f4eb3349835e040d18, type: 3}
+      propertyPath: m_DeadZoneHeight
+      value: 0.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 2073276983, guid: 5af8fa4ddd7d50f4eb3349835e040d18, type: 3}
+      propertyPath: m_SoftZoneHeight
+      value: 1.76
+      objectReference: {fileID: 0}
+    - target: {fileID: 2073276983, guid: 5af8fa4ddd7d50f4eb3349835e040d18, type: 3}
       propertyPath: m_LookaheadIgnoreY
       value: 1
       objectReference: {fileID: 0}
@@ -18797,11 +18871,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4400582474091118264, guid: 5af8fa4ddd7d50f4eb3349835e040d18, type: 3}
       propertyPath: m_MaxFOV
-      value: 75
+      value: 99.81895
       objectReference: {fileID: 0}
     - target: {fileID: 4400582474091118264, guid: 5af8fa4ddd7d50f4eb3349835e040d18, type: 3}
       propertyPath: m_MinFOV
-      value: 29
+      value: 86.14407
       objectReference: {fileID: 0}
     - target: {fileID: 7262275620497145618, guid: 5af8fa4ddd7d50f4eb3349835e040d18, type: 3}
       propertyPath: m_RootOrder
@@ -18889,7 +18963,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7262275620497145629, guid: 5af8fa4ddd7d50f4eb3349835e040d18, type: 3}
       propertyPath: m_Lens.FieldOfView
-      value: 70
+      value: 120
       objectReference: {fileID: 0}
     - target: {fileID: 7262275620497145629, guid: 5af8fa4ddd7d50f4eb3349835e040d18, type: 3}
       propertyPath: m_Lens.ModeOverride
@@ -18897,7 +18971,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7262275620497145629, guid: 5af8fa4ddd7d50f4eb3349835e040d18, type: 3}
       propertyPath: m_Lens.NearClipPlane
-      value: 1
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 7262275620497145629, guid: 5af8fa4ddd7d50f4eb3349835e040d18, type: 3}
       propertyPath: m_Lens.m_SensorSize.x
@@ -19457,17 +19531,37 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1686069952194774025, guid: 8de7aee6f13c8764a9c4ffc2e6624be1, type: 3}
+      propertyPath: cine
+      value: 
+      objectReference: {fileID: 451255416}
+    - target: {fileID: 2950460432681005180, guid: 8de7aee6f13c8764a9c4ffc2e6624be1, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.007692306
+      objectReference: {fileID: 0}
+    - target: {fileID: 2950460432681005180, guid: 8de7aee6f13c8764a9c4ffc2e6624be1, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.016923072
+      objectReference: {fileID: 0}
     - target: {fileID: 3189724728691074636, guid: 8de7aee6f13c8764a9c4ffc2e6624be1, type: 3}
       propertyPath: m_AmplitudeGain
       value: 0.325
       objectReference: {fileID: 0}
+    - target: {fileID: 3810913202670398841, guid: 8de7aee6f13c8764a9c4ffc2e6624be1, type: 3}
+      propertyPath: m_Follow
+      value: 
+      objectReference: {fileID: 674871119}
+    - target: {fileID: 3810913202670398841, guid: 8de7aee6f13c8764a9c4ffc2e6624be1, type: 3}
+      propertyPath: m_LookAt
+      value: 
+      objectReference: {fileID: 398906714}
     - target: {fileID: 4112874366383624702, guid: 8de7aee6f13c8764a9c4ffc2e6624be1, type: 3}
       propertyPath: m_MaxFOV
-      value: 101.6638
+      value: 110.6186
       objectReference: {fileID: 0}
     - target: {fileID: 4112874366383624702, guid: 8de7aee6f13c8764a9c4ffc2e6624be1, type: 3}
       propertyPath: m_MinFOV
-      value: 83.32766
+      value: 103.115
       objectReference: {fileID: 0}
     - target: {fileID: 4638639762591759981, guid: 8de7aee6f13c8764a9c4ffc2e6624be1, type: 3}
       propertyPath: m_Name
@@ -19581,6 +19675,22 @@ PrefabInstance:
       propertyPath: m_Follow
       value: 
       objectReference: {fileID: 674871119}
+    - target: {fileID: 8504934914866426723, guid: 8de7aee6f13c8764a9c4ffc2e6624be1, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.007692306
+      objectReference: {fileID: 0}
+    - target: {fileID: 8504934914866426723, guid: 8de7aee6f13c8764a9c4ffc2e6624be1, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.016923072
+      objectReference: {fileID: 0}
+    - target: {fileID: 8803627215068765753, guid: 8de7aee6f13c8764a9c4ffc2e6624be1, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.007692306
+      objectReference: {fileID: 0}
+    - target: {fileID: 8803627215068765753, guid: 8de7aee6f13c8764a9c4ffc2e6624be1, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.016923072
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 288757043841080689, guid: 8de7aee6f13c8764a9c4ffc2e6624be1, type: 3}
     - {fileID: 3189724728691074636, guid: 8de7aee6f13c8764a9c4ffc2e6624be1, type: 3}
@@ -21058,6 +21168,13 @@ MonoBehaviour:
   spd: 25
   accSpd: 5
   boidVel: {x: 0, y: 0, z: 0}
+  changeSpd: 20
+  randPos: {x: 0, y: 0, z: 0}
+  startPos: {x: 0, y: 0, z: 0}
+  wanderSpd: 0
+  centerWanderObj: {fileID: 0}
+  wanderMaxRadius: 75
+  distToNextWander: 5
 --- !u!114 &883372180
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25674,6 +25791,13 @@ MonoBehaviour:
   spd: 25
   accSpd: 5
   boidVel: {x: 0, y: 0, z: 0}
+  changeSpd: 20
+  randPos: {x: 0, y: 0, z: 0}
+  startPos: {x: 0, y: 0, z: 0}
+  wanderSpd: 0
+  centerWanderObj: {fileID: 0}
+  wanderMaxRadius: 75
+  distToNextWander: 5
 --- !u!114 &1032239203
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26107,6 +26231,13 @@ MonoBehaviour:
   spd: 25
   accSpd: 5
   boidVel: {x: 0, y: 0, z: 0}
+  changeSpd: 20
+  randPos: {x: 0, y: 0, z: 0}
+  startPos: {x: 0, y: 0, z: 0}
+  wanderSpd: 0
+  centerWanderObj: {fileID: 0}
+  wanderMaxRadius: 75
+  distToNextWander: 5
 --- !u!114 &1044430445
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27955,6 +28086,13 @@ MonoBehaviour:
   spd: 25
   accSpd: 5
   boidVel: {x: 0, y: 0, z: 0}
+  changeSpd: 20
+  randPos: {x: 0, y: 0, z: 0}
+  startPos: {x: 0, y: 0, z: 0}
+  wanderSpd: 0
+  centerWanderObj: {fileID: 0}
+  wanderMaxRadius: 75
+  distToNextWander: 5
 --- !u!114 &1102870916
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -31249,6 +31387,13 @@ MonoBehaviour:
   spd: 25
   accSpd: 5
   boidVel: {x: 0, y: 0, z: 0}
+  changeSpd: 20
+  randPos: {x: 0, y: 0, z: 0}
+  startPos: {x: 0, y: 0, z: 0}
+  wanderSpd: 0
+  centerWanderObj: {fileID: 0}
+  wanderMaxRadius: 75
+  distToNextWander: 5
 --- !u!114 &1283540422
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -34733,6 +34878,13 @@ MonoBehaviour:
   spd: 25
   accSpd: 5
   boidVel: {x: 0, y: 0, z: 0}
+  changeSpd: 20
+  randPos: {x: 0, y: 0, z: 0}
+  startPos: {x: 0, y: 0, z: 0}
+  wanderSpd: 0
+  centerWanderObj: {fileID: 0}
+  wanderMaxRadius: 75
+  distToNextWander: 5
 --- !u!114 &1471609212
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -47760,6 +47912,14 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7250686040578996275, guid: 4c577d44bfcf6bb429c35b201dcd3479, type: 3}
+      propertyPath: m_DeadZoneHeight
+      value: 0.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 7250686040578996275, guid: 4c577d44bfcf6bb429c35b201dcd3479, type: 3}
+      propertyPath: m_SoftZoneHeight
+      value: 1.76
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -50951,6 +51111,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 902696420131606168, guid: 287e83fa30cb8e943878bc29ef3105d4, type: 3}
+      propertyPath: m_DeadZoneHeight
+      value: 0.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 902696420131606168, guid: 287e83fa30cb8e943878bc29ef3105d4, type: 3}
+      propertyPath: m_SoftZoneHeight
+      value: 1.76
+      objectReference: {fileID: 0}
     - target: {fileID: 5249254145918283140, guid: 287e83fa30cb8e943878bc29ef3105d4, type: 3}
       propertyPath: m_Name
       value: StarBomber
