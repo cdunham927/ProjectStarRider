@@ -31,7 +31,8 @@ public class BossHitPointController : MonoBehaviour
         idamage = boss.GetComponent<IDamageable>();
         breakHp = (boss.maxHp * (breakPercentage / 100));
 
-        if (skinnedMeshRenderer == null) skinnedMeshRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
+        if (skinnedMeshRenderer == null) 
+            skinnedMeshRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
     }
 
     public void Damage(int amt)
@@ -66,7 +67,8 @@ public class BossHitPointController : MonoBehaviour
 
     void ResetMaterial()
     {
-        if (skinnedMeshRenderer != null) skinnedMeshRenderer.material = origMat;
+        if (skinnedMeshRenderer != null) 
+            skinnedMeshRenderer.material = origMat;
     }
 
     public void Retaliate()

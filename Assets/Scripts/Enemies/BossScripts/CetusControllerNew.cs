@@ -156,7 +156,7 @@ public class CetusControllerNew : BossControllerBase, IDamageable
     public override void Retaliate(Vector3 pos)
     {
         Debug.Log("Retalilating");
-        _notifications[1].SetActive(true);
+        //_notifications[1].SetActive(true);
         for (int i = 0; i < retaliateShots; i++)
         {
             GameObject bul = bulletPool.GetPooledObject();
