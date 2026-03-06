@@ -46,7 +46,9 @@ public class Bullet : MonoBehaviour
     //private NativeArray<Vector3> positionsToWrite;
     //private Unity.Jobs.JobHandle txJob;
 
-
+    public float noSpd, halfSpd, regSpd;
+    [HideInInspector]
+    public float boostedSpd;
     
 
     private void Update()
@@ -80,7 +82,7 @@ public class Bullet : MonoBehaviour
                 
                 // Use Mathf.Lerp to interpolate between the base and max speed.
                 // The third parameter (the curve value) determines our position in the interpolation.
-                 speed = Mathf.Lerp(startSpd, maxSpd, curveValue);
+                 speed = boostedSpd + Mathf.Lerp(startSpd, maxSpd, curveValue);
 
                 // Apply the new velocity to the Rigidbody, maintaining the projectile's forward direction.
                 rb.velocity = transform.forward * speed;

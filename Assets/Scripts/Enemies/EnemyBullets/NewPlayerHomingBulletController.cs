@@ -74,7 +74,7 @@ public class NewPlayerHomingBulletController : Bullet
 
         // Use Mathf.Lerp to interpolate between the base and max speed.
         // The third parameter (the curve value) determines our position in the interpolation.
-        speed = Mathf.Lerp(startSpd, maxSpd, curveValue);
+        speed = boostedSpd + Mathf.Lerp(startSpd, maxSpd, curveValue);
 
         if (target != null && target.gameObject.activeInHierarchy)
         {

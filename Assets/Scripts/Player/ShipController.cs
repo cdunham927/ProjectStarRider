@@ -66,7 +66,8 @@ public class ShipController : MonoBehaviour
     public int dashDir = 1;
 
     //Input
-    float vert, hor, vert2, hor2;
+    [HideInInspector]
+    public float vert, hor, vert2, hor2;
 
     PlayerController player;
     public float controllerSensitivity;
@@ -425,10 +426,13 @@ public class ShipController : MonoBehaviour
                 transform.rotation = Quaternion.Euler(playerRotation);
             }
 
+            //Rotate back to horizon
+            //
+            //Not on controller yet either
             if (Input.GetMouseButton(1))
             {
-                Quaternion targetRotation = Quaternion.FromToRotation(transform.up, Vector3.up) * transform.rotation;
-                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 5f);
+                //Quaternion targetRotation = Quaternion.FromToRotation(transform.up, Vector3.up) * transform.rotation;
+                //transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 5f);
             }
         }
     }

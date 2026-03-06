@@ -235,8 +235,23 @@ public class PlayerShooting : MonoBehaviour
         //Set bullet damage
         Bullet b = bul.GetComponent<Bullet>();
         b.damage = dmg;
+
+        if (ship.vert > 0)
+        {
+            b.boostedSpd = b.regSpd;
+        }
+        else if (ship.vert < 0)
+        {
+            b.boostedSpd = b.noSpd;
+        }
+        else
+        {
+            b.boostedSpd = b.halfSpd;
+        }
+
+
         //bul.GetComponent<Rigidbody>().velocity = bod.velocity;
-       
+
         curShootCools = shootCooldown;
         PlayMuzzle();
         

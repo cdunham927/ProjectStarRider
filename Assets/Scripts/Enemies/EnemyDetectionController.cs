@@ -9,6 +9,9 @@ public class EnemyDetectionController : MonoBehaviour
     public Animator anim;
     public Healthbar hpBar;
 
+    float checkCools;
+    public float checkTime = 1f;
+
     private void Awake()
     {
         parent = GetComponentInParent<EnemyControllerBase>();
@@ -16,6 +19,17 @@ public class EnemyDetectionController : MonoBehaviour
         if (parent != null) anim = parent.anim;
 
         if (parent == null) flock = GetComponentInParent<FlockEnemy>();
+    }
+
+    private void Update()
+    {
+        if (checkCools > 0)
+        {
+            checkCools -= Time.deltaTime;
+        }
+        else {
+            checkCools = checkTime;
+        }
     }
 
     private void OnEnable()
@@ -56,7 +70,7 @@ public class EnemyDetectionController : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && parent != null && !parent.playerInRange && checkCools <= 0)
         {
             if (anim != null) anim.SetBool("InRange", true);
 
