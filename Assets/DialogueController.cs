@@ -31,8 +31,12 @@ public class DialogueController : MonoBehaviour
 
     }
 
+    void Start()
+    {
+        StartCoroutine(RepeatFunctionEverySeconds(2f)); // Start the coroutine
+    }
 
-    public void Update()
+    IEnumerator RepeatFunctionEverySeconds(float waitTime)
     {
         if (stats.Curr_hp <= (stats.Max_hp/2) && !halfHealth) 
         {
@@ -48,7 +52,7 @@ public class DialogueController : MonoBehaviour
             Invoke("LowHealth", .5f);
         }
 
-        
+        yield return new WaitForSeconds(waitTime);
 
     }
 
