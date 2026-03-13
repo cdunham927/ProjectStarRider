@@ -372,7 +372,7 @@ public class ShipController : MonoBehaviour
             //Movement
             if (!Mathf.Approximately(0f, pitch))
             {
-               bod.AddTorque(-transform.right * (pitchForce * pitch * Time.fixedDeltaTime));
+               bod.AddTorque(-stats.shakeCam.transform.right * (pitchForce * pitch * Time.fixedDeltaTime));
             }
 
             //if (!Mathf.Approximately(0f, roll))
@@ -382,7 +382,7 @@ public class ShipController : MonoBehaviour
 
             if (!Mathf.Approximately(0f, yaw))
             {
-                bod.AddTorque(transform.up * (yawForce * yaw * Time.fixedDeltaTime));
+                bod.AddTorque(stats.shakeCam.transform.up * (yawForce * yaw * Time.fixedDeltaTime));
             }
                 
             if (player.joystick) shipLocalTransform.localEulerAngles = new Vector3(-pitch * contRotForce, yaw * contRotForce, 0f);
@@ -426,6 +426,11 @@ public class ShipController : MonoBehaviour
             {
                 Vector3 playerRotation = transform.rotation.eulerAngles;
                 //playerRotation.z = 0;
+
+                //playerRotation.x = Mathf.Clamp(playerRotation.x, -90, 90);
+                //playerRotation.z = Mathf.Clamp(playerRotation.z, -90, 90);
+                //playerRotation.y = Mathf.Clamp(playerRotation.y, -90, 90);
+
                 transform.rotation = Quaternion.Euler(playerRotation);
             }
 
