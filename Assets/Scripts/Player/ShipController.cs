@@ -388,6 +388,9 @@ public class ShipController : MonoBehaviour
             if (player.joystick) shipLocalTransform.localEulerAngles = new Vector3(-pitch * contRotForce, yaw * contRotForce, 0f);
             else shipLocalTransform.localEulerAngles = new Vector3(-pitch * mouseRotForce, yaw * mouseRotForce, 0f);
 
+           
+
+
             bod.AddForce(transform.forward * (speed * Time.fixedDeltaTime));
 
             //Dash code
