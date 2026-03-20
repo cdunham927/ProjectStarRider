@@ -7,10 +7,10 @@ using Cinemachine;
 public class ShipController : MonoBehaviour
 {
     [SerializeField]
-    [Range(20000f, 75000f)]
+    [Range(1000f, 75000f)]
     float explosiveForce = 50000f;
     [SerializeField]
-    [Range(5000, 25000)]
+    [Range(1000f, 25000f)]
     float sideDashForce = 50000f;
 
     [Header("Flight Physics : ")]

@@ -269,6 +269,14 @@ public class CetusControllerNew : BossControllerBase, IDamageable
 
     }
 
+    public void ActivateBarrier()
+    {
+        for (int i = 0; i < weakpoints.Length; i++)
+        {
+            weakpoints[i].tag = "Wall";
+        }
+    }
+
     public void DeactivateBarrier()
     {
         for (int i = 0; i < weakpoints.Length; i++)
@@ -370,6 +378,7 @@ public class CetusControllerNew : BossControllerBase, IDamageable
         if (curHp < phase3Thres && phase == 2)
         {
             phase = 3;
+            ActivateBarrier();
             phase3Cutscene.Play();
         }
         else if (curHp < phase2Thres && phase == 1)

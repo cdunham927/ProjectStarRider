@@ -44,7 +44,7 @@ public class BarrierController : MonoBehaviour
 
     public void Deactivate()
     {
+        FindObjectOfType<CetusControllerNew>().DeactivateBarrier();
         gameObject.SetActive(false);
-        FindObjectOfType<CetusController>().DeactivateBarrier();
     }
 }
