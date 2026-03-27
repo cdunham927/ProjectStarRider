@@ -70,6 +70,7 @@ public class EnemyBullet : Bullet
                     hitCollider.GetComponent<DecoyController>().Damage();
                     if (!spawned)
                     {
+                        if (hitVFXPool == null) hitVFXPool = cont.enemyHitVFXPool;
                         GameObject hit = hitVFXPool.GetPooledObject();
                         hit.transform.position = hitCollider.transform.position;
                         hit.transform.rotation = hitCollider.transform.rotation;
@@ -83,6 +84,7 @@ public class EnemyBullet : Bullet
                 {
                     if (!spawned)
                     {
+                        if (hitVFXPool == null) hitVFXPool = cont.enemyHitVFXPool;
                         GameObject hit = hitVFXPool.GetPooledObject();
                         hit.transform.position = hitCollider.transform.position;
                         hit.transform.rotation = hitCollider.transform.rotation;
@@ -96,6 +98,7 @@ public class EnemyBullet : Bullet
                 {
                     if (!spawned)
                     {
+                        if (hitVFXPool == null) hitVFXPool = cont.enemyHitVFXPool;
                         GameObject hit = hitVFXPool.GetPooledObject();
                         hit.transform.position = hitCollider.transform.position;
                         hit.transform.rotation = hitCollider.transform.rotation;
@@ -118,6 +121,8 @@ public class EnemyBullet : Bullet
         col.Damage(damage);
         if (!spawned)
         {
+
+            if (hitVFXPool == null) hitVFXPool = cont.enemyHitVFXPool;
             GameObject hit = hitVFXPool.GetPooledObject();
             hit.transform.position = col.transform.position;
             hit.transform.rotation = col.transform.rotation;
@@ -132,7 +137,7 @@ public class EnemyBullet : Bullet
         RaycastHit sphereHit ; // use raycast 
         if (Physics.SphereCast(transform.position, checkSize, transform.TransformDirection(transform.forward), out sphereHit, playerMask)) 
         { 
-        
+            if (hitVFXPool == null) hitVFXPool = cont.enemyHitVFXPool;
             GameObject hit = hitVFXPool.GetPooledObject();
             if (hit != null)
             {

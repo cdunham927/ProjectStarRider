@@ -59,6 +59,7 @@ public class CetusControllerNew : BossControllerBase, IDamageable
     protected const string Boss_Death = "Armature|Death";
 
     Quaternion origRot;
+    bool laserDone = false;
 
     protected override void Awake()
     {
@@ -68,6 +69,7 @@ public class CetusControllerNew : BossControllerBase, IDamageable
         pOLA = maxHp * phaseOneLossPerc;
         pTLA = maxHp * phaseTwoLossPerc;
         pTtLA = maxHp * phaseThreeLossPerc;
+        laserDone = false;
 
         laserStartSize = laserCollider.radius;
         laserStartHeight = laserCollider.height;
@@ -114,7 +116,7 @@ public class CetusControllerNew : BossControllerBase, IDamageable
             //laserCollider.height = Mathf.Lerp(laserCollider.height, 0, Time.deltaTime * laserLerpSpd);
         }
 
-        if (laserCollider.radius <= 0.15f)
+        if (laserCollider.radius <= 0.25f)
         {
             laserObj.SetActive(false);
             //laserRend.enabled = false;
@@ -149,6 +151,7 @@ public class CetusControllerNew : BossControllerBase, IDamageable
 
                 else FrontBullets();
             }
+            else FrontBullets();
         }
     }
 
@@ -392,12 +395,13 @@ public class CetusControllerNew : BossControllerBase, IDamageable
         switch (phase)
         {
             case 3:
-                if (curHpLoss > pTtLA)
+                if (curHpLoss > pTtLA && !laserDone)
                 {
                     //Do laser attack here then reset cooldown
                     //Debug.Log("Lost 10% hp");
                     LaserAttack();
                     curHpLoss = 0;
+                    laserDone = true;
                 }
                 break;
             case 2:
