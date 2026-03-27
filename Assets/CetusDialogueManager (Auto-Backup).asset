@@ -1554,7 +1554,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       conversationID: 6
-      isRoot: 0
+      isRoot: 1
       isGroup: 0
       nodeColor: 
       delaySimStatus: 0
@@ -3381,7 +3381,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Actor
-        value: 1
+        value: 2
         type: 5
         typeString: CustomFieldType_Actor
       - title: Conversant
@@ -3393,7 +3393,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: Dont rush in it'll make it harder for you to defeat them quickly
+        value: 'Dont rush in '
         type: 0
         typeString: 
       - title: Sequence
@@ -3411,7 +3411,7 @@ MonoBehaviour:
       - originConversationID: 9
         originDialogueID: 2
         destinationConversationID: 9
-        destinationDialogueID: 3
+        destinationDialogueID: 4
         isConnector: 0
         priority: 2
       conditionsString: 
@@ -3470,8 +3470,63 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 23
-        y: 331
+        x: 26
+        y: 435
+        width: 160
+        height: 30
+    - id: 4
+      fields:
+      - title: Title
+        value: 
+        type: 0
+        typeString: 
+      - title: Description
+        value: 
+        type: 0
+        typeString: 
+      - title: Actor
+        value: 2
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Conversant
+        value: 1
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Menu Text
+        value: 
+        type: 0
+        typeString: 
+      - title: Dialogue Text
+        value: it'll make it harder for you to defeat them quickly
+        type: 0
+        typeString: 
+      - title: Sequence
+        value: 
+        type: 0
+        typeString: 
+      conversationID: 9
+      isRoot: 0
+      isGroup: 0
+      nodeColor: 
+      delaySimStatus: 0
+      falseConditionAction: Block
+      conditionPriority: 2
+      outgoingLinks:
+      - originConversationID: 9
+        originDialogueID: 4
+        destinationConversationID: 9
+        destinationDialogueID: 3
+        isConnector: 0
+        priority: 2
+      conditionsString: 
+      userScript: 
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+      canvasRect:
+        serializedVersion: 2
+        x: 19
+        y: 328
         width: 160
         height: 30
     entryGroups: []
