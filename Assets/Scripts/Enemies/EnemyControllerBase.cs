@@ -461,7 +461,8 @@ public class EnemyControllerBase : MonoBehaviour, IDamageable
     private void OnDisable()
     {
         //Debug.Log("Enemy dead in enemycontrollerbase", gameObject);
-        if (cont != null) cont.DeadEnemy();
+        FindObjectOfType<GameManager>().DeadEnemy();
+        //if (cont != null) cont.DeadEnemy();
         if (player != null) player.RestoreCharge();
         CancelInvoke();
     }
