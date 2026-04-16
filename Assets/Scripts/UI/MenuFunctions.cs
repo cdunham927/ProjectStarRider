@@ -89,7 +89,7 @@ public class MenuFunctions : MonoBehaviour
 
     public void OpenUrl()
     {
-        Application.OpenURL("https://forms.gle/aBQ5QeqQaMoiWoMb8");
+        Application.OpenURL("https://docs.google.com/forms/d/e/1FAIpQLSddhoSHKJeTAPEO3tlyn96t___Tn1zbVc6t2Hay6QrM53IOwg/viewform?usp=sharing&ouid=104276367322391238150");
         Debug.Log("Is this working?");
     }
 
@@ -101,7 +101,7 @@ public class MenuFunctions : MonoBehaviour
 
     public void ItchUrl()
     {
-        Application.OpenURL("https://teamstarrider.itch.io/star-rider");
+        Application.OpenURL("https://store.steampowered.com/app/3076930/StarRider/");
         Debug.Log("Is this working?");
     }
 

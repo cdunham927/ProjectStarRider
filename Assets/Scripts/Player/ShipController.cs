@@ -403,7 +403,7 @@ public class ShipController : MonoBehaviour
                 Debug.Log("Dashing");
                 //bod.AddExplosionForce(explosiveForce, transform.position, 1f);
                 //bod.AddForce(stats.shakeCam.transform.forward * (explosiveForce * Time.fixedDeltaTime), ForceMode.Acceleration);
-                bod.AddForce(stats.shakeCam.transform.forward * explosiveForce, ForceMode.Force);
+                bod.AddForce(stats.shakeCam.transform.forward * explosiveForce, ForceMode.Impulse);
             
                 //dashing = false;
                 //ChangeAnimationState(BarrelRoll);
@@ -414,7 +414,7 @@ public class ShipController : MonoBehaviour
             {
                 //Debug.Log("SideDashing");
                 //bod.AddForce(transform.right * dashDir * (explosiveForce * Time.fixedDeltaTime), ForceMode.Force);
-                bod.AddForce(stats.shakeCam.transform.right * dashDir * explosiveForce, ForceMode.Force);
+                bod.AddForce(stats.shakeCam.transform.right * dashDir * explosiveForce, ForceMode.Impulse);
                 //bod.AddForce(transform.right * dashDir * (explosiveForce * Time.fixedDeltaTime), ForceMode.Force);
 
                 //sideDashing = false;

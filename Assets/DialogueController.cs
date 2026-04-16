@@ -27,7 +27,7 @@ public class DialogueController : MonoBehaviour
     {
 
         stats = FindObjectOfType<Player_Stats>();
-        Invoke("MissionStart", 1f);
+        Invoke("MissionStart", 10f);
 
     }
 
@@ -36,6 +36,7 @@ public class DialogueController : MonoBehaviour
         StartCoroutine(RepeatFunctionEverySeconds(2f)); // Start the coroutine
     }
 
+ 
     IEnumerator RepeatFunctionEverySeconds(float waitTime)
     {
         if (stats.Curr_hp <= (stats.Max_hp/2) && !halfHealth) 
@@ -61,6 +62,11 @@ public class DialogueController : MonoBehaviour
         if (collision.gameObject.tag == "Pick Up" && stats.Curr_hp <= (stats.Max_hp / 2) && !halfHealth) 
         {
             DialogueManager.StartConversation("Pick Up");
+        }
+
+        if (collision.gameObject.CompareTag ("Wall"))
+        {
+            Invoke("WallHit", .5f);
         }
     }
 
@@ -107,6 +113,12 @@ public class DialogueController : MonoBehaviour
     {
 
         DialogueManager.StartConversation("Barrier Hit");
+    }
+
+    void WallHit()
+    {
+
+        DialogueManager.StartConversation("WallTrigger");
     }
 
 

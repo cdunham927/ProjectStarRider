@@ -21,7 +21,7 @@ public class DialogueControllerCounter : MonoBehaviour
 
     void MissionStart()
     {
-        DialogueManager.StartConversation("Mission 01 : Near the End");
+        DialogueManager.StartConversation("Mission 01 : Near the End ");
     }
 
     private void Start()

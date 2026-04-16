@@ -203,10 +203,29 @@ public class MusicController : MonoBehaviour
                     audioSourceArray[1].clip = audioClipArray[0];
                     break;
 
+                case "GameHub":
+
+                    MusicController.instance.audioSourceArray[0].clip = MusicController.instance.audioClipArray[2];
+                    MusicController.instance.audioSourceArray[1].clip = MusicController.instance.audioClipArray[2];
+                    break;
+
+                case "Mission_01":
+
+                    MusicController.instance.audioSourceArray[0].clip = MusicController.instance.audioClipArray[3];
+                    MusicController.instance.audioSourceArray[1].clip = MusicController.instance.audioClipArray[3];
+                    break;
+
+                case "FreeFlightTest":
+
+                    MusicController.instance.audioSourceArray[0].clip = MusicController.instance.audioClipArray[4];
+                    MusicController.instance.audioSourceArray[1].clip = MusicController.instance.audioClipArray[4];
+                    break;
 
                 default:
-                    if (audioSourceArray[0] != null) audioSourceArray[0].clip = audioClipArray[2];
-                    if (audioSourceArray[1] != null) audioSourceArray[1].clip = audioClipArray[2];
+                    if (audioSourceArray[0] != null) 
+                        audioSourceArray[0].clip = audioClipArray[2];
+                    if (audioSourceArray[1] != null) 
+                        audioSourceArray[1].clip = audioClipArray[2];
                     break;
 
             }

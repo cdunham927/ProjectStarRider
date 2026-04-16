@@ -122,6 +122,54 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &66605924
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 66605926}
+  - component: {fileID: 66605925}
+  m_Layer: 0
+  m_Name: ToNextScene
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &66605925
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 66605924}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f89fa9e00b2a1d842bd3f5e3e49f6177, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _SceneToLoad:
+    _SceneAsset: {fileID: 102900000, guid: c985e42e18499f847afb8901e6158751, type: 3}
+    _SceneName: Mech_Test
+  waitTime: 0.5
+--- !u!4 &66605926
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 66605924}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 960, y: 540, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &96109306
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -239,6 +287,30 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5473854049794727535, guid: 3f5851e1fd0de364b93a372b508d8750, type: 3}
+      propertyPath: m_SceneBindings.Array.size
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 5473854049794727535, guid: 3f5851e1fd0de364b93a372b508d8750, type: 3}
+      propertyPath: m_SceneBindings.Array.data[14].key
+      value: 
+      objectReference: {fileID: 3382838529181778620, guid: 37d94bdcd96a8c94f92fa1e78a4fddf7, type: 2}
+    - target: {fileID: 5473854049794727535, guid: 3f5851e1fd0de364b93a372b508d8750, type: 3}
+      propertyPath: m_SceneBindings.Array.data[1].value
+      value: 
+      objectReference: {fileID: 1791186198}
+    - target: {fileID: 5473854049794727535, guid: 3f5851e1fd0de364b93a372b508d8750, type: 3}
+      propertyPath: m_SceneBindings.Array.data[2].value
+      value: 
+      objectReference: {fileID: 1233962022}
+    - target: {fileID: 5473854049794727535, guid: 3f5851e1fd0de364b93a372b508d8750, type: 3}
+      propertyPath: m_SceneBindings.Array.data[8].value
+      value: 
+      objectReference: {fileID: 2023770545}
+    - target: {fileID: 5473854049794727535, guid: 3f5851e1fd0de364b93a372b508d8750, type: 3}
+      propertyPath: m_SceneBindings.Array.data[9].value
+      value: 
+      objectReference: {fileID: 113643886}
+    - target: {fileID: 5473854049794727535, guid: 3f5851e1fd0de364b93a372b508d8750, type: 3}
       propertyPath: m_SceneBindings.Array.data[12].value
       value: 
       objectReference: {fileID: 0}
@@ -246,6 +318,10 @@ PrefabInstance:
       propertyPath: m_SceneBindings.Array.data[13].value
       value: 
       objectReference: {fileID: 96109309}
+    - target: {fileID: 5473854049794727535, guid: 3f5851e1fd0de364b93a372b508d8750, type: 3}
+      propertyPath: m_SceneBindings.Array.data[14].value
+      value: 
+      objectReference: {fileID: 66605924}
     - target: {fileID: 5473854050282700165, guid: 3f5851e1fd0de364b93a372b508d8750, type: 3}
       propertyPath: m_Layer
       value: 5
@@ -273,6 +349,10 @@ PrefabInstance:
     - target: {fileID: 8061048260714710531, guid: 3f5851e1fd0de364b93a372b508d8750, type: 3}
       propertyPath: m_Layer
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8061048260714710531, guid: 3f5851e1fd0de364b93a372b508d8750, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8252493626318860574, guid: 3f5851e1fd0de364b93a372b508d8750, type: 3}
       propertyPath: m_Layer
@@ -343,6 +423,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   director: {fileID: 96109308}
   conversationName: 'Mission 00 : Intro Cutscene'
+--- !u!1 &113643886 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7833351497209154656, guid: 3f5851e1fd0de364b93a372b508d8750, type: 3}
+  m_PrefabInstance: {fileID: 96109306}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &226698216
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -499,6 +584,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: BG_Music
       objectReference: {fileID: 0}
+    - target: {fileID: 4644707668880889535, guid: 6d3271e5ae24096479bd8dc3b11d13f7, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6720885632238254949, guid: 6d3271e5ae24096479bd8dc3b11d13f7, type: 3}
+      propertyPath: audioClipArray.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6720885632238254949, guid: 6d3271e5ae24096479bd8dc3b11d13f7, type: 3}
+      propertyPath: audioClipArray.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: a050d542c9195b94cab7a02eb32caf7a, type: 3}
+    - target: {fileID: 6720885632238254949, guid: 6d3271e5ae24096479bd8dc3b11d13f7, type: 3}
+      propertyPath: audioClipArray.Array.data[5]
+      value: 
+      objectReference: {fileID: 8300000, guid: 4b3ee587493dc7d418e992099c9e8fca, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -603,6 +704,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!82 &1233962022 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 877252893838211536, guid: 6d3271e5ae24096479bd8dc3b11d13f7, type: 3}
+  m_PrefabInstance: {fileID: 680318960}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1558889610
 GameObject:
   m_ObjectHideFlags: 0
@@ -661,7 +767,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: -5818701710252422464, guid: e94e86a227e4d4d4eb428bc609fd30dc, type: 2}
-  m_audioClip: {fileID: 8300000, guid: 05875e58a53c1ff4795a44c2223ce62d, type: 3}
+  m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 0.918
   m_Pitch: 1.55
@@ -855,6 +961,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6b93a3113a51896478068f5d7da39efd, type: 3}
+--- !u!114 &1791186198 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3490135104266017033, guid: 6b93a3113a51896478068f5d7da39efd, type: 3}
+  m_PrefabInstance: {fileID: 1791186197}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72ece51f2901e7445ab60da3685d6b5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1799917867 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1441436807956753282, guid: a7aa7943e58705a4fb8e4ddb458e77c7, type: 3}
@@ -983,7 +1100,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 769672639653492504, guid: a7aa7943e58705a4fb8e4ddb458e77c7, type: 3}
       propertyPath: m_Text
-      value: Input Field
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 1111771189110171169, guid: a7aa7943e58705a4fb8e4ddb458e77c7, type: 3}
       propertyPath: m_AnchorMax.y
@@ -1698,6 +1815,11 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 2949803691106374828, guid: a7aa7943e58705a4fb8e4ddb458e77c7, type: 3}
   m_PrefabInstance: {fileID: 1854743386}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2023770545 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8061048260714710531, guid: 3f5851e1fd0de364b93a372b508d8750, type: 3}
+  m_PrefabInstance: {fileID: 96109306}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2043629069
 GameObject:
   m_ObjectHideFlags: 0
@@ -1759,14 +1881,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c50edddc6389bf34bb48a51b1ce27b91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelLoaderUIPrefab: {fileID: 0}
+  levelLoaderUIPrefab: {fileID: 2091656143}
   sl: {fileID: 0}
   progressText: {fileID: 0}
   waitTime: 0
   songs: []
   _SceneToLoad:
-    _SceneAsset: {fileID: 0}
-    _SceneName: 
+    _SceneAsset: {fileID: 102900000, guid: c985e42e18499f847afb8901e6158751, type: 3}
+    _SceneName: Mech_Test
   optionsPrefab: {fileID: 5486015543283699352, guid: 6bab25dffb9b4944297c9682a392517f, type: 3}
   optionsMenu: {fileID: 5486015543283699352, guid: 6bab25dffb9b4944297c9682a392517f, type: 3}
   alreadyLoading: 0
@@ -1813,3 +1935,4 @@ SceneRoots:
   - {fileID: 1854743386}
   - {fileID: 96109306}
   - {fileID: 600357476}
+  - {fileID: 66605926}
