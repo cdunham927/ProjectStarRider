@@ -288,12 +288,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5473854049794727535, guid: 3f5851e1fd0de364b93a372b508d8750, type: 3}
       propertyPath: m_SceneBindings.Array.size
-      value: 15
+      value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 5473854049794727535, guid: 3f5851e1fd0de364b93a372b508d8750, type: 3}
       propertyPath: m_SceneBindings.Array.data[14].key
       value: 
       objectReference: {fileID: 3382838529181778620, guid: 37d94bdcd96a8c94f92fa1e78a4fddf7, type: 2}
+    - target: {fileID: 5473854049794727535, guid: 3f5851e1fd0de364b93a372b508d8750, type: 3}
+      propertyPath: m_SceneBindings.Array.data[15].key
+      value: 
+      objectReference: {fileID: -6432154362247368678, guid: 37d94bdcd96a8c94f92fa1e78a4fddf7, type: 2}
     - target: {fileID: 5473854049794727535, guid: 3f5851e1fd0de364b93a372b508d8750, type: 3}
       propertyPath: m_SceneBindings.Array.data[1].value
       value: 
@@ -322,6 +326,10 @@ PrefabInstance:
       propertyPath: m_SceneBindings.Array.data[14].value
       value: 
       objectReference: {fileID: 66605924}
+    - target: {fileID: 5473854049794727535, guid: 3f5851e1fd0de364b93a372b508d8750, type: 3}
+      propertyPath: m_SceneBindings.Array.data[15].value
+      value: 
+      objectReference: {fileID: 781651607}
     - target: {fileID: 5473854050282700165, guid: 3f5851e1fd0de364b93a372b508d8750, type: 3}
       propertyPath: m_Layer
       value: 5
@@ -590,10 +598,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6720885632238254949, guid: 6d3271e5ae24096479bd8dc3b11d13f7, type: 3}
       propertyPath: audioClipArray.Array.size
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6720885632238254949, guid: 6d3271e5ae24096479bd8dc3b11d13f7, type: 3}
       propertyPath: audioClipArray.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: a050d542c9195b94cab7a02eb32caf7a, type: 3}
+    - target: {fileID: 6720885632238254949, guid: 6d3271e5ae24096479bd8dc3b11d13f7, type: 3}
+      propertyPath: audioClipArray.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: a050d542c9195b94cab7a02eb32caf7a, type: 3}
+    - target: {fileID: 6720885632238254949, guid: 6d3271e5ae24096479bd8dc3b11d13f7, type: 3}
+      propertyPath: audioClipArray.Array.data[2]
       value: 
       objectReference: {fileID: 8300000, guid: a050d542c9195b94cab7a02eb32caf7a, type: 3}
     - target: {fileID: 6720885632238254949, guid: 6d3271e5ae24096479bd8dc3b11d13f7, type: 3}
@@ -605,6 +621,117 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6d3271e5ae24096479bd8dc3b11d13f7, type: 3}
+--- !u!1 &781651607
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 781651609}
+  - component: {fileID: 781651608}
+  m_Layer: 0
+  m_Name: DialqueTrigger
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &781651608
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 781651607}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c593457cd8105e148906690e1707c592, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  trigger: 64
+  delayOneFrame: 0
+  condition:
+    luaConditions: []
+    questConditions: []
+    acceptedTags: []
+    acceptedGameObjects: []
+    luaWizardIndex: -1
+    lastEvaluationValue: 0
+  setQuestState: 1
+  questName: 
+  questState: 0
+  setQuestEntryState: 0
+  questEntryNumber: 1
+  questEntryState: 0
+  setAnotherQuestEntryState: 0
+  anotherQuestEntryNumber: 1
+  anotherQuestEntryState: 0
+  luaCode: 
+  sequence: 
+  sequenceSpeaker: {fileID: 0}
+  sequenceListener: {fileID: 0}
+  waitOneFrameOnStartOrEnable: 1
+  alertMessage: 
+  textTable: {fileID: 0}
+  alertDuration: 0
+  sendMessages: []
+  barkSource: 0
+  barkConversation: 
+  barkEntryID: -1
+  barkEntryTitle: 
+  barkText: 
+  barkTextSequence: 
+  barker: {fileID: 0}
+  barkTarget: {fileID: 0}
+  barkOrder: 0
+  allowBarksDuringConversations: 0
+  skipBarkIfNoValidEntries: 0
+  cacheBarkLines: 0
+  conversation: 'Mission 00 : Intro Cutscene'
+  conversationConversant: {fileID: 0}
+  conversationActor: {fileID: 0}
+  startConversationEntryID: -1
+  startConversationEntryTitle: 
+  overrideDialogueUI: {fileID: 0}
+  exclusive: 0
+  replace: 0
+  queue: 0
+  skipIfNoValidEntries: 0
+  preventRestartOnSameFrameEnded: 0
+  stopConversationOnTriggerExit: 1
+  marginToAllowTriggerExit: 0.2
+  stopConversationIfTooFar: 0
+  maxConversationDistance: 5
+  monitorConversationDistanceFrequency: 1
+  showCursorDuringConversation: 0
+  pauseGameDuringConversation: 0
+  setActiveActions: []
+  setEnabledActions: []
+  setAnimatorStateActions: []
+  onExecute:
+    m_PersistentCalls:
+      m_Calls: []
+  useConversationTitlePicker: 1
+  useBarkTitlePicker: 1
+  useQuestNamePicker: 1
+  selectedDatabase: {fileID: 11400000, guid: 9dd1f290b8dd6f04b8474e6c987f9bfd, type: 2}
+--- !u!4 &781651609
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 781651607}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 4576.756, y: 1750.112, z: 802.74066}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &811267709
 GameObject:
   m_ObjectHideFlags: 0
@@ -1187,16 +1314,12 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1441436807962089734, guid: a7aa7943e58705a4fb8e4ddb458e77c7, type: 3}
-      propertyPath: displaySettings.dialogueUI
-      value: 
-      objectReference: {fileID: 1854743387}
-    - target: {fileID: 1441436807962089734, guid: a7aa7943e58705a4fb8e4ddb458e77c7, type: 3}
       propertyPath: displaySettings.cameraSettings.sequencerCamera
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 1441436807962089734, guid: a7aa7943e58705a4fb8e4ddb458e77c7, type: 3}
       propertyPath: displaySettings.subtitleSettings.continueButton
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1441436807962089734, guid: a7aa7943e58705a4fb8e4ddb458e77c7, type: 3}
       propertyPath: displaySettings.subtitleSettings.minSubtitleSeconds
@@ -1470,6 +1593,14 @@ PrefabInstance:
       propertyPath: m_Padding.m_Left
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 4589757740752838412, guid: a7aa7943e58705a4fb8e4ddb458e77c7, type: 3}
+      propertyPath: leaveSceneTransition.onTransitionStart.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4589757740752838412, guid: a7aa7943e58705a4fb8e4ddb458e77c7, type: 3}
+      propertyPath: leaveSceneTransition.onTransitionStart.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 4627182098805996516, guid: a7aa7943e58705a4fb8e4ddb458e77c7, type: 3}
       propertyPath: m_Color.a
       value: 1
@@ -1696,7 +1827,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7436925042581061656, guid: a7aa7943e58705a4fb8e4ddb458e77c7, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8059312239406744176, guid: a7aa7943e58705a4fb8e4ddb458e77c7, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
@@ -1803,18 +1934,14 @@ PrefabInstance:
       value: -0.000059127808
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 7436925042581061656, guid: a7aa7943e58705a4fb8e4ddb458e77c7, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 1441436807956753282, guid: a7aa7943e58705a4fb8e4ddb458e77c7, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1799917876}
   m_SourcePrefab: {fileID: 100100000, guid: a7aa7943e58705a4fb8e4ddb458e77c7, type: 3}
---- !u!1 &1854743387 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2949803691106374828, guid: a7aa7943e58705a4fb8e4ddb458e77c7, type: 3}
-  m_PrefabInstance: {fileID: 1854743386}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2023770545 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8061048260714710531, guid: 3f5851e1fd0de364b93a372b508d8750, type: 3}
@@ -1868,7 +1995,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &2091656144
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1936,3 +2063,4 @@ SceneRoots:
   - {fileID: 96109306}
   - {fileID: 600357476}
   - {fileID: 66605926}
+  - {fileID: 781651609}

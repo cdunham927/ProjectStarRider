@@ -5,13 +5,13 @@ using System.Diagnostics;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using PixelCrushers.DialogueSystem;
 using UnityEngine.EventSystems;
 
 public class SceneSwitch : MonoBehaviour
 {
     /// <summary>
     /// ATTENTION :  THIS CODE IS OLD AN OUTDATED PLEASE ARCHIVE
-    ///
     /// </summary>
 
     CarouselController CarouselController;
@@ -117,17 +117,20 @@ public class SceneSwitch : MonoBehaviour
         }
         yield return new WaitForSeconds(waitTime);
         SceneManager.LoadScene(n);
+        DialogueManager.StopConversation();
 
     }
 
     public void NextScene()
     {
+        DialogueManager.StopConversation();
         //MusicController.instance.PlaySound();
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
     public void LoadLevel(int levelIndex)
     {
+        DialogueManager.StopConversation();
         //MusicController.instance.PlaySound();
         SceneManager.LoadScene(levelIndex);
     }

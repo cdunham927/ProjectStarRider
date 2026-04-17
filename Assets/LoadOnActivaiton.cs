@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using PixelCrushers.DialogueSystem;
 
 public class LoadOnActivaiton : MonoBehaviour
 {
@@ -19,7 +20,7 @@ public class LoadOnActivaiton : MonoBehaviour
 
     IEnumerator ToScene()
     {
-        
+        DialogueManager.StopConversation();
         yield return new WaitForSeconds(waitTime);
         SceneManager.LoadScene(_SceneToLoad);
     }
