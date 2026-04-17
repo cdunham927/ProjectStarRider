@@ -22,13 +22,20 @@ public class WaterPillarController : MonoBehaviour
     public int damage;
     public float iframes = 0.3f;
     float curFrames;
+    float enemyFrames;
 
     private void Awake()
     {
         dir = (Random.value > 0.5f) ? 1 : -1;
         rotSpd = Random.Range(lowRotSpd, highRotSpd);
         startYPos = transform.position.y;
-        radius = Vector3.Distance(transform.position, centerPos.transform.position);
+
+        Invoke("GetRadius", 0.2f);
+    }
+
+    void GetRadius()
+    {
+        if (centerPos != null) radius = Vector3.Distance(transform.position, centerPos.transform.position);
     }
 
     public void MovePillars()
@@ -52,6 +59,7 @@ public class WaterPillarController : MonoBehaviour
             //Debug.Log(Vector3.Distance(transform.position, centerPos.transform.position));
 
             if (curFrames > 0) curFrames -= Time.deltaTime;
+            if (enemyFrames > 0) enemyFrames -= Time.deltaTime;
         }
     }
 
@@ -62,6 +70,11 @@ public class WaterPillarController : MonoBehaviour
             other.GetComponent<Player_Stats>().Damage(damage);
             curFrames = iframes;
         }
+        if (other.CompareTag("Urchin") && enemyFrames <= 0)
+        {
+            other.GetComponent<EnemyControllerBase>().Damage(damage);
+            enemyFrames = iframes;
+        }
     }
 
     private void OnTriggerStay(Collider other)
@@ -70,6 +83,11 @@ public class WaterPillarController : MonoBehaviour
         {
             other.GetComponent<Player_Stats>().Damage(damage);
             curFrames = iframes;
+        }
+        if (other.CompareTag("Urchin") && enemyFrames <= 0)
+        {
+            other.GetComponent<EnemyControllerBase>().Damage(damage);
+            enemyFrames = iframes;
         }
     }
 }

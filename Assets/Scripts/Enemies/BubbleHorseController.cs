@@ -2,17 +2,53 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BubbleHorseController : MonoBehaviour
+public class BubbleHorseController : EnemyControllerBase
 {
-    // Start is called before the first frame update
-    void Start()
+
+
+
+    protected override void Awake()
     {
-        
+        base.Awake();
     }
 
-    // Update is called once per frame
-    void Update()
+    protected override void OnEnable()
     {
-        
+        base.OnEnable();
+    }
+
+    protected override void Update()
+    {
+        base.Update();
+    }
+
+    protected override void Alert()
+    {
+        base.Alert();
+    }
+
+    protected override void Attack()
+    {
+        base.Attack();
+    }
+
+    protected override void Death()
+    {
+        base.Death();
+    }
+
+    protected override void Idle()
+    {
+        base.Idle();
+    }
+
+    protected override void Patrol()
+    {
+        base.Patrol();
+    }
+
+    protected override void Retreat()
+    {
+        base.Retreat();
     }
 }

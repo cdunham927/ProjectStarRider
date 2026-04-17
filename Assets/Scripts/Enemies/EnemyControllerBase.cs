@@ -127,7 +127,7 @@ public class EnemyControllerBase : MonoBehaviour, IDamageable
     [Space]
     [Header("Enemy Indicator")]
     public GameObject enemyIndicator;
-    EnemyIndicator eI;
+    protected EnemyIndicator eI;
 
     //Material[] tempMats;
     //Color[] originalColors;
@@ -141,8 +141,8 @@ public class EnemyControllerBase : MonoBehaviour, IDamageable
     public bool hasCircularMovement;
     protected BulletPatterns pattern;
     public int patternBulNum = 16;
-    public enum patterntypes { triangle, spiral, square, circle, flamethrower };
-    public patterntypes bulPatType = patterntypes.triangle;
+    public enum patterntypes { none, triangle, spiral, square, circle, flamethrower };
+    public patterntypes bulPatType = patterntypes.none;
 
     protected virtual void Awake()
     {
@@ -232,6 +232,9 @@ public class EnemyControllerBase : MonoBehaviour, IDamageable
 
         switch (bulPatType)
         {
+            case patterntypes.none:
+                //pattern.FlamethrowerPattern(bulletPool);
+                break;
             case patterntypes.triangle:
                 pattern.TrianglePattern(bulletPool);
                 break;
@@ -461,7 +464,8 @@ public class EnemyControllerBase : MonoBehaviour, IDamageable
     private void OnDisable()
     {
         //Debug.Log("Enemy dead in enemycontrollerbase", gameObject);
-        FindObjectOfType<GameManager>().DeadEnemy();
+        if (cont != null) cont.DeadEnemy();
+        //FindObjectOfType<GameManager>().DeadEnemy();
         //if (cont != null) cont.DeadEnemy();
         if (player != null) player.RestoreCharge();
         CancelInvoke();
