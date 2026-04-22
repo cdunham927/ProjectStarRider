@@ -14,6 +14,8 @@ public class DialogueController : MonoBehaviour
 
     //refercnce to player stats
     protected Player_Stats stats;
+    protected BossControllerBase boss_stats;
+
     public bool halfHealth = false;
     public bool lowHealth = false;
 
@@ -25,7 +27,7 @@ public class DialogueController : MonoBehaviour
     public string[] Conversation; // go into dialogue tab >> converstatsion adn copy and paste the coverstation label you want to play at the start of the level
     private void Awake()
     {
-
+        //boss_stats = FindObjectOfType<BossControllerBase>();
         stats = FindObjectOfType<Player_Stats>();
         Invoke("MissionStart", 10f);
 
@@ -34,6 +36,8 @@ public class DialogueController : MonoBehaviour
     void Start()
     {
         StartCoroutine(RepeatFunctionEverySeconds(2f)); // Start the coroutine
+        StartCoroutine(CheckBossHealth(2f)); // Start the coroutine
+
     }
 
  
@@ -42,6 +46,27 @@ public class DialogueController : MonoBehaviour
         if (stats.Curr_hp <= (stats.Max_hp/2) && !halfHealth) 
         {
             
+            //LowHealth();
+            Invoke("HalfHealth", .5f);
+        }
+
+        if (stats.Curr_hp <= (stats.Max_hp / 3) && !lowHealth)
+        {
+
+            //LowHealth();
+            Invoke("LowHealth", .5f);
+        }
+
+        yield return new WaitForSeconds(waitTime);
+
+    }
+
+
+    IEnumerator CheckBossHealth(float waitTime)
+    {
+        if (stats.Curr_hp <= (stats.Max_hp / 2) && !halfHealth)
+        {
+
             //LowHealth();
             Invoke("HalfHealth", .5f);
         }
