@@ -439,7 +439,7 @@ public class GameManager : MonoBehaviour
             }
             if (controlsText != null) controlsText.SetActive(false);
             //EventSystem.current.SetSelectedGameObject(gameoverButton);
-            //GameOverUI.SetActive(true);
+            GameOverUI.SetActive(true);
             yield return new WaitForSeconds(waitTime);
             
             //SceneManager.LoadScene(sceneName);
@@ -496,10 +496,10 @@ public class GameManager : MonoBehaviour
 
     IEnumerator LoadScene(string n)
     {
-        
         yield return new WaitForSeconds(waitTime);
         SceneManager.LoadScene(n);
     }
+
     IEnumerator ToLinkMenuScene()
     {
         //music = FindObjectOfType<MusicController>();
@@ -511,7 +511,9 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(waitTime);
         //if (music != null) music.ChangeSong(menuSong);
         //SceneManager.LoadScene(3);
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+
+
+        //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
     IEnumerator ToMenuScene()
     {
