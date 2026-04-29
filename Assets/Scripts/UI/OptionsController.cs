@@ -75,9 +75,12 @@ public class OptionsController : MonoBehaviour
         //if (PlayerPrefs.HasKey("MouseSensitivity")) tempMouseSensitivitySlider.value = PlayerPrefs.GetFloat("MouseSensitivity");
         //if (PlayerPrefs.HasKey("Invert")) tempInvertToggle.isOn = (PlayerPrefs.GetInt("Invert") == 1) ? true : false;
 
-        if (PlayerPrefs.HasKey("ControllerSensitivity")) controllerSensitivitySlider.value = PlayerPrefs.GetFloat("ControllerSensitivity");
-        if (PlayerPrefs.HasKey("MouseSensitivity")) mouseSensitivitySlider.value = PlayerPrefs.GetFloat("MouseSensitivity");
-        if (PlayerPrefs.HasKey("Invert")) invertToggle.isOn = (PlayerPrefs.GetInt("Invert") == 1) ? true : false;
+        if (PlayerPrefs.HasKey("ControllerSensitivity")) 
+            controllerSensitivitySlider.value = PlayerPrefs.GetFloat("ControllerSensitivity");
+        if (PlayerPrefs.HasKey("MouseSensitivity")) 
+            mouseSensitivitySlider.value = PlayerPrefs.GetFloat("MouseSensitivity");
+        if (PlayerPrefs.HasKey("Invert")) 
+            invertToggle.isOn = (PlayerPrefs.GetInt("Invert") == 1) ? true : false;
 
         //profile = volume.sharedProfile;
         
@@ -180,7 +183,7 @@ public class OptionsController : MonoBehaviour
 
         PlayerPrefs.SetFloat("ControllerSensitivity", val);
         PlayerPrefs.Save();
-
+        
         if (player != null) player.GetControllerSensitivity();
     }
 

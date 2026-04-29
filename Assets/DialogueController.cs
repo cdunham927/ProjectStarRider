@@ -22,9 +22,11 @@ public class DialogueController : MonoBehaviour
 
     //Array for Dialgue triigers to spawn
     //public GameObject[] DialogueTriggers;
+    public GameObject Barrier;
     public GameObject BOSS;
     public GameObject PLAYER;
     public string[] Conversation; // go into dialogue tab >> converstatsion adn copy and paste the coverstation label you want to play at the start of the level
+    
     private void Awake()
     {
         //boss_stats = FindObjectOfType<BossControllerBase>();
