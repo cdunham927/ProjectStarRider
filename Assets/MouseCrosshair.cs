@@ -204,6 +204,8 @@ namespace UI.HUD
                 if (cursorRectTransform != null)
                 {
                     cursorRectTransform.anchoredPosition = Vector3.Scale(viewportPosition - new Vector3(0.5f, 0.5f, 0), canvasRectTransform.sizeDelta);
+                    Cursor.lockState = CursorLockMode.None;
+                    Cursor.visible = true;
                 }
 
                 // Set the line position
