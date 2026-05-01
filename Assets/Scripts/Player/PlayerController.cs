@@ -289,6 +289,12 @@ public class PlayerController : MonoBehaviour
             if (PlayerPrefs.HasKey("MouseSensitivity")) ship.mouseLerp = PlayerPrefs.GetFloat("MouseSensitivity", lookSpd);
             if (PlayerPrefs.HasKey("Invert")) ship.invertControls = (PlayerPrefs.GetInt("Invert") == 1) ? true : false;
         }
+        else
+        {
+            ship.controllerLerp = 2.5f;
+            ship.mouseLerp = 2.5f;
+            ship.invertControls = false;
+        }
     }
 
     public void GetInvert()

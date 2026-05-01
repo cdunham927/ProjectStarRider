@@ -30,7 +30,7 @@ public class WaterPillarController : MonoBehaviour
         rotSpd = Random.Range(lowRotSpd, highRotSpd);
         startYPos = transform.position.y;
 
-        Invoke("GetRadius", 0.2f);
+        //Invoke("GetRadius", 0.2f);
     }
 
     void GetRadius()

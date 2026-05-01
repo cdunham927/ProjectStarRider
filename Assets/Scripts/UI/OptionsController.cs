@@ -87,12 +87,12 @@ public class OptionsController : MonoBehaviour
         //profile.TryGet<Bloom>(out var bloom);
         //curBloomIntensity = bloom.intensity.value;
 
-        //if (player != null)
-        //{
-        //    player.GetControllerSensitivity();
-        //    player.GetMouseSensitivity();
-        //    player.GetInvert();
-        //}
+        if (player != null)
+        {
+            player.GetControllerSensitivity();
+            player.GetMouseSensitivity();
+            player.GetInvert();
+        }
     }
 
 

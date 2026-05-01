@@ -618,7 +618,7 @@ public class GameManager : MonoBehaviour
         }
         if (minimap != null) minimap.SetActive(true);
         optionsMenu.SetActive(false);
-        ControllsUI.SetActive(false);
+        ControllsUI.SetActive(true);
         healthbar.SetActive(true);
         uiParent.SetActive(true);
         //If player is using keyboard, show the mouse

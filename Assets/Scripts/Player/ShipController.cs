@@ -77,8 +77,8 @@ public class ShipController : MonoBehaviour
     public float mouseSensitivity;
     public bool invertControls = false;
 
-    public float controllerLerp;
-    public float mouseLerp;
+    public float controllerLerp = 2.5f;
+    public float mouseLerp = 2.5f;
 
     GameManager cont;
     PlayerAbility ability;

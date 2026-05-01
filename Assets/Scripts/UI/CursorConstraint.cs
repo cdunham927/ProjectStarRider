@@ -69,8 +69,12 @@ public class CursorConstraint : MonoBehaviour
         }
         else
         {
-            Vector2 mousePos = new Vector2(Screen.width / 2 + (Input.GetAxis("MouseX") * ship.mouseSensitivity), Screen.height / 2 - (-Input.GetAxis("MouseY") * ship.mouseSensitivity));
-            aimPos = Vector2.Lerp(aimPos, mousePos, controllerLerpSpd * Time.deltaTime);
+            Vector2 mouseInput = new Vector2(Input.GetAxis("MouseX"), Input.GetAxis("MouseY"));
+            if (mouseInput != Vector2.zero)
+            {
+                Vector2 mousePos = new Vector2(Screen.width / 2 + (Input.GetAxis("MouseX") * ship.mouseSensitivity), Screen.height / 2 - (-Input.GetAxis("MouseY") * ship.mouseSensitivity));
+                aimPos = Vector2.Lerp(aimPos, mousePos, controllerLerpSpd * Time.deltaTime);
+            }
         }
 
         r.position = aimPos;
