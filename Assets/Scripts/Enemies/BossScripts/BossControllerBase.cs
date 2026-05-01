@@ -209,8 +209,14 @@ public class BossControllerBase : MonoBehaviour
     //Shows radius for enemy attacks
     public GameObject attackIndicator;
 
+    public enum patterntypes { none, triangle, spiral, square, circle, flamethrower };
+    public patterntypes bulPatType = patterntypes.none;
+    protected BulletPatterns pattern;
+    public int patternBulNum = 16;
+
     protected virtual void Awake()
     {
+        pattern = GetComponent<BulletPatterns>();
         cam = FindObjectOfType<CinemachineVirtualCamera>();
         if (perlin == null && cam != null) perlin = cam.GetComponentInChildren<CinemachineBasicMultiChannelPerlin>();
         anim = GetComponentInChildren<Animator>();
@@ -270,6 +276,33 @@ public class BossControllerBase : MonoBehaviour
                 eI.enemy = gameObject;
                 eI.transform.SetParent(cont.transform);
             }
+        }
+    }
+
+    public void UseBulletPattern()
+    {
+        if (bulletPool == null) bulletPool = cont.enemyBulPool;
+
+        switch (bulPatType)
+        {
+            case patterntypes.none:
+                //pattern.FlamethrowerPattern(bulletPool);
+                break;
+            case patterntypes.triangle:
+                pattern.TrianglePattern(bulletPool);
+                break;
+            case patterntypes.spiral:
+                pattern.SpiralPattern(bulletPool, patternBulNum);
+                break;
+            case patterntypes.square:
+                pattern.SquarePattern(bulletPool);
+                break;
+            case patterntypes.circle:
+                pattern.CirclePattern(bulletPool);
+                break;
+            case patterntypes.flamethrower:
+                pattern.FlamethrowerPattern(bulletPool);
+                break;
         }
     }
 

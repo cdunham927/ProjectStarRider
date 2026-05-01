@@ -143,15 +143,25 @@ public class CetusControllerNew : BossControllerBase, IDamageable
     {
         if (!laserOn)
         {
-            //After phase 2 we stop shooting off at all the fins
-            if (phase < 3)
+            if (pattern != null && bulPatType != patterntypes.none)
             {
-                if (Random.value < 0.65f)
-                    FanBullets();
+                Invoke("UseBulletPattern", 0.4f);
+                ChangeAnimationState(Cetus_Attack_2);
+                //Reset attack cooldown
+                attackCools = atkCooldowns[0];
+            }
+            else
+            {
+                //After phase 2 we stop shooting off at all the fins
+                if (phase < 3)
+                {
+                    if (Random.value < 0.65f)
+                        FanBullets();
 
+                    else FrontBullets();
+                }
                 else FrontBullets();
             }
-            else FrontBullets();
         }
     }
 

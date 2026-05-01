@@ -211,6 +211,7 @@ public class GameManager : MonoBehaviour
         GameOverUI = Instantiate(GameOverUIPrefab);
         VictoryUI = Instantiate(VictoryUIPrefab);
         ControllsUI = Instantiate(ControllsUIPrefab);
+
         //Get references for buttons
         mainMenuButton = GameObject.FindGameObjectWithTag("MainMenu");
         resumeButton = GameObject.FindGameObjectWithTag("ResumeButton");
@@ -220,7 +221,7 @@ public class GameManager : MonoBehaviour
         pauseMenuUI.SetActive(false);
         GameOverUI.SetActive(false);
         VictoryUI.SetActive(false);
-        ControllsUI.SetActive(false);
+        //ControllsUI.SetActive(false);
 
         //GameObject a = GameObject.FindGameObjectWithTag("BossHealth");
 
