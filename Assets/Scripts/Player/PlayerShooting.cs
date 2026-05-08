@@ -10,7 +10,7 @@ using Cinemachine;
 public class PlayerShooting : MonoBehaviour
 {
     [Header("Shooting References: ")]
-    public ObjectPool bulPool; 
+    public ObjectPool bulPool;
     public Transform bulSpawn;
     public GameObject muzzle;
     bool PlayerIsShooting;
@@ -21,11 +21,11 @@ public class PlayerShooting : MonoBehaviour
     //public float bulletSpd;
     public float shootCooldown;
     float curShootCools = 0.0f;
-   
+
     [Header("Audio Clips: ")]
-    public AudioClip ShotSounds; 
+    public AudioClip ShotSounds;
     private AudioSource AS;
-    
+
     GameManager cont;
     Rigidbody bod;
     public float recoilForce;
@@ -34,7 +34,7 @@ public class PlayerShooting : MonoBehaviour
     public int dmg;
 
     GameManager gm;
-    
+
     public GameObject cursor;
     private ShipController shipController;
     private Transform debugTransform;
@@ -168,7 +168,7 @@ public class PlayerShooting : MonoBehaviour
             {
                 Shoot(true);
                 PlaySound();
-               
+
             }
 
             if (charging)
@@ -231,7 +231,7 @@ public class PlayerShooting : MonoBehaviour
         //bul.GetComponent<Rigidbody>().velocity = bod.velocity;
 
         bul.SetActive(true);
-       
+
         //Set bullet damage
         Bullet b = bul.GetComponent<Bullet>();
         b.damage = dmg;
@@ -254,7 +254,7 @@ public class PlayerShooting : MonoBehaviour
 
         curShootCools = shootCooldown;
         PlayMuzzle();
-        
+
         //Player Recoil
         bod.AddForce(-bod.transform.forward * recoilForce * Time.deltaTime, ForceMode.Impulse);
         PlayerIsShooting = newShooting;
@@ -271,16 +271,17 @@ public class PlayerShooting : MonoBehaviour
     {
         AS.PlayOneShot(ShotSounds);
     }
-    
-    public void PlayMuzzle() 
+
+    public void PlayMuzzle()
     {
         if (!muzzle.activeInHierarchy)
         {
             muzzle.SetActive(true);
         }
 
-        
+
     }
 
-    
+
 }
+

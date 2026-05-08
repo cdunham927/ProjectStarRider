@@ -3,27 +3,38 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Cinemachine;
-namespace UI.HUD
-{
 
     
-    public class MouseCrosshair : MonoBehaviour
+ public class MouseCrosshair : MonoBehaviour
+ {
+    /// <summary>
+    /// Interface for a component that uses the HUD camera.
+    /// </summary>
+    /// 
+
+    PlayerController player;
+    ShipController ship;
+    Vector2 aimPos;
+    public float controllerLerpSpd;
+
+    public interface IHUDCameraUser
     {
+            Camera HUDCamera { set; }
+    }
 
-        [Header("Settings")]
-        public bool joystick = true;
+   [Header("Settings")]
+   public bool joystick = true;
 
-        [Tooltip("The camera used by the HUDCursor when setting the viewport position.")]
-        [SerializeField]
-        //protected CinemachineVirtualCamera m_Camera;
-        protected Camera m_Camera;
-        public virtual Camera HUDCamera
+   [Tooltip("The camera used by the HUDCursor when setting the viewport position.")]
+   [SerializeField]
+   protected Camera m_Camera;
+   public virtual Camera HUDCamera
+   {
+        set
         {
-            set
-            {
-                m_Camera = value;
-            }
+            m_Camera = value;
         }
+   }
 
         [Tooltip("The canvas that the HUDCursor is part of.")]
         [SerializeField]
@@ -109,13 +120,21 @@ namespace UI.HUD
         public void Awake()
         {
 ;
+
             //Cursor.visible = false; // makes mouse arrow cursor invisible
             //Cursor.lockState = CursorLockMode.Confined;
+
+            player = FindObjectOfType<PlayerController>();
+
             if (canvas != null)
             {
                 canvasRectTransform = canvas.GetComponent<RectTransform>();
             }
+            
+           
         }
+        
+    
         /// <summary>
         /// Put the cursor at the center of the screen.
         /// </summary>
@@ -163,8 +182,9 @@ namespace UI.HUD
         /// Set the viewport position of the cursor.
         /// </summary>
         /// <param name="viewportPosition">The new viewport position.</param>
-        public virtual void SetViewportPosition(Vector3 viewportPosition)
-        {
+        
+    public virtual void SetViewportPosition(Vector3 viewportPosition)
+    {
 
             bool worldSpace = (canvas == null) || (canvas.renderMode == RenderMode.WorldSpace);
 
@@ -204,8 +224,7 @@ namespace UI.HUD
                 if (cursorRectTransform != null)
                 {
                     cursorRectTransform.anchoredPosition = Vector3.Scale(viewportPosition - new Vector3(0.5f, 0.5f, 0), canvasRectTransform.sizeDelta);
-                    Cursor.lockState = CursorLockMode.None;
-                    Cursor.visible = true;
+                    
                 }
 
                 // Set the line position
@@ -225,7 +244,22 @@ namespace UI.HUD
                     }
                 }
             }
-        }
     }
 
+    private void Update()
+    {
+        if (m_Camera == null) 
+            return;
+        SetScreenPosition(Input.mousePosition);
+        SetViewportPosition(Input.mousePosition);
+
+
+        //if (player.joystick)
+        //{
+            //Vector2 controllerPos = new Vector2(Screen.width / 2 + (Input.GetAxis("JoystickAxis4") * ship.controllerSensitivity), Screen.height / 2 - (Input.GetAxis("JoystickAxis5") * ship.controllerSensitivity));
+            //aimPos = Vector2.Lerp(aimPos, controllerPos, controllerLerpSpd * Time.deltaTime);
+        //}
+    }
 }
+
+

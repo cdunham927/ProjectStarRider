@@ -14,6 +14,11 @@ public class CursorConstraint : MonoBehaviour
     public float controllerLerpSpd;
     GameManager cont;
 
+ 
+
+    [SerializeField]
+    protected bool centerCursorOnInputEnabled = true;
+
     private void Awake()
     {
         cont = FindObjectOfType<GameManager>();
@@ -21,12 +26,18 @@ public class CursorConstraint : MonoBehaviour
         ship = FindObjectOfType<ShipController>();
         i = GetComponent<Image>();
         r = GetComponent<RectTransform>();
+
+       
     }
 
     private void Update()
     {
+        
+
+
         if (!cont.gameIsPaused)
         {
+            
             Cursor.visible = player.joystick;
             Cursor.lockState = CursorLockMode.Confined;
         }
@@ -78,5 +89,6 @@ public class CursorConstraint : MonoBehaviour
         }
 
         r.position = aimPos;
+        
     }
 }
