@@ -35,6 +35,11 @@ public class AntaresController : BossControllerBase, IDamageable
     public float meleeAttackTimeFull = 10f;
     public float lookSpd = 30f;
 
+    //Teleport attacks around the map
+    public GameObject[] teleportSpots;
+    float closestTeleportDistance;
+    GameObject closestTeleport;
+
     protected override void Awake()
     {
         //Boss does a special attack after losing a set amount of health per phase
@@ -163,6 +168,24 @@ public class AntaresController : BossControllerBase, IDamageable
     {
 
         Invoke("ResetAttacking", meleeAttackTimeFull);
+    }
+
+    void TeleportAttack()
+    {
+        closestTeleportDistance = Vector3.Distance(transform.position, teleportSpots[0].transform.position);
+        closestTeleport = teleportSpots[0];
+
+        for (int i = 1; i < teleportSpots.Length; i++)
+        {
+            float dist = Vector3.Distance(transform.position, teleportSpots[i].transform.position);
+            if (dist < closestTeleportDistance)
+            {
+                closestTeleportDistance = dist;
+                closestTeleport = teleportSpots[i];
+            }
+        }
+
+
     }
 
     void RangedAttack()
