@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class DeathFxController : MonoBehaviour
 {
-    public float len;
+    public float DisableTime;
 
     private void OnEnable()
     {
-        Invoke("Disable", len);
+        Invoke("Disable", DisableTime);
     }
 
     private void OnDisable()
