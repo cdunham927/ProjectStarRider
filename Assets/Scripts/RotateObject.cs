@@ -21,19 +21,19 @@ public class RotateObject : MonoBehaviour
     private void Awake()
     {
         curRotMod = Random.Range(1, rotMod);
-      
+        
 
     }
 
     private void Update()
     {
         transform.Rotate(rotSpdX * Time.deltaTime * curRotMod, rotSpdY * Time.deltaTime * curRotMod, rotSpdZ * Time.deltaTime * curRotMod);  
-        
         if (hover == true) 
         {
             Hover();
         
         }
+        
     }
 
     public void Hover()
