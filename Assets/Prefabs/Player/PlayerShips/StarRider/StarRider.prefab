@@ -15194,7 +15194,7 @@ MonoBehaviour:
   timeToMove: 0.3125
   collisionDamage: 1
   spikeDamage: 3
-  KnockBackForce: 2
+  knockBackForce: 2
   blinkDuration: 0.3
   blinkIntensity: 2
   TrailTime: 2
@@ -15234,6 +15234,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   explosiveForce: 27302
+  sideDashForce: 25000
   pitchForce: 790
   rollForce: 785
   yawForce: 785
@@ -15256,6 +15257,10 @@ MonoBehaviour:
   dashTime: 0
   curDashTime: 0
   dashDir: 1
+  vert: 0
+  hor: 0
+  vert2: 0
+  hor2: 0
   controllerSensitivity: 200
   mouseSensitivity: 30
   invertControls: 0
@@ -15270,6 +15275,10 @@ MonoBehaviour:
   mouseRotForce: 0
   contRotForce: 0
   aimPos: {x: 0, y: 0}
+  mouseAim: {fileID: 0}
+  cameraRig: {fileID: 0}
+  cam: {fileID: 0}
+  camSmoothSpeed: 5
 --- !u!114 &575024446864579742
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15360,7 +15369,6 @@ MonoBehaviour:
   hitVolume: 1
   explodeVolume: 0.675
   perlin: {fileID: 0}
-  shakeTimer: 0.1
   shakeAmt: 5
   bigShakeAmt: 25
   blinkDuration: 0.3

@@ -394,6 +394,8 @@ using Cinemachine;
 
             if (!bod.freezeRotation && canMove)
             {
+            if (bod != null)
+            {
                 //Movement
                 if (!Mathf.Approximately(0f, pitch))
                 {
@@ -415,6 +417,7 @@ using Cinemachine;
 
 
                 bod.AddForce(transform.forward * (speed * Time.fixedDeltaTime));
+            }
 
                 //Dash code
                 if (curDashCools > dashTime && dashing)

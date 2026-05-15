@@ -39,6 +39,8 @@ public class AntaresController : BossControllerBase, IDamageable
     public GameObject[] teleportSpots;
     float closestTeleportDistance;
     GameObject closestTeleport;
+    Vector3 lastPos;
+    public float teleportAttackCools = 8f;
 
     protected override void Awake()
     {
@@ -130,6 +132,8 @@ public class AntaresController : BossControllerBase, IDamageable
         playerInRange = Vector3.Distance(transform.position, player.transform.position) < meleeRange;
         isAttacking = true;
 
+        TeleportAttack();
+
         if (curHp > 0 && player != null && pStats != null && pStats.Curr_hp > 0)
         {
             //If the player is close enough
@@ -185,7 +189,26 @@ public class AntaresController : BossControllerBase, IDamageable
             }
         }
 
+        int tInd = Random.Range(0, teleportSpots.Length - 1);
+        if (teleportSpots[tInd] == closestTeleport)
+        {
+            if (tInd == teleportSpots.Length - 1)
+                tInd--;
+            else tInd++;
+        }
 
+        lastPos = transform.position;
+        transform.position = teleportSpots[tInd].transform.position;
+
+        attackCools = teleportAttackCools;
+
+        Invoke("RangedAttack", 1.75f);
+        Invoke("TeleportBack", 6f);
+    }
+
+    void TeleportBack()
+    {
+        transform.position = lastPos;
     }
 
     void RangedAttack()
