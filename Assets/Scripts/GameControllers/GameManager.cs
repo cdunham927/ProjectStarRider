@@ -95,6 +95,7 @@ public class GameManager : MonoBehaviour
     public GameObject afterimageParent;
     public GameObject spiralFillParent;
     public MPImage[] afterimages;
+    public GameObject[] afterImageParts;
     public MPImage spiralFill;
     public EnemyManager[] enemyManager;
     public int enemyCount = 0;

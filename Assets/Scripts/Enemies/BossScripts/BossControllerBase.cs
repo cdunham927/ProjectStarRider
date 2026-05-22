@@ -279,7 +279,7 @@ public class BossControllerBase : MonoBehaviour
         }
     }
 
-    public void UseBulletPattern()
+    public virtual void UseBulletPattern()
     {
         if (bulletPool == null) bulletPool = cont.enemyBulPool;
 

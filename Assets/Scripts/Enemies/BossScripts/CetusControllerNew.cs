@@ -138,6 +138,34 @@ public class CetusControllerNew : BossControllerBase, IDamageable
             }
         }
     }
+    public override void UseBulletPattern()
+    {
+        //if (bulletPool == null) bulletPool = cont.enemyBulPool;
+        ObjectPool pool = cont.enemyBulPool;
+        pool = homingBulletPool;
+
+        switch (bulPatType)
+        {
+            case patterntypes.none:
+                //pattern.FlamethrowerPattern(bulletPool);
+                break;
+            case patterntypes.triangle:
+                pattern.TrianglePattern(pool);
+                break;
+            case patterntypes.spiral:
+                pattern.SpiralPattern(pool, patternBulNum);
+                break;
+            case patterntypes.square:
+                pattern.SquarePattern(pool);
+                break;
+            case patterntypes.circle:
+                pattern.CirclePattern(pool);
+                break;
+            case patterntypes.flamethrower:
+                pattern.FlamethrowerPattern(pool);
+                break;
+        }
+    }
 
     protected override void Attack()
     {

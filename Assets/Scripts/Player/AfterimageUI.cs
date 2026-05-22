@@ -19,6 +19,8 @@ public class AfterimageUI : MonoBehaviour
 
     float oneCharge;
 
+    public GameObject[] afterImageParts;
+
     private void Awake()
     {
         cont = FindObjectOfType<GameManager>();
@@ -31,6 +33,7 @@ public class AfterimageUI : MonoBehaviour
 
         //4 charges max, so 1 charge is 1/4th of the max image time
         oneCharge = ability.maxImagesTime / ability.maxCharges;
+        afterImageParts = cont.afterImageParts;
     }
 
     void Update()
@@ -40,6 +43,7 @@ public class AfterimageUI : MonoBehaviour
         //0-8
         if (afterimageUI[0] != null) afterimageUI[0].fillAmount = Mathf.Lerp(afterimageUI[0].fillAmount, (ability.curActiveTime) / (oneCharge * 1f), uiLerp * Time.deltaTime);
         if (afterimageUI[0] != null) afterimageUI[0].sprite = (ability.curActiveTime < oneCharge * 1f) ? emptyImage : filledImage;
+        if (afterimageUI[0] != null) afterImageParts[0].SetActive((ability.curActiveTime < oneCharge * 1f) ? false : true);
         //8-16
         if (afterimageUI[1] != null)
         {
@@ -54,6 +58,8 @@ public class AfterimageUI : MonoBehaviour
                 afterimageUI[1].fillAmount = Mathf.Lerp(afterimageUI[1].fillAmount, 0, uiLerp * Time.deltaTime);
                 afterimageUI[1].sprite = emptyImage;
             }
+
+            afterImageParts[1].SetActive((ability.curActiveTime < oneCharge * 2f) ? false : true);
         }
         //16-24
         if (afterimageUI[2] != null)
@@ -69,6 +75,8 @@ public class AfterimageUI : MonoBehaviour
                 afterimageUI[2].fillAmount = Mathf.Lerp(afterimageUI[2].fillAmount, 0, uiLerp * Time.deltaTime);
                 afterimageUI[2].sprite = emptyImage;
             }
+
+            afterImageParts[2].SetActive((ability.curActiveTime < oneCharge * 3f) ? false : true);
         }
         //24-32
         if (afterimageUI[3] != null)
@@ -84,6 +92,8 @@ public class AfterimageUI : MonoBehaviour
                 afterimageUI[3].fillAmount = Mathf.Lerp(afterimageUI[3].fillAmount, 0, uiLerp * Time.deltaTime);
                 afterimageUI[3].sprite = emptyImage;
             }
+
+            afterImageParts[3].SetActive((ability.curActiveTime < oneCharge * 4f) ? false : true);
         }
     }
 }

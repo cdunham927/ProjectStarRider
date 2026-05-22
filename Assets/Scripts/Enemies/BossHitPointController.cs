@@ -18,7 +18,8 @@ public class BossHitPointController : MonoBehaviour
     public Material mat;
     public int matNum = 1;
     //public Material[] mats;
-    public GameObject deadWeakPoint;
+    public GameObject coreBreak;
+    public GameObject coreGuard;
 
     public SkinnedMeshRenderer skinnedMeshRenderer;
     Material origMat;
@@ -48,11 +49,18 @@ public class BossHitPointController : MonoBehaviour
         curDmg += totDmg;
         if (curDmg >= breakHp)
         {
-            deadWeakPoint.SetActive(true);
+            coreBreak.SetActive(true);
+            Invoke("CoreGuard", 1.25f);
 
             GetComponent<Collider>().enabled = false;
         }
         //}
+    }
+
+    void CoreGuard()
+    {
+        coreGuard.SetActive(true);
+        coreBreak.SetActive(false);
     }
 
     protected void DamageBlink()
