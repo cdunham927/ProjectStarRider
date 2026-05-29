@@ -26,6 +26,7 @@ public class HomingBulletController : Bullet
     public float checkSize = 2f;
     public bool spawned = false;
 
+    private float currentTurnSpeed;
     private void Awake()
     {
         cont = FindObjectOfType<GameManager>();
@@ -56,12 +57,14 @@ public class HomingBulletController : Bullet
     {
         if (player != null && player.gameObject.activeInHierarchy)
         {
-            Vector3 targDir = player.transform.position - transform.position;
+            Vector3 targDir = (player.transform.position - transform.position).normalized;
             Vector3 newDir = Vector3.RotateTowards(transform.forward, targDir, lerpSpd * Time.deltaTime, 0.0f);
             transform.rotation = Quaternion.LookRotation(newDir);
+            currentTurnSpeed = Mathf.Lerp(currentTurnSpeed,lerpSpd,Time.deltaTime);
         }
 
-        moveDir = transform.forward;
+        moveDir = transform.forward * speed * Time.deltaTime;
+        transform.position += moveDir;
     }
 
     public override void FixedUpdate()

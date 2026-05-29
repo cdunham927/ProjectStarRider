@@ -10,6 +10,7 @@ public class CursorConstraint : MonoBehaviour
     PlayerController player;
     ShipController ship;
     Vector2 aimPos;
+    Vector2 aimOffset;
     public float controllerLerpSpd;
     GameManager cont;
 
@@ -27,9 +28,11 @@ public class CursorConstraint : MonoBehaviour
         r = GetComponent<RectTransform>();
 
         aimPos = new Vector2(Screen.width / 2, Screen.height / 2);
+       
+            
     }
 
- 
+    
 
     private void Update()
     {
@@ -40,10 +43,10 @@ public class CursorConstraint : MonoBehaviour
         {
             
             Cursor.visible = player.joystick;
-            Cursor.lockState = CursorLockMode.Confined;
+            Cursor.lockState = CursorLockMode.Locked;
         }
 
-        Vector2 input = Vector2.zero;
+        //Vector2 input = Vector2.zero;
 
         if (player.joystick)
         {
@@ -54,18 +57,19 @@ public class CursorConstraint : MonoBehaviour
         }
         else
         {
-            Vector2 mouseInput = new Vector2(Input.GetAxis("MouseX"), Input.GetAxis("MouseY"));
+            Vector2 mouseInput = new Vector2(Input.GetAxis("MouseX"), -Input.GetAxis("MouseY"));
             if (mouseInput.sqrMagnitude > 0.0001f)
             {
-                Vector2 mousePos = new Vector2(Screen.width / 2 + (Input.GetAxis("MouseX") * ship.mouseSensitivity), Screen.height / 2 - (-Input.GetAxis("MouseY") * ship.mouseSensitivity));
-                aimPos =  Vector2.Lerp(aimPos, mousePos, (controllerLerpSpd * Time.deltaTime));
+                //Vector2 mousePos = new Vector2(Screen.width / 2 + (Input.GetAxis("MouseX") * ship.mouseSensitivity), Screen.height / 2 - (-Input.GetAxis("MouseY") * ship.mouseSensitivity));
+                //aimPos =  Vector2.Lerp(aimPos, mousePos, (controllerLerpSpd * Time.deltaTime));
 
+                aimPos += mouseInput * ship.mouseSensitivity;
                 //input = new Vector2(Input.GetAxis("MouseX"),Input.GetAxis("MouseY") ) * ship.mouseSensitivity;
 
             }
         }
 
-        aimPos += input;
+        //aimPos += input;
 
         aimPos.x = Mathf.Clamp(aimPos.x, Screen.width / 2 - constraint.x,Screen.width / 2 + constraint.x);
 

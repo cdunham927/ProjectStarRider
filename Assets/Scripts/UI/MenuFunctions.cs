@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
+using PixelCrushers.DialogueSystem;
 using UnityEngine.EventSystems;
 
 public class MenuFunctions : MonoBehaviour
@@ -119,15 +120,20 @@ public class MenuFunctions : MonoBehaviour
 
     public void TurnOffUI()
     {
+        DialogueManager.Pause();
         if (scene != null) scene.TurnOffUI();
         if (pauseMenu != null)
         {
             pauseMenu.SetActive(false);
+            DialogueManager.Unpause();
+
         }
 
         if (hubOptionsMenuButton != null)
         {
             EventSystem.current.SetSelectedGameObject(hubOptionsMenuButton);
         }
+
+        
     }
 }
