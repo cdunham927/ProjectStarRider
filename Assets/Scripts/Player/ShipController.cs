@@ -132,8 +132,8 @@ using Cinemachine;
             startPos = transform.position;
             startRot = transform.rotation;
 
-           
-        
+            
+
         }
 
 
@@ -413,10 +413,10 @@ using Cinemachine;
                 }
 
                 if (player.joystick)
-                    //shipLocalTransform.localEulerAngles = new Vector3(-pitch * contRotForce, yaw * contRotForce,-yaw * contRotForce);
-                shipLocalTransform.localEulerAngles = new Vector3(-pitch * contRotForce, yaw * contRotForce, 0f);
+                    shipLocalTransform.localEulerAngles = new Vector3(-pitch * contRotForce, yaw * contRotForce,-yaw * contRotForce);
+                    //shipLocalTransform.localEulerAngles = new Vector3(-pitch * contRotForce, yaw * contRotForce, 0f);
                 else 
-                    shipLocalTransform.localEulerAngles = new Vector3(-pitch * mouseRotForce, yaw * mouseRotForce, 0f);
+                    shipLocalTransform.localEulerAngles = new Vector3(-pitch * mouseRotForce, yaw * mouseRotForce, -yaw * contRotForce);
 
 
                 bod.AddForce(transform.forward * (speed * Time.fixedDeltaTime));
