@@ -12,7 +12,8 @@ public class PlayerShooting : MonoBehaviour
     [Header("Shooting References: ")]
     public ObjectPool bulPool;
     public Transform bulSpawn;
-    public GameObject muzzle;
+    
+    
     bool PlayerIsShooting;
     GameObject mVfx;
     [SerializeField] private LayerMask aimColliderlayerMask = new LayerMask();
@@ -21,6 +22,9 @@ public class PlayerShooting : MonoBehaviour
     //public float bulletSpd;
     public float shootCooldown;
     float curShootCools = 0.0f;
+
+    [Header("Bullet System : ")]
+    public BulletSystem bulletSystem;
 
     [Header("Audio Clips: ")]
     public AudioClip ShotSounds;
@@ -70,8 +74,8 @@ public class PlayerShooting : MonoBehaviour
         bulPool = cont.bulPool;
         AS = GetComponent<AudioSource>();
         shipController = GetComponent<ShipController>();
-        mVfx = Instantiate(muzzle);
-        mVfx.SetActive(false);
+       
+        
 
         if (affectsCursor)
         {
@@ -274,11 +278,7 @@ public class PlayerShooting : MonoBehaviour
 
     public void PlayMuzzle()
     {
-        if (!muzzle.activeInHierarchy)
-        {
-            muzzle.SetActive(true);
-        }
-
+       
 
     }
 

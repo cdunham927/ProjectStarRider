@@ -209,6 +209,7 @@ public class BossControllerBase : MonoBehaviour
     //Shows radius for enemy attacks
     public GameObject attackIndicator;
 
+   
     public enum patterntypes { none, triangle, spiral, square, circle, flamethrower };
     public patterntypes bulPatType = patterntypes.none;
     protected BulletPatterns pattern;

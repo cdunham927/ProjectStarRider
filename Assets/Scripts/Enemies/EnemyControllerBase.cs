@@ -143,7 +143,7 @@ public class EnemyControllerBase : MonoBehaviour, IDamageable
     public int patternBulNum = 16;
     public enum patterntypes { none, triangle, spiral, square, circle, flamethrower };
     public patterntypes bulPatType = patterntypes.none;
-
+   
     protected virtual void Awake()
     {
         //mesh = GetComponent<MeshRenderer>();

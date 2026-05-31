@@ -41,7 +41,7 @@ public class CursorConstraint : MonoBehaviour
 
         if (!cont.gameIsPaused)
         {
-            
+            //Cursor.visible = false;
             Cursor.visible = player.joystick;
             Cursor.lockState = CursorLockMode.Locked;
         }

@@ -2,10 +2,11 @@ using System.Collections.Generic;
 using Unity.Collections;
 using UnityEngine;
 using UnityEngine.Jobs;
+using Unity.Burst;
 
 public class ObjectPool : MonoBehaviour
 {
-    public bool test;
+    
     [Header("Object pool variables")]
     //public static ObjectPool SharedInstance;
     //Object we want to be pooled

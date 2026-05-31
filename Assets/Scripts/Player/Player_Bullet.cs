@@ -274,6 +274,15 @@ public class Player_Bullet : Bullet
         trail.Clear();
     }
 
+
+    void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "DestructBullets")
+            Destroy(gameObject); // Destroys the projectile itself
+    }
+
+    
+    
     public override void Disable()
     {
         if (minimapObj != null) minimapObj.SetActive(false);

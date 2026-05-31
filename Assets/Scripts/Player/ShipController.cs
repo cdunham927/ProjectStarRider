@@ -412,8 +412,11 @@ using Cinemachine;
                     bod.AddTorque(stats.shakeCam.transform.up * (yawForce * yaw * Time.fixedDeltaTime));
                 }
 
-                if (player.joystick) shipLocalTransform.localEulerAngles = new Vector3(-pitch * contRotForce, yaw * contRotForce, 0f);
-                else shipLocalTransform.localEulerAngles = new Vector3(-pitch * mouseRotForce, yaw * mouseRotForce, 0f);
+                if (player.joystick)
+                    //shipLocalTransform.localEulerAngles = new Vector3(-pitch * contRotForce, yaw * contRotForce,-yaw * contRotForce);
+                shipLocalTransform.localEulerAngles = new Vector3(-pitch * contRotForce, yaw * contRotForce, 0f);
+                else 
+                    shipLocalTransform.localEulerAngles = new Vector3(-pitch * mouseRotForce, yaw * mouseRotForce, 0f);
 
 
                 bod.AddForce(transform.forward * (speed * Time.fixedDeltaTime));

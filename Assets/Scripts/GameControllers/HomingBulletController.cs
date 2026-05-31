@@ -7,6 +7,7 @@ public class HomingBulletController : Bullet
 {
     PlayerController player;
     public float lerpSpd;
+    public float Launchtime = 1.5f;
     Rigidbody bod;
     //public float spd;
     public GameObject spawnPos;
@@ -63,8 +64,9 @@ public class HomingBulletController : Bullet
             currentTurnSpeed = Mathf.Lerp(currentTurnSpeed,lerpSpd,Time.deltaTime);
         }
 
-        moveDir = transform.forward * speed * Time.deltaTime;
-        transform.position += moveDir;
+        Invoke("MoveBullet", Launchtime);
+        //moveDir = transform.forward * speed * Time.deltaTime;
+        //transform.position += moveDir;
     }
 
     public override void FixedUpdate()
@@ -256,6 +258,13 @@ public class HomingBulletController : Bullet
     void OnDisable()
     {
         CancelInvoke();
+    }
+
+    void MoveBullet()
+    {
+        moveDir = transform.forward * speed * Time.deltaTime;
+        transform.position += moveDir;
+
     }
 
     private void OnTriggerEnter(Collider collision)

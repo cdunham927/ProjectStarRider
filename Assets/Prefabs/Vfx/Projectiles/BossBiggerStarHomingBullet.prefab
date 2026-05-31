@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 9006509095168818348}
   - component: {fileID: 4212393056131086272}
-  - component: {fileID: 1212352961879085906}
   m_Layer: 0
   m_Name: BossBiggerStarHomingBullet
   m_TagString: DestructBullets
@@ -89,6 +88,7 @@ MonoBehaviour:
   regSpd: 2
   boostedSpd: 0
   lerpSpd: 2
+  Launchtime: 1.5
   spawnPos: {fileID: 8701767644159492086, guid: 8327d579f0661e84a92587298fc1136f, type: 3}
   hitVFXPool: {fileID: 0}
   minimapObj: {fileID: 5048312555498857287}
@@ -100,22 +100,6 @@ MonoBehaviour:
     m_Bits: 128
   checkSize: 6.5
   spawned: 0
---- !u!114 &1212352961879085906
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9006509095168818344}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ceb7e77719db8404fb7fefbcdde67554, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  detectionCollider: {fileID: 0}
-  col: {fileID: 0}
-  maxHp: 0.5
-  killScore: 100
 --- !u!1 &9006509095415868167
 GameObject:
   m_ObjectHideFlags: 0
@@ -305,7 +289,7 @@ TrailRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 0.9716981, g: 0, b: 0, a: 1}
+      key0: {r: 1, g: 0.73333335, b: 0, a: 1}
       key1: {r: 0.9716981, g: 0, b: 0, a: 1}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
@@ -322,7 +306,7 @@ TrailRenderer:
       ctime6: 0
       ctime7: 0
       atime0: 0
-      atime1: 26521
+      atime1: 7687
       atime2: 65535
       atime3: 65535
       atime4: 65535
@@ -330,7 +314,7 @@ TrailRenderer:
       atime6: 0
       atime7: 0
       m_Mode: 0
-      m_ColorSpace: -1
+      m_ColorSpace: 0
       m_NumColorKeys: 2
       m_NumAlphaKeys: 3
     numCornerVertices: 0

@@ -13,6 +13,12 @@ public class Bullet : MonoBehaviour
 {
     public Vector3 startVel;
     
+    //public varaibales to read into the bullet system
+    public Vector3 pos;
+    public Vector3 dir;
+    public Vector3 dist;
+    
+
     [Header("Speed Settings")]
     public float speed;
     public float startSpd;
@@ -22,7 +28,7 @@ public class Bullet : MonoBehaviour
     
     private Rigidbody rb;
     public float randSpdMod = 0f;
-    protected float elapsedTime = 0f;
+    protected float elapsedTime ;
 
     [Header("Acceleration Curve")]
     public AnimationCurve accelerationCurve; // The curve that defines the acceleration (ease)
@@ -36,10 +42,7 @@ public class Bullet : MonoBehaviour
 
     public float pushSpd;
 
-    //public varaibales to read into the bullet system
-    public Vector3 pos;
-    public Vector3 dir;
-    public Vector3 dist;
+    
 
     protected Vector3 moveDir;
     public bool increaseSpd = false;
@@ -59,11 +62,10 @@ public class Bullet : MonoBehaviour
 		Schedule a batch transform update.
 		*/
        
-    
+        
 
-    float dt = Time.deltaTime;
-
-
+        float dt = Time.deltaTime;
+     
         if (increaseSpd)
         {
             if (elapsedTime < maxSpdTime)
@@ -88,12 +90,15 @@ public class Bullet : MonoBehaviour
                 rb.velocity = transform.forward * speed;
 
             }
+            
+               
 
 
 
 
 
-           
+
+
         }
 
         

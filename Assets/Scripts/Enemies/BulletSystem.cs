@@ -1,10 +1,12 @@
 using System.Collections.Generic;
 using Unity.Collections;
 using Unity.Jobs;
+using Unity.Burst;
 using UnityEngine;
 using UnityEngine.Jobs;
 using UnityEngine.Pool;
 
+[BurstCompile]
 struct BulletTransformJob : IJobParallelForTransform
 {
 	[ReadOnly]
@@ -16,7 +18,7 @@ struct BulletTransformJob : IJobParallelForTransform
 	}
 };
 
-class BulletSystem : MonoBehaviour
+public class BulletSystem : MonoBehaviour
 {
 	const int CAPACITY = 4096;
 
@@ -158,6 +160,25 @@ class BulletSystem : MonoBehaviour
 			positionsToWrite.Dispose();
 	}
 
+	public void SpawnBullet(GameObject bulletPrefab,Vector3 position,Vector3 direction,float speed)
+	{
+		if (bulletCount >= CAPACITY)
+			return;
+
+		GameObject obj = Instantiate(bulletPrefab, position, Quaternion.identity);
+
+		Bullet bullet = new Bullet();
+		bullet.pos = position;
+		bullet.dir = direction.normalized;
+		bullet.speed = speed;
+		//bullet.transform = obj.transform;
+
+		bullets[bulletCount] = bullet;
+
+		transforms.Add(obj.transform);
+
+		bulletCount++;
+	}
 
 	[System.NonSerialized] BulletSystem next;
 
