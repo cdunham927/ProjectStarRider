@@ -391,6 +391,7 @@ public class CetusControllerNew : BossControllerBase, IDamageable
         //
         //
         //
+        ChangeAnimationState(Cetus_Wings_All);
         for (int i = 0; i < bulSpawn.Length; i++)
         {
             GameObject bul = homingBulletPool.GetPooledObject();
