@@ -485,7 +485,6 @@ public class GameManager : MonoBehaviour
             //StartCoroutine(LoadScene(n));
             EventSystem.current.SetSelectedGameObject(null);
             EventSystem.current.SetSelectedGameObject(victoryButton);
-            Time.timeScale = 1f;
             gameIsOver = true;
 
             //Disable non-gameover ui
@@ -532,11 +531,15 @@ public class GameManager : MonoBehaviour
 
     public void SlowTime()
     {
-        wantedTime = slowTimeAmt;
-        Time.timeScale = wantedTime;
+        //wantedTime = slowTimeAmt;
+        //Time.timeScale = wantedTime;
 
-        StartCoroutine(ReturnTime());
-        Invoke("Victory", slowTimeWait);
+        //StartCoroutine(ReturnTime());
+        //Invoke("Victory", slowTimeWait);
+        FindObjectOfType<BossControllerBase>().enabled = false;
+
+        Bullet[] allBullets = FindObjectsOfType<Bullet>();
+        foreach (Bullet g in allBullets) g.gameObject.SetActive(false);
     }
 
     IEnumerator ReturnTime()

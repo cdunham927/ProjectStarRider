@@ -9,6 +9,7 @@ public class CetusControllerNew : BossControllerBase, IDamageable
     [Header("Timelines")]
     public PlayableDirector phase2Cutscene;
     public PlayableDirector phase3Cutscene;
+    public PlayableDirector deathCutscene;
 
     [Space]
     [Header("Bullet spawn positions")]
@@ -380,8 +381,16 @@ public class CetusControllerNew : BossControllerBase, IDamageable
         ChangeAnimationState(Cetus_Whirlwind);
     }
 
+    //Spawns homing bullets
+    //
+    //
     void SpawnBullets()
     {
+        //Picks x(bulSpawn) amount of homing bullets and shoots them
+        //
+        //
+        //
+        //
         for (int i = 0; i < bulSpawn.Length; i++)
         {
             GameObject bul = homingBulletPool.GetPooledObject();
@@ -475,6 +484,7 @@ public class CetusControllerNew : BossControllerBase, IDamageable
             //    hasAdded = true;
             //    pStats.AddScore(killScore);
             //}
+            deathCutscene.Play();
             Death();
 
             Instantiate(deathVFX, transform.position, transform.rotation);

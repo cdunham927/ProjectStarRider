@@ -349,6 +349,7 @@ public class BossControllerBase : MonoBehaviour
         cont.SlowTime();
         skinnedMeshRenderer.material.color = Color.white;
     }
+
     protected void SwitchState(bossStates newState)
     {
         currentState = newState;
