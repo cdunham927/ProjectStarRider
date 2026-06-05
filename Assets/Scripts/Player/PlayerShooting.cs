@@ -9,6 +9,8 @@ using Cinemachine;
 
 public class PlayerShooting : MonoBehaviour
 {
+    public bool canShoot = true;
+    
     [Header("Shooting References: ")]
     public ObjectPool bulPool;
     public Transform bulSpawn;
@@ -122,6 +124,9 @@ public class PlayerShooting : MonoBehaviour
 
     private void Update()
     {
+        canShoot = ship.canMove;
+
+        if (!canShoot) return;
 
         if (!bod.freezeRotation)
         {
