@@ -4843,6 +4843,7 @@ GameObject:
   - component: {fileID: 1492024944959960810}
   - component: {fileID: 2310014023576641306}
   - component: {fileID: 276307624024348165}
+  - component: {fileID: 6174612534768316003}
   m_Layer: 0
   m_Name: Afterimage
   m_TagString: Untagged
@@ -4884,13 +4885,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39bffa1c4ae4a9145b74387f8d2c1f95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canShoot: 1
   bulPool: {fileID: 0}
   bulSpawn: {fileID: 3555698440890239340}
-  muzzle: {fileID: 4487601941698459567}
   aimColliderlayerMask:
     serializedVersion: 2
     m_Bits: 0
   shootCooldown: 0.33
+  bulletSystem: {fileID: 0}
   ShotSounds: {fileID: 8300000, guid: 33f24126a410fcf4db6d9abd6cdef767, type: 3}
   recoilForce: 0
   parentShoot: {fileID: 0}
@@ -5042,6 +5044,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeToDeactivate: 10
+--- !u!114 &6174612534768316003
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 672394538714028356}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff5a972ffe5717b4bbab5014dbf850ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationaroundSpeed: 60
+  _rotationAround: {x: 0, y: 0, z: 20}
+  targetObject: {fileID: 0}
 --- !u!1 &1428903279058548614
 GameObject:
   m_ObjectHideFlags: 0

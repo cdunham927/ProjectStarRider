@@ -34,7 +34,9 @@ public class Player_Bullet : Bullet
     {
         //Physics.IgnoreCollision();
         Collider[] overlapSphere = Physics.OverlapSphere(transform.position, checkSize, enemyMask);
-        if (overlapSphere.Length > 0)
+        RaycastHit[] overlapSphere2 = Physics.SphereCastAll(transform.position, checkSize, transform.forward, 1f, enemyMask);
+
+        if (overlapSphere2.Length > 0)
         {
             foreach (var hitCollider in overlapSphere)
             {
@@ -135,6 +137,108 @@ public class Player_Bullet : Bullet
                 }
             }
         }
+
+        //if (overlapSphere.Length > 0)
+        //{
+        //    foreach (var hitCollider in overlapSphere)
+        //    {
+        //        if (hitVFXPool == null) hitVFXPool = cont.hitVFXPool;
+        //
+        //        EnemyControllerBase en = hitCollider.GetComponent<EnemyControllerBase>();
+        //        if (en) HitEnemy(en);
+        //
+        //        if (hitCollider.CompareTag("BossHitPoint"))
+        //        {
+        //            //Debug.Log("Hit Enemy");
+        //            hitCollider.GetComponent<BossHitPointController>().Damage(damage);
+        //            //ContactPoint cp = col.GetContact(0);
+        //            if (hitVFXPool == null) hitVFXPool = cont.hitVFXPool;
+        //            if (!spawned)
+        //            {
+        //                GameObject hit = hitVFXPool.GetPooledObject();
+        //                hit.transform.position = spawnPos.transform.position;
+        //                hit.transform.rotation = spawnPos.transform.rotation;
+        //                //bul.GetComponent<Rigidbody>().velocity = bod.velocity;
+        //                hit.SetActive(true);
+        //                spawned = true;
+        //            }
+        //            Invoke("Disable", 0.001f);
+        //        }
+        //
+        //        if (hitCollider.CompareTag("Barrier"))
+        //        {
+        //            // Find the line from the gun to the point that was clicked.
+        //            Vector3 incomingVec = hitCollider.ClosestPoint(transform.position) - transform.position;
+        //
+        //            // Use the point's normal to calculate the reflection vector.
+        //            Vector3 reflec = hitCollider.ClosestPointOnBounds(transform.position).normalized;
+        //            Vector3 reflectVec = Vector3.Reflect(incomingVec, reflec);
+        //            reflectVec = reflectVec.normalized;
+        //            moveDir = reflectVec * speed;
+        //
+        //            // Draw lines to show the incoming "beam" and the reflection.
+        //            //Debug.DrawLine(transform.position, sphereHit.point, Color.red);
+        //            //Debug.DrawRay(sphereHit.point, reflectVec, Color.green);
+        //
+        //            GameObject hit = hitVFXPool.GetPooledObject();
+        //            hit.transform.position = spawnPos.transform.position;
+        //            hit.transform.rotation = spawnPos.transform.rotation;
+        //            hit.SetActive(true);
+        //        }
+        //
+        //        if (hitCollider.CompareTag("DestructBullets"))
+        //        {
+        //            //Debug.Log("Hit Enemy");
+        //            hitCollider.GetComponent<DestructableBullets>().Damage(damage);
+        //            //ContactPoint cp = col.GetContact(0);
+        //            if (hitVFXPool == null) hitVFXPool = cont.hitVFXPool;
+        //            if (!spawned)
+        //            {
+        //                GameObject hit = hitVFXPool.GetPooledObject();
+        //                hit.transform.position = spawnPos.transform.position;
+        //                hit.transform.rotation = spawnPos.transform.rotation;
+        //                //bul.GetComponent<Rigidbody>().velocity = bod.velocity;
+        //                hit.SetActive(true);
+        //                spawned = true;
+        //            }
+        //            //bul.GetComponent<Rigidbody>().velocity = bod.velocity;
+        //            Invoke("Disable", 0.01f);
+        //        }
+        //
+        //        if (hitCollider.CompareTag("DWall"))
+        //        {
+        //            hitCollider.GetComponent<DestructibleObject>().TakeDamage(damage);
+        //            //ContactPoint cp = col.GetContact(0);
+        //            if (hitVFXPool == null) hitVFXPool = cont.hitVFXPool;
+        //            if (!spawned)
+        //            {
+        //                GameObject hit = hitVFXPool.GetPooledObject();
+        //                hit.transform.position = spawnPos.transform.position;
+        //                hit.transform.rotation = spawnPos.transform.rotation;
+        //                //bul.GetComponent<Rigidbody>().velocity = bod.velocity;
+        //                hit.SetActive(true);
+        //                spawned = true;
+        //            }
+        //            Invoke("Disable", 0.001f);
+        //        }
+        //
+        //        if (hitCollider.CompareTag("Wall"))
+        //        {
+        //            //ContactPoint cp = col.GetContact(0);
+        //            if (hitVFXPool == null) hitVFXPool = cont.hitVFXPool;
+        //            if (!spawned)
+        //            {
+        //                GameObject hit = hitVFXPool.GetPooledObject();
+        //                hit.transform.position = spawnPos.transform.position;
+        //                hit.transform.rotation = spawnPos.transform.rotation;
+        //                //bul.GetComponent<Rigidbody>().velocity = bod.velocity;
+        //                hit.SetActive(true);
+        //                spawned = true;
+        //            }
+        //            Invoke("Disable", 0.001f);
+        //        }
+        //    }
+        //}
 
         //RaycastHit sphereHit;
         //if (Physics.SphereCast(transform.position, checkSize, transform.TransformDirection(transform.forward), out sphereHit, enemyMask))
