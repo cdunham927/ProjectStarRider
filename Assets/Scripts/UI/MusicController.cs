@@ -48,8 +48,7 @@ public class MusicController : MonoBehaviour
     public AudioClip[] UISfx;
     private AudioSource AS;
 
-    [Header("BGM Audio Clips: ")]
-    public AudioClip[] BGMSfx;
+    
     private double dspTime;
 
     //Var for checking scenes
