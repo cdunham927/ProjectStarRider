@@ -29,9 +29,10 @@ public class BulletSpawner : MonoBehaviour
 
     public void UseBulletPattern()
     {
+        if (pool == null) pool = cont.enemyBulPool;
+
         if (pool != null)
         {
-            if (pool == null) pool = cont.enemyBulPool;
             //ObjectPool pool = cont.enemyBulPool;
 
             switch (bulPatType)

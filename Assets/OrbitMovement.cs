@@ -7,14 +7,14 @@ public class OrbitMovement : MonoBehaviour
     //Assign the object / point  to orbit around
     [Header("Orbit Around : ")]
     [SerializeField] public float rotationaroundSpeed = 10f;
-    [SerializeField] private Vector3 _rotationAround;
+    [SerializeField] private Vector3 _rotationAround = Vector3.up;
     ShipController player;
     public GameObject targetObject;
-    [Space(10)]
+    //[Space(10)]
 
-    [Header("Rotation : ")]
-    [SerializeField] private Vector3 _rotation;
-    [SerializeField] private float _rotationSpeed;
+    //[Header("Rotation : ")]
+    //[SerializeField] private Vector3 _rotation;
+    //[SerializeField] private float _rotationSpeed;
 
 
 
@@ -28,6 +28,7 @@ public class OrbitMovement : MonoBehaviour
         
         // rotate  the object around the position
         transform.RotateAround(targetObject.transform.position, _rotationAround, rotationaroundSpeed * Time.deltaTime);
+        transform.up = targetObject.transform.up;
        
         //transform.LookAt(player.transform.forward);
     }
