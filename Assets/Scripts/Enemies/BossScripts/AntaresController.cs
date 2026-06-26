@@ -42,12 +42,14 @@ public class AntaresController : BossControllerBase, IDamageable
     Vector3 lastPos;
     public float teleportAttackCools = 8f;
 
+    public int attackSubPhase = 0;
+
     protected override void Awake()
     {
         //Boss does a special attack after losing a set amount of health per phase
-        pOLA = maxHp * phaseOneLossPerc;
-        pTLA = maxHp * phaseTwoLossPerc;
-        pTtLA = maxHp * phaseThreeLossPerc;
+        //pOLA = maxHp * phaseOneLossPerc;
+        //pTLA = maxHp * phaseTwoLossPerc;
+        //pTtLA = maxHp * phaseThreeLossPerc;
 
         base.Awake();
 
@@ -129,6 +131,58 @@ public class AntaresController : BossControllerBase, IDamageable
 
     protected override void Attack()
     {
+        //New attack shit
+        switch(phase)
+        {
+            case 1:
+                switch(attackSubPhase)
+                {
+                    case 1:
+
+                        break;
+                    case 2:
+
+                        break;
+                    case 3:
+
+                        break;
+                }
+                break;
+            case 2:
+                switch (attackSubPhase)
+                {
+                    case 1:
+
+                        break;
+                    case 2:
+
+                        break;
+                    case 3:
+
+                        break;
+                    case 4:
+
+                        break;
+                }
+                break;
+            case 3:
+                switch (attackSubPhase)
+                {
+                    case 1:
+
+                        break;
+                    case 2:
+
+                        break;
+                    case 3:
+
+                        break;
+                }
+                break;
+        }
+
+
+
         playerInRange = Vector3.Distance(transform.position, player.transform.position) < meleeRange;
         isAttacking = true;
 
@@ -174,6 +228,7 @@ public class AntaresController : BossControllerBase, IDamageable
         Invoke("ResetAttacking", meleeAttackTimeFull);
     }
 
+    int teleportIndex;
     void TeleportAttack()
     {
         closestTeleportDistance = Vector3.Distance(transform.position, teleportSpots[0].transform.position);
@@ -189,21 +244,32 @@ public class AntaresController : BossControllerBase, IDamageable
             }
         }
 
-        int tInd = Random.Range(0, teleportSpots.Length - 1);
-        if (teleportSpots[tInd] == closestTeleport)
+        teleportIndex = Random.Range(0, teleportSpots.Length - 1);
+        if (teleportSpots[teleportIndex] == closestTeleport)
         {
-            if (tInd == teleportSpots.Length - 1)
-                tInd--;
-            else tInd++;
+            if (teleportIndex == teleportSpots.Length - 1)
+                teleportIndex--;
+            else teleportIndex++;
         }
 
         lastPos = transform.position;
-        transform.position = teleportSpots[tInd].transform.position;
+        transform.position = teleportSpots[teleportIndex].transform.position;
 
         attackCools = teleportAttackCools;
 
-        Invoke("RangedAttack", 1.75f);
+        Invoke("TrackingAttack", 1.75f);
         Invoke("TeleportBack", 6f);
+    }
+
+    void TeleportNext()
+    {
+        {
+            if (teleportIndex == teleportSpots.Length - 1)
+                teleportIndex--;
+            else teleportIndex++;
+        }
+
+        transform.position = teleportSpots[teleportIndex].transform.position;
     }
 
     void TeleportBack()
@@ -240,6 +306,69 @@ public class AntaresController : BossControllerBase, IDamageable
             Invoke("SpawnBullets", bulSpawnTime);
             Invoke("CancelAllBullet", allBulStopTime);
         }
+    }
+
+    //left or right attack
+    void RapidFireAttack()
+    {
+        if (Random.value > 0.5f)
+        {
+            print("Attacking right");
+            anim.Play("Antares|Shoot");
+        }
+        else
+        {
+            print("Attacking left");
+            anim.Play("Antares|Shoot Flipped");
+        }
+
+        Invoke("SpawnBullets", bulSpawnTime);
+        Invoke("CancelAllBullet", allBulStopTime);
+    }
+
+    void DoubleRapidFireAttack()
+    {
+
+    }
+
+    void DoubleFasterRapidFireAttack()
+    {
+
+    }
+
+    void BigProjectileAttack()
+    {
+
+    }
+
+    void SnipeAttack()
+    {
+
+    }
+
+    void FasterSnipeAttack()
+    {
+
+    }
+
+    void StingerAttack()
+    {
+
+    }
+
+    void FasterStingerAttack()
+    {
+
+    }
+
+    void SummonAllies()
+    {
+
+    }
+
+    void SummonFireCage()
+    {
+
     }
 
     public void ResetAttacking()
@@ -345,32 +474,32 @@ public class AntaresController : BossControllerBase, IDamageable
         }
         else phase = 1;
 
-        curHpLoss += damageAmount;
+        //curHpLoss += damageAmount;
 
-        switch (phase)
-        {
-            case 3:
-                if (curHpLoss > pTtLA)
-                {
-                    //AttackThree();
-                    curHpLoss = 0;
-                }
-                break;
-            case 2:
-                if (curHpLoss > pTLA)
-                {
-                    //AttackThree();
-                    curHpLoss = 0;
-                }
-                break;
-            case 1:
-                if (curHpLoss > pOLA)
-                {
-                    //AttackThree();
-                    curHpLoss = 0;
-                }
-                break;
-        }
+        //switch (phase)
+        //{
+        //    case 3:
+        //        if (curHpLoss > pTtLA)
+        //        {
+        //            //AttackThree();
+        //            curHpLoss = 0;
+        //        }
+        //        break;
+        //    case 2:
+        //        if (curHpLoss > pTLA)
+        //        {
+        //            //AttackThree();
+        //            curHpLoss = 0;
+        //        }
+        //        break;
+        //    case 1:
+        //        if (curHpLoss > pOLA)
+        //        {
+        //            //AttackThree();
+        //            curHpLoss = 0;
+        //        }
+        //        break;
+        //}
 
         if (curHp <= 0)
         {
