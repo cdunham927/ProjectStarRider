@@ -6,7 +6,7 @@ public class BulletSpawner : MonoBehaviour
 {
     BulletPatterns pattern;
     GameManager cont;
-    public enum patterntypes { none, triangle, spiral, square, circle, flamethrower };
+    public enum patterntypes { none, triangle, spiral, square, circle, flamethrower, Radial, Wave, multiWave };
     public patterntypes bulPatType = patterntypes.none;
     public int patternBulNum = 16;
 
@@ -16,7 +16,8 @@ public class BulletSpawner : MonoBehaviour
 
     private void Awake()
     {
-        pattern = FindObjectOfType<BulletPatterns>();
+        //pattern = FindObjectOfType<BulletPatterns>();
+        pattern = GetComponent<BulletPatterns>();
         cont = FindObjectOfType<GameManager>();
     }
 
@@ -54,6 +55,15 @@ public class BulletSpawner : MonoBehaviour
                     break;
                 case patterntypes.flamethrower:
                     pattern.FlamethrowerPattern(pool);
+                    break;
+                case patterntypes.Radial:
+                    pattern.ShotgunPattern(pool);
+                    break;
+                case patterntypes.Wave:
+                    pattern.WavePattern(pool);
+                    break;
+                case patterntypes.multiWave:
+                    pattern.MultiWavePattern(pool);
                     break;
             }
 

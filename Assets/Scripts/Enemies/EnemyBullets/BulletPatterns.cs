@@ -52,7 +52,7 @@ public class BulletPatterns : MonoBehaviour
         }
     }
 
-    public void CirclePattern(ObjectPool pool)
+   public void CirclePattern(ObjectPool pool)
     {
         if (pool == null) return;
         Vector3 startPos = (rotObj.transform.forward * 2f) + (rotObj.transform.up * 25f);
@@ -68,14 +68,14 @@ public class BulletPatterns : MonoBehaviour
         }
     }
 
-    public void FlamethrowerPattern(ObjectPool pool)
+   public void FlamethrowerPattern(ObjectPool pool)
     {
         if (pool == null) return;
         Vector3 startPos = (rotObj.transform.forward * 2f) + (rotObj.transform.up * 25f);
         pool.ActivateAtPosition((transform.position + startPos), rotObj.transform.rotation);
     }
 
-        public void SquarePattern(ObjectPool pool)
+   public void SquarePattern(ObjectPool pool)
     {
         if (pool == null) return;
         Vector3 startPos = (rotObj.transform.forward * 2f) + (rotObj.transform.up * 25f);
@@ -111,7 +111,7 @@ public class BulletPatterns : MonoBehaviour
     }
 
     //Shoots bullets in all directions around the enemy
-    public void SpiralPatternCopy(ObjectPool pool, int numBullets = 16)
+   public void SpiralPatternCopy(ObjectPool pool, int numBullets = 16)
     {
         if (pool == null) return;
 
@@ -127,7 +127,7 @@ public class BulletPatterns : MonoBehaviour
     }
 
     //Shoots bullets forward at the player like a shotgun
-    public void ShotgunPattern(ObjectPool pool, int numBullets = 16)
+   public void ShotgunPattern(ObjectPool pool, int numBullets = 16)
     {
         if (pool == null) return;
 
@@ -155,7 +155,7 @@ public class BulletPatterns : MonoBehaviour
     }
 
     //Shoots bullets forward at the player like a shotgun
-    public void VerticalPattern(ObjectPool pool, int numBullets = 16)
+   public void VerticalPattern(ObjectPool pool, int numBullets = 16)
     {
         if (pool == null) return;
 
@@ -180,5 +180,66 @@ public class BulletPatterns : MonoBehaviour
                 //bul.GetComponent<EnemyBullet>().Push();
             }
         }
+    }
+
+    public void WavePattern(ObjectPool pool, int numBullets = 36) 
+    {
+        if (pool == null) 
+            return;
+        float increment = 360 / numBullets;
+        float angle = 0;
+        for (int i = 0; i < numBullets; i++)
+        {
+            //Get pooled bullet
+            GameObject bul = pool.GetPooledObject();
+            if (bul != null)
+            {
+                //Put it where the enemy position is
+                //bul.transform.position = transform.position;
+                //Aim it at the player
+                //Activate it at the enemy position
+                bul.SetActive(true);
+                angle += increment;
+                
+                Quaternion rot = bul.transform.rotation * Quaternion.Euler(0, angle, 0);
+
+                pool.ActivateAtPosition(transform.position,rot);
+
+
+                //bul.GetComponent<EnemyBullet>().Push();
+            }
+        }
+
+    }
+
+    public void MultiWavePattern(ObjectPool pool, int numBullets = 36)
+    {
+        if (pool == null)
+            return;
+        float increment = 360 / numBullets;
+        //float angle = 0;
+        for (float pitch = -75; pitch<=75; pitch+= 25)
+        {
+            //Get pooled bullet
+             GameObject bul = pool.GetPooledObject();
+            if (bul != null)
+            {
+                //Put it where the enemy position is
+                //bul.transform.position = transform.position;
+                //Aim it at the player
+                //Activate it at the enemy position
+                bul.SetActive(true);
+                for(float yaw = 0; yaw < 360; yaw += 15) 
+                { 
+                    Quaternion rot = bul.transform.rotation * Quaternion.Euler(pitch, yaw, 0);
+                
+                    pool.ActivateAtPosition(transform.position, rot);
+            
+            
+                }
+            //bul.GetComponent<EnemyBullet>().Push();
+            }
+        }
+
     }
 }
